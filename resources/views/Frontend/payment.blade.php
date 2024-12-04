@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <!-- <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" /> -->
+    @vite('resources/css/app.css')
+</head>
+
+<body>
+    @include('layout.Navbar')
+    <main>
+        <section class="mt-14 md:mt-20 cart">
+            <div class="container">
+                <div class="flex flex-col grid-cols-12 gap-4 md:grid">
+                    <div class="col-span-6 transition-all duration-300 ease-in-out box-cart font-aesthetnova">
+                        <div
+                            class="flex flex-col p-2.5 rounded-lg md:p-8 gap-y-8 content-body bg-secondary-accent-color">
+                            <div class="box-status-order bg-[#D4EDDA] py-4 rounded-lg px-8">
+                                <p class="text-[#185C26] md:text-lg text-sm font-semibold text-center">
+                                    Order successfully created , please continue payment for
+                                    your order
+                                </p>
+                            </div>
+                            <!-- Repeted Content -->
+                            @forelse ($temp_cart as $cart)
+                                <div
+                                    class="flex flex-col items-center justify-between md:p-0 p-0.5 md:flex-row md:gap-y-0 gap-y-3">
+                                    <img src="{{ asset('storage/' . $cart->menu->image) }}" alt="Sicilian Pizza"
+                                        class="object-cover w-full rounded h-52 3xl:w-96 3xl:h-60 md:w-64 md:h-44" />
+                                    <div class="flex flex-col w-full gap-2 md:w-fit text-wrap">
+                                        <p class="text-xl font-semibold md:text-lg line-clamp-1">
+                                            {{ $cart->menu->name }}
+                                        </p>
+                                        <p class="text-xl md:text-lg text-highlight-content">
+                                            Extra
+                                        </p>
+                                        <div class="flex wrap">
+                                            <p class="text-xl md:text-lg">Rp
+                                                {{ number_format($cart->subtotal, 0, ',', '.') }}</p>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full px-4 py-2 rounded-full md:w-fit quantity-area bg-secondary-color">
+                                        <p class="text-xl text-center md:text-base ms-auto">
+                                            Qty : {{ $cart->quantity }}
+                                        </p>
+                                    </div>
+                                </div>
+                            @empty
+                            @endforelse
+
+
+                            <!-- Repeted Content end -->
+                            <hr class="border-[1px] border-gray-500" />
+                            <div class="flex flex-col gap-3 wrap">
+                                <span class="flex items-center justify-between">
+                                    <p class="text-lg">Subtotal</p>
+                                    <p class="text-lg">Rp 1.500.000</p>
+                                </span>
+                                <span class="flex items-center justify-between">
+                                    <p class="flex items-center gap-3 text-lg text-highlight-content">
+                                        Shipping
+                                        <img src="../asset/QuestionMark-Shipping.png" class="w-[10%]" alt="" />
+                                    </p>
+                                    <p class="text-lg text-highlight-content">Rp. 20.000</p>
+                                </span>
+                                <span class="flex items-center justify-between">
+                                    <p class="text-lg">Total Payment</p>
+                                    <p class="text-lg">Rp {{ number_format($totalSubtotal, 0, ',', '.') }}</p>
+                                </span>
+                            </div>
+                            <button
+                                class="self-end w-full gap-3 py-3 text-base transition-all duration-300 ease-in-out rounded-lg bg-secondary-color">
+                                Cancle Order
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-span-6 row-auto gap-4 text-base md:text-lg">
+                        <div
+                            class="sticky flex flex-col w-full gap-4 rounded-lg h-fit top-36 box-Location font-aesthetnova bg-secondary-accent-color">
+                            <div class="px-4 py-4 rounded-t-lg bg-secondary-color header body md:px-8">
+                                <p class="uppercase">Payment Method</p>
+                            </div>
+                            <div class="px-4 py-4 body md:px-8">
+                                <div class="user-quick-details flex items-center justify-between gap-0.5">
+                                    <img src="../asset/Payment/Midtrans.png" class="md:w-[25%] w-[40%]"
+                                        alt="" />
+                                    <input type="checkbox"
+                                        class="w-5 h-5 transition-all duration-300 ease-in-out bg-transparent border-2 rounded-full appearance-none cursor-pointer border-highlight-content checked:bg-highlight-content checked:border-highlight-content hover:border-none hover:bg-highlight-content" />
+                                </div>
+                            </div>
+                            <div
+                                class="flex flex-col items-center justify-between gap-4 px-4 py-4 md:gap-0 md:flex-row md:px-8 footer">
+                                <p class="text-sm text-highlight-content">
+                                    Order That Been Pay Cannot Be Cancle *
+                                </p>
+                                <a href="Tracking-order.html"
+                                    class="self-end w-full gap-3 px-2 py-2.5 text-base text-center transition-all duration-300 ease-in-out rounded-lg md:w-fit 2xl:px-12 bg-secondary-color">Pay
+                                    Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- SideBar  -->
+        @include('layout.Sidebar')
+        <!-- Login & register Box -->
+        @include('layout.AuthCustomer')
+    </main>
+    @include('layout.Footer')
+</body>
+<!-- <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+      AOS.init();
+  </script> -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+<script src="{{ asset('/js/swiper.js') }}"></script>
+<script src="{{ asset('/js/GSAP.js') }}"></script>
+<script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+<script src="{{ asset('/js/sidebar.js') }}"></script>
+<script src="{{ asset('/js/boxLogin.js') }}"></script>
+
+</html>

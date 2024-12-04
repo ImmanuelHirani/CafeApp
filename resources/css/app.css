@@ -1,0 +1,350 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .btn-primary {
+        @apply px-5 py-2 font-semibold rounded-lg shadow-md bg-violet-500 text-accent-color hover:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-400 focus:ring-opacity-75;
+    }
+    .middle-nav {
+        @apply py-[18px] max-w-fit rounded-full   px-14 text-xl;
+    }
+}
+
+.box {
+    @apply bg-secondary-color w-[43%] -z-10 overflow-hidden 3xl:h-[75px] h-16 transition-all ease-in-out duration-[400ms] rounded-full absolute xl:inline-block hidden translate-x-1/2 translate-y-1/2 bottom-1/2 right-1/2;
+}
+
+.box.expanded {
+    @apply w-[100%] 3xl:h-20 h-[75px] shadow-lg;
+}
+
+@layer base {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    button,
+    lable,
+    a {
+        @apply subpixel-antialiased text-accent-color;
+    }
+
+    /* Standarisasi ukuran font untuk h1 hingga h6 */
+    h1 {
+        @apply text-5xl  lg:text-7xl 3xl:text-[150px] 2xl:text-9xl;
+    }
+
+    h2 {
+        @apply text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl;
+    }
+
+    h3 {
+        @apply text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl;
+    }
+
+    h4 {
+        @apply text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl;
+    }
+
+    h5 {
+        @apply text-xl md:text-2xl xl:text-3xl 2xl:text-4xl;
+    }
+
+    h6 {
+        @apply text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl;
+    }
+
+    html,
+    body {
+        @apply scroll-smooth;
+    }
+
+    .secondary-color-gradient {
+        background: linear-gradient(270deg, #141925 13.36%, #090e1a 86.64%);
+    }
+
+    @font-face {
+        font-family: "AesthetNova";
+        font-weight: 500;
+        src: url("/public/fonts/Aesthet-Nova-Medium.ttf") format("truetype");
+    }
+
+    @font-face {
+        font-family: "Magilo";
+        font-weight: 400;
+        src: url("/public/fonts/magilio-regular.ttf") format("truetype");
+    }
+
+    body {
+        @apply flex flex-col h-screen overflow-x-hidden bg-primary-color font-magilo;
+    }
+
+    #Admin {
+        @apply flex flex-col h-screen p-4 overflow-x-hidden bg-secondary-color-admin;
+    }
+    #Admin {
+        @apply font-inter;
+    }
+
+    #Admin,
+    #Admin p,
+    #Admin h1,
+    #Admin h2,
+    #Admin h3,
+    #Admin h4,
+    #Admin h5,
+    #Admin h6 {
+        @apply !text-secondary-accent-color;
+    }
+
+    .footer-content-paging .pagination-container button {
+        @apply !text-secondary-accent-color;
+    }
+
+    footer {
+        @apply mt-auto;
+    }
+}
+
+@layer utilities {
+    .filter-none {
+        filter: none;
+    }
+    .filter-grayscale {
+        filter: grayscale(100%);
+    }
+}
+
+/* JS Required Css */
+.sidebar-active {
+    @apply -translate-x-0;
+}
+
+.quick-menu-active {
+    @apply visible transition-all duration-300 ease-in-out opacity-100;
+}
+
+.box-active-review {
+    @apply visible transition-all duration-300 ease-in-out opacity-100;
+}
+
+.box-registLogin-active {
+    @apply visible transition-all duration-300 ease-in-out opacity-100;
+}
+
+.LoginBox-Active {
+    @apply visible opacity-100;
+}
+
+.RegisterBox-Active {
+    @apply visible opacity-100;
+}
+
+.cart-mobile-menu-active {
+    @apply visible translate-y-0 opacity-100;
+}
+
+/* JS Required Css End */
+
+.container {
+    @apply px-4 md:px-12;
+}
+
+section {
+    @apply py-12 lg:py-24 md:py-16;
+}
+
+/* Selector untuk figcaption */
+.swiper-slide-active .topping-wrapper figcaption {
+    @apply translate-y-0 opacity-100;
+}
+
+/* Selector untuk topping-logo */
+.swiper-slide-active .topping-wrapper .topping-logo {
+    @apply translate-y-0 opacity-100;
+}
+
+.swiper-slide-active .card-wrapper {
+    @apply scale-100 opacity-100;
+}
+
+.swiper-slide-next + .swiper-slide .card-wrapper {
+    @apply scale-100 opacity-100;
+}
+
+/* Mengatur efek pada gambar saat slide aktif */
+.swiper-slide-active .topping-wrapper {
+    @apply scale-100 opacity-100; /* Menggunakan TailwindCSS utility classes */
+}
+
+#swiperBanner .swiper-pagination {
+    @apply -bottom-4;
+}
+
+#swiperBanner .swiper-pagination-bullet {
+    @apply opacity-100 bg-transparent border-[2px] border-[#f8c055] md:w-5 w-3.5 md:h-5 h-3.5 m-2;
+}
+
+#swiperBanner .swiper-pagination-bullet-active {
+    @apply bg-[#f8c055];
+}
+
+.swiper-slide {
+    backface-visibility: hidden;
+}
+
+/* Admin CSS */
+
+.dataTables_filter > label > input {
+    @apply px-4 rounded-lg outline-none;
+}
+
+.dataTables_filter {
+    @apply mb-4;
+}
+
+/* .dataTables_filter > label > input::placeholder {
+  @apply pl-2;
+} */
+
+.dataTables_length > label {
+    @apply flex items-center gap-2 font-medium;
+}
+
+.dataTables_info {
+    @apply mt-4 font-medium;
+}
+
+.dataTables_paginate {
+    @apply mt-4;
+}
+
+.dataTables_paginate > span > .paginate_button.current {
+    @apply !bg-secondary-color-admin;
+}
+
+.dataTables_paginate > span > .paginate_button {
+    @apply bg-white;
+}
+
+/* Select */
+.status-select select {
+    appearance: none;
+    padding: 4px 12px;
+    border-radius: 40px;
+    min-width: fit-content;
+    background-size: 16px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    padding-right: 32px;
+}
+
+.status-select select.completed {
+    background-color: rgb(220, 252, 231);
+    color: rgb(22, 101, 52);
+}
+
+.status-select select.in-progress {
+    background-color: rgb(254, 249, 195);
+    color: rgb(161, 98, 7);
+}
+
+.status-select select.canceled {
+    background-color: rgb(254, 226, 226);
+    color: rgb(185, 28, 28);
+}
+
+.status-select select option {
+    background: white;
+    color: black;
+    text-align: left !important;
+    font-weight: normal;
+    padding: 8px;
+    border-radius: 0;
+}
+/* Select End */
+.tab-active-sideMenu {
+    @apply bg-secondary-accent-color-admin outline outline-gray-300;
+}
+
+.sideMenu-tabs-content {
+    @apply transition-all duration-500 ease-in-out opacity-0;
+}
+.sideMenu-tabs-content:not(:has(.hidden)) {
+    @apply opacity-100;
+}
+
+.tabs-content-product {
+    @apply transition-all duration-500 ease-in-out opacity-0;
+}
+.tabs-content-product:not(:has(.hidden)) {
+    @apply opacity-100;
+}
+
+@starting-style {
+    .sideMenu-tabs-content:not(:has(.hidden)) {
+        @apply opacity-0;
+    }
+
+    .tabs-content-product:not(:has(.hidden)) {
+        @apply opacity-0;
+    }
+}
+
+#modal-add-product {
+    @apply p-4 m-auto rounded-lg opacity-0;
+    transition: all 0.3s ease-in-out allow-discrete;
+}
+
+#modal-add-product[open] {
+    opacity: 1;
+}
+
+@starting-style {
+    #modal-add-product[open] {
+        opacity: 0;
+    }
+}
+
+#modal-add-product::backdrop {
+    @apply bg-transparent;
+    transition: all 0.3s ease-in-out allow-discrete;
+}
+
+#modal-add-product[open]::backdrop {
+    @apply bg-black bg-opacity-50;
+}
+
+@starting-style {
+    #modal-add-product[open]::backdrop {
+        @apply bg-transparent;
+    }
+}
+
+/* Nav link  */
+.Navlink-Active {
+    @apply bg-secondary-accent-color-admin outline !text-secondary-accent-color;
+}
+/* Nav link End */
+
+/* Navlink tabs  */
+
+.tab-active-product {
+    @apply rounded-full bg-secondary-accent-color-admin outline outline-1 outline-gray-300;
+}
+
+/* Navlink tabs end */
+
+.wrap-quickTab > button {
+    @apply !text-secondary-accent-color;
+}
+
+/* Admin CSS End */
