@@ -25,7 +25,7 @@ Route::get('/payment', [OrderController::class, 'payment'])->name('payment.view'
 Route::delete('/cart/delete/{id}', [OrderController::class, 'deleteCart'])->name('delete.cart');
 
 
-
+Route::get('/make-order', [OrderController::class, 'makeOrder'])->name('make.order');
 
 
 Route::get('/Dashboard', function () {

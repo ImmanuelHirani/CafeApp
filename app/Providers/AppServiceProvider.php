@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Services\CustomerService;
 use App\Repository\CustomerRepo;
 use App\Repository\MenuRepo;
+use Illuminate\Support\Facades\DB;
 use App\Repository\orderRepo;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
@@ -54,6 +55,11 @@ class AppServiceProvider extends ServiceProvider
 
             // Data ini akan tersedia di semua view
             $view->with('cartItems', $cartItems);
+        });
+
+        DB::listen(function ($query) {
+            logger($query->sql);
+            logger($query->bindings);
         });
     }
 }

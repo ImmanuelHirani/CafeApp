@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Models\orderTransaction;
 use App\Models\tempTransaction;
 
 interface orderRepo

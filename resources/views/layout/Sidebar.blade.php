@@ -10,90 +10,30 @@
                 <div class="px-4 pb-8 3xl:max-h-[52.5rem] 2xl:max-h-[39rem] xl:max-h-[43em] other-item-content">
                     <div class="swiper-wrapper">
                         <!-- Repeat this block for each item -->
-                        <div class="swiper-slide">
-                            <div
-                                class="flex flex-col items-center w-full rounded-lg shadow-xl bg-secondary-accent-color max-h-fit outline outline-1 outline-highlight-content">
-                                <img src="{{ asset('/asset/Booba Menu/Choco bobba.jpg') }}" alt="Sicilian Pizza"
-                                    class="rounded-t-lg h-[180px] w-full object-cover" />
-                                <div class="flex items-center justify-between w-full p-4 wrap">
-                                    <div class="flex flex-col">
-                                        <p class="text-xl">
-                                            Sicilian Pizza
-                                        </p>
-                                        <p class="text-lg text-gray-3 00">
-                                            Rp 500.000
-                                        </p>
+                        @foreach ($menus as $menu)
+                            <div class="swiper-slide">
+                                <div
+                                    class="flex flex-col items-center w-full rounded-lg shadow-xl bg-secondary-accent-color max-h-fit outline outline-1 outline-highlight-content">
+                                    <img src="{{ asset('storage/' . $menu->image) }}" alt="Sicilian Pizza"
+                                        class="rounded-t-lg h-[180px] w-full object-cover" />
+                                    <div class="flex items-center justify-between w-full p-4 wrap">
+                                        <div class="flex flex-col">
+                                            <p class="text-xl">
+                                                {{ $menu->name }}
+                                            </p>
+                                            <p class="text-lg text-gray-3 00">
+                                                Rp {{ number_format($menu->price, 0, ',', '.') }}
+                                            </p>
+                                        </div>
+                                        <button class="w-10 h-10 text-red-500 bg-white rounded-full">
+                                            <img src="{{ asset('/asset/SVG/Cart_Plus-Sidebar.svg') }}" alt=""
+                                                class="w-5 mx-auto" />
+                                        </button>
                                     </div>
-                                    <button class="w-10 h-10 text-red-500 bg-white rounded-full">
-                                        <img src="{{ asset('/asset/SVG/Cart_Plus-Sidebar.svg') }}" alt=""
-                                            class="w-5 mx-auto" />
-                                    </button>
                                 </div>
                             </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div
-                                class="flex flex-col items-center w-full rounded-lg shadow-xl bg-secondary-accent-color max-h-fit outline outline-1 outline-highlight-content">
-                                <img src="{{ asset('/asset/Booba Menu/Brown Sugar Syrup and Milk Tea bobba.jpg') }}"
-                                    alt="Sicilian Pizza" class="rounded-t-lg h-[180px] w-full object-cover" />
-                                <div class="flex items-center justify-between w-full p-4 wrap">
-                                    <div class="flex flex-col">
-                                        <p class="text-xl">
-                                            Sicilian Pizza
-                                        </p>
-                                        <p class="text-xl">
-                                            Rp 500.000
-                                        </p>
-                                    </div>
-                                    <button class="w-10 h-10 text-red-500 bg-white rounded-full">
-                                        <img src="{{ asset('/asset/SVG/Cart_Plus-Sidebar.svg') }}" alt=""
-                                            class="w-5 mx-auto" />
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div
-                                class="flex flex-col items-center w-full rounded-lg shadow-xl bg-secondary-accent-color max-h-fit outline outline-1 outline-highlight-content">
-                                <img src="{{ asset('/asset/Booba Menu/Oreo Bobba.jpg') }}" alt="Sicilian Pizza"
-                                    class="rounded-t-lg h-[180px] w-full object-cover" />
-                                <div class="flex items-center justify-between w-full p-4 wrap">
-                                    <div class="flex flex-col">
-                                        <p class="text-xl">
-                                            Sicilian Pizza
-                                        </p>
-                                        <p class="text-xl">
-                                            Rp 500.000
-                                        </p>
-                                    </div>
-                                    <button class="w-10 h-10 text-red-500 bg-white rounded-full">
-                                        <img src="{{ asset('/asset/SVG/Cart_Plus-Sidebar.svg') }}" alt=""
-                                            class="w-5 mx-auto" />
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div
-                                class="flex flex-col items-center w-full rounded-lg shadow-xl bg-secondary-accent-color max-h-fit outline outline-1 outline-highlight-content">
-                                <img src="{{ asset('/asset/Booba Menu/Milk bobba.jpg') }}" alt="Sicilian Pizza"
-                                    class="rounded-t-lg h-[180px] w-full object-cover" />
-                                <div class="flex items-center justify-between w-full p-4 wrap">
-                                    <div class="flex flex-col">
-                                        <p class="text-xl">
-                                            Sicilian Pizza
-                                        </p>
-                                        <p class="text-xl">
-                                            Rp 500.000
-                                        </p>
-                                    </div>
-                                    <button class="w-10 h-10 text-red-500 bg-white rounded-full">
-                                        <img src="{{ asset('/asset/SVG/Cart_Plus-Sidebar.svg') }}" alt=""
-                                            class="w-5 mx-auto" />
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
+
                         <!-- End of item block -->
                     </div>
                 </div>
@@ -210,40 +150,8 @@
 <script src="{{ asset('/js/sidebar.js') }}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    document.querySelectorAll(".delete-cart-item").forEach((deleteButton) => {
-        deleteButton.addEventListener("click", (e) => {
-            e.preventDefault();
-            const form = deleteButton.closest("form"); // Ambil elemen form
-            const url = form.action; // Ambil URL dari atribut action
-            const formData = new FormData(form); // Ambil data dari form
-
-            fetch(url, {
-                    method: "POST", // Tetap gunakan POST sesuai dengan form
-                    body: formData, // Kirim data form termasuk _method dan csrf
-                })
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.success) {
-                        // Tampilkan notifikasi sukses
-                        notyf.success(data.message);
-
-                        // Hapus item dari tampilan
-                        form.closest(".swiper-slide").remove();
-                    } else {
-                        // Tampilkan notifikasi error
-                        notyf.error(data.message);
-                    }
-                })
-                .catch((error) => {
-                    console.error("Error:", error);
-                    // Tampilkan notifikasi error jika ada kesalahan
-                    notyf.error("Something went wrong. Please try again.");
-                });
-        });
-    });
-</script>
-<script>
     $(document).ready(function() {
+        // Handle the increase button click
         $('.increase-btn').on('click', function() {
             var itemId = $(this).data('id');
             var quantity = parseInt($('#quantity-' + itemId).text()) + 1;
@@ -283,5 +191,46 @@
                 }
             });
         }
+
+        // Handle item delete
+        $('.delete-cart-item').on('click', function(e) {
+            e.preventDefault();
+            var form = $(this).closest('form'); // Ambil elemen form
+            var url = form.attr('action'); // Ambil URL dari atribut action
+            var formData = new FormData(form[0]); // Ambil data dari form
+
+            $.ajax({
+                url: url,
+                method: 'POST',
+                data: formData,
+                processData: false, // Jangan proses data agar sesuai dengan FormData
+                contentType: false, // Jangan atur content type agar sesuai dengan FormData
+                success: function(data) {
+                    if (data.success) {
+                        // Tampilkan notifikasi sukses
+                        notyf.success(data.message);
+
+                        // Hapus item dari tampilan
+                        form.closest('.swiper-slide').remove();
+
+                        // Update total quantity and total price jika ada
+                        if (data.totalQuantity) {
+                            $('#total-quantity').text(data.totalQuantity);
+                        }
+                        if (data.totalPrice) {
+                            $('#total-price').text('Rp ' + data.totalPrice);
+                        }
+                    } else {
+                        // Tampilkan notifikasi error
+                        notyf.error(data.message);
+                    }
+                },
+                error: function(xhr) {
+                    console.error('Error:', xhr);
+                    // Tampilkan notifikasi error jika ada kesalahan
+                    notyf.error('Something went wrong. Please try again.');
+                }
+            });
+        });
     });
 </script>

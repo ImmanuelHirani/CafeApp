@@ -155,28 +155,6 @@
                             </svg>
                         </div>
                         <div class="flex flex-col gap-3 px-3 py-3 rounded-b-lg content-body bg-secondary-accent-color">
-                            @forelse ($temp_cart as $cart)
-                                <div class="flex items-center justify-between wrap">
-                                    <div class="span flex flex-col gap-1.5">
-                                        <p class="text-lg">{{ $cart->menu->name }}</p>
-                                        <p class="text-base text-highlight-content">
-                                            EXTRA : Sauce + Side
-                                        </p>
-                                        <div class="flex items-center gap-3 wrap">
-                                            <p>Qty :</p>
-                                            <p id="quantityOrder-{{ $cart->temp_ID }}" class="text-lg ">
-                                                {{ $cart->quantity }}</p>
-                                        </div>
-
-                                    </div>
-                                    <p id="subtotalOrder-{{ $cart->temp_ID }}" class="text-xl md:text-lg ">
-                                        Rp {{ number_format($cart->subtotal, 0, ',', '.') }}
-                                    </p>
-                                </div>
-                                <hr />
-                            @empty
-                                <p class="text-center">Keranjang Anda kosong.</p>
-                            @endforelse
                             <!-- Repeted Content -->
                             <span class="flex items-center justify-between">
                                 <p class="flex items-center gap-3 text-lg text-highlight-content">
@@ -184,17 +162,28 @@
                                     <img src="../asset/QuestionMark-Shipping.png" class="w-[10%]" alt="" />
                                 </p>
                             </span>
-                            <span class="flex items-center justify-between">
-                                <p class="text-lg">Total</p>
-                                <p class="text-xl md:text-lg" id="totalsubtotal-{{ $cart->temp_ID }}">
-                                    Rp {{ number_format($cart->totalSubtotal, 0, ',', '.') }}
-                                </p>
-                            </span>
-                            <span class="add-to-cart">
-                                <div class="flex items-center justify-between gap-1 rounded-lg add-to-cart">
-                                    <a href="/payment"
-                                        class="w-full gap-3 px-2 py-3 text-base text-center rounded-lg 2xl:px-5 bg-secondary-color">Make
-                                        Order</a>
+                            @if (isset($cart))
+                                <span class="flex items-center justify-between">
+                                    <p class="text-xl">Total</p>
+                                    <p class="text-xl" id="totalsubtotal-{{ $cart->temp_ID }}">
+                                        Rp <span
+                                            id="totalAmount">{{ number_format($totalSubtotal, 0, ',', '.') }}</span>
+                                    </p>
+                                </span>
+                            @else
+                                <span class="flex items-center justify-between">
+                                    <p class="text-xl">Total</p>
+                                    <p class="text-xl" id="totalsubtotal-empty">
+                                        Rp <span id="totalAmount">0</span>
+                                    </p>
+                                </span>
+                            @endif
+                            <span class="makeOrder">
+                                <div class="flex items-center justify-between gap-1 rounded-lg MakeOrder">
+                                    <a href="{{ route('make.order') }}"
+                                        class="w-full gap-3 px-2 py-3 text-base text-center rounded-lg 2xl:px-5 bg-secondary-color">
+                                        Make Order
+                                    </a>
                                 </div>
                             </span>
                         </div>
@@ -206,10 +195,6 @@
     </main>
     @include('layout.Footer')
 </body>
-<!-- <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-                  <script>
-                      AOS.init();
-                  </script> -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
 <script src="{{ asset('/js/swiper.js') }}"></script>
@@ -218,74 +203,21 @@
 <script src="{{ asset('/js/boxLogin.js') }}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    document.querySelectorAll(".delete-cart-item").forEach((deleteButton) => {
-        deleteButton.addEventListener("click", (e) => {
-            e.preventDefault();
-            const form = deleteButton.closest("form"); // Ambil elemen form terdekat
-            const url = form.action; // URL dari atribut action form
-            const formData = new FormData(form); // Data dari form, termasuk CSRF token
-
-            fetch(url, {
-                    method: "POST",
-                    body: formData,
-                })
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.success) {
-                        // Notifikasi sukses
-                        notyf.success(data.message);
-
-                        // Hapus elemen cart item dari DOM
-                        const cartItem = deleteButton.closest(".cart-item");
-                        if (cartItem) {
-                            cartItem.remove();
-                        }
-
-                        // Update jumlah total di UI jika diperlukan
-                        const totalQuantity = document.getElementById("total-quantity");
-                        const totalPrice = document.getElementById("total-price");
-                        if (totalQuantity) {
-                            totalQuantity.textContent = data.totalQuantity;
-                        }
-                        if (totalPrice) {
-                            totalPrice.textContent = `Rp ${data.totalPrice}`;
-                        }
-                    } else {
-                        // Notifikasi error
-                        notyf.error(data.message);
-                    }
-                })
-                .catch((error) => {
-                    console.error("Error:", error);
-                    // Notifikasi error umum
-                    notyf.error("Something went wrong. Please try again.");
-                });
-        });
-    });
-</script>
-<script>
     $(document).ready(function() {
-        // Handle the increase button click
-        $('.increase-btn').on('click', function() {
-            var itemId = $(this).data('id');
-            var currentQuantity = parseInt($('#quantity-' + itemId).text());
-            var newQuantity = currentQuantity + 1;
+        // Handle increase and decrease button clicks
+        $('.increase-btn, .decrease-btn').on('click', function() {
+            const isIncrease = $(this).hasClass('increase-btn');
+            const itemId = $(this).data('id');
+            const $quantityEl = $('#quantity-' + itemId);
+            const currentQuantity = parseInt($quantityEl.text());
+            const newQuantity = isIncrease ? currentQuantity + 1 : Math.max(0, currentQuantity - 1);
+
             updateCartQuantity(itemId, newQuantity);
         });
-
-        // Handle the decrease button click
-        $('.decrease-btn').on('click', function() {
-            var itemId = $(this).data('id');
-            var currentQuantity = parseInt($('#quantity-' + itemId).text());
-            var newQuantity = currentQuantity - 1;
-            updateCartQuantity(itemId, newQuantity);
-        });
-
         // Function to update cart quantity and subtotal
         function updateCartQuantity(itemId, quantity) {
-            // Send the updated quantity to the backend via AJAX
             $.ajax({
-                url: '/cart/update/' + itemId,
+                url: `/cart/update/${itemId}`,
                 method: 'PUT',
                 data: {
                     quantity: quantity,
@@ -293,82 +225,68 @@
                 },
                 success: function(response) {
                     if (response.success) {
-                        // Update the quantity and subtotal in the DOM based on the server response
                         $('#quantity-' + itemId).text(response.quantity);
                         $('#subtotal-' + itemId).text('Rp ' + response.subtotal);
+                        // Safely update totalsubtotal element if cart exists
+                        @isset($cart)
+                            $('#totalsubtotal-{{ $cart->temp_ID }} #totalAmount').text(response
+                                .totalSubtotal || '0');
+                        @else
+                            $('#totalsubtotal-empty #totalAmount').text(response.totalSubtotal ||
+                                '0');
+                        @endisset
                         notyf.success('Cart updated successfully!');
                     } else {
                         notyf.error(response.error);
                     }
                 },
                 error: function(xhr) {
-                    var errorResponse = xhr.responseJSON;
-                    notyf.error(errorResponse.error || 'Something went wrong. Please try again.');
+                    const errorMessage = xhr.responseJSON?.error ||
+                        'Something went wrong. Please try again.';
+                    notyf.error(errorMessage);
                 }
             });
         }
-    });
-</script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Fungsi untuk menangani peningkatan kuantitas
-        document.querySelectorAll('.increase-btn').forEach(function(button) {
-            button.addEventListener('click', function() {
-                var tempId = button.getAttribute('data-id');
-                var quantityElement = document.querySelector('#quantityOrder-' + tempId);
-                var currentQuantity = parseInt(quantityElement.textContent);
-                var newQuantity = currentQuantity + 1;
-                updateCartQuantity(tempId, newQuantity);
-            });
-        });
 
-        // Fungsi untuk menangani pengurangan kuantitas
-        document.querySelectorAll('.decrease-btn').forEach(function(button) {
-            button.addEventListener('click', function() {
-                var tempId = button.getAttribute('data-id');
-                var quantityElement = document.querySelector('#quantityOrder-' + tempId);
-                var currentQuantity = parseInt(quantityElement.textContent);
-                var newQuantity = currentQuantity - 1;
-                if (newQuantity >= 0) {
-                    updateCartQuantity(tempId, newQuantity);
-                }
-            });
-        });
+        // Handle item delete
+        $('.delete-cart-item').on('click', function(e) {
+            e.preventDefault();
+            const $form = $(this).closest('form');
 
-        // Fungsi untuk memperbarui kuantitas dan subtotal keranjang
-        function updateCartQuantity(tempId, quantity) {
-            var csrfToken = document.querySelector('input[name="_token"]').value; // CSRF token
-            fetch(`/cart/update/${tempId}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': csrfToken
-                    },
-                    body: JSON.stringify({
-                        quantity: quantity
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
+            $.ajax({
+                url: $form.attr('action'),
+                method: 'POST',
+                data: new FormData($form[0]),
+                processData: false,
+                contentType: false,
+                success: function(data) {
                     if (data.success) {
-                        // Update kuantitas dan subtotal di DOM berdasarkan respons server
-                        document.querySelector('#quantityOrder-' + tempId).textContent = data.quantity;
-                        document.querySelector('#subtotalOrder-' + tempId).textContent = 'Rp ' +
-                            formatCurrency(data.subtotal);
-                    }
-                })
-                .catch(error => {
-                    // Tidak ada pemberitahuan kesalahan
-                });
-        }
+                        notyf.success(data.message);
+                        const $cartItem = $(e.target).closest('.cart-item');
+                        $cartItem.remove();
 
-        // Fungsi untuk format jumlah uang
-        function formatCurrency(amount) {
-            return amount.toLocaleString('id-ID', {
-                style: 'currency',
-                currency: 'IDR'
-            }).replace('Rp', '').trim();
-        }
+                        $('#total-quantity').text(data.totalQuantity || 0);
+                        $('#total-price').text(data.totalPrice || '0');
+
+                        // Update total subtotal based on the data returned
+                        if (data.totalSubtotal !== undefined) {
+                            @isset($cart)
+                                $('#totalsubtotal-{{ $cart->temp_ID }} #totalAmount').text(
+                                    data.totalSubtotal);
+                            @else
+                                $('#totalsubtotal-empty #totalAmount').text(data
+                                    .totalSubtotal);
+                            @endisset
+                        }
+                    } else {
+                        notyf.error(data.message);
+                    }
+                },
+                error: function() {
+                    notyf.error('Something went wrong. Please try again.');
+                }
+            });
+        });
     });
 </script>
 

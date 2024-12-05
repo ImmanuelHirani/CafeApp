@@ -14,4 +14,13 @@ class orderTransaction extends Model
         'total_amount',
         'status_order',
     ];
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_ID', 'customer_ID');
+    }
+    public function details()
+    {
+        return $this->hasMany(transactionDetails::class, 'order_ID', 'order_ID');
+    }
 }

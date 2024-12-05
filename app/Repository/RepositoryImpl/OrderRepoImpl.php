@@ -18,8 +18,6 @@ class OrderRepoImpl implements orderRepo
         $tempTransaction->save();
         return $tempTransaction;
     }
-
-
     public function delete($id): bool
     {
         $tempTransaction = tempTransaction::find($id);
@@ -29,7 +27,6 @@ class OrderRepoImpl implements orderRepo
         }
         return false;
     }
-
     public function update(tempTransaction $tempTransaction, array $data): tempTransaction
     {
         // Update the tempTransaction with the provided data

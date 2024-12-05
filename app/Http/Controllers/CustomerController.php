@@ -6,6 +6,7 @@ use App\Services\CustomerService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Customer;
+use App\Models\Menu;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
@@ -105,6 +106,9 @@ class CustomerController extends Controller
     }
     public function index()
     {
-        return view('Frontend.index',);
+        $menus = Menu::all();
+        return view('Frontend.index', [
+            'menus' => $menus
+        ]);
     }
 }

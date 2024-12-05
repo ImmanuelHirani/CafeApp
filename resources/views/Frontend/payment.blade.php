@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     <!-- <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" /> -->
     @vite('resources/css/app.css')
 </head>
@@ -29,40 +30,43 @@
                                 </p>
                             </div>
                             <!-- Repeted Content -->
-                            @forelse ($temp_cart as $cart)
+                            @forelse ($orderDetail as $order)
                                 <div
                                     class="flex flex-col items-center justify-between md:p-0 p-0.5 md:flex-row md:gap-y-0 gap-y-3">
-                                    <img src="{{ asset('storage/' . $cart->menu->image) }}" alt="Sicilian Pizza"
+                                    <img src="{{ asset('storage/' . $order->menu->image) }}"
+                                        alt="{{ $order->menu->name }}"
                                         class="object-cover w-full rounded h-52 3xl:w-96 3xl:h-60 md:w-64 md:h-44" />
                                     <div class="flex flex-col w-full gap-2 md:w-fit text-wrap">
                                         <p class="text-xl font-semibold md:text-lg line-clamp-1">
-                                            {{ $cart->menu->name }}
+                                            {{ $order->menu->name }}
                                         </p>
                                         <p class="text-xl md:text-lg text-highlight-content">
                                             Extra
                                         </p>
                                         <div class="flex wrap">
                                             <p class="text-xl md:text-lg">Rp
-                                                {{ number_format($cart->subtotal, 0, ',', '.') }}</p>
+                                                {{ number_format($order->price * $order->quantity, 0, ',', '.') }}
+                                            </p>
                                         </div>
                                     </div>
                                     <div
                                         class="w-full px-4 py-2 rounded-full md:w-fit quantity-area bg-secondary-color">
                                         <p class="text-xl text-center md:text-base ms-auto">
-                                            Qty : {{ $cart->quantity }}
+                                            Qty : {{ $order->quantity }}
                                         </p>
                                     </div>
                                 </div>
                             @empty
+                                <p>Tidak ada data</p>
                             @endforelse
-
-
                             <!-- Repeted Content end -->
                             <hr class="border-[1px] border-gray-500" />
                             <div class="flex flex-col gap-3 wrap">
                                 <span class="flex items-center justify-between">
                                     <p class="text-lg">Subtotal</p>
-                                    <p class="text-lg">Rp 1.500.000</p>
+                                    <p class="text-lg">Rp
+                                        {{ number_format($orderTransaction->total_amount, 0, ',', '.') }}</p>
+                                    <!-- Subtotal diambil dari totalPrice -->
                                 </span>
                                 <span class="flex items-center justify-between">
                                     <p class="flex items-center gap-3 text-lg text-highlight-content">
@@ -73,7 +77,9 @@
                                 </span>
                                 <span class="flex items-center justify-between">
                                     <p class="text-lg">Total Payment</p>
-                                    <p class="text-lg">Rp {{ number_format($totalSubtotal, 0, ',', '.') }}</p>
+                                    <p class="text-lg">Rp
+                                        {{ number_format($orderTransaction->total_amount, 0, ',', '.') }}</p>
+                                    <!-- Total Payment diambil dari orderTransaction->total_amount -->
                                 </span>
                             </div>
                             <button
@@ -110,8 +116,6 @@
                 </div>
             </div>
         </section>
-        <!-- SideBar  -->
-        @include('layout.Sidebar')
         <!-- Login & register Box -->
         @include('layout.AuthCustomer')
     </main>

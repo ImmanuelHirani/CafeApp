@@ -18,8 +18,6 @@ class MenuController extends Controller
     {
         $this->menuRepo = $menuRepo;
     }
-
-    // Method untuk menambah menu baru
     public function NewMenu(Request $request)
     {
         $validated = $request->validate([
@@ -107,6 +105,7 @@ class MenuController extends Controller
             } else {
                 // Jika bukan admin, tampilkan tampilan frontend
                 return view('Frontend.menu-detail', [
+                    'menus' => $menus,
                     'menusDetails' => $menuDetails,
                 ]);
             }
@@ -134,9 +133,6 @@ class MenuController extends Controller
         // Jika gagal menghapus menu
         return redirect()->back()->with('error', 'Failed to delete menu.');
     }
-
-
-    // View
 
     public function Product()
     {
