@@ -23,12 +23,6 @@
                     <div class="col-span-6 transition-all duration-300 ease-in-out box-cart font-aesthetnova">
                         <div
                             class="flex flex-col p-2.5 rounded-lg md:p-8 gap-y-8 content-body bg-secondary-accent-color">
-                            <div class="box-status-order bg-[#D4EDDA] py-4 rounded-lg px-8">
-                                <p class="text-[#185C26] md:text-lg text-sm font-semibold text-center">
-                                    Order successfully created , please continue payment for
-                                    your order
-                                </p>
-                            </div>
                             <!-- Repeted Content -->
                             @forelse ($orderDetail as $order)
                                 <div
@@ -107,7 +101,7 @@
                                 <p class="text-sm text-highlight-content">
                                     Order That Been Pay Cannot Be Cancle *
                                 </p>
-                                <a href="Tracking-order.html"
+                                <a href="/tracking/order"
                                     class="self-end w-full gap-3 px-2 py-2.5 text-base text-center transition-all duration-300 ease-in-out rounded-lg md:w-fit 2xl:px-12 bg-secondary-color">Pay
                                     Now</a>
                             </div>

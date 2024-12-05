@@ -9,80 +9,40 @@ use App\Models\transactionDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Repository\orderRepo;
+use App\Services\OrderService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    private orderRepo $orderRepo;
+    private $orderRepo;
+    protected $orderService;
 
-    public function __construct(orderRepo $orderRepo)
+    public function __construct(orderRepo $orderRepo, OrderService $orderService)
     {
         $this->orderRepo = $orderRepo;
+        $this->orderService = $orderService;
     }
     public function AddToCart(Request $request)
     {
-        try {
-            $customer = Auth::user();
-            if (!$customer) {
-                return redirect()->back()->with('error', 'You Must Login First!.');
-            }
-
-            $customerID = $customer->customer_ID;
-
-            $validated = $request->validate([
-                'menu_ID' => 'required|integer',
-                'quantity' => 'required|integer|min:1|max:2',
-            ]);
-
-            $existingItem = tempTransaction::where('menu_ID', $validated['menu_ID'])
-                ->where('customer_ID', $customerID)
-                ->first();
-
-            if ($existingItem) {
-                $menu = $existingItem->menu;
-                if (!$menu) {
-                    return redirect()->back()->with('error', 'Menu Not Found.');
-                }
-
-                // Menambahkan pengecekan agar tidak melebihi jumlah maksimal (2)
-                if ($existingItem->quantity >= 2) {
-                    return redirect()->back()->with('error', 'Max Qty 2');
-                }
-
-                // Jika kuantitas lebih dari batas, sesuaikan
-                $newQuantity = $existingItem->quantity + $validated['quantity'];
-                if ($newQuantity > 2) {
-                    $newQuantity = 2;
-                }
-
-                $existingItem->quantity = $newQuantity;
-                $existingItem->subtotal = $menu->price * $newQuantity;
-                $existingItem->save();
-
-                return redirect()->back()->with('success', 'Cart Updated');
-            }
-
-            // Jika item belum ada di keranjang
-            $menuDetails = Menu::findOrFail($validated['menu_ID']);
-            $subtotal = $menuDetails->price * $validated['quantity'];
-
-            $data = [
-                'menu_ID' => $validated['menu_ID'],
-                'customer_ID' => $customerID,
-                'quantity' => $validated['quantity'],
-                'subtotal' => $subtotal,
-            ];
-
-            // Tambahkan item baru ke keranjang
-            $this->orderRepo->add($data);
-
-            return redirect()->back()->with('success', 'Menu Added');
-        } catch (\Exception $e) {
-            Log::error('Add to Cart Error: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'Something Wrongs');
+        $customer = Auth::user();
+        if (!$customer) {
+            return redirect()->back()->with('error', 'You Must Login First!');
         }
+
+        $validated = $request->validate([
+            'menu_ID' => 'required|integer',
+            'quantity' => 'required|integer|min:1|max:2',
+        ]);
+
+        $response = $this->orderService->addToCart($customer->customer_ID, $validated['menu_ID'], $validated['quantity']);
+
+        if (isset($response['error'])) {
+            return redirect()->back()->with('error', $response['error']);
+        }
+
+        return redirect()->back()->with('success', $response['success']);
     }
     public function getCartItems()
     {
@@ -115,7 +75,7 @@ class OrderController extends Controller
 
         // Cek jika tidak ada item di temp_cart
         if ($temp_cart->isEmpty()) {
-            return redirect()->back()->with('error', 'Your cart is empty Please add some menu ');
+            return redirect('/menu')->with('error', 'Your cart is empty. Please add some menu.');
         }
 
         $totalSubtotal = $temp_cart->sum('subtotal');
@@ -151,62 +111,12 @@ class OrderController extends Controller
             'totalSubtotal' => number_format($totalSubtotal, 0, ',', '.') // Format the total subtotal
         ]);
     }
-    public function updateCart($id, Request $request)
-    {
-        try {
-            // Temukan transaksi berdasarkan ID
-            $temp_cart = tempTransaction::find($id);
-
-            if (!$temp_cart) {
-                return response()->json(['error' => 'Menu not found.'], 404);
-            }
-
-            // Ambil customer dari temp_cart
-            $customer = $temp_cart->customer_ID;
-
-            // Ambil kuantitas dari request
-            $quantity = $request->input('quantity');
-
-            // Validasi kuantitas (batasi antara 1 dan 2)
-            if ($quantity < 1) {
-                return response()->json(['error' => 'Min Qty 1.'], 400);
-            }
-
-            if ($quantity > 2) {
-                return response()->json(['error' => 'Maximal Qty 2.'], 400);
-            }
-
-            // Update kuantitas dan hitung subtotal kembali
-            $temp_cart->quantity = $quantity;
-            $temp_cart->subtotal = $temp_cart->menu->price * $quantity;
-            $temp_cart->save();
-
-            // Hitung total subtotal hanya untuk transaksi dengan customer yang sama
-            $totalSubtotal = tempTransaction::where('customer_ID', $customer)
-                ->sum('subtotal');  // Jumlahkan subtotal untuk customer yang sama
-
-            // Log total subtotal untuk verifikasi
-            Log::info('Total Subtotal untuk customer ' . $customer . ': ' . $totalSubtotal);
-
-            return response()->json([
-                'success' => 'Updated Successfully',
-                'quantity' => $temp_cart->quantity,
-                'subtotal' => number_format($temp_cart->subtotal, 0, ',', '.'),
-                'totalSubtotal' => number_format($totalSubtotal, 0, ',', '.')  // Kirimkan totalSubtotal
-            ]);
-        } catch (\Exception $e) {
-            Log::error('Menu update error: ' . $e->getMessage());
-            return response()->json(['error' => 'Failed to update: ' . $e->getMessage()], 500);
-        }
-    }
-
     public function payment()
     {
         $customer = Auth::user();
         if (!$customer) {
-            return redirect()->route('login')->with('error', 'Login First!');
+            return redirect()->back()->with('error', 'Login First!');
         }
-
         $customerID = $customer->customer_ID;
 
         // Ambil order transaction yang terakhir untuk customer tersebut
@@ -231,71 +141,36 @@ class OrderController extends Controller
             'orderDetail' => $orderDetails,
         ]);
     }
-
-
-
     public function makeOrder()
     {
-        DB::beginTransaction();
+        $result = $this->orderService->makeOrder();
 
-        try {
-            $customerId = Auth::user()->customer_ID;
-
-            // Ambil order transaction yang sedang pending
-            $orderTransaction = orderTransaction::where('customer_ID', $customerId)
-                ->where('status_order', 'Pending')
-                ->first();
-
-            // Jika tidak ada transaksi dengan status 'Pending', buat order baru
-            if (!$orderTransaction) {
-                $orderTransaction = orderTransaction::create([
-                    'customer_ID' => $customerId,
-                    'total_amount' => 0, // Atur total amount awal menjadi 0
-                    'status_order' => 'Pending',
-                ]);
-            }
-
-            // Ambil semua item dari cart
-            $tempTransactions = tempTransaction::where('customer_ID', $customerId)->get();
-
-            if ($tempTransactions->isEmpty()) {
-                return redirect()->back()->with('error', 'Cart Anda kosong!');
-            }
-
-            // Looping untuk setiap item di cart
-            foreach ($tempTransactions as $tempTransaction) {
-                // Periksa apakah menu sudah ada di order transaction yang sedang pending
-                $existingDetail = transactionDetails::where('order_ID', $orderTransaction->order_ID)
-                    ->where('menu_ID', $tempTransaction->menu_ID)
-                    ->first();
-
-                // Jika menu sudah ada di order sebelumnya (payment), beri pesan bahwa menu tersebut sudah ada
-                if ($existingDetail) {
-                    return redirect('/payment')->with('error', 'Menu already added, please complete payment first.');
-                }
-
-                // Jika menu belum ada, tambahkan sebagai detail transaksi baru
-                transactionDetails::create([
-                    'menu_ID' => $tempTransaction->menu_ID,
-                    'order_ID' => $orderTransaction->order_ID,
-                    'price' => $tempTransaction->subtotal / $tempTransaction->quantity,
-                    'quantity' => $tempTransaction->quantity,
-                ]);
-
-                // Update total_amount transaksi
-                $orderTransaction->total_amount += $tempTransaction->subtotal;  // Update total amount
-                $orderTransaction->save();
-            }
-
-            // Hapus item dari cart setelah masuk ke transaction
-            tempTransaction::where('customer_ID', $customerId)->delete();
-
-            DB::commit();
-            return redirect('/payment')->with('success', 'Order berhasil dibuat!');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            Log::error('Error saat membuat order: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'Gagal membuat order! Silakan coba lagi.');
+        if ($result['status']) {
+            return redirect('/payment')->with('success', $result['message']);
+        } else {
+            return redirect()->back()->with('error', $result['message']);
         }
+    }
+    public function updateCart($id, Request $request)
+    {
+        $quantity = $request->input('quantity');
+
+        $response = $this->orderService->updateCart($id, $quantity);
+
+        if (isset($response['error'])) {
+            return response()->json(['error' => $response['error']], $response['status']);
+        }
+
+        return response()->json($response);
+    }
+
+    public function trackOrder()
+    {
+
+        $menus = Menu::all();
+
+        return view('Frontend.Tracking-order', [
+            'menus' => $menus,
+        ]);
     }
 }

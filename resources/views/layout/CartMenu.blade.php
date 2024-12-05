@@ -17,14 +17,12 @@
                 disabled>
             <p>SIZE : LG</p>
             <p>EXTRA : Sauce + Side</p>
-
             <!-- Input Hidden Menu ID -->
             <input type="hidden" name="menu_ID" value="{{ $menusDetails->menu_ID ?? '' }}">
             <!-- Input Hidden Customer ID -->
             <input type="hidden" name="customer_ID" value="{{ Auth::user()->customer_ID ?? '' }}">
             <!-- Input Hidden Quantity -->
             <input type="hidden" name="quantity" id="hidden-quantity" value="1">
-
             <!-- Informasi Harga -->
             <p class="text-highlight-content">Max. Pembelian 2 pcs!</p>
             <span class="flex items-center justify-between">

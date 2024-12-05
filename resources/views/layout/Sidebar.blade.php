@@ -14,26 +14,29 @@
                             <div class="swiper-slide">
                                 <div
                                     class="flex flex-col items-center w-full rounded-lg shadow-xl bg-secondary-accent-color max-h-fit outline outline-1 outline-highlight-content">
-                                    <img src="{{ asset('storage/' . $menu->image) }}" alt="Sicilian Pizza"
+                                    <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}"
                                         class="rounded-t-lg h-[180px] w-full object-cover" />
                                     <div class="flex items-center justify-between w-full p-4 wrap">
                                         <div class="flex flex-col">
                                             <p class="text-xl">
                                                 {{ $menu->name }}
                                             </p>
-                                            <p class="text-lg text-gray-3 00">
+                                            <p class="text-lg text-gray-300">
                                                 Rp {{ number_format($menu->price, 0, ',', '.') }}
                                             </p>
                                         </div>
-                                        <button class="w-10 h-10 text-red-500 bg-white rounded-full">
-                                            <img src="{{ asset('/asset/SVG/Cart_Plus-Sidebar.svg') }}" alt=""
-                                                class="w-5 mx-auto" />
-                                        </button>
+                                        <form action="{{ Route('frontend.menu.details', $menu->menu_ID ?? '') }}"
+                                            method="POST">
+                                            @method('get')
+                                            @csrf
+                                            <button class="w-10 h-10 text-red-500 bg-white rounded-full">
+                                                <i class="text-2xl ti ti-shopping-cart-search"></i>
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         @endforeach
-
                         <!-- End of item block -->
                     </div>
                 </div>

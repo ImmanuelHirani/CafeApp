@@ -25,7 +25,6 @@ class AppServiceProvider extends ServiceProvider
     {
         // Binding repository
         $this->app->bind(CustomerRepo::class, CustomerRepoImpl::class);
-
         $this->app->bind(MenuRepo::class, MenuRepoImpl::class);
         $this->app->bind(orderRepo::class, OrderRepoImpl::class);
 
@@ -35,9 +34,10 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(OrderService::class, function ($app) {
-            return new OrderService($app->make(OrderService::class));
+            return new OrderService($app->make(orderRepo::class));
         });
     }
+
 
     /**
      * Bootstrap any application services.

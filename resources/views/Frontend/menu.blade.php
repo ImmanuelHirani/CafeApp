@@ -4,8 +4,6 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
@@ -92,15 +90,10 @@
                                                                 <a href="{{ Route('frontend.menu.details', $menu->menu_ID ?? '') }}"
                                                                     class="px-6 py-1 text-lg rounded-lg md:px-8 md:py-1.5 bg-secondary-color">Details</a>
                                                                 <a
-                                                                    class="px-2 py-[8px] text-base rounded-lg cursor-pointer md:px-4 md:py-[9px] bg-secondary-color trigger-menu-open">
-                                                                    <img src="{{ asset('/asset/SVG/Cart-menu-icon.SVG') }}"
-                                                                        alt="">
+                                                                    class="px-2 h-[2.5rem] flex items-center text-base rounded-lg cursor-pointer md:px-3  outline outline-2 outline-secondary-color  transition-all ease-in-out duration-500 hover:bg-secondary-color">
+                                                                    <i class="text-2xl ti ti-heart-filled"></i>
                                                                 </a>
                                                             </div>
-                                                        </div>
-                                                        <div class="absolute fav top-4 right-6">
-                                                            <img src="{{ asset('/asset/SVG/Fav-icon.SVG') }}"
-                                                                alt="">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -145,16 +138,12 @@
                                                                 <a href="{{ Route('frontend.menu.details', $menu->menu_ID ?? '') }}"
                                                                     class="px-6 py-1 text-lg rounded-lg md:px-8 md:py-1.5 bg-secondary-color">Details</a>
                                                                 <a
-                                                                    class="px-2 py-[8px] text-base rounded-lg cursor-pointer md:px-4 md:py-[9px] bg-secondary-color trigger-menu-open">
-                                                                    <img src="{{ asset('/asset/SVG/Cart-menu-icon.SVG') }}"
-                                                                        alt="">
+                                                                    class="px-2 h-[2.5rem] flex items-center text-base rounded-lg cursor-pointer md:px-3  outline outline-2 outline-secondary-color  transition-all ease-in-out duration-500 hover:bg-secondary-color">
+                                                                    <i class="text-2xl ti ti-heart-filled"></i>
                                                                 </a>
                                                             </div>
                                                         </div>
-                                                        <div class="absolute fav top-4 right-6">
-                                                            <img src="{{ asset('/asset/SVG/Fav-icon.SVG') }}"
-                                                                alt="">
-                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -198,16 +187,12 @@
                                                                 <a href="{{ Route('frontend.menu.details', $menu->menu_ID ?? '') }}"
                                                                     class="px-6 py-1 text-lg rounded-lg md:px-8 md:py-1.5 bg-secondary-color">Details</a>
                                                                 <a
-                                                                    class="px-2 py-[8px] text-base rounded-lg cursor-pointer md:px-4 md:py-[9px] bg-secondary-color trigger-menu-open">
-                                                                    <img src="{{ asset('/asset/SVG/Cart-menu-icon.SVG') }}"
-                                                                        alt="">
+                                                                    class="px-2 h-[2.5rem] flex items-center text-base rounded-lg cursor-pointer md:px-3  outline outline-2 outline-secondary-color  transition-all ease-in-out duration-500 hover:bg-secondary-color">
+                                                                    <i class="text-2xl ti ti-heart-filled"></i>
                                                                 </a>
                                                             </div>
                                                         </div>
-                                                        <div class="absolute fav top-4 right-6">
-                                                            <img src="{{ asset('/asset/SVG/Fav-icon.SVG') }}"
-                                                                alt="">
-                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -221,87 +206,8 @@
                 </div>
                 <!-- Menu End -->
             </div>
-
         </section>
-        <div id="cartquickMenu"
-            class="fixed inset-0 z-50 flex items-center justify-center invisible bg-black opacity-0 bg-opacity-70 add-to-cart-quick-list font-aesthetnova">
-            <div
-                class="relative flex flex-col md:flex-row w-[90%] md:w-[60%] h-fit md:h-[553px] p-4 md:p-8 gap-3 md:gap-9 rounded-lg bg-secondary-accent-color outline outline-1 outline-highlight-content box-cart">
-                <img src="../asset/Booba Menu/Choco bobba.jpg"
-                    class="w-full h-[180px] md:h-full object-cover rounded-lg" alt="Melted Choco Bubble Image" />
-                <div class="flex flex-col w-full h-full gap-3 place-content-center menu-selection">
-                    <p class="text-lg md:text-2xl">Melted Choco Bubble</p>
-                    <p class="text-lg md:text-2xl">Rp 50.000</p>
-                    <!-- Size Selection -->
-                    <div class="flex flex-col gap-3">
-                        <p class="text-lg md:text-2xl">Size :</p>
-                        <div class="flex flex-wrap items-center gap-3 menu-selection-wrapper">
-                            <button class="w-[21%] md:w-[22%] py-1.5 bg-secondary-color rounded-full">
-                                XL
-                            </button>
-                            <button
-                                class="w-[21%] md:w-[22%] py-1.5 outline outline-2 outline-white hover:bg-red-500 transition-all ease-in-out duration-500 rounded-full">
-                                LG
-                            </button>
-                            <button
-                                class="w-[21%] md:w-[22%] py-1.5 outline outline-2 outline-white hover:bg-red-500 transition-all ease-in-out duration-500 rounded-full">
-                                MD
-                            </button>
-                            <button
-                                class="w-[21%] md:w-[22%] py-1.5 outline outline-2 outline-white hover:bg-red-500 transition-all ease-in-out duration-500 rounded-full">
-                                SM
-                            </button>
-                        </div>
-                    </div>
-                    <!-- Extra Selection -->
-                    <div class="flex flex-col gap-3">
-                        <p class="text-lg md:text-2xl">Extra :</p>
-                        <div class="flex flex-wrap items-center gap-3 menu-selection-wrapper">
-                            <p class="text-highlight-content">
-                                No extra item for this product
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Quantity Selection -->
-                    <div class="flex flex-col gap-3">
-                        <p class="text-lg md:text-2xl">Qty :</p>
-                        <div class="flex items-center justify-between gap-1 rounded-lg add-to-cart">
-                            <button class="w-fit px-3 2xl:px-4 py-2.5 bg-secondary-color rounded-lg">
-                                <svg width="20px" height="24px" fill="white" viewBox="0 0 512 512"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M417.4,224H94.6C77.7,224,64,238.3,64,256c0,17.7,13.7,32,30.6,32h322.8c16.9,0,30.6-14.3,30.6-32  C448,238.3,434.3,224,417.4,224z" />
-                                </svg>
-                            </button>
-                            <button class="w-full px-2 py-3 text-sm rounded-lg 2xl:px-5 bg-secondary-color">
-                                ADD TO CART (3)
-                            </button>
-                            <button class="w-fit px-3 2xl:px-4 py-2.5 bg-secondary-color rounded-lg">
-                                <svg width="20px" height="24px" fill="white" viewBox="0 0 512 512"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M417.4,224H288V94.6c0-16.9-14.3-30.6-32-30.6c-17.7,0-32,13.7-32,30.6V224H94.6C77.7,224,64,238.3,64,256  c0,17.7,13.7,32,30.6,32H224v129.4c0,16.9,14.3,30.6,32,30.6c17.7,0,32-13.7,32-30.6V288h129.4c16.9,0,30.6-14.3,30.6-32  C448,238.3,434.3,224,417.4,224z" />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                    <!-- Subtotal -->
-                    <hr />
-                    <div class="flex items-center justify-between">
-                        <p class="text-xl">SUBTOTAL</p>
-                        <p class="text-xl">Rp 500.000</p>
-                    </div>
-                </div>
-                <!-- Close Button -->
-                <svg id="closequickCart" xmlns="http://www.w3.org/2000/svg"
-                    class="absolute cursor-pointer top-6 right-6" width="20" height="20" viewBox="0 0 12 12"
-                    fill="none">
-                    <path class="fill-highlight-content" fill-rule="evenodd" clip-rule="evenodd"
-                        d="M0.29289 0.29289C0.68342 -0.09763 1.31658 -0.09763 1.70711 0.29289L6 4.58579L10.2929 0.29289C10.6834 -0.09763 11.3166 -0.09763 11.7071 0.29289C12.0976 0.68342 12.0976 1.31658 11.7071 1.70711L7.4142 6L11.7071 10.2929C12.0976 10.6834 12.0976 11.3166 11.7071 11.7071C11.3166 12.0976 10.6834 12.0976 10.2929 11.7071L6 7.4142L1.70711 11.7071C1.31658 12.0976 0.68342 12.0976 0.29289 11.7071C-0.09763 11.3166 -0.09763 10.6834 0.29289 10.2929L4.58579 6L0.29289 1.70711C-0.09763 1.31658 -0.09763 0.68342 0.29289 0.29289Z"
-                        fill="none" />
-                </svg>
-            </div>
-        </div>
+
         <!-- SideBar  -->
         @include('layout.Sidebar')
         <!-- Login & register Box -->
@@ -314,29 +220,12 @@
       AOS.init();
   </script> -->
 
-
 <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
-
 <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 <script src="{{ asset('/js/swiper.js') }}"></script>
 <script src="{{ asset('/js/GSAP.js') }}"></script>
 <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
 <script src="{{ asset('/js/sidebar.js') }}"></script>
-<script>
-    const triggermenuopen = document.querySelectorAll(".trigger-menu-open"),
-        cartquickMenu = document.getElementById("cartquickMenu"),
-        closequickCart = document.getElementById("closequickCart");
-
-    triggermenuopen.forEach((triggerMenu) => {
-        triggerMenu.addEventListener("click", () => {
-            cartquickMenu.classList.add("quick-menu-active");
-        });
-    });
-
-    closequickCart.addEventListener("click", () => {
-        cartquickMenu.classList.remove("quick-menu-active");
-    });
-</script>
 <script src="{{ asset('/js/boxLogin.js') }}"></script>
 
 </html>
