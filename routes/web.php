@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\contactUsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CustomerOrderController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
 
@@ -17,6 +19,9 @@ Route::post('/customer/logout', [CustomerController::class, 'logout'])->name('lo
 Route::get('/menu', [MenuController::class, 'Product'])->name('frontend.menu');
 Route::get('/menu/detail/{id}', [MenuController::class, 'getMenuDetails'])->name('frontend.menu.details');
 
+// Custom Order
+Route::get('/menu/custom', [CustomerOrderController::class, 'customPizza'])->name('frontend.menu.custom');
+
 // Order
 Route::get('/cart', [OrderController::class, 'cartMenu'])->name('cart.view');
 Route::put('/cart/update/{id}', [OrderController::class, 'updateCart'])->name('cart.update');
@@ -24,9 +29,10 @@ Route::post('/cart/add', [OrderController::class, 'AddToCart'])->name('cart.add'
 Route::get('/payment', [OrderController::class, 'payment'])->name('payment.view');
 Route::delete('/cart/delete/{id}', [OrderController::class, 'deleteCart'])->name('delete.cart');
 Route::get('/tracking/order', [OrderController::class, 'trackOrder'])->name('tracking.view');
-
-
 Route::get('/make-order', [OrderController::class, 'makeOrder'])->name('make.order');
+
+// Contact US
+Route::get('/contact', [contactUsController::class, 'contactUS'])->name('contact.view');
 
 
 Route::get('/Dashboard', function () {

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->unsignedBigInteger('menu_ID')->nullable();
             $table->unsignedBigInteger('custom_ID')->nullable();
             $table->unsignedBigInteger('order_ID');
+            $table->string('size', 255)->nullable();
             $table->decimal('price', 10, 2);
             $table->integer('quantity');
             $table->timestamps();

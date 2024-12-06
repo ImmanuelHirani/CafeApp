@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
@@ -181,28 +180,158 @@
                 <div class="w-full overflow-x-hidden swiper">
                     <div class="customTopping">
                         <div class="swiper-wrapper">
-                            <?php
-                            for ($i = 0; $i < 8; $i++): ?>
                             <div class="swiper-slide">
                                 <div
                                     class="relative overflow-hidden rounded-2xl scale-[0.9] opacity-50 topping-wrapper transition-all ease-in-out duration-500">
                                     <div class="content-topping">
-                                        <img src="{{ asset('/asset/Topping/Cheess.png') }}"
-                                            class="object-cover w-full h-full transition-all duration-500 ease-in-out rounded-2xl"
-                                            alt="Topping Image" />
+                                        <img src="{{ asset('asset/Topping/Chocco.png') }}"
+                                            class="object-cover w-full h-full transition-all duration-500 ease-in-out rounded-2xl image-topping"
+                                            alt="" />
                                     </div>
                                     <div
                                         class="absolute w-12 h-12 p-3 transition-all duration-500 ease-in-out -translate-y-full bg-opacity-50 rounded-full opacity-0 md:w-16 md:h-16 top-2 topping-logo right-2 overlay-icon backdrop-blur-md bg-primary-color outline outline-2 outline-white">
-                                        <img src="{{ asset('/asset/Topping/chees - logo.png') }}" class="w-[100%]"
-                                            alt="Topping Logo" />
+                                        <img src="{{ asset('asset/Topping/choco - logo.png') }}" class="w-[100%]"
+                                            alt="" />
                                     </div>
                                     <figcaption
                                         class="absolute bottom-0 translate-x-1/2 translate-y-full md:p-4 p-2.5 opacity-0 transition-all ease-in-out duration-500 rounded-b-2xl right-1/2 w-full text-center backdrop-blur-md overlay-content-title">
-                                        <h6>Chees</h6>
+                                        <h6>Slime Choco</h6>
                                     </figcaption>
                                 </div>
                             </div>
-                            <?php endfor; ?>
+                            <div class="swiper-slide">
+                                <div
+                                    class="relative overflow-hidden rounded-2xl scale-[0.9] opacity-50 topping-wrapper transition-all ease-in-out duration-500">
+                                    <div class="content-topping">
+                                        <img src="{{ asset('asset/Topping/jam.png') }}"
+                                            class="object-cover w-full h-full transition-all duration-500 ease-in-out rounded-2xl image-topping"
+                                            alt="" />
+                                    </div>
+                                    <div
+                                        class="absolute w-12 h-12 p-3 transition-all duration-500 ease-in-out -translate-y-full bg-opacity-50 rounded-full opacity-0 md:w-16 md:h-16 top-2 topping-logo right-2 overlay-icon backdrop-blur-md bg-primary-color outline outline-2 outline-white">
+                                        <img src="{{ asset('asset/Topping/jam - logo.png') }}" class="w-[100%]"
+                                            alt="" />
+                                    </div>
+                                    <figcaption
+                                        class="absolute bottom-0 translate-x-1/2 translate-y-full md:p-4 p-2.5 opacity-0 transition-all ease-in-out duration-500 rounded-b-2xl right-1/2 w-full text-center backdrop-blur-md overlay-content-title">
+                                        <h6>Strawberry Jam</h6>
+                                    </figcaption>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div
+                                    class="relative overflow-hidden rounded-2xl scale-[0.9] opacity-50 topping-wrapper transition-all ease-in-out duration-500">
+                                    <div class="content-topping">
+                                        <img src="{{ asset('asset/Topping/Chocco.png') }}"
+                                            class="object-cover w-full h-full transition-all duration-500 ease-in-out rounded-2xl image-topping"
+                                            alt="" />
+                                    </div>
+                                    <div
+                                        class="absolute w-12 h-12 p-3 transition-all duration-500 ease-in-out -translate-y-full bg-opacity-50 rounded-full opacity-0 md:w-16 md:h-16 top-2 topping-logo right-2 overlay-icon backdrop-blur-md bg-primary-color outline outline-2 outline-white">
+                                        <img src="{{ asset('asset/Topping/choco - logo.png') }}" class="w-[100%]"
+                                            alt="" />
+                                    </div>
+                                    <figcaption
+                                        class="absolute bottom-0 translate-x-1/2 translate-y-full md:p-4 p-2.5 opacity-0 transition-all ease-in-out duration-500 rounded-b-2xl right-1/2 w-full text-center backdrop-blur-md overlay-content-title">
+                                        <h6>Nuttela Chocolate</h6>
+                                    </figcaption>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div
+                                    class="relative overflow-hidden rounded-2xl scale-[0.9] opacity-50 topping-wrapper transition-all ease-in-out duration-500">
+                                    <div class="content-topping">
+                                        <img src="{{ asset('asset/Topping/Cheess.png') }}"
+                                            class="object-cover w-full h-full transition-all duration-500 ease-in-out rounded-2xl image-topping"
+                                            alt="" />
+                                    </div>
+                                    <div
+                                        class="absolute w-12 h-12 p-3 transition-all duration-500 ease-in-out -translate-y-full bg-opacity-50 rounded-full opacity-0 md:w-16 md:h-16 top-2 topping-logo right-2 overlay-icon backdrop-blur-md bg-primary-color outline outline-2 outline-white">
+                                        <img src="{{ asset('asset/Topping/chees - logo.png') }}" class="w-[100%]"
+                                            alt="" />
+                                    </div>
+                                    <figcaption
+                                        class="absolute bottom-0 translate-x-1/2 translate-y-full md:p-4 p-2.5 opacity-0 transition-all ease-in-out duration-500 rounded-b-2xl right-1/2 w-full text-center backdrop-blur-md overlay-content-title">
+                                        <h6>Mozarella</h6>
+                                    </figcaption>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div
+                                    class="relative overflow-hidden rounded-2xl scale-[0.9] opacity-50 topping-wrapper transition-all ease-in-out duration-500">
+                                    <div class="content-topping">
+                                        <img src="{{ asset('asset/Topping/Chocco.png') }}"
+                                            class="object-cover w-full h-full transition-all duration-500 ease-in-out rounded-2xl image-topping"
+                                            alt="" />
+                                    </div>
+                                    <div
+                                        class="absolute w-12 h-12 p-3 transition-all duration-500 ease-in-out -translate-y-full bg-opacity-50 rounded-full opacity-0 md:w-16 md:h-16 top-2 topping-logo right-2 overlay-icon backdrop-blur-md bg-primary-color outline outline-2 outline-white">
+                                        <img src="{{ asset('asset/Topping/choco - logo.png') }}" class="w-[100%]"
+                                            alt="" />
+                                    </div>
+                                    <figcaption
+                                        class="absolute bottom-0 translate-x-1/2 translate-y-full md:p-4 p-2.5 opacity-0 transition-all ease-in-out duration-500 rounded-b-2xl right-1/2 w-full text-center backdrop-blur-md overlay-content-title">
+                                        <h6>Slime Choco</h6>
+                                    </figcaption>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div
+                                    class="relative overflow-hidden rounded-2xl scale-[0.9] opacity-50 topping-wrapper transition-all ease-in-out duration-500">
+                                    <div class="content-topping">
+                                        <img src="{{ asset('asset/Topping/blueberry.png') }}"
+                                            class="object-cover w-full h-full transition-all duration-500 ease-in-out rounded-2xl image-topping"
+                                            alt="" />
+                                    </div>
+                                    <div
+                                        class="absolute w-12 h-12 p-3 transition-all duration-500 ease-in-out -translate-y-full bg-opacity-50 rounded-full opacity-0 md:w-16 md:h-16 top-2 topping-logo right-2 overlay-icon backdrop-blur-md bg-primary-color outline outline-2 outline-white">
+                                        <img src="{{ asset('asset/Topping/jam - logo.png') }}" class="w-[100%]"
+                                            alt="" />
+                                    </div>
+                                    <figcaption
+                                        class="absolute bottom-0 translate-x-1/2 translate-y-full md:p-4 p-2.5 opacity-0 transition-all ease-in-out duration-500 rounded-b-2xl right-1/2 w-full text-center backdrop-blur-md overlay-content-title">
+                                        <h6>Blueberry Jam</h6>
+                                    </figcaption>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div
+                                    class="relative overflow-hidden rounded-2xl scale-[0.9] opacity-50 topping-wrapper transition-all ease-in-out duration-500">
+                                    <div class="content-topping">
+                                        <img src="{{ asset('asset/Topping/Chocco.png') }}"
+                                            class="object-cover w-full h-full transition-all duration-500 ease-in-out rounded-2xl image-topping"
+                                            alt="" />
+                                    </div>
+                                    <div
+                                        class="absolute w-12 h-12 p-3 transition-all duration-500 ease-in-out -translate-y-full bg-opacity-50 rounded-full opacity-0 md:w-16 md:h-16 top-2 topping-logo right-2 overlay-icon backdrop-blur-md bg-primary-color outline outline-2 outline-white">
+                                        <img src="{{ asset('asset/Topping/choco - logo.png') }}" class="w-[100%]"
+                                            alt="" />
+                                    </div>
+                                    <figcaption
+                                        class="absolute bottom-0 translate-x-1/2 translate-y-full md:p-4 p-2.5 opacity-0 transition-all ease-in-out duration-500 rounded-b-2xl right-1/2 w-full text-center backdrop-blur-md overlay-content-title">
+                                        <h6>Nuttela Chocolate</h6>
+                                    </figcaption>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div
+                                    class="relative overflow-hidden rounded-2xl scale-[0.9] opacity-50 topping-wrapper transition-all ease-in-out duration-500">
+                                    <div class="content-topping">
+                                        <img src="{{ asset('asset/Topping/Cheess.png') }}"
+                                            class="object-cover w-full h-full transition-all duration-500 ease-in-out rounded-2xl image-topping"
+                                            alt="" />
+                                    </div>
+                                    <div
+                                        class="absolute w-12 h-12 p-3 transition-all duration-500 ease-in-out -translate-y-full bg-opacity-50 rounded-full opacity-0 md:w-16 md:h-16 top-2 topping-logo right-2 overlay-icon backdrop-blur-md bg-primary-color outline outline-2 outline-white">
+                                        <img src="{{ asset('asset/Topping/chees - logo.png') }}" class="w-[100%]"
+                                            alt="" />
+                                    </div>
+                                    <figcaption
+                                        class="absolute bottom-0 translate-x-1/2 translate-y-full md:p-4 p-2.5 opacity-0 transition-all ease-in-out duration-500 rounded-b-2xl right-1/2 w-full text-center backdrop-blur-md overlay-content-title">
+                                        <h6>Mozarella</h6>
+                                    </figcaption>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

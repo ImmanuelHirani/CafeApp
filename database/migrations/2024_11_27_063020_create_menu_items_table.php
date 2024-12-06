@@ -15,8 +15,7 @@ return new class extends Migration
             $table->string('name');
             $table->integer('stock')->nullable();
             $table->text('menu_description')->nullable();
-            $table->decimal('price', 10, 2);
-            $table->integer('is_active')->nullable();
+            $table->integer('is_active', 4)->nullable();
             $table->timestamps();
         });
     }

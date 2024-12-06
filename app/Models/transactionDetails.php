@@ -12,6 +12,7 @@ class transactionDetails extends Model
     protected $fillable = [
         'menu_ID',
         'order_ID',
+        'size',
         'price',
         'quantity', // Pastikan kolom ini ditambahkan
     ];

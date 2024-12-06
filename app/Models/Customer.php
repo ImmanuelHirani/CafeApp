@@ -22,4 +22,9 @@ class Customer extends Authenticatable
     ];
 
     protected $hidden = ['password'];
+
+    public function favoriteMenus()
+    {
+        return $this->belongsToMany(Menu::class, 'favorite_menus', 'customer_ID', 'menu_ID');
+    }
 }
