@@ -6,33 +6,20 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('menu_properties', function (Blueprint $table) {
-            $table->bigIncrements('property_ID');
+            $table->id();
             $table->unsignedBigInteger('menu_ID');
-            $table->string('size', 50);
-            $table->decimal('price', 10, 2);
+            $table->string('size');
+            $table->decimal('price', 8, 2)->default(0); // Default price 0
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
 
-            // Foreign key constraint
-            $table->foreign('menu_ID')
-                ->references('menu_ID')
-                ->on('menu_items')
-                ->onDelete('cascade');
+            $table->foreign('menu_ID')->references('menu_ID')->on('menu_items')->onDelete('cascade');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('menu_properties');

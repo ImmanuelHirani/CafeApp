@@ -4,10 +4,11 @@
 namespace App\Repository;
 
 use App\Models\Menu;
+use App\Models\menuProperties;
 
 interface MenuRepo
 {
-    public function update(Menu $menu, array $validatedData): Menu;
-    public function insert(array $validatedData): Menu;
+    public function update(Menu $menu, menuProperties $properties,  array $data);
+    public function create(array $data): Menu;
     public function delete($id);
 }

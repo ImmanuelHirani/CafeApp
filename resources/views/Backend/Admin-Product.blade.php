@@ -102,9 +102,6 @@
                             <div class="flex flex-col h-[8rem] gap-6 wrap-body">
                                 <div class="mt-2 text-lg body-card">
                                     <p class="font-medium">{{ $menu->name }}</p>
-                                    <p class="!text-accent-color-admin">Rp.
-                                        {{ number_format($menu->price, 0, ',', '.') }}</p>
-
                                 </div>
                                 <div class="flex justify-between mt-auto footer-card">
                                     <div class="inline-flex gap-3 stock">

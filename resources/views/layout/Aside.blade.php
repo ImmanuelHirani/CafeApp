@@ -15,7 +15,7 @@
             </li>
         </ul>
     </div>
-    <form action="{{ route('update.menu', $menusDetails->menu_ID ?? '') }}" method="POST"
+    <form action="{{ route('update.menu', ['id' => $menusDetails->menu_ID, 'size' => $selectedSize]) }}" method="POST"
         enctype="multipart/form-data">
         @csrf
         @method('put')
@@ -70,7 +70,6 @@
                 </select>
             </div>
         </div>
-
         <div class="px-6 pb-6 overflow-y-auto card-content sideMenu-tabs-content">
             <div class="flex flex-col gap-4 text-lg">
                 <!-- Stock -->
@@ -79,28 +78,66 @@
                     <input type="number" name="stock" value="{{ $menusDetails->stock ?? '' }}"
                         class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin" placeholder="Max 20 Char" />
                 </label>
-                <!-- Harga Normal -->
-                <label for="price" class="flex flex-col gap-3">
-                    Normal price
-                    <input type="number" name="price" value="{{ $menusDetails->price ?? '' }}"
-                        class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin" min="0" />
-                </label>
                 <!-- Discount -->
-                <label for="discount" class="flex flex-col gap-3">
-                    Discount
-                    <input type="number" class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin"
-                        min="0" />
+                <label class="flex flex-col gap-3">
+                    <p>Size</p>
+                    <div class="flex items-center w-full gap-3 flex-nowrap wrap-size-selection">
+                        @isset($menusDetails)
+                            @foreach ($menusDetails->properties as $property)
+                                @php
+                                    $isActive = $selectedSize == $property->size; // Gunakan $selectedSize yang dikirim dari controller
+                                    $sizeClass = $isActive
+                                        ? 'bg-secondary-accent-color text-white'
+                                        : 'text-secondary-accent-color hover:bg-secondary-accent-color hover:text-white';
+                                @endphp
+                                <a href="{{ route('admin.product.detail', ['id' => $menusDetails->menu_ID, 'size' => $property->size]) }}"
+                                    class="w-full flex items-center cursor-pointer justify-center px-3 py-1.5 rounded-full outline outline-2 outline-secondary-accent-color transition-all ease-in-out duration-300 {{ $sizeClass }}">
+                                    {{ strtoupper($property->size) }}
+                                </a>
+                            @endforeach
+                        @else
+                            <p>Pilih Item Terlebih Dahulu</p>
+                        @endisset
+                    </div>
                 </label>
-                <!-- Discount Member -->
-                <label for="discount_member" class="flex flex-col gap-3">
-                    Discount Number For Member Only
-                    <input type="number" class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin"
-                        min="0" />
+                <!-- Ensure price input has the correct name and value -->
+                <label for="price" class="flex flex-col gap-3">
+                    Price Each Size
+                    <div class="flex items-center w-full gap-3 flex-nowrap wrap-size-selection">
+                        @isset($selectedSize)
+                            <input type="number" name="price"
+                                value="{{ $menusDetails->properties->where('size', $selectedSize)->first()->price ?? 0 }}"
+                                class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin" min="0"
+                                step="0.01" />
+                        @else
+                            <input type="number" name="price"
+                                class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin size-price"
+                                min="0" step="0.01" value="0" />
+                        @endisset
+                    </div>
                 </label>
+                {{-- Status Menu_Prop --}}
+                <!-- Status Size -->
+                @php
+                    $menuProperty = $menusDetails->properties->where('size', $selectedSize)->first();
+                @endphp
+
+                <label for="status" class="block">Status</label>
+                <select name="is_active_properties"
+                    class="relative p-3 rounded-lg outline-none bg-secondary-color-admin">
+                    @if ($menuProperty)
+                        <option value="1" {{ $menuProperty->is_active == 1 ? 'selected' : '' }}>Active</option>
+                        <option value="0" {{ $menuProperty->is_active == 0 ? 'selected' : '' }}>Non-Active
+                        </option>
+                    @else
+                        <option value="1" disabled>Select Size First</option>
+                    @endif
+                </select>
+                {{-- Status Menu_Prop End --}}
             </div>
         </div>
+        <input type="hidden" name="size" value="{{ $selectedSize }}" />
         <input type="submit" id="update" value="Update" class="hidden">
-
     </form>
     <div class="flex items-center w-full gap-3 p-4 mt-auto bg-white shadow-inner footer-toggle">
 

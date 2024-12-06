@@ -19,6 +19,7 @@ Route::post('/customer/logout', [CustomerController::class, 'logout'])->name('lo
 Route::get('/menu', [MenuController::class, 'Product'])->name('frontend.menu');
 Route::get('/menu/detail/{id}', [MenuController::class, 'getMenuDetails'])->name('frontend.menu.details');
 
+
 // Custom Order
 Route::get('/menu/custom', [CustomerOrderController::class, 'customPizza'])->name('frontend.menu.custom');
 
@@ -47,7 +48,9 @@ Route::get('/customer/detail/{id}', [CustomerController::class, 'getCustomerDeta
 
 // Admin Product
 Route::get('/admin/product', [MenuController::class, 'Product'])->name('admin.product');
-Route::get('/admin/product/detail/{id}', [MenuController::class, 'getMenuDetails'])->name('menu.details');
+Route::get('/admin/product/detail/{id}/{size?}', [MenuController::class, 'getMenuDetails'])->name('admin.product.detail');
+
+
 Route::put('/update/product/{id}', [MenuController::class, 'updateMenu'])->name('update.menu');
 Route::delete('/delete/product/{id}', [MenuController::class, 'deleteMenu'])->name('delete.menu');
 Route::post('/create/product', [MenuController::class, 'NewMenu'])->name('create.new.product');

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Repository\RepositoryImpl\CustomerRepoImpl;
 use App\Repository\RepositoryImpl\MenuRepoImpl;
 use App\Repository\RepositoryImpl\OrderRepoImpl;
+use App\Services\MenuService;
 use App\Services\OrderService;
 
 class AppServiceProvider extends ServiceProvider
@@ -28,7 +29,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(MenuRepo::class, MenuRepoImpl::class);
         $this->app->bind(orderRepo::class, OrderRepoImpl::class);
 
-        // Binding service
+        $this->app->bind(MenuService::class, function ($app) {
+            return new MenuService($app->make(MenuRepo::class));
+        });
+
         $this->app->singleton(CustomerService::class, function ($app) {
             return new CustomerService($app->make(CustomerRepo::class));
         });

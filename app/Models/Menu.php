@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
 {
-
-
     protected $table = 'menu_items';
     protected $primaryKey = 'menu_ID';
 
@@ -17,7 +15,12 @@ class Menu extends Model
         'name',
         'stock',
         'menu_description',
-        'price',
         'is_active',
     ];
+
+    // Relasi satu ke banyak (One to Many)
+    public function properties()
+    {
+        return $this->hasMany(menuProperties::class, 'menu_ID', 'menu_ID');
+    }
 }

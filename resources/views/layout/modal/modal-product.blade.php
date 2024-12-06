@@ -2,7 +2,7 @@
     <form action="{{ Route('create.new.product') }}" class="w-[65rem]" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="card-content">
-            <div class="grid h-full grid-cols-2 items-center gap-6 text-lg auto-rows-[47rem]">
+            <div class="grid h-full grid-cols-2  gap-6 text-lg auto-rows-[47rem]">
                 <!-- Image Container -->
                 <div class="relative w-full h-full overflow-hidden rounded-lg img-file-management">
                     <!-- Display Image -->
@@ -19,10 +19,7 @@
                         File harus berupa gambar (jpg, jpeg, png) dan ukuran maksimal 2MB.
                     </label>
                 </div>
-
                 <!-- Error Message -->
-
-
                 <div class="flex flex-col gap-3 wrap">
                     <!-- Product Name Input -->
                     <label for="" class="flex flex-col gap-3">
@@ -61,14 +58,6 @@
                         <input type="number" name="stock" value="{{ old('stock') }}"
                             class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin"
                             placeholder="Max 20 Char" />
-                    </label>
-
-                    <!-- Normal Price Input -->
-                    <label for="" class="flex flex-col gap-3">
-                        Normal price
-                        <input type="number" name="price" value="{{ old('price') }}"
-                            class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin"
-                            placeholder="Max 20 Char" min="0" />
                     </label>
 
                     <!-- Buttons -->
