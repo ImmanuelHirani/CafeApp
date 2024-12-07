@@ -53,7 +53,7 @@ class MenuController extends Controller
             'stock' => 'required|integer|min:1|max:100',
             'menu_description' => 'required|string|regex:/^[a-zA-Z\s]+$/|min:1|max:255',
             'is_active' => 'required|int|min:0|max:1',
-            'price' => 'integer|min:20000|max:200000', // Ensure that price is integer
+            'price' => 'numeric|min:20000|max:200000',
         ]);
 
         // Ambil data menu utama
@@ -97,8 +97,7 @@ class MenuController extends Controller
             ->with('success', 'Updated Successfully');
     }
 
-
-    public function getMenuDetails($id)
+    public function getMenuDetails($id, $size = null)
     {
         try {
             // Menemukan menu berdasarkan ID dengan relasi menu_properties
@@ -109,23 +108,39 @@ class MenuController extends Controller
                 return redirect()->route('menu.index')->withErrors(['error' => 'Menu not found']);
             }
 
+            // Jika size diberikan, kita cari property berdasarkan size yang dipilih
+            if ($size) {
+                // Mencari property berdasarkan size yang dipilih
+                $selectedProperty = $menuDetails->properties->firstWhere('size', $size);
+            } else {
+                // Jika size tidak diberikan, pilih property pertama (default)
+                $selectedProperty = $menuDetails->properties->first();
+            }
+
+            // Mengecek apakah properti dengan ukuran yang dipilih ada
+            if ($selectedProperty) {
+                $selectedPrice = $selectedProperty->price;
+            } else {
+                $selectedPrice = null; // Jika tidak ada harga untuk ukuran yang dipilih
+            }
+
             // Mendapatkan semua menu untuk digunakan dalam view
             $menus = Menu::all();
 
             // Mengecek apakah request ini untuk halaman admin atau frontend
             if (request()->is('admin/*')) {
-
                 // Jika rute dimulai dengan 'admin/', tampilkan tampilan admin
-                return view('Backend.Admin-Product', compact('menuDetails', 'menus'));
+                return view('Backend.Admin-Product', compact('menuDetails', 'menus', 'selectedProperty', 'selectedPrice'));
             } else {
                 // Jika bukan admin, tampilkan tampilan frontend
-                return view('Frontend.menu-detail', compact('menuDetails', 'menus'));
+                return view('Frontend.menu-detail', compact('menuDetails', 'menus', 'selectedProperty', 'selectedPrice'));
             }
         } catch (\Exception $e) {
             // Menangani error dan mengarahkan kembali dengan pesan kesalahan
             return redirect()->back()->withErrors(['error' => 'Failed to get details: ' . $e->getMessage()]);
         }
     }
+
 
     public function deleteMenu($id)
     {
@@ -140,7 +155,7 @@ class MenuController extends Controller
 
     public function Product()
     {
-        $menus = Menu::all();
+        $menus = Menu::with('properties')->get();
 
         // Menentukan tampilan berdasarkan kondisi (misalnya, rute atau role)
         if (request()->is('admin/*')) {

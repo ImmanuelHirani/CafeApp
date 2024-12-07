@@ -70,7 +70,7 @@
                                                 <div
                                                     class="relative transition-all duration-300 ease-in-out scale-95 opacity-50 card-wrapper rounded-2xl h-fit bg-secondary-accent-color">
                                                     <img src="{{ asset('storage/' . $menu->image) }}"
-                                                        alt="{{ $menu->name }} "
+                                                        alt="{{ $menu->name }}"
                                                         class="h-[250px] w-full text-white rounded-t-2xl object-cover object-center" />
                                                     <div class="flex flex-col gap-4 p-5 content">
                                                         <div class="flex flex-col gap-2 wrap-desc">
@@ -83,14 +83,24 @@
                                                             </p>
                                                         </div>
                                                         <div class="flex items-center justify-between wrap-price">
-                                                            <p class="text-xl md:text-2xl">
-                                                                Rp {{ number_format($menu->price, 0, ',', '.') }}</p>
-                                                            </p>
+                                                            {{-- Menampilkan harga berdasarkan ukuran 'sm' --}}
+                                                            @php
+                                                                // Mencari property dengan size 'sm'
+                                                                $property = $menu->properties->firstWhere('size', 'xl');
+                                                            @endphp
+                                                            @if ($property)
+                                                                <p class="text-xl md:text-2xl">
+                                                                    Rp
+                                                                    {{ number_format($property->price, 0, ',', '.') }}
+                                                                </p>
+                                                            @else
+                                                                <p class="text-xl md:text-2xl">Price Not Available</p>
+                                                            @endif
                                                             <div class="flex items-center md:gap-2 gap-1.5 wrap">
                                                                 <a href="{{ Route('frontend.menu.details', $menu->menu_ID ?? '') }}"
                                                                     class="px-6 py-1 text-lg rounded-lg md:px-8 md:py-1.5 bg-secondary-color">Details</a>
                                                                 <a
-                                                                    class="px-2 h-[2.5rem] flex items-center text-base rounded-lg cursor-pointer md:px-3  outline outline-2 outline-secondary-color  transition-all ease-in-out duration-500 hover:bg-secondary-color">
+                                                                    class="px-2 h-[2.5rem] flex items-center text-base rounded-lg cursor-pointer md:px-3 outline outline-2 outline-secondary-color transition-all ease-in-out duration-500 hover:bg-secondary-color">
                                                                     <i class="text-2xl ti ti-heart-filled"></i>
                                                                 </a>
                                                             </div>
@@ -100,6 +110,7 @@
                                             </div>
                                         @endif
                                     @endforeach
+
                                     <!-- Card Menu End -->
                                 </div>
                             </div>

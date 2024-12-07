@@ -17,7 +17,7 @@ Route::post('/customer/logout', [CustomerController::class, 'logout'])->name('lo
 
 // frontend menu
 Route::get('/menu', [MenuController::class, 'Product'])->name('frontend.menu');
-Route::get('/menu/detail/{id}', [MenuController::class, 'getMenuDetails'])->name('frontend.menu.details');
+Route::get('/menu/detail/{id}/{size?}', [MenuController::class, 'getMenuDetails'])->name('frontend.menu.details');
 
 
 // Custom Order

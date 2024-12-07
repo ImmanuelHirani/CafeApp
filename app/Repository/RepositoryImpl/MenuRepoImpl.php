@@ -28,18 +28,6 @@ class MenuRepoImpl implements MenuRepo
 
     // MenuRepository.php
 
-    public function findSize($id, $size)
-    {
-        return menuProperties::where('menu_ID', $id)->where('size', $size)->first();
-    }
-
-    public function updateSize(menuProperties $properties, array $data)
-    {
-        // Update data ukuran menu
-        $properties->update($data);
-    }
-
-
     public function update(Menu $menu, array $data)
     {
         $menu->update($data);

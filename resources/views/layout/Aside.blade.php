@@ -87,11 +87,20 @@
                     <div class="flex flex-wrap w-full gap-3">
                         @isset($menuDetails)
                             @foreach ($menuDetails->properties as $property)
-                                <input type="hidden" name="property_ID" value="{{ $property->property_ID }}">
-                                <input type="hidden" name="size" value="{{ $property->size }}">
-                                <input type="number" name="price"
-                                    class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin size-price"
-                                    value="{{ $property->price ?? '' }}" />
+                                <div class="flex items-center w-full gap-3 wrap">
+                                    <label
+                                        class="p-2 uppercase border-2 rounded-lg text-secondary-accent-color border-secondary-accent-color w-[3.5rem] flex items-center justify-center h-[3rem]">{{ $property->size }}</label>
+                                    <input type="number"
+                                        class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin size-price"
+                                        min="0" name="properties[{{ $property->property_ID }}][price]"
+                                        value="{{ $property->price }}" />
+                                </div>
+                                <input type="hidden" name="properties[{{ $property->property_ID }}][property_ID]"
+                                    value="{{ $property->property_ID }}">
+                                <input type="hidden" name="properties[{{ $property->property_ID }}][size]"
+                                    value="{{ $property->size }}">
+                                <input type="hidden" name="properties[{{ $property->property_ID }}][is_active_properties]"
+                                    value="1">
                                 <input type="hidden" name="is_active_properties" value="1">
                             @endforeach
                         @else

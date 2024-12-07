@@ -102,6 +102,18 @@
                             <div class="flex flex-col h-[8rem] gap-6 wrap-body">
                                 <div class="mt-2 text-lg body-card">
                                     <p class="font-medium">{{ $menu->name }}</p>
+                                    @php
+                                        // Mencari property dengan size 'sm'
+                                        $property = $menu->properties->firstWhere('size', 'xl');
+                                    @endphp
+                                    @if ($property)
+                                        <p class="font-medium">
+                                            Rp
+                                            {{ number_format($property->price, 0, ',', '.') }}
+                                        </p>
+                                    @else
+                                        <p class="text-xl md:text-2xl">Price Not Available</p>
+                                    @endif
                                 </div>
                                 <div class="flex justify-between mt-auto footer-card">
                                     <div class="inline-flex gap-3 stock">

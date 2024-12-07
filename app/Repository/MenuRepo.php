@@ -13,7 +13,5 @@ interface MenuRepo
     public function create(array $data): Menu;
     public function delete($id);
     public function find($id);
-    public function findSize($id, $size);
     public function update(Menu $menu, array $data);
-    public function updateSize(menuProperties $properties, array $data);
 }

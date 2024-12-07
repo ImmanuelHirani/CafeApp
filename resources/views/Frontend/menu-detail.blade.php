@@ -20,9 +20,9 @@
         <section class="mt-12 md:mt-20 contact-us">
             <div class="container flex flex-col grid-cols-12 gap-8 md:grid 2xl:gap-8">
                 <div class="col-span-5">
-                    <img src="{{ asset('storage/' . $menusDetails->image) }}"
-                        class="{{ $menusDetails->image ?? '' ? 'object-cover' : 'object-cover' }}  w-full 3xl:h-[35rem] h-[31rem] rounded-lg"
-                        alt="{{ $menusDetails->name ?? 'Default Image' }}"
+                    <img src="{{ asset('storage/' . $menuDetails->image ?? '') }}"
+                        class="{{ $menuDetails->image ?? '' ? 'object-cover' : 'object-cover' }}  w-full 3xl:h-[35rem] h-[31rem] rounded-lg"
+                        alt="{{ $menuDetails->name ?? 'Default Image' }}"
                         onerror="this.onerror=null; this.src='{{ asset('asset/Error-Image.png') }}';" />
                 </div>
                 <div class="flex flex-col col-span-4 gap-4 font-aesthetnova">
@@ -60,10 +60,11 @@
                             </svg>
                             <p class="text-xs">(20)</p>
                         </div>
-                        <h4 class="py-1 line-clamp-1">{{ $menusDetails->name }}</h4>
+                        <h4 class="py-1 line-clamp-1">{{ $menuDetails->name ?? '' }}</h4>
                     </span>
                     <span class="flex flex-row justify-between md:gap-4 md:flex-col">
-                        <p class="w-full text-xl md:text-2xl">Rp {{ number_format($menusDetails->price, 0, ',', '.') }}
+                        <p class="w-full text-xl md:text-2xl">
+                            Rp {{ number_format($selectedPrice, 0, ',', '.') }}
                         </p>
                         <div class="flex items-center justify-between w-full gap-3 md:justify-normal">
                             <svg xmlns="http://www.w3.org/2000/svg" class="hidden md:block stroke-highlight-content"
@@ -94,45 +95,21 @@
                     </span>
                     <span class="flex-col hidden gap-3 md:flex">
                         <h6>Size :</h6>
-                        <div class="flex flex-wrap items-center gap-3 menu-selection-wrapper">
-                            <button class="w-[22%] px-3 py-1.5 rounded-full bg-secondary-color">
-                                XL
-                            </button>
-                            <button
-                                class="w-[22%] px-3 py-1.5 rounded-full outline outline-2 outline-white hover:outline-none hover:bg-red-500 transition-all ease-in-out duration-500">
-                                LG
-                            </button>
-                            <button
-                                class="w-[22%] px-3 py-1.5 rounded-full outline outline-2 outline-white hover:outline-none hover:bg-red-500 transition-all ease-in-out duration-500">
-                                MD
-                            </button>
-                            <button
-                                class="w-[22%] px-3 py-1.5 rounded-full outline outline-2 outline-white hover:outline-none hover:bg-red-500 transition-all ease-in-out duration-500">
-                                SM
-                            </button>
+                        <div class="flex items-center gap-3 flex-nowrap menu-selection-wrapper">
+                            @isset($menuDetails)
+                                @foreach ($menuDetails->properties as $property)
+                                    <a href="{{ route('frontend.menu.details', ['id' => $menuDetails->menu_ID, 'size' => $property->size]) }}"
+                                        class="w-full px-3 py-3 uppercase rounded-full outline text-center outline-2 {{ $selectedProperty && $selectedProperty->size == $property->size ? 'bg-secondary-color outline-secondary-color' : 'outline-white hover:bg-secondary-color transition-all ease-in-out duration-300 hover:outline-none' }}">
+                                        {{ $property->size }}
+                                    </a>
+                                @endforeach
+                            @else
+                                <p>No sizes available for this menu.</p>
+                            @endisset
                         </div>
                     </span>
-                    <span class="flex-col hidden gap-3 md:flex">
-                        @if ($menusDetails->menu_type != 'pizza')
-                            <h6>Extra :</h6>
-                            <div class="flex flex-wrap items-center gap-3 menu-selection-wrapper">
-                                <p class="text-xl text-gray-500">Extra Item Only On Pizza Menu!</p>
-                            </div>
-                        @else
-                            <h6>Extra :</h6>
-                            <div class="flex flex-wrap items-center gap-3 menu-selection-wrapper">
-                                <button class="w-[30%] px-3 py-1.5 rounded-full bg-secondary-color">
-                                    Sause
-                                </button>
-                                <button
-                                    class="w-[30%] px-3 py-1.5 rounded-full outline outline-2 outline-white hover:outline-none hover:bg-red-500 transition-all ease-in-out duration-500">
-                                    Side
-                                </button>
-                            </div>
-                        @endif
-                    </span>
                     <p class="text-base text-justify md:text-lg line-clamp-3">
-                        {{ $menusDetails->menu_description }}
+                        {{ $menuDetails->menu_description ?? '' }}
                     </p>
                 </div>
                 {{-- Sidecart Quick Add --}}

@@ -78,26 +78,6 @@ class MenuService
         $this->menuRepo->update($menu, $validated);
     }
 
-    // MenuService.php
-
-    public function updateMenuSize($id, $size, array $validated)
-    {
-        // Cari menu berdasarkan ID dan size
-        $menu = $this->menuRepo->findSize($id, $size);
-
-        if (!$menu) {
-            throw new \Exception('Menu or Size not found.');
-        }
-
-        // Update harga untuk setiap ukuran
-        foreach ($validated['price'] as $size => $price) {
-            $menuProperty = $this->menuRepo->findSize($id, $size);
-            if ($menuProperty) {
-                $this->menuRepo->updateSize($menuProperty, ['price' => $price]);
-            }
-        }
-    }
-
 
     public function deleteMenuById(int $id): bool
     {

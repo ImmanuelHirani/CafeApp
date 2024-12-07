@@ -9,7 +9,7 @@
             ITEM?
         </p>
         <!-- Product Image -->
-        <img src="{{ asset('storage/' . $menusDetails->image) }}" alt="{{ $menusDetails->name }}"
+        <img src="{{ asset('storage/' . $menuDetails->image) }}" alt="{{ $menuDetails->name }}"
             class="md:w-[50%] w-full h-[18rem]  object-cover rounded-lg" />
         <!-- Star Rating SVG Icons -->
         <div class="flex items-center gap-1.5 star">
