@@ -21,9 +21,19 @@
                                             <p class="text-xl">
                                                 {{ $menu->name }}
                                             </p>
-                                            <p class="text-lg text-gray-300">
-                                                Rp {{ number_format($menu->price, 0, ',', '.') }}
-                                            </p>
+                                            @php
+                                                // Mencari property dengan size 'sm'
+                                                $property = $menu->properties->firstWhere('size', 'sm');
+                                            @endphp
+                                            @if ($property)
+                                                <p class="text-lg text-gray-300">
+                                                    Rp
+                                                    {{ number_format($property->price, 0, ',', '.') }}
+                                                </p>
+                                            @else
+                                                <p class="text-xl md:text-2xl">Rp 0</p>
+                                            @endif
+
                                         </div>
                                         <form action="{{ Route('frontend.menu.details', $menu->menu_ID ?? '') }}"
                                             method="POST">
@@ -70,11 +80,8 @@
                                         <p class="text-xl font-semibold md:text-xl line-clamp-1">
                                             {{ $item->menu->name }}
                                         </p>
-                                        <p class="text-xl md:text-lg text-highlight-content">
-                                            Extra :
-                                        </p>
-                                        <p class="text-xl md:text-lg text-highlight-content">
-                                            Size :
+                                        <p class="text-xl uppercase md:text-lg text-highlight-content">
+                                            Size : {{ $item->size }}
                                         </p>
                                         <div class="items-center hidden gap-3 md:flex wrap">
                                             <form action="{{ route('cart.update', $item->temp_ID) }}" method="POST">
@@ -96,13 +103,13 @@
                                                     </button>
                                                 </div>
                                             </form>
-                                            <form action="{{ route('delete.cart', $item->temp_ID ?? '') }}"
-                                                method="POST">
+                                            <form action="{{ route('delete.cart', $item->temp_ID) }}" method="POST"
+                                                class="delete-form">
                                                 @csrf
                                                 @method('delete')
-                                                <button
+                                                <button type="button"
                                                     class="flex items-center justify-center p-1.5 rounded-full bg-secondary-color delete-cart-item"
-                                                    href="">
+                                                    data-id="{{ $item->temp_ID }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"
                                                         fill="none" viewBox="0 0 26 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -154,86 +161,116 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
-        // Handle the increase button click
-        $('.increase-btn').on('click', function() {
+        // Handle item delete via AJAX
+        $('.delete-cart-item').on('click', function(e) {
+            e.preventDefault(); // Mencegah form dikirimkan secara normal
+            var itemId = $(this).data('id'); // Ambil temp_ID dari data-id
+            var form = $(this).closest('form'); // Ambil form yang mengandung tombol delete
+
+            $.ajax({
+                url: '/cart/delete/' + itemId, // URL untuk menghapus item
+                method: 'POST',
+                data: {
+                    _token: $('input[name="_token"]').val(), // Sertakan CSRF token
+                    _method: 'DELETE' // Mengirimkan method DELETE
+                },
+                success: function(response) {
+                    if (response.success) {
+                        // Tampilkan notifikasi sukses
+                        notyf.success(response.message);
+
+                        // Hapus item dari tampilan
+                        form.closest('.swiper-slide')
+                            .remove(); // Atau selector yang sesuai dengan item yang akan dihapus
+
+                        // Update informasi keranjang jika diperlukan (misalnya total item atau harga)
+                        // $('#total-quantity').text(response.totalQuantity);
+                        // $('#total-price').text('Rp ' + response.totalPrice);
+                    } else {
+                        notyf.error(response.message); // Tampilkan pesan error jika gagal
+                    }
+                },
+                error: function(xhr) {
+                    notyf.error(
+                        'Something went wrong. Please try again.'
+                    ); // Pesan error jika terjadi kesalahan
+                }
+            });
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        // Update kuantitas saat tombol decrease diklik
+        $('.decrease-btn').on('click', function(e) {
+            e.preventDefault();
             var itemId = $(this).data('id');
-            var quantity = parseInt($('#quantity-' + itemId).text()) + 1;
-            updateCartQuantity(itemId, quantity);
+            var currentQuantity = parseInt($('#quantity-' + itemId).text());
+
+            // Jika sudah di minimum (1), tampilkan pesan
+            if (currentQuantity <= 1) {
+                notyf.error('Minimum quantity is 1');
+                return;
+            }
+
+            updateQuantity(itemId, currentQuantity - 1);
         });
 
-        // Handle the decrease button click
-        $('.decrease-btn').on('click', function() {
+        // Update kuantitas saat tombol increase diklik
+        $('.increase-btn').on('click', function(e) {
+            e.preventDefault();
             var itemId = $(this).data('id');
-            var quantity = parseInt($('#quantity-' + itemId).text()) - 1;
-            updateCartQuantity(itemId, quantity);
+            var currentQuantity = parseInt($('#quantity-' + itemId).text());
+
+            // Jika sudah di maksimum (2), tampilkan pesan
+            if (currentQuantity >= 2) {
+                notyf.error('Maximum quantity is 2');
+                return;
+            }
+
+            updateQuantity(itemId, currentQuantity + 1);
         });
 
-        // Function to update cart quantity and subtotal
-        function updateCartQuantity(itemId, quantity) {
+        // Fungsi untuk memperbarui kuantitas dan subtotal
+        function updateQuantity(itemId, newQuantity) {
             $.ajax({
                 url: '/cart/update/' + itemId,
                 method: 'PUT',
                 data: {
-                    quantity: quantity,
-                    _token: $('input[name="_token"]').val() // CSRF token
+                    _token: $('input[name="_token"]').val(),
+                    quantity: newQuantity
                 },
                 success: function(response) {
                     if (response.success) {
-                        // Update the quantity and subtotal in the DOM
+                        // Update tampilan kuantitas
                         $('#quantity-' + itemId).text(response.quantity);
-                        $('#subtotal-' + itemId).text('Rp ' + response.subtotal); // Update subtotal
-                        notyf.success('Cart updated successfully!');
+
+                        // Update subtotal
+                        $('#subtotal-' + itemId).text('Rp ' + response.subtotal.toLocaleString(
+                            'id-ID'));
+
+                        // Tampilkan notifikasi sukses
+                        notyf.success(response.message);
                     } else {
-                        notyf.error(response
-                            .error); // Show error notification if something goes wrong
+                        // Tampilkan pesan error
+                        notyf.error(response.message);
+
+                        // Jika ada currentQuantity dalam response, kembalikan ke kuantitas semula
+                        if (response.currentQuantity !== undefined) {
+                            $('#quantity-' + itemId).text(response.currentQuantity);
+                        }
                     }
                 },
                 error: function(xhr) {
-                    var errorResponse = xhr.responseJSON;
-                    notyf.error(errorResponse.error || 'Something went wrong. Please try again.');
+                    // Parse error response
+                    try {
+                        var errorResponse = JSON.parse(xhr.responseText);
+                        notyf.error(errorResponse.message || 'Something went wrong');
+                    } catch (e) {
+                        notyf.error('Something went wrong');
+                    }
                 }
             });
         }
-
-        // Handle item delete
-        $('.delete-cart-item').on('click', function(e) {
-            e.preventDefault();
-            var form = $(this).closest('form'); // Ambil elemen form
-            var url = form.attr('action'); // Ambil URL dari atribut action
-            var formData = new FormData(form[0]); // Ambil data dari form
-
-            $.ajax({
-                url: url,
-                method: 'POST',
-                data: formData,
-                processData: false, // Jangan proses data agar sesuai dengan FormData
-                contentType: false, // Jangan atur content type agar sesuai dengan FormData
-                success: function(data) {
-                    if (data.success) {
-                        // Tampilkan notifikasi sukses
-                        notyf.success(data.message);
-
-                        // Hapus item dari tampilan
-                        form.closest('.swiper-slide').remove();
-
-                        // Update total quantity and total price jika ada
-                        if (data.totalQuantity) {
-                            $('#total-quantity').text(data.totalQuantity);
-                        }
-                        if (data.totalPrice) {
-                            $('#total-price').text('Rp ' + data.totalPrice);
-                        }
-                    } else {
-                        // Tampilkan notifikasi error
-                        notyf.error(data.message);
-                    }
-                },
-                error: function(xhr) {
-                    console.error('Error:', xhr);
-                    // Tampilkan notifikasi error jika ada kesalahan
-                    notyf.error('Something went wrong. Please try again.');
-                }
-            });
-        });
     });
 </script>

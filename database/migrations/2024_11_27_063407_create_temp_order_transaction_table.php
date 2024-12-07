@@ -13,6 +13,7 @@ return new class extends Migration
             $table->id('temp_ID');
             $table->unsignedBigInteger('menu_ID');
             $table->unsignedBigInteger('customer_ID');
+            $table->string('size');
             $table->integer('quantity');
             $table->decimal('subtotal', 10, 2);
             $table->timestamps();

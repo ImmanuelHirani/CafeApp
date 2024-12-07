@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\contactUsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
@@ -23,12 +24,15 @@ Route::get('/menu/detail/{id}/{size?}', [MenuController::class, 'getMenuDetails'
 // Custom Order
 Route::get('/menu/custom', [CustomerOrderController::class, 'customPizza'])->name('frontend.menu.custom');
 
+// Cart
+Route::get('/cart', [CartController::class, 'cartMenu'])->name('cart.view');
+Route::put('/cart/update/{tempID}', [CartController::class, 'updateCartQuantity'])->name('cart.update');
+Route::delete('/cart/delete/{tempID}', [CartController::class, 'deleteCart'])->name('delete.cart');
+Route::post('/cart/add', [CartController::class, 'AddToCart'])->name('cart.add');
+
+
 // Order
-Route::get('/cart', [OrderController::class, 'cartMenu'])->name('cart.view');
-Route::put('/cart/update/{id}', [OrderController::class, 'updateCart'])->name('cart.update');
-Route::post('/cart/add', [OrderController::class, 'AddToCart'])->name('cart.add');
 Route::get('/payment', [OrderController::class, 'payment'])->name('payment.view');
-Route::delete('/cart/delete/{id}', [OrderController::class, 'deleteCart'])->name('delete.cart');
 Route::get('/tracking/order', [OrderController::class, 'trackOrder'])->name('tracking.view');
 Route::get('/make-order', [OrderController::class, 'makeOrder'])->name('make.order');
 

@@ -86,7 +86,7 @@
                                                             {{-- Menampilkan harga berdasarkan ukuran 'sm' --}}
                                                             @php
                                                                 // Mencari property dengan size 'sm'
-                                                                $property = $menu->properties->firstWhere('size', 'xl');
+                                                                $property = $menu->properties->firstWhere('size', 'sm');
                                                             @endphp
                                                             @if ($property)
                                                                 <p class="text-xl md:text-2xl">

@@ -12,6 +12,7 @@ class tempTransaction extends Model
     protected $fillable = [
         'menu_ID',
         'customer_ID',
+        'size',
         'quantity',
         'subtotal'
     ];

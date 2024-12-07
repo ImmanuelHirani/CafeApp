@@ -18,20 +18,25 @@
             @if ($selectedProperty)
                 <div class="flex items-center gap-2 wrap">
                     <p class="text-lg">SIZE : </p>
-                    <input class="text-lg text-white bg-transparent outline-none" readonly
-                        value="{{ strtoupper($selectedProperty->size) }}" disabled>
+                    <input name="size" class="text-lg text-white uppercase bg-transparent outline-none" readonly
+                        value="{{ $selectedProperty->size ?? '' }}">
                 </div>
             @else
                 <p>SIZE: Not selected</p>
             @endif
+
             <!-- Input Hidden Menu ID -->
             <input type="hidden" name="menu_ID" value="{{ $menuDetails->menu_ID ?? '' }}">
+
             <!-- Input Hidden Customer ID -->
             <input type="hidden" name="customer_ID" value="{{ Auth::user()->customer_ID ?? '' }}">
+
             <!-- Input Hidden Quantity -->
             <input type="hidden" name="quantity" id="hidden-quantity" value="1">
+
             <!-- Informasi Harga -->
             <p class="text-highlight-content">Max. Pembelian 2 pcs!</p>
+
             @if ($selectedProperty)
                 <div class="flex items-center justify-between gap-2 wrap">
                     <p>SUBTOTAL</p>
@@ -40,6 +45,7 @@
             @else
                 <p>SIZE: Not selected</p>
             @endif
+
             <!-- Tombol Add Quantity -->
             <div class="flex items-center justify-between gap-1 rounded-lg add-to-cart">
                 <!-- Tombol Decrease -->

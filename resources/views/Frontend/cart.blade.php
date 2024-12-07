@@ -108,12 +108,13 @@
                                             </button>
                                         </div>
                                     </form>
-                                    <form action="{{ route('delete.cart', $cart->temp_ID ?? '') }}" method="POST">
+                                    <form action="{{ route('delete.cart', $cart->temp_ID) }}" method="POST"
+                                        class="delete-form">
                                         @csrf
                                         @method('delete')
-                                        <button
+                                        <button type="button"
                                             class="flex items-center justify-center p-1.5 rounded-full bg-secondary-color delete-cart-item"
-                                            href="">
+                                            data-id="{{ $cart->temp_ID }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
                                                 viewBox="0 0 26 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -204,90 +205,119 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
-        // Handle increase and decrease button clicks
-        $('.increase-btn, .decrease-btn').on('click', function() {
-            const isIncrease = $(this).hasClass('increase-btn');
-            const itemId = $(this).data('id');
-            const $quantityEl = $('#quantity-' + itemId);
-            const currentQuantity = parseInt($quantityEl.text());
-            const newQuantity = isIncrease ? currentQuantity + 1 : Math.max(0, currentQuantity - 1);
+        // Initialize the total subtotal from the backend
+        let totalSubtotal = parseFloat($('#totalAmount').text().replace('Rp ', '').replace('.', '').trim());
 
-            updateCartQuantity(itemId, newQuantity);
-        });
-        // Function to update cart quantity and subtotal
-        function updateCartQuantity(itemId, quantity) {
+        // Handle item delete via AJAX
+        $('.delete-cart-item').on('click', function(e) {
+            e.preventDefault(); // Prevent form submission
+            var itemId = $(this).data('id'); // Get temp_ID from data-id
+            var form = $(this).closest('form'); // Get the form containing the delete button
+
             $.ajax({
-                url: `/cart/update/${itemId}`,
-                method: 'PUT',
+                url: '/cart/delete/' + itemId, // URL for deleting the item
+                method: 'POST',
                 data: {
-                    quantity: quantity,
-                    _token: $('input[name="_token"]').val() // CSRF token
+                    _token: $('input[name="_token"]').val(), // Include CSRF token
+                    _method: 'DELETE' // Send DELETE method
                 },
                 success: function(response) {
                     if (response.success) {
-                        $('#quantity-' + itemId).text(response.quantity);
-                        $('#subtotal-' + itemId).text('Rp ' + response.subtotal);
-                        // Safely update totalsubtotal element if cart exists
-                        @isset($cart)
-                            $('#totalsubtotal-{{ $cart->temp_ID }} #totalAmount').text(response
-                                .totalSubtotal || '0');
-                        @else
-                            $('#totalsubtotal-empty #totalAmount').text(response.totalSubtotal ||
-                                '0');
-                        @endisset
-                        notyf.success('Cart updated successfully!');
+                        // Show success notification
+                        notyf.success(response.message);
+
+                        // Remove the item from the view
+                        form.closest('.cart-item').remove();
+
+                        // Update the total subtotal after item is deleted
+                        updateTotalSubtotal(-response
+                        .deletedSubtotal); // Subtract the deleted item's subtotal
                     } else {
-                        notyf.error(response.error);
+                        notyf.error(response
+                        .message); // Show error message if deletion fails
                     }
                 },
                 error: function(xhr) {
-                    const errorMessage = xhr.responseJSON?.error ||
-                        'Something went wrong. Please try again.';
-                    notyf.error(errorMessage);
-                }
-            });
-        }
-
-        // Handle item delete
-        $('.delete-cart-item').on('click', function(e) {
-            e.preventDefault();
-            const $form = $(this).closest('form');
-
-            $.ajax({
-                url: $form.attr('action'),
-                method: 'POST',
-                data: new FormData($form[0]),
-                processData: false,
-                contentType: false,
-                success: function(data) {
-                    if (data.success) {
-                        notyf.success(data.message);
-                        const $cartItem = $(e.target).closest('.cart-item');
-                        $cartItem.remove();
-
-                        $('#total-quantity').text(data.totalQuantity || 0);
-                        $('#total-price').text(data.totalPrice || '0');
-
-                        // Update total subtotal based on the data returned
-                        if (data.totalSubtotal !== undefined) {
-                            @isset($cart)
-                                $('#totalsubtotal-{{ $cart->temp_ID }} #totalAmount').text(
-                                    data.totalSubtotal);
-                            @else
-                                $('#totalsubtotal-empty #totalAmount').text(data
-                                    .totalSubtotal);
-                            @endisset
-                        }
-                    } else {
-                        notyf.error(data.message);
-                    }
-                },
-                error: function() {
                     notyf.error('Something went wrong. Please try again.');
                 }
             });
         });
+
+        // Update quantity when decrease button is clicked
+        $('.decrease-btn').on('click', function(e) {
+            e.preventDefault();
+            var itemId = $(this).data('id');
+            var currentQuantity = parseInt($('#quantity-' + itemId).text());
+
+            // If the quantity is at minimum (1), show a message
+            if (currentQuantity <= 1) {
+                notyf.error('Minimum quantity is 1');
+                return;
+            }
+
+            updateQuantity(itemId, currentQuantity - 1);
+        });
+
+        // Update quantity when increase button is clicked
+        $('.increase-btn').on('click', function(e) {
+            e.preventDefault();
+            var itemId = $(this).data('id');
+            var currentQuantity = parseInt($('#quantity-' + itemId).text());
+
+            // If the quantity is at maximum (2), show a message
+            if (currentQuantity >= 2) {
+                notyf.error('Maximum quantity is 2');
+                return;
+            }
+
+            updateQuantity(itemId, currentQuantity + 1);
+        });
+
+        // Function to update quantity and subtotal
+        function updateQuantity(itemId, newQuantity) {
+            $.ajax({
+                url: '/cart/update/' + itemId,
+                method: 'PUT',
+                data: {
+                    _token: $('input[name="_token"]').val(),
+                    quantity: newQuantity
+                },
+                success: function(response) {
+                    if (response.success) {
+                        // Update quantity display
+                        $('#quantity-' + itemId).text(response.quantity);
+
+                        // Update subtotal display
+                        $('#subtotal-' + itemId).text('Rp ' + response.subtotal.toLocaleString(
+                            'id-ID'));
+
+                        // Update the total subtotal after quantity change
+                        updateTotalSubtotal(response.subtotal - response.oldSubtotal);
+
+                        // Show success notification
+                        notyf.success(response.message);
+                    } else {
+                        notyf.error(response.message); // Show error message
+                    }
+                },
+                error: function(xhr) {
+                    try {
+                        var errorResponse = JSON.parse(xhr.responseText);
+                        notyf.error(errorResponse.message || 'Something went wrong');
+                    } catch (e) {
+                        notyf.error('Something went wrong');
+                    }
+                }
+            });
+        }
+
+        // Function to update the total subtotal
+        function updateTotalSubtotal(amount) {
+            totalSubtotal += amount; // Add or subtract based on the action
+            $('#totalAmount').text('Rp ' + totalSubtotal.toLocaleString('id-ID')); // Update the display
+        }
     });
 </script>
+
 
 </html>
