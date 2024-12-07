@@ -231,10 +231,10 @@
 
                         // Update the total subtotal after item is deleted
                         updateTotalSubtotal(-response
-                        .deletedSubtotal); // Subtract the deleted item's subtotal
+                            .deletedSubtotal); // Subtract the deleted item's subtotal
                     } else {
                         notyf.error(response
-                        .message); // Show error message if deletion fails
+                            .message); // Show error message if deletion fails
                     }
                 },
                 error: function(xhr) {
@@ -291,6 +291,7 @@
                         $('#subtotal-' + itemId).text('Rp ' + response.subtotal.toLocaleString(
                             'id-ID'));
 
+
                         // Update the total subtotal after quantity change
                         updateTotalSubtotal(response.subtotal - response.oldSubtotal);
 
@@ -318,6 +319,5 @@
         }
     });
 </script>
-
 
 </html>
