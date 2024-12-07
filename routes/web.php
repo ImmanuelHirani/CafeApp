@@ -48,7 +48,9 @@ Route::get('/customer/detail/{id}', [CustomerController::class, 'getCustomerDeta
 
 // Admin Product
 Route::get('/admin/product', [MenuController::class, 'Product'])->name('admin.product');
-Route::get('/admin/product/detail/{id}/{size?}', [MenuController::class, 'getMenuDetails'])->name('admin.product.detail');
+Route::get('/admin/product/detail/{id}', [MenuController::class, 'getMenuDetails'])->name('admin.product.detail');
+
+// Route untuk update ukuran menu
 
 
 Route::put('/update/product/{id}', [MenuController::class, 'updateMenu'])->name('update.menu');

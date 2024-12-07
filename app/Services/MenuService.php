@@ -58,50 +58,56 @@ class MenuService
         }
     }
 
-    public function updateMenu(Request $request, $id, $size = null)
+    public function updateMenu($id, array $validated, Request $request)
     {
-        $validated = $request->validate([
-            'menu_type' => 'required|string|min:1|max:10',
-            'image' => 'nullable|mimes:jpg,jpeg,bmp,png|max:2048',
-            'name' => 'required|string|regex:/^[a-zA-Z\s]+$/|min:1|max:30',
-            'stock' => 'required|integer|min:1|max:100',
-            'menu_description' => 'required|string|regex:/^[a-zA-Z\s]+$/|min:1|max:255',
-            'is_active' => 'required|int|min:0|max:1',
-            'price' => 'required|numeric|min:20000',
-            'is_active_properties' => 'required|int|min:0|max:1',
-        ]);
+        // Mencari menu
+        $menu = $this->menuRepo->find($id);
 
-        try {
-            $menu = Menu::find($id);
-
-            if (!$menu) {
-                return 'Menu not found.';
-            }
-
-            // Proses upload gambar jika ada
-            if ($request->hasFile('image')) {
-                $image = $request->file('image');
-                $imagePath = $image->store('menu_images', 'public');
-                $validated['image'] = $imagePath;
-            }
-
-
-            $properties = menuProperties::where('menu_ID', $id)
-                ->where('size', $size) // Pastikan size diikutsertakan
-                ->first();
-
-            if (!$properties) {
-                Log::error("MenuProperties not found for menu_ID: $id and size: $size");
-                return 'Size not found for this menu.';
-            }
-
-            // Simpan perubahan menggunakan repository
-            $this->menuRepo->update($menu, $properties, $validated);
-
-            return 'Menu and size properties updated successfully.';
-        } catch (\Exception $e) {
-            Log::error('Menu update error: ' . $e->getMessage());
-            return 'Failed to update menu: ' . $e->getMessage();
+        if (!$menu) {
+            throw new \Exception('Menu not found.');
         }
+
+        // Proses upload gambar jika ada
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imagePath = $image->store('menu_images', 'public');
+            $validated['image'] = $imagePath;
+        }
+
+        // Memperbarui menu menggunakan repository
+        $this->menuRepo->update($menu, $validated);
+    }
+
+    // MenuService.php
+
+    public function updateMenuSize($id, $size, array $validated)
+    {
+        // Cari menu berdasarkan ID dan size
+        $menu = $this->menuRepo->findSize($id, $size);
+
+        if (!$menu) {
+            throw new \Exception('Menu or Size not found.');
+        }
+
+        // Update harga untuk setiap ukuran
+        foreach ($validated['price'] as $size => $price) {
+            $menuProperty = $this->menuRepo->findSize($id, $size);
+            if ($menuProperty) {
+                $this->menuRepo->updateSize($menuProperty, ['price' => $price]);
+            }
+        }
+    }
+
+
+    public function deleteMenuById(int $id): bool
+    {
+        $menu = Menu::find($id);
+
+        if ($menu) {
+            $menu->delete();
+            return true;
+        }
+
+        return false;
     }
 }

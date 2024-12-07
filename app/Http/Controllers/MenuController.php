@@ -43,54 +43,83 @@ class MenuController extends Controller
         }
     }
 
-    public function updateMenu(Request $request, $id, $size = null)
+    public function updateMenu(Request $request, $id)
     {
-        // Memanggil service untuk memperbarui menu
-        $result = $this->menuService->updateMenu($request, $id,);
+        // Validasi data untuk menu utama
+        $validated = $request->validate([
+            'menu_type' => 'required|string|min:1|max:10',
+            'image' => 'nullable|mimes:jpg,jpeg,bmp,png|max:2048',
+            'name' => 'required|string|regex:/^[a-zA-Z\s]+$/|min:1|max:30',
+            'stock' => 'required|integer|min:1|max:100',
+            'menu_description' => 'required|string|regex:/^[a-zA-Z\s]+$/|min:1|max:255',
+            'is_active' => 'required|int|min:0|max:1',
+            'price' => 'integer|min:20000|max:200000', // Ensure that price is integer
+        ]);
 
-        // Mengecek apakah update berhasil atau gagal
-        if ($result == 'Menu not found.' || $result == 'Size not found for this menu.' || strpos($result, 'Failed') === 0) {
-            return redirect()->back()->withErrors(['error' => $result]);
+        // Ambil data menu utama
+        try {
+            $this->menuService->updateMenu($id, $validated, $request);
+        } catch (\Exception $e) {
+            Log::error('Menu update error: ' . $e->getMessage());
+            return redirect()->back()->withErrors(['error' => 'Failed to update menu: ' . $e->getMessage()]);
         }
 
-        return redirect()->route('admin.product.detail', ['id' => $id])->with('success', $result);
+        // Jika ada data properties, lakukan pembaruan
+        if ($request->has('properties')) {
+            $propertiesData = $request->input('properties');
+
+            try {
+                foreach ($propertiesData as $propertyData) {
+                    if (empty($propertyData['property_ID'])) {
+                        throw new \Exception('Invalid property ID.');
+                    }
+
+                    // Convert price to integer if it's not
+                    $propertyData['price'] = isset($propertyData['price']) ? intval($propertyData['price']) : null;
+
+                    $updateData = [
+                        'size' => $propertyData['size'] ?? null,
+                        'price' => $propertyData['price'] ?? null,
+                        'is_active_properties' => $propertyData['is_active_properties'] ?? 1,
+                    ];
+
+                    MenuProperties::where('property_ID', $propertyData['property_ID'])
+                        ->where('menu_ID', $id)
+                        ->update($updateData);
+                }
+            } catch (\Exception $e) {
+                return redirect()->back()->withErrors(['error' => 'Failed to update properties: ' . $e->getMessage()]);
+            }
+        }
+
+        // Setelah sukses update menu dan properties, arahkan kembali ke detail produk
+        return redirect()->route('admin.product.detail', ['id' => $id])
+            ->with('success', 'Updated Successfully');
     }
 
 
-    public function getMenuDetails($id, $size = null)
+    public function getMenuDetails($id)
     {
         try {
-            // Menemukan menu berdasarkan ID
-            $menuDetails = Menu::find($id);
+            // Menemukan menu berdasarkan ID dengan relasi menu_properties
+            $menuDetails = Menu::with('properties')->where('menu_ID', $id)->first();
 
             // Mengecek apakah menu ditemukan
             if (!$menuDetails) {
                 return redirect()->route('menu.index')->withErrors(['error' => 'Menu not found']);
             }
 
-            // Jika ada size, cari properti berdasarkan size
-            $menuProperties = $size ? $menuDetails->properties()->where('size', $size)->first() : null;
-
-            // Mengatur ukuran yang dipilih
-            $selectedSize = $size;
+            // Mendapatkan semua menu untuk digunakan dalam view
+            $menus = Menu::all();
 
             // Mengecek apakah request ini untuk halaman admin atau frontend
             if (request()->is('admin/*')) {
+
                 // Jika rute dimulai dengan 'admin/', tampilkan tampilan admin
-                return view('Backend.Admin-Product', [
-                    'menus' => Menu::all(),
-                    'menusDetails' => $menuDetails,
-                    'menuProperties' => $menuProperties,
-                    'selectedSize' => $selectedSize,
-                ]);
+                return view('Backend.Admin-Product', compact('menuDetails', 'menus'));
             } else {
                 // Jika bukan admin, tampilkan tampilan frontend
-                return view('Frontend.menu-detail', [
-                    'menus' => Menu::all(),
-                    'menusDetails' => $menuDetails,
-                    'menuProperties' => $menuProperties,
-                    'selectedSize' => $selectedSize,
-                ]);
+                return view('Frontend.menu-detail', compact('menuDetails', 'menus'));
             }
         } catch (\Exception $e) {
             // Menangani error dan mengarahkan kembali dengan pesan kesalahan
@@ -98,24 +127,15 @@ class MenuController extends Controller
         }
     }
 
-
     public function deleteMenu($id)
     {
         // Menemukan menu yang ingin dihapus
-        $menu = Menu::find($id);
-
-        if (!$menu) {
+        if (!$this->menuService->deleteMenuById($id)) {
             return redirect()->back()->with('error', 'Menu not found.');
         }
 
-        // Melakukan penghapusan
-        if ($this->menuRepo->delete($id)) {
-            // Mengalihkan ke daftar menu setelah berhasil dihapus
-            return redirect()->route('admin.product')->with('success', 'Menu deleted successfully.');
-        }
-
-        // Jika gagal menghapus menu
-        return redirect()->back()->with('error', 'Failed to delete menu.');
+        // Jika berhasil menghapus menu
+        return redirect()->route('admin.product')->with('success', 'Menu deleted successfully.');
     }
 
     public function Product()

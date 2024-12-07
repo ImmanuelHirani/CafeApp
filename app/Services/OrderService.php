@@ -24,7 +24,6 @@ class OrderService
 
         try {
             $customerId = Auth::user()->customer_ID;
-
             // Ambil order transaction yang sedang pending
             $orderTransaction = $this->orderRepo->getPendingOrderTransactionByCustomerId($customerId);
 
@@ -32,7 +31,6 @@ class OrderService
             if (!$orderTransaction) {
                 $orderTransaction = $this->orderRepo->createNewOrderTransaction($customerId);
             }
-
             // Ambil semua item dari cart
             $tempTransactions = $this->orderRepo->getCartItemsByCustomerId($customerId);
 
