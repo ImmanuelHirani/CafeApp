@@ -101,7 +101,7 @@
                             @endif
                             <div class="flex flex-col h-[8rem] gap-6 wrap-body">
                                 <div class="mt-2 text-lg body-card">
-                                    <p class="font-medium">{{ $menu->name }}</p>
+                                    <p class="font-medium line-clamp-1">{{ $menu->name }}</p>
                                     @php
                                         // Mencari property dengan size 'sm'
                                         $property = $menu->properties->firstWhere('size', 'xl');
@@ -396,56 +396,6 @@
 <script src="{{ asset('/js/modal.js') }}"></script>
 <script src="{{ asset('/js/pagginationPage.js') }}"></script>
 <script src="{{ asset('/js/tabs-sideMenu.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
-<!-- SweetAlert2 CDN -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    // Create an instance of Notyf
-    const notyf = new Notyf({
-        duration: 1000,
-        position: {
-            x: 'right',
-            y: 'top',
-        },
-        types: [{
-                type: 'warning',
-                background: 'orange',
-                color: 'white', // Set text color to white
-                icon: {
-                    className: 'material-icons',
-                    tagName: 'i',
-                    text: 'warning',
-                },
-            },
-            {
-                type: 'success',
-                background: '#2ECC71',
-                duration: 10000,
-                dismissible: true,
-                color: 'white', // Set text color to white
-            },
-            {
-                type: 'error',
-                background: 'indianred',
-                duration: 10000,
-                dismissible: true,
-                color: 'white', // Set text color to white
-            },
-        ],
-    });
-
-    // Display error notifications if there are any
-    @if ($errors->any())
-        @foreach ($errors->all() as $error)
-            notyf.error("{{ $error }}");
-        @endforeach
-    @endif
-
-    // Display a success notification if there is a success message in the session
-    @if (session('success'))
-        notyf.success("{{ session('success') }}");
-    @endif
-</script>
 <script>
     function confirmation(ev) {
         ev.preventDefault(); // Mencegah pengiriman form default

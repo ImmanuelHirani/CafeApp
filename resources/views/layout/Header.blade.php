@@ -20,12 +20,12 @@
                             class="text-2xl ti ti-headset"></i>Customers</a>
                 </li>
                 <li class="relative group">
-                    <a href="/Admin/order/custom"
+                    <a href="/admin/menu/custom/order"
                         class="!text-accent-color-admin flex items-center gap-3 nav-toggle px-6 py-2 rounded-full outline-1 outline-gray-300"><i
                             class="text-2xl ti ti-table-options"></i>Custom Orders</a>
                 </li>
                 <li class="relative group">
-                    <a href="/Admin/order"
+                    <a href="/admin/menu/order"
                         class="!text-accent-color-admin flex items-center gap-3 nav-toggle px-6 py-2 rounded-full outline-1 outline-gray-300"><i
                             class="text-2xl ti ti-checkup-list"></i>Orders</a>
                 </li>
@@ -39,3 +39,53 @@
         </div>
     </nav>
 </header>
+<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+<!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    // Create an instance of Notyf
+    const notyf = new Notyf({
+        duration: 1000,
+        position: {
+            x: 'right',
+            y: 'top',
+        },
+        types: [{
+                type: 'warning',
+                background: 'orange',
+                color: 'white', // Set text color to white
+                icon: {
+                    className: 'material-icons',
+                    tagName: 'i',
+                    text: 'warning',
+                },
+            },
+            {
+                type: 'success',
+                background: '#2ECC71',
+                duration: 10000,
+                dismissible: true,
+                color: 'white', // Set text color to white
+            },
+            {
+                type: 'error',
+                background: 'indianred',
+                duration: 10000,
+                dismissible: true,
+                color: 'white', // Set text color to white
+            },
+        ],
+    });
+
+    // Display error notifications if there are any
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            notyf.error("{{ $error }}");
+        @endforeach
+    @endif
+
+    // Display a success notification if there is a success message in the session
+    @if (session('success'))
+        notyf.success("{{ session('success') }}");
+    @endif
+</script>

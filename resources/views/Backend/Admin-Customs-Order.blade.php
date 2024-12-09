@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="../public/output.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
@@ -16,50 +15,11 @@
     <!-- jQuery dan DataTables JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    @vite('resources/css/app.css')
 </head>
 
 <body id="Admin">
-    <header class="px-6 py-6 rounded-xl bg-primary-color-admin">
-        <nav class="flex items-center justify-between text-lg font-medium">
-            <p>Cafe Travel - CMS</p>
-            <!-- middle Content -->
-            <div class="middle-quick-link">
-                <ul class="flex items-center gap-6">
-                    <li class="relative group">
-                        <a href="Admin-Dashboard.html"
-                            class="!text-accent-color-admin px-6 flex items-center gap-3 nav-toggle py-2 rounded-full outline-1 outline-gray-300">
-                            <i class="text-2xl ti ti-layout-dashboard"></i>Dashboard</a>
-                    </li>
-                    <li class="relative group">
-                        <a href="Admin-Product.html"
-                            class="px-6 py-2 rounded-full flex items-center gap-3 !text-accent-color-admin nav-toggle outline-1 outline-gray-300">
-                            <i class="text-2xl ti ti-box"></i>Products</a>
-                    </li>
-                    <li class="relative group">
-                        <a href="Admin-Customers.html"
-                            class="!text-accent-color-admin flex items-center gap-3 nav-toggle px-6 py-2 rounded-full outline-1 outline-gray-300"><i
-                                class="text-2xl ti ti-headset"></i>Customers</a>
-                    </li>
-                    <li class="relative group">
-                        <a href="Admin-Customs-Order.html"
-                            class="!text-accent-color-admin flex items-center gap-3 nav-toggle px-6 py-2 rounded-full outline-1 outline-gray-300"><i
-                                class="text-2xl ti ti-table-options"></i>Custom Orders</a>
-                    </li>
-                    <li class="relative group">
-                        <a href="Admin-Orders.html"
-                            class="!text-accent-color-admin flex items-center gap-3 nav-toggle px-6 py-2 rounded-full outline-1 outline-gray-300"><i
-                                class="text-2xl ti ti-checkup-list"></i>Orders</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- middle Content End -->
-            <div class="flex items-center gap-4 user">
-                <img src="https://png.pngtree.com/background/20230426/original/pngtree-happy-old-man-wearing-glasses-is-smiling-picture-image_2485948.jpg"
-                    alt="" class="object-cover w-10 h-10 rounded-full" />
-                <p>Super Admin</p>
-            </div>
-        </nav>
-    </header>
+    @include('layout.header')
     <main class="grid grid-cols-7 gap-4 py-4">
         <section class="flex flex-col col-span-5 p-6 rounded-lg gap-9 bg-primary-color-admin">
             <div class="overflow-x-auto">
@@ -257,9 +217,8 @@
         </aside>
     </main>
 </body>
-<script src="../js/table.js"></script>
-<script src="../js/selectedStatus.js"></script>
-<script src="../js/tabs-sideMenu.js"></script>
-<script src="../js/navbar.js"></script>
+<script src="{{ asset('/js/table.js') }}"></script>
+<script src="{{ asset('/js/selectedStatus.js') }}"></script>
+<script src="{{ asset('/js/tabs-sideMenu.js') }}"></script>
 
 </html>

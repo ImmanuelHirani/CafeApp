@@ -11,6 +11,14 @@ class CartController extends Controller
 {
     public function AddToCart(Request $request)
     {
+
+        // Pastikan pengguna sudah login
+        $customer = Auth::user();
+        if (!$customer) {
+            return redirect()->back()->with('error', 'Login First!');
+        }
+
+
         $request->validate([
             'menu_ID' => 'required|exists:menu_items,menu_ID',
             'customer_ID' => 'required|exists:customers,customer_ID', // Sesuaikan nama tabel customer
@@ -70,8 +78,15 @@ class CartController extends Controller
         // Hapus item dari keranjang
         $item->delete();
 
+        // Hitung total subtotal sisa keranjang
+        $totalSubtotal = tempTransaction::where('customer_ID', Auth::id())->sum('subtotal');
+
         // Kembalikan respons sukses
-        return response()->json(['success' => true, 'message' => 'Item removed from cart.']);
+        return response()->json([
+            'success' => true,
+            'message' => 'Item removed from cart.',
+            'totalSubtotal' => $totalSubtotal
+        ]);
     }
 
     public function updateCartQuantity(Request $request, $tempID)
@@ -111,6 +126,7 @@ class CartController extends Controller
             ]);
         }
 
+
         // Update kuantitas item
         $item->quantity = $request->quantity;
 
@@ -118,12 +134,16 @@ class CartController extends Controller
         $item->subtotal = $item->quantity * $property->price;
         $item->save();
 
+        // Hitung total subtotal sisa keranjang
+        $totalSubtotal = tempTransaction::where('customer_ID', Auth::id())->sum('subtotal');
+
         // Kembalikan respons sukses dengan data terbaru
         return response()->json([
             'success' => true,
             'message' => 'Quantity updated successfully.',
             'quantity' => $item->quantity,
             'subtotal' => $item->subtotal,
+            'totalSubtotal' => $totalSubtotal,
             'price' => $property->price
         ]);
     }

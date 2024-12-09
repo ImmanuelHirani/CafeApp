@@ -27,4 +27,9 @@ class Customer extends Authenticatable
     {
         return $this->belongsToMany(Menu::class, 'favorite_menus', 'customer_ID', 'menu_ID');
     }
+
+    public function orderCustomer()
+    {
+        return $this->hasMany(orderTransaction::class, 'customer_ID', 'customer_ID');
+    }
 }

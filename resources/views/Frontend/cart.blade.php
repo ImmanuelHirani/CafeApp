@@ -53,13 +53,13 @@
                         </div>
                         @forelse ($temp_cart as $cart)
                             <div
-                                class="relative flex items-center self-start w-full gap-5 px-3 py-3 rounded-lg outline outline-1 outline-highlight-content md:justify-between h-fit md:px-4 md:py-4 cart-item font-aesthetnova bg-secondary-accent-color">
+                                class="relative flex items-center self-start w-full gap-12 px-3 py-3 rounded-lg outline outline-1 outline-highlight-content md:justify-between h-fit md:px-4 md:py-4 cart-item font-aesthetnova bg-secondary-accent-color">
                                 <img src="{{ asset('storage/' . $cart->menu->image) }}"
-                                    class="md:w-[220px] w-[140px] object-cover rounded-lg h-fit md:h-[180px]"
+                                    class="md:w-[30%] w-[140px] object-cover rounded-lg h-fit md:h-[180px]"
                                     alt="" />
-                                <div class="flex flex-col gap-3 wrap">
+                                <div class="flex w-[30%]  flex-col gap-3 wrap">
                                     <p>{{ $cart->menu->name }}</p>
-                                    <p class="text-highlight-content">Extra : -</p>
+                                    <p class="uppercase text-highlight-content">Size : {{ $cart->size }}</p>
                                     <div class="flex items-center gap-3 md:hidden wrap">
                                         <div
                                             class="flex items-center justify-center gap-8 px-4 py-1.5 rounded-full w-fit outline outline-1 outline-white">
@@ -89,7 +89,7 @@
                                     </div>
                                     <p class="inline-block md:hidden">Rp 500.000</p>
                                 </div>
-                                <div class="items-center hidden gap-3 md:flex wrap">
+                                <div class="items-center w-[20%]  hidden gap-3 md:flex wrap">
                                     <form action="{{ route('cart.update', $cart->temp_ID) }}" method="POST"
                                         class="cart-form">
                                         @csrf
@@ -123,7 +123,7 @@
                                         </button>
                                     </form>
                                 </div>
-                                <div class="flex items-center justify-between wrap">
+                                <div class="flex items-center justify-center w-[20%]  wrap">
                                     <p class="text-xl md:text-lg" id="subtotal-{{ $cart->temp_ID }}">
                                         Rp {{ number_format($cart->subtotal, 0, ',', '.') }}
                                     </p>
@@ -232,6 +232,10 @@
                         // Update the total subtotal after item is deleted
                         updateTotalSubtotal(-response
                             .deletedSubtotal); // Subtract the deleted item's subtotal
+
+                        // Update the total displayed subtotal from the response
+                        $('#totalAmount').text(response.totalSubtotal
+                            .toLocaleString('id-ID'));
                     } else {
                         notyf.error(response
                             .message); // Show error message if deletion fails
@@ -291,12 +295,15 @@
                         $('#subtotal-' + itemId).text('Rp ' + response.subtotal.toLocaleString(
                             'id-ID'));
 
-
                         // Update the total subtotal after quantity change
                         updateTotalSubtotal(response.subtotal - response.oldSubtotal);
 
                         // Show success notification
                         notyf.success(response.message);
+
+                        // Update the total displayed subtotal from the response
+                        $('#totalAmount').text(response.totalSubtotal.toLocaleString(
+                            'id-ID'));
                     } else {
                         notyf.error(response.message); // Show error message
                     }
@@ -319,5 +326,6 @@
         }
     });
 </script>
+
 
 </html>

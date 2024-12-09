@@ -35,6 +35,10 @@ Route::post('/cart/add', [CartController::class, 'AddToCart'])->name('cart.add')
 Route::get('/payment', [OrderController::class, 'payment'])->name('payment.view');
 Route::get('/tracking/order', [OrderController::class, 'trackOrder'])->name('tracking.view');
 Route::get('/make-order', [OrderController::class, 'makeOrder'])->name('make.order');
+Route::put('/order/cancel/{orderId}', [OrderController::class, 'cancelOrder'])->name('order.cancel');
+Route::put('/order/pay/{orderId}', [OrderController::class, 'payOrder'])->name('order.pay');
+
+
 
 // Contact US
 Route::get('/contact', [contactUsController::class, 'contactUS'])->name('contact.view');
@@ -55,6 +59,13 @@ Route::get('/admin/product', [MenuController::class, 'Product'])->name('admin.pr
 Route::get('/admin/product/detail/{id}', [MenuController::class, 'getMenuDetails'])->name('admin.product.detail');
 
 // Route untuk update ukuran menu
+
+Route::get('/admin/menu/order', [OrderController::class, 'adminOrder'])->name('admin.order');
+Route::get('/admin/menu/custom/order', [OrderController::class, 'adminCustomOrder'])->name('admin.custom.order');
+Route::get('/admin/menu/order/{id}', [OrderController::class, 'getCustomerOrderDetails'])->name('admin.order.details');
+// Route untuk mengupdate status order
+Route::post('/order/update-status/{orderID}', [OrderController::class, 'updateStatus'])->name('order.updateStatus');
+
 
 
 Route::put('/update/product/{id}', [MenuController::class, 'updateMenu'])->name('update.menu');

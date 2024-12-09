@@ -39,7 +39,7 @@
                                             method="POST">
                                             @method('get')
                                             @csrf
-                                            <button class="w-10 h-10 text-red-500 bg-white rounded-full">
+                                            <button class="w-10 h-10 bg-white rounded-full text-secondary-color">
                                                 <i class="text-2xl ti ti-shopping-cart-search"></i>
                                             </button>
                                         </form>
@@ -143,16 +143,18 @@
                 <p class="text-base text-center">
                     Shipping and taxes calculated at checkout.
                 </p>
-                <a href="{{ route('cart.view') }}">
-                    <button class="w-full py-3 mt-4 font-semibold bg-red-500 hover:bg-red-600">
-                        VIEW CART
-                    </button>
-                </a>
-                <a href="menu.html">
-                    <button class="w-full mt-4 text-center">
-                        Buy Other Product
-                    </button>
-                </a>
+                <div class="flex items-center w-full gap-3 wrap">
+                    <a class="w-full" href="{{ route('cart.view') }}">
+                        <button class="w-full py-3 mt-4 font-semibold rounded-lg bg-secondary-color hover:bg-red-600">
+                            VIEW CART
+                        </button>
+                    </a>
+                    <a class="w-full" href="/payment">
+                        <button class="w-full py-3 mt-4 font-semibold rounded-lg bg-secondary-color hover:bg-red-600">
+                            PAYMENT
+                        </button>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

@@ -19,6 +19,7 @@ class orderTransaction extends Model
     {
         return $this->belongsTo(Customer::class, 'customer_ID', 'customer_ID');
     }
+
     public function details()
     {
         return $this->hasMany(transactionDetails::class, 'order_ID', 'order_ID');
