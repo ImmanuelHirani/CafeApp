@@ -141,7 +141,6 @@ class MenuController extends Controller
         }
     }
 
-
     public function deleteMenu($id)
     {
         // Menemukan menu yang ingin dihapus

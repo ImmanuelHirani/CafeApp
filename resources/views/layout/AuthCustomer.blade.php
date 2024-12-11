@@ -12,7 +12,7 @@
                     <div class="relative">
                         <input required type="text" name="email" value="{{ old('email') }}"
                             class="w-full h-12 border-b-[1px] border-white bg-transparent outline-none"
-                            placeholder="Username / Email" />
+                            placeholder="Email" />
                         <svg class="absolute right-0 w-6 h-6 bottom-2" fill="white" viewBox="0 0 48 48"
                             xmlns="http://www.w3.org/2000/svg">
                             <g data-name="8-Email" id="_8-Email">

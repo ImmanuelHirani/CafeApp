@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Customer;
 use App\Repository\CustomerRepo;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class CustomerService
 {
@@ -26,5 +27,28 @@ class CustomerService
 
         // Gunakan repository untuk menyimpan customer
         return $this->customerRepo->insert($customer);
+    }
+
+    public function updateCustomer(Customer $customer, array $data): Customer
+    {
+        if (isset($data['image']) && $data['image'] instanceof \Illuminate\Http\UploadedFile) {
+            $image = $data['image'];
+
+            // Simpan gambar ke dalam storage
+            $imagePath = Storage::disk('public')->put('customer_images', $image);
+
+            // Hapus gambar lama jika ada
+            if ($customer->image) {
+                Storage::disk('public')->delete($customer->image);
+            }
+
+            // Update path gambar baru
+            $data['image'] = $imagePath;
+        }
+
+        // Perbarui data customer
+        $customer->fill($data);
+
+        return $this->customerRepo->update($customer);
     }
 }

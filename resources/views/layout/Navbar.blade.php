@@ -37,24 +37,16 @@
                                 alt="Cart" />
                         </button>
                     @endif
-
                     @auth
-                        <form action="{{ route('logout') }}" method="POST" class="flex items-center gap-3">
-                            @csrf
-
-                            <button type="submit">
-                                <img src="{{ asset('/asset/SVG/User_login_navbar.svg') }}" class="w-8 md:w-10"
-                                    alt="Logout" />
-                            </button>
-                        </form>
+                        <a href="/profile">
+                            <img src="{{ asset('/asset/SVG/User_login_navbar.svg') }}" class="w-8 md:w-10" alt="Logout" />
+                        </a>
                     @endauth
                     @guest
-
                         <button id="loginRegisterTrigger">
                             <img src="{{ asset('/asset/SVG/User_login_navbar.svg') }}" class="w-8 md:w-10" alt="" />
                         </button>
                     @endguest
-
                     <button id="navTrigger" class="flex items-center p-2 rounded-full xl:hidden bg-secondary-color">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

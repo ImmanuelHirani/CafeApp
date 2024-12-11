@@ -48,6 +48,33 @@ class CustomerController extends Controller
             return redirect()->back()->withErrors(['error' => 'Failed to register customer.'])->withInput();
         }
     }
+    public function updateCustomer(Request $request, $customer_ID)
+    {
+        $request->validate([
+            'username' => 'required|string|max:30',
+            'email' => 'required|email',
+            'phone' => 'required|regex:/^[0-9]{10,15}$/',
+            'image' => 'nullable|image|mimes:jpeg,png|max:1024', // Maks. 1 MB
+        ]);
+
+        // Ambil data dari request
+        $data = $request->only(['username', 'email', 'phone']);
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image'); // Simpan file langsung
+        }
+
+        // Validasi customer
+        $customer = Auth::user();
+        if (!$customer || $customer->customer_ID != $customer_ID) {
+            return redirect()->back()->with('error', 'Unauthorized or User Not Found');
+        }
+
+        // Panggil service untuk update
+        $this->customerService->updateCustomer($customer, $data);
+
+        return redirect()->back()->with('success', 'Profile updated successfully');
+    }
+
     public function login(Request $request)
     {
         $credentials = $request->validate([

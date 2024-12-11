@@ -23,7 +23,6 @@
                         <div
                             class="flex flex-col p-2.5 rounded-lg md:p-8 gap-y-8 content-body bg-secondary-accent-color">
                             <!-- Repeted Content -->
-
                             @foreach ($orderTransactions as $orderTransaction)
                                 @foreach ($orderTransaction->details as $orderDetail)
                                     <div

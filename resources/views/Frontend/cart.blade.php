@@ -24,32 +24,25 @@
                             class="flex flex-col self-start w-full gap-4 px-4 py-4 rounded-lg h-fit md:px-8 box-Location font-aesthetnova bg-secondary-accent-color">
                             <span class="flex items-center justify-between">
                                 <p class="uppercase">Shipping Details</p>
-                                <a href="" class="flex items-center gap-3 text-green-500">Change Detail
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-green-500" width="18"
-                                        height="18" viewBox="0 0 18 24" fill="none">
-                                        <path
-                                            d="M0 15C0 15.7956 0.316071 16.5587 0.87868 17.1213C1.44129 17.6839 2.20435 18 3 18H8V23C8 23.2652 8.10536 23.5196 8.29289 23.7071C8.48043 23.8946 8.73478 24 9 24C9.26522 24 9.51957 23.8946 9.70711 23.7071C9.89464 23.5196 10 23.2652 10 23V18H15C15.724 18.002 16.4241 17.7414 16.9706 17.2666C17.5171 16.7917 17.8729 16.1349 17.972 15.4177C18.0712 14.7006 17.9069 13.9718 17.5097 13.3665C17.1125 12.7612 16.5094 12.3205 15.812 12.126L14.212 5.737C14.8371 5.45648 15.3474 4.97042 15.6579 4.35966C15.9685 3.7489 16.0606 3.05024 15.919 2.37986C15.7773 1.70948 15.4105 1.10778 14.8795 0.674814C14.3484 0.241849 13.6852 0.00371064 13 0L5 0C4.31458 0.00303401 3.65086 0.240689 3.1193 0.673418C2.58774 1.10615 2.22039 1.70785 2.07838 2.37841C1.93636 3.04896 2.02825 3.74793 2.33876 4.35899C2.64926 4.97006 3.15965 5.45637 3.785 5.737L2.185 12.126C1.55818 12.3029 1.00597 12.6791 0.611789 13.1975C0.217605 13.716 0.00286194 14.3487 0 15ZM15 16H3C2.73478 16 2.48043 15.8946 2.29289 15.7071C2.10536 15.5196 2 15.2652 2 15C2 14.7348 2.10536 14.4804 2.29289 14.2929C2.48043 14.1054 2.73478 14 3 14H15C15.2652 14 15.5196 14.1054 15.7071 14.2929C15.8946 14.4804 16 14.7348 16 15C16 15.2652 15.8946 15.5196 15.7071 15.7071C15.5196 15.8946 15.2652 16 15 16ZM4.281 12L5.781 6H12.219L13.719 12H4.281ZM5 2H13C13.2652 2 13.5196 2.10536 13.7071 2.29289C13.8946 2.48043 14 2.73478 14 3C14 3.26522 13.8946 3.51957 13.7071 3.70711C13.5196 3.89464 13.2652 4 13 4H5C4.73478 4 4.48043 3.89464 4.29289 3.70711C4.10536 3.51957 4 3.26522 4 3C4 2.73478 4.10536 2.48043 4.29289 2.29289C4.48043 2.10536 4.73478 2 5 2Z" />
-                                    </svg>
-                                </a>
                             </span>
                             <hr />
                             <div class="user-quick-details flex flex-col gap-0.5">
                                 <p class="text-highlight-content">Name & Phone Number</p>
-                                <p>Immanuel Christian Hirani</p>
-                                <p>(081314801945)</p>
+                                <p>{{ $primaryLocation->reciver_name }}</p>
+                                <p>({{ $primaryLocation->reciver_number }})</p>
                             </div>
                             <div class="user-quick-details flex flex-col gap-0.5">
                                 <p class="text-highlight-content">Location</p>
+                                <p>( {{ $primaryLocation->location_label }} )</p>
                                 <p>
-                                    Kampus Kijang Jl. Kemanggisan Ilir III No. 45, Kemanggisan /
-                                    Palmerah Jakarta Barat 11480, Indonesia
+                                    {{ $primaryLocation->reciver_address }}
                                 </p>
                             </div>
                             <hr />
-                            <button
+                            <a href="/profile"
                                 class="self-end w-full gap-3 px-2 py-2 text-base transition-all duration-300 ease-in-out rounded-lg md:w-fit 2xl:px-5 outline outline-1 outline-secondary-color hover:bg-secondary-color">
-                                Choose Other Location?
-                            </button>
+                                Change Primary Location ?
+                            </a>
                         </div>
                         @forelse ($temp_cart as $cart)
                             <div

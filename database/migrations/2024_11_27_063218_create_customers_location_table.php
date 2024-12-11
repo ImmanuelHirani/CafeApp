@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('customers_location', function (Blueprint $table) {
             $table->id('location_ID');
             $table->unsignedBigInteger('customer_ID');
+            $table->string('location_lable');
             $table->string('reciver_address');
             $table->string('reciver_number');
             $table->string('reciver_name');

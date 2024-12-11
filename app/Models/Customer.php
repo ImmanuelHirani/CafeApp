@@ -32,4 +32,9 @@ class Customer extends Authenticatable
     {
         return $this->hasMany(orderTransaction::class, 'customer_ID', 'customer_ID');
     }
+
+    public function locationCustomer()
+    {
+        return $this->hasMany(location::class, 'customer_ID', 'customer_ID');
+    }
 }

@@ -5,9 +5,10 @@ use App\Http\Controllers\contactUsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerOrderController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
-
+use App\Http\Controllers\profileController;
 
 // FE
 // Customer
@@ -19,6 +20,12 @@ Route::post('/customer/logout', [CustomerController::class, 'logout'])->name('lo
 // frontend menu
 Route::get('/menu', [MenuController::class, 'Product'])->name('frontend.menu');
 Route::get('/menu/detail/{id}/{size?}', [MenuController::class, 'getMenuDetails'])->name('frontend.menu.details');
+
+// Profile
+Route::get('/profile', [profileController::class, 'profile'])->name('frontend.profile');
+Route::put('/profile/update/{customer_ID}', [CustomerController::class, 'updateCustomer'])->name('profile.update');
+Route::post('/profile/location/add', [LocationController::class, 'addLocation'])->name('profile.location.add');
+Route::put('/profile/location/update/primary/{locationID}', [LocationController::class, 'updatePrimary'])->name('profile.location.primary');
 
 
 // Custom Order

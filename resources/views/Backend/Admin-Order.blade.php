@@ -163,7 +163,7 @@
                                 <!-- Daftar Topping -->
                                 <div class="flex flex-wrap items-center gap-2 list-wrap">
                                     <label
-                                        class="px-4 py-2 text-base rounded-full bg-secondary-accent-color-admin outline outline-1 outline-gray-300">
+                                        class="w-full px-4 py-2 text-base text-center rounded-full bg-secondary-accent-color-admin outline outline-1 outline-gray-300">
                                         {{ $detail->menu->name ?? 'Unknown Menu' }}
                                     </label>
                                 </div>

@@ -160,7 +160,7 @@ class OrderController extends Controller
         $orderTransaction->save();
 
         // Redirect back with a success message
-        return redirect()->Route('frontend.menu')->with('success', 'Order has been canceled successfully.');
+        return redirect()->Route('frontend.menu')->with('error', 'Order has been canceled');
     }
 
     public function payOrder($orderId)

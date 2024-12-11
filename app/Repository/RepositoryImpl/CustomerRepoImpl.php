@@ -28,4 +28,15 @@ class CustomerRepoImpl implements CustomerRepo
 
         return $customer;
     }
+
+    public function update(Customer $customer): Customer
+    {
+        $data = $customer->only(['username', 'email', 'phone', 'image']);
+
+        $this->conn->table('customers')
+            ->where('customer_ID', $customer->customer_ID)
+            ->update($data);
+
+        return $customer;
+    }
 }

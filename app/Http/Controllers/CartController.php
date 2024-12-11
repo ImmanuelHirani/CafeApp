@@ -150,7 +150,6 @@ class CartController extends Controller
 
     public function cartMenu()
     {
-        // Pastikan pengguna sudah login
         $customer = Auth::user();
         if (!$customer) {
             return redirect()->back()->with('error', 'Login First!');
@@ -159,15 +158,20 @@ class CartController extends Controller
         $customerID = $customer->customer_ID;
         $temp_cart = tempTransaction::where('customer_ID', $customerID)->with('menu')->get();
 
-        // Cek jika tidak ada item di temp_cart
         if ($temp_cart->isEmpty()) {
             return redirect('/menu')->with('error', 'Your cart is empty. Please add some menu.');
         }
 
         $totalSubtotal = $temp_cart->sum('subtotal');
+
+        // Ambil lokasi utama dari relasi
+        $primaryLocation = $customer->locationCustomer->firstWhere('is_primary', 1);
+
         return view('Frontend.cart', [
+            'customer' => $customer,
             'temp_cart' => $temp_cart,
-            'totalSubtotal' => $totalSubtotal, // Total keseluruhan subtotal
+            'totalSubtotal' => $totalSubtotal,
+            'primaryLocation' => $primaryLocation, // Kirim lokasi utama ke Blade
         ]);
     }
 }

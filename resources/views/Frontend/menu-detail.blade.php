@@ -60,7 +60,7 @@
                             </svg>
                             <p class="text-xs">(20)</p>
                         </div>
-                        <h4 class="py-1 line-clamp-1">{{ $menuDetails->name ?? '' }}</h4>
+                        <p class="text-4xl 3xl:text-5xl" class="py-1 line-clamp-1">{{ $menuDetails->name ?? '' }}</p>
                     </span>
                     <span class="flex flex-row justify-between md:gap-4 md:flex-col">
                         <p class="w-full text-xl md:text-2xl">

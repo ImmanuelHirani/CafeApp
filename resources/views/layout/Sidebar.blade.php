@@ -7,7 +7,7 @@
                 OTHERS ALSO BOUGHT
             </h6>
             <div class="swiper">
-                <div class="px-4 pb-8 3xl:max-h-[52.5rem] 2xl:max-h-[39rem] xl:max-h-[43em] other-item-content">
+                <div class="px-4 pt-2 pb-8 3xl:max-h-[52.5rem] 2xl:max-h-[39rem] xl:max-h-[43em] other-item-content">
                     <div class="swiper-wrapper">
                         <!-- Repeat this block for each item -->
                         @foreach ($menus as $menu)
