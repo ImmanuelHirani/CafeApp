@@ -204,7 +204,6 @@
                     @endisset
                 </div>
             </form>
-
             <div class="flex items-center w-full gap-3 p-4 mt-auto bg-white shadow-inner h-fit footer-toggle">
                 <button type="submit"
                     class="w-full h-12 rounded-full text-secondary-accent-color bg-secondary-accent-color-admin outline outline-gray-200 outline-[1px]">

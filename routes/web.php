@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\contactUsController;
+use App\Http\Controllers\CustomCategoriesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerOrderController;
@@ -30,6 +31,12 @@ Route::put('/profile/location/update/primary/{locationID}', [LocationController:
 
 // Custom Order
 Route::get('/menu/custom', [CustomerOrderController::class, 'customPizza'])->name('frontend.menu.custom');
+Route::post('/custom-categories/store', [CustomCategoriesController::class, 'store'])->name('custom.categories.store');
+Route::delete('admin/menu/custom/delete/{id}', [CustomCategoriesController::class, 'delete'])->name('custom.categories.delete');
+
+Route::get('admin/menu/custom/details/{id}', [OrderController::class, 'getCategoriesDetails'])->name('custom.categories.details');
+
+
 
 // Cart
 Route::get('/cart', [CartController::class, 'cartMenu'])->name('cart.view');

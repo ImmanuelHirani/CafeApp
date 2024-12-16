@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Custom_categories_pizza;
 use App\Models\Customer;
 use App\Models\Menu;
 use App\Models\orderTransaction;
@@ -183,6 +184,29 @@ class OrderController extends Controller
 
     public function adminCustomOrder()
     {
-        return view('Backend.Admin-Customs-Order');
+
+        $categories = Custom_categories_pizza::with(['properties', 'sizeProperties'])->get();
+
+        return view('Backend.Admin-Customs-Order', [
+            'categories' => $categories,
+        ]);
+    }
+
+    public function getCategoriesDetails($id)
+    {
+
+        $detailCategories = Custom_categories_pizza::with(['properties', 'sizeProperties'])->find($id);
+        $categories = Custom_categories_pizza::with(['properties', 'sizeProperties'])->get();
+
+        // Jika kategori tidak ditemukan
+        if (!$categories) {
+            return redirect()->back()->with('error', 'Category not found.');
+        }
+
+        // Tampilkan view dengan data kategori
+        return view('Backend.Admin-Customs-Order', [
+            'categories' => $categories,
+            'detailCategories' =>   $detailCategories,
+        ]);
     }
 }

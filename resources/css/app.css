@@ -352,4 +352,17 @@ section {
     @apply !text-secondary-accent-color;
 }
 
+/* Line */
+
+.proggres-line .line {
+    background-color: #e0e0e0; /* Warna abu-abu untuk garis belum aktif */
+    transition: background-color 0.3s ease;
+}
+
+.proggres-line .line.active {
+    background-color: #000; /* Warna hitam untuk garis aktif */
+}
+
+/* Line End */
+
 /* Admin CSS End */

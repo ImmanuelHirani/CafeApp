@@ -12,17 +12,19 @@
                 <li class="relative group">
                     <a href="/admin/product"
                         class="px-6 py-2 rounded-full flex items-center gap-3 !text-accent-color-admin nav-toggle outline-1 outline-gray-300">
-                        <i class="text-2xl ti ti-box"></i>Products</a>
+                        <i class="text-2xl ti ti-tools-kitchen-2"></i>
+                        Menu</a>
+                </li>
+                <li class="relative group">
+                    <a href="/admin/menu/custom/order"
+                        class="px-6 py-2 rounded-full flex items-center gap-3 !text-accent-color-admin nav-toggle outline-1 outline-gray-300">
+                        <i class="text-2xl rotate-180 ti ti-pizza"></i>
+                        Custom Pizza</a>
                 </li>
                 <li class="relative group">
                     <a href="/Customer"
                         class="!text-accent-color-admin flex items-center gap-3 nav-toggle px-6 py-2 rounded-full outline-1 outline-gray-300"><i
                             class="text-2xl ti ti-headset"></i>Customers</a>
-                </li>
-                <li class="relative group">
-                    <a href="/admin/menu/custom/order"
-                        class="!text-accent-color-admin flex items-center gap-3 nav-toggle px-6 py-2 rounded-full outline-1 outline-gray-300"><i
-                            class="text-2xl ti ti-table-options"></i>Custom Orders</a>
                 </li>
                 <li class="relative group">
                     <a href="/admin/menu/order"

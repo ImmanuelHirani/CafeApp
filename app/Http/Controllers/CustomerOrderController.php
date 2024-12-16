@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Menu;
+use App\Models\Custom_categories_pizza;
 use Illuminate\Http\Request;
 
 class CustomerOrderController extends Controller
 {
     public function customPizza()
     {
-        $menus = Menu::all();
+        $categories = Custom_categories_pizza::with(['properties', 'sizeProperties'])->get();
+
         return view('Frontend.custom', [
-            'menus' => $menus,
+            'categories' => $categories,
         ]);
     }
 }

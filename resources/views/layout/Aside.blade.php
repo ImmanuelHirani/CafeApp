@@ -1,7 +1,7 @@
 <aside id="showSelectedMenu"
     class="flex flex-col col-span-2 gap-8 pt-6 overflow-hidden rounded-lg bg-primary-color-admin">
     <div class="px-6 head-aside">
-        <p class="text-xl font-semibold">Edit Products</p>
+        <p class="text-xl font-semibold">Edit Menu</p>
     </div>
     <div class="px-6 quick-link">
         <ul class="flex items-center justify-between w-full gap-3 text-base">

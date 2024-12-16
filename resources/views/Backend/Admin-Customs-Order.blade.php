@@ -15,13 +15,22 @@
     <!-- jQuery dan DataTables JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     @vite('resources/css/app.css')
 </head>
 
 <body id="Admin">
     @include('layout.header')
-    <main class="grid grid-cols-7 gap-4 py-4">
-        <section class="flex flex-col col-span-5 p-6 rounded-lg gap-9 bg-primary-color-admin">
+    <main class="grid grid-cols-10 gap-3 py-4">
+        <section class="flex flex-col col-span-7 p-6 rounded-lg gap-9 bg-primary-color-admin">
+            <div class="flex items-center justify-between wrap">
+                <p class="text-2xl font-semibold">Custom Pizza</p>
+                <button id="btn-add-product"
+                    class="flex items-center group hover:bg-secondary-accent-color transition-all ease-in-out duration-300 hover:!text-white w-fit gap-3 px-4 justify-center py-3 h-10 outline outline-2 outline-accent-color-admin rounded-full !text-accent-color-admin">
+                    New Categories
+                    <i class="ti ti-plus group-hover:!text-white !text-accent-color-admin text-xl"></i>
+                </button>
+            </div>
             <div class="overflow-x-auto">
                 <table id="tableCustomers" class="border shadow-sm min-w-fullborder stripe">
                     <thead class="">
@@ -30,18 +39,16 @@
                                 ID
                             </th>
                             <th class="text-sm font-medium text-left text-gray-500 uppercase">
-                                Customers Name
+                                Categories Type
                             </th>
                             <th class="text-sm font-medium text-left text-gray-500 uppercase">
-                                Email
+                                status
                             </th>
-
                             <th class="text-sm font-medium text-left text-gray-500 uppercase">
-                                Type
+                                Created At
                             </th>
-
                             <th class="text-sm font-medium text-left text-gray-500 uppercase">
-                                Join Date
+                                Updated At
                             </th>
                             <th class="text-sm font-medium text-left text-gray-500 uppercase">
                                 Action
@@ -49,50 +56,57 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white">
-                        <tr class="hover:bg-gray-50">
-                            <td class="text-base text-gray-900">#CUS1R</td>
-                            <td class="text-base text-gray-500">
-                                Immanuel Christian Hirani
-                            </td>
-                            <td class="text-base text-gray-500">nuel.hirani8@gmail.com</td>
-                            <td class="">
-                                <div class="status-select">
-                                    <select id="statusSelect" class="cursor-pointer focus:outline-none">
-                                        <option value="completed" class="cursor-pointer">
-                                            Reguler
-                                        </option>
-                                        <option value="in-progress" class="cursor-pointer">
-                                            Member
-                                        </option>
-                                    </select>
-                                </div>
-                            </td>
-                            <td class="text-base text-gray-500">12 sep 2023 , 18,32</td>
-                            <td class="flex justify-center text-base text-gray-500">
-                                <div
-                                    class="flex items-center cursor-pointer justify-center !text-white bg-blue-300 rounded-full w-9 h-9 btn">
-                                    <a class="text-xl"><i class="ti ti-eye-search"></i></a>
-                                </div>
-                            </td>
-                        </tr>
+                        @foreach ($categories as $category)
+                            <tr class="hover:bg-gray-50">
+                                <td class="text-base text-gray-900">{{ $category->categories_ID }}</td>
+                                <td class="text-base text-gray-500">{{ $category->categories_type }}</td>
+                                @if ($category->is_active == 1)
+                                    <td class="text-base text-gray-500"><label
+                                            class="px-8 py-3 text-white bg-green-500 rounded-full shadow-lg">Active</label>
+                                    </td>
+                                @else
+                                    <td class="text-base text-gray-500"><label
+                                            class="px-8 py-3 text-white bg-red-500 rounded-full shadow-lg">Non-Active</label>
+                                    </td>
+                                @endif
+                                <td class="text-base text-gray-500">{{ $category->created_at }}</td>
+                                <td class="text-base text-gray-500">{{ $category->updated_at }}</td>
+                                <td class="flex justify-center gap-1 text-base text-gray-500">
+                                    <div
+                                        class="flex items-center cursor-pointer justify-center !text-white bg-blue-500 rounded-full w-9 h-9 btn">
+                                        <a href="{{ route('custom.categories.details', $category->categories_ID ?? '') }}"
+                                            class="text-xl cursor-pointer">
+                                            <i class="ti ti-eye-search"></i>
+                                        </a>
+                                    </div>
+                                    <div
+                                        class="flex items-center cursor-pointer justify-center !text-white bg-red-500 rounded-full w-9 h-9 btn">
+                                        <form
+                                            action="{{ Route('custom.categories.delete', $category->categories_ID ?? '') }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="text-xl cursor-pointer">
+                                                <i class="ti ti-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
         </section>
-        <aside class="flex flex-col col-span-2 gap-8 pt-6 overflow-hidden rounded-lg bg-primary-color-admin">
+        <aside class="flex flex-col col-span-3 gap-8 pt-6 overflow-hidden rounded-lg bg-primary-color-admin">
             <div class="px-6 head-aside">
-                <p class="text-xl font-semibold">Custom Order Details</p>
+                <p class="text-xl font-semibold">Edit Custom Menu</p>
             </div>
             <div class="px-6 quick-link">
                 <ul class="flex items-center justify-between w-full gap-3 text-base">
                     <li
                         class="relative w-full px-4 py-2 text-center transition-all duration-300 ease-in-out rounded-full cursor-pointer group outline-1 sideMenu-tabs-toggle">
-                        <a class="!text-accent-color-admin">Customer Details</a>
-                    </li>
-
-                    <li
-                        class="relative w-full px-4 py-2 text-center transition-all duration-300 ease-in-out rounded-full cursor-pointer sideMenu-tabs-toggle group outline-1">
-                        <a class="!text-accent-color-admin">Order Details</a>
+                        <a class="!text-accent-color-admin">Categories Details</a>
                     </li>
                 </ul>
             </div>
@@ -122,102 +136,17 @@
                     </div>
                 </div>
             </form>
-            <form action="" class="sideMenu-tabs-content">
-                <div class="flex flex-col gap-3 px-6 pb-6 overflow-y-auto card-wrapper">
-                    <div class="flex flex-col gap-3 text-lg order-card">
-                        <img src="../asset/Logo/Pizza Menu/Blackpaper.jpg" class="object-cover w-full rounded-lg h-28"
-                            alt="" />
-                        <div class="flex flex-col gap-2 topping-list">
-                            <p class="font-semibold">Topping List :</p>
-                            <div class="flex flex-wrap items-center gap-2 list-wrap">
-                                <button
-                                    class="px-4 py-2 text-base rounded-full bg-secondary-accent-color-admin outline outline-1 outline-gray-300">
-                                    Nuttela
-                                </button>
-                                <button
-                                    class="px-4 py-2 text-base rounded-full bg-secondary-accent-color-admin outline outline-1 outline-gray-300">
-                                    Nuttela
-                                </button>
-                                <button
-                                    class="px-4 py-2 text-base rounded-full bg-secondary-accent-color-admin outline outline-1 outline-gray-300">
-                                    Nuttela
-                                </button>
-
-                                <button
-                                    class="px-4 py-2 text-base rounded-full bg-secondary-accent-color-admin outline outline-1 outline-gray-300">
-                                    Nuttela
-                                </button>
-                                <button
-                                    class="px-4 py-2 text-base rounded-full bg-secondary-accent-color-admin outline outline-1 outline-gray-300">
-                                    Nuttela
-                                </button>
-                                <button
-                                    class="px-4 py-2 text-base rounded-full bg-secondary-accent-color-admin outline outline-1 outline-gray-300">
-                                    Nuttela
-                                </button>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-6 tiny-details">
-                            <p class="!text-gray-500">Quantity : 1</p>
-                            <p class="!text-gray-500">Size : XXL</p>
-                        </div>
-                        <p class="font-semibold">Total : Rp 60.000</p>
-                    </div>
-                    <hr />
-                    <div class="flex flex-col gap-3 text-lg order-card">
-                        <img src="../asset/Logo/Pizza Menu/Blackpaper.jpg" class="object-cover w-full rounded-lg h-28"
-                            alt="" />
-                        <div class="flex flex-col gap-2 topping-list">
-                            <p class="font-semibold">Topping List :</p>
-                            <div class="flex flex-wrap items-center gap-2 list-wrap">
-                                <button
-                                    class="px-4 py-2 text-base rounded-full bg-secondary-accent-color-admin outline outline-1 outline-gray-300">
-                                    Nuttela
-                                </button>
-                                <button
-                                    class="px-4 py-2 text-base rounded-full bg-secondary-accent-color-admin outline outline-1 outline-gray-300">
-                                    Nuttela
-                                </button>
-                                <button
-                                    class="px-4 py-2 text-base rounded-full bg-secondary-accent-color-admin outline outline-1 outline-gray-300">
-                                    Nuttela
-                                </button>
-
-                                <button
-                                    class="px-4 py-2 text-base rounded-full bg-secondary-accent-color-admin outline outline-1 outline-gray-300">
-                                    Nuttela
-                                </button>
-                                <button
-                                    class="px-4 py-2 text-base rounded-full bg-secondary-accent-color-admin outline outline-1 outline-gray-300">
-                                    Nuttela
-                                </button>
-                                <button
-                                    class="px-4 py-2 text-base rounded-full bg-secondary-accent-color-admin outline outline-1 outline-gray-300">
-                                    Nuttela
-                                </button>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-6 tiny-details">
-                            <p class="!text-gray-500">Quantity : 1</p>
-                            <p class="!text-gray-500">Size : XXL</p>
-                        </div>
-                        <p class="font-semibold">Total : Rp 60.000</p>
-                    </div>
-                </div>
-            </form>
             <div class="flex items-center w-full gap-3 p-4 mt-auto bg-white shadow-inner h-fit footer-toggle">
-                <button type="submit"
-                    class="w-full h-12 rounded-full text-secondary-accent-color bg-secondary-accent-color-admin outline outline-gray-200 outline-[1px]">
-                    Cancle Order
-                </button>
-                <button type="submit" class="w-full h-12 !text-white rounded-full bg-secondary-accent-color">
-                    Finish Order
+                <button type="submit" class="w-full h-12 !text-white rounded-lg bg-secondary-accent-color">
+                    Update
                 </button>
             </div>
         </aside>
+        @include('layout.modal.modal-custom-menu')
     </main>
 </body>
 <script src="{{ asset('/js/table.js') }}"></script>
+<script src="{{ asset('/js/modal.js') }}"></script>
 <script src="{{ asset('/js/selectedStatus.js') }}"></script>
 <script src="{{ asset('/js/tabs-sideMenu.js') }}"></script>
 

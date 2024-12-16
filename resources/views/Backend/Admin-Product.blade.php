@@ -20,18 +20,19 @@
         <section class="flex flex-col col-span-5 p-6 rounded-lg gap-9 bg-primary-color-admin">
             <!-- Header Content -->
             <div class="flex items-center justify-between header">
-                <p class="text-2xl font-semibold">Products</p>
+                <p class="text-2xl font-semibold">Menus</p>
                 <div class="flex items-center gap-3 wrap">
-                    <div class="relative w-full max-w-xs">
+                    {{-- <div class="relative w-full max-w-xs">
                         <input type="search" placeholder="Search Product"
                             class="w-full p-3 pl-10 rounded-full outline-none bg-secondary-accent-color-admin" />
                         <img src="{{ asset('asset/SVG/search-icon-admin.svg') }}" alt="Search Icon"
                             class="absolute w-5 h-5 transform -translate-y-1/2 left-3 top-1/2" />
-                    </div>
+                    </div> --}}
                     <button id="btn-add-product"
-                        class="flex items-center gap-3 w-[100%] justify-center py-3 h-10 outline outline-2 outline-accent-color-admin rounded-full !text-accent-color-admin">
-                        Add New Product
-                        <i class="ti ti-plus !text-accent-color-admin text-xl"></i>
+                        class="flex items-center group transition-all ease-in-out duration-300 hover:bg-secondary-accent-color
+hover:!text-white gap-3  justify-center py-3 h-10 px-4  w-full outline outline-2 outline-accent-color-admin rounded-full !text-accent-color-admin">
+                        Add New Menu
+                        <i class="ti ti-plus group-hover:!text-white !text-accent-color-admin text-xl"></i>
                     </button>
                 </div>
             </div>
@@ -88,7 +89,6 @@
                                         <i class="p-2.5 text-lg bg-red-500 !text-white rounded-full ti ti-trash"></i>
                                     </button>
                                 </form>
-
                             </div>
                             @if ($menu->is_active == 1)
                                 <div
