@@ -13,13 +13,10 @@ return new class extends Migration
     {
         Schema::create('custom_categories_size_properties', function (Blueprint $table) {
             $table->id('size_ID');
-            $table->unsignedBigInteger('categories_ID');
             $table->string('size');
             $table->integer('allowed_flavor');
             $table->decimal('price', 8, 2)->default(0); // Default price 0
             $table->timestamps();
-
-            $table->foreign('categories_ID')->references('categories_ID')->on('custom_categories_pizza')->onDelete('cascade');
         });
     }
 

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Custom_categories_pizza;
+use App\Models\Custom_categories_properties;
+use App\Models\Custom_categories_size_properties;
 use App\Models\Customer;
 use App\Models\Menu;
 use App\Models\orderTransaction;
@@ -127,7 +129,7 @@ class OrderController extends Controller
     {
         // Validasi input status
         $validated = $request->validate([
-            'status_order' => 'required|string|in:pendding,in-progress,completed,canceled',
+            'status_order' => 'required|string|in:pending,in-progress,completed,canceled',
         ]);
 
         // Temukan order transaction berdasarkan order ID
@@ -139,7 +141,7 @@ class OrderController extends Controller
             $orderTransaction->save(); // simpan perubahan
 
             // Kembalikan response sukses
-            return back()->with('success', 'Order status updated successfully.');
+            return back()->with('success', 'Order status updated.');
         } else {
             // Jika order tidak ditemukan
             return back()->with('error', 'Order not found.');
@@ -180,33 +182,5 @@ class OrderController extends Controller
 
         // Redirect back with a success message
         return redirect()->Route('tracking.view')->with('success', 'Order has been Pay.');
-    }
-
-    public function adminCustomOrder()
-    {
-
-        $categories = Custom_categories_pizza::with(['properties', 'sizeProperties'])->get();
-
-        return view('Backend.Admin-Customs-Order', [
-            'categories' => $categories,
-        ]);
-    }
-
-    public function getCategoriesDetails($id)
-    {
-
-        $detailCategories = Custom_categories_pizza::with(['properties', 'sizeProperties'])->find($id);
-        $categories = Custom_categories_pizza::with(['properties', 'sizeProperties'])->get();
-
-        // Jika kategori tidak ditemukan
-        if (!$categories) {
-            return redirect()->back()->with('error', 'Category not found.');
-        }
-
-        // Tampilkan view dengan data kategori
-        return view('Backend.Admin-Customs-Order', [
-            'categories' => $categories,
-            'detailCategories' =>   $detailCategories,
-        ]);
     }
 }

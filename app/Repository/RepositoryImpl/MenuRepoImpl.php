@@ -19,8 +19,6 @@ class MenuRepoImpl implements MenuRepo
         return Menu::create($data);
     }
 
-
-
     public function find($id)
     {
         return Menu::find($id);

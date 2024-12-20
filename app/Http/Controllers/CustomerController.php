@@ -74,7 +74,6 @@ class CustomerController extends Controller
 
         return redirect()->back()->with('success', 'Profile updated successfully');
     }
-
     public function login(Request $request)
     {
         $credentials = $request->validate([

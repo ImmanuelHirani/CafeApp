@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\orderTransaction;
 use App\Models\tempTransaction;
+use App\Models\tempTransactionDetails;
+use App\Models\transactionDetails;
 use Illuminate\Support\ServiceProvider;
 use App\Services\CustomerService;
 use App\Repository\CustomerRepo;
@@ -54,16 +57,20 @@ class AppServiceProvider extends ServiceProvider
 
             // Jika user tidak login, tidak ada data cart
             $cartItems = $customerID
-                ? tempTransaction::where('customer_ID', $customerID)->with('menu')->get()
+                ? orderTransaction::where('customer_ID', $customerID)
+                ->where('status_order', 'pending') // Ambil hanya transaksi dengan status 'pending'
+                ->with(['details.menu']) // Eager load hubungan details dan menu
+                ->get()
+                ->flatMap(fn($transaction) => $transaction->details) // Ambil semua detail dari transaksi
                 : collect();
 
             // Data ini akan tersedia di semua view
             $view->with('cartItems', $cartItems);
         });
 
+        // Logging query untuk debugging
         DB::listen(function ($query) {
-            logger($query->sql);
-            logger($query->bindings);
+            logger()->info('Query Executed: ', ['sql' => $query->sql, 'bindings' => $query->bindings, 'time' => $query->time]);
         });
     }
 }

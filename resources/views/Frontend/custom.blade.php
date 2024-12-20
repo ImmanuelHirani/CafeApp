@@ -7,7 +7,9 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     <!-- <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" /> -->
@@ -44,194 +46,85 @@
                     <div
                         class="text-xl transition-all border-b-[1px] duration-300 ease-in-out accordion-content max-h-0">
                         <div class="flex flex-wrap items-center gap-3 pb-6 mt-3 lg:mt-6 wrap">
-                            <button class="w-[22%] px-3 py-1.5 rounded-full bg-secondary-color">
-                                XL
-                            </button>
-                            <button
-                                class="w-[22%] px-3 py-1.5 rounded-full outline outline-2 outline-white hover:outline-none hover:bg-red-500 transition-all ease-in-out duration-500">
-                                LG
-                            </button>
-                            <button
-                                class="w-[22%] px-3 py-1.5 rounded-full outline outline-2 outline-white hover:outline-none hover:bg-red-500 transition-all ease-in-out duration-500">
-                                MD
-                            </button>
-                            <button
-                                class="w-[22%] px-3 py-1.5 rounded-full outline outline-2 outline-white hover:outline-none hover:bg-red-500 transition-all ease-in-out duration-500">
-                                SM
-                            </button>
+                            @foreach ($sizes as $size)
+                                <!-- Iterasi pada sizeProperties per kategori -->
+                                <button data-id="{{ $size->size_ID }}" data-price="{{ $size->price }}"
+                                    data-max-toppings="{{ $size->allowed_flavor }}"
+                                    class="w-[20%] p-3 size-button uppercase rounded-full bg-secondary-color">
+                                    {{ $size->size }}
+                                    <!-- Ganti 'size' dengan field yang sesuai dari model SizeProperty -->
+                                </button>
+                            @endforeach
                         </div>
                         <p class="text-highlight-content">Note :</p>
                         <ul class="pb-6 space-y-1 list-disc list-inside text-accent-color">
-                            <li>Small Size ( 3 Flavor )</li>
-                            <li>Medium Size ( 5 Flavor )</li>
-                            <li>Large Size( 7 Flavor )</li>
-                            <li>Small Size ( 9 Flavor )</li>
+                            <li>Small Size ( {{ $sizes->get(0)->allowed_flavor }} Flavor )</li>
+                            <li>Medium Size ( {{ $sizes->get(1)->allowed_flavor }} Flavor )</li>
+                            <li>Large Size ( {{ $sizes->get(2)->allowed_flavor }} Flavor )</li>
+                            <li>Extra Large Size ( {{ $sizes->get(3)->allowed_flavor }} Flavor )</li>
                         </ul>
                     </div>
                 </div>
-                <div class="flex flex-col overflow-hidden accordion-wrapper">
-                    <div class="accordion-head">
+                @foreach ($categories as $category)
+                    <div class="flex flex-col overflow-hidden accordion-wrapper">
+                        <div class="accordion-head">
+                            <div
+                                class="flex items-center justify-between pb-3 cursor-pointer lg:pb-6 head-wrapper-accordion">
+                                <p class="text-xl lg:text-4xl">{{ $category->categories_type }}</p>
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="p-2 transition-all duration-300 ease-in-out rounded-full bg-secondary-accent-color"
+                                    width="32" height="32" viewBox="0 0 42 25" fill="none">
+                                    <path
+                                        d="M2.52604 -1.10417e-07L-9.74969e-07 2.69531L20.8333 25L41.6667 2.69531L39.1536 -1.71146e-06L20.8333 19.5964L2.52604 -1.10417e-07Z"
+                                        fill="#E8E0CE" />
+                                </svg>
+                            </div>
+                        </div>
                         <div
-                            class="flex items-center justify-between pb-3 cursor-pointer lg:pb-6 head-wrapper-accordion">
-                            <p class="text-xl lg:text-4xl">Chocolate</p>
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                class="p-2 transition-all duration-300 ease-in-out rounded-full bg-secondary-accent-color"
-                                width="32" height="32" viewBox="0 0 42 25" fill="none">
-                                <path
-                                    d="M2.52604 -1.10417e-07L-9.74969e-07 2.69531L20.8333 25L41.6667 2.69531L39.1536 -1.71146e-06L20.8333 19.5964L2.52604 -1.10417e-07Z"
-                                    fill="#E8E0CE" />
-                            </svg>
+                            class="text-xl transition-all border-b-[1px] duration-300 ease-in-out accordion-content max-h-0">
+                            <div class="flex flex-wrap items-center lg:gap-3 gap-2 pb-6 pl-0.5 lg:mt-6 mt-3 wrap">
+                                @foreach ($category->properties as $property)
+                                    <button data-price="{{ $property->price }}"
+                                        data-name="{{ $property->properties_name }}"
+                                        class="px-8 py-3 text-sm rounded-full topping-button w-fit bg-secondary-color 3xl:text-xl lg:text-xl">
+                                        {{ $property->properties_name }}
+                                    </button>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
-                    <div
-                        class="text-xl transition-all border-b-[1px] duration-300 ease-in-out accordion-content max-h-0">
-                        <div class="flex flex-wrap items-center lg:gap-3 gap-2 pb-6 pl-0.5 lg:mt-6 mt-3 wrap">
-                            <button
-                                class="px-8 py-3 text-sm rounded-full w-fit bg-secondary-color 3xl:text-xl lg:text-xl">
-                                Nuttela
-                            </button>
-                            <button
-                                class="px-8 py-3 text-sm transition-all duration-500 ease-in-out rounded-full w-fit outline outline-2 outline-white hover:outline-none hover:bg-red-500 3xl:text-xl lg:text-xl">
-                                White Chocolate
-                            </button>
-                            <button
-                                class="px-8 py-3 text-sm transition-all duration-500 ease-in-out rounded-full w-fit outline outline-2 outline-white hover:outline-none hover:bg-red-500 3xl:text-xl lg:text-xl">
-                                Chocolate sprinkles
-                            </button>
-                            <button
-                                class="px-8 py-3 text-sm transition-all duration-500 ease-in-out rounded-full w-fit outline outline-2 outline-white hover:outline-none hover:bg-red-500 3xl:text-xl lg:text-xl">
-                                Chocolate
-                            </button>
-                            <button
-                                class="px-8 py-3 text-sm transition-all duration-500 ease-in-out rounded-full w-fit outline outline-2 outline-white hover:outline-none hover:bg-red-500 3xl:text-xl lg:text-xl">
-                                Dairy Milk
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex flex-col overflow-hidden accordion-wrapper">
-                    <div class="accordion-head">
-                        <div
-                            class="flex items-center justify-between pb-3 cursor-pointer lg:pb-6 head-wrapper-accordion">
-                            <p class="text-xl lg:text-4xl">Cheese</p>
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                class="p-2 transition-all duration-300 ease-in-out rounded-full bg-secondary-accent-color"
-                                width="32" height="32" viewBox="0 0 42 25" fill="none">
-                                <path
-                                    d="M2.52604 -1.10417e-07L-9.74969e-07 2.69531L20.8333 25L41.6667 2.69531L39.1536 -1.71146e-06L20.8333 19.5964L2.52604 -1.10417e-07Z"
-                                    fill="#E8E0CE" />
-                            </svg>
-                        </div>
-                    </div>
-                    <div
-                        class="text-xl transition-all border-b-[1px] duration-300 ease-in-out accordion-content max-h-0">
-                        <div class="flex flex-wrap items-center lg:gap-3 gap-2 pb-6 pl-0.5 lg:mt-6 mt-3 wrap">
-                            <button
-                                class="px-8 py-3 text-sm rounded-full w-fit bg-secondary-color 3xl:text-xl lg:text-xl">
-                                Cheddar Chees
-                            </button>
-                            <button
-                                class="px-8 py-3 text-sm transition-all duration-500 ease-in-out rounded-full w-fit outline outline-2 outline-white hover:outline-none hover:bg-red-500 3xl:text-xl lg:text-xl">
-                                Mozarela Chees
-                            </button>
-                            <button
-                                class="px-8 py-3 text-sm transition-all duration-500 ease-in-out rounded-full w-fit outline outline-2 outline-white hover:outline-none hover:bg-red-500 3xl:text-xl lg:text-xl">
-                                Provolone Chees
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex flex-col overflow-hidden accordion-wrapper">
-                    <div class="accordion-head">
-                        <div
-                            class="flex items-center justify-between pb-3 cursor-pointer lg:pb-6 head-wrapper-accordion">
-                            <p class="text-xl lg:text-4xl">Jam</p>
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                class="p-2 transition-all duration-300 ease-in-out rounded-full bg-secondary-accent-color"
-                                width="32" height="32" viewBox="0 0 42 25" fill="none">
-                                <path
-                                    d="M2.52604 -1.10417e-07L-9.74969e-07 2.69531L20.8333 25L41.6667 2.69531L39.1536 -1.71146e-06L20.8333 19.5964L2.52604 -1.10417e-07Z"
-                                    fill="#E8E0CE" />
-                            </svg>
-                        </div>
-                    </div>
-                    <div
-                        class="text-xl transition-all border-b-[1px] duration-300 ease-in-out accordion-content max-h-0">
-                        <div class="flex flex-wrap items-center lg:gap-3 gap-2 pb-6 pl-0.5 lg:mt-6 mt-3 wrap">
-                            <button
-                                class="px-8 py-3 text-sm rounded-full w-fit bg-secondary-color 3xl:text-xl lg:text-xl">
-                                Peanut butter
-                            </button>
-                            <button
-                                class="px-8 py-3 text-sm transition-all duration-500 ease-in-out rounded-full w-fit outline outline-2 outline-white hover:outline-none hover:bg-red-500 3xl:text-xl lg:text-xl">
-                                Blueberry jam
-                            </button>
-                            <button
-                                class="px-8 py-3 text-sm transition-all duration-500 ease-in-out rounded-full w-fit outline outline-2 outline-white hover:outline-none hover:bg-red-500 3xl:text-xl lg:text-xl">
-                                Strawberry jam
-                            </button>
-                            <button
-                                class="px-8 py-3 text-sm transition-all duration-500 ease-in-out rounded-full w-fit outline outline-2 outline-white hover:outline-none hover:bg-red-500 3xl:text-xl lg:text-xl">
-                                Chocolate spread
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
             <img src="../asset/CustomOrder.png"
                 class="relative top-0 w-full col-span-5 row-span-5 wrap lg:sticky lg:top-36" alt="" />
             <div
                 class="container fixed z-50 w-full text-white translate-x-1/2 right-1/2 bottom-4 add-to-cart-custom-order">
-                <div
+                <form action="{{ route('store.custom.order') }}" method="POST"
                     class="flex flex-col items-center justify-between w-full p-6 rounded-lg lg:gap-y-0 gap-y-4 lg:flex-row wrap outline outline-1 outline-highlight-content bg-secondary-accent-color">
-                    <div class="lg:w-[80%] w-full space-y-1 wrap">
-                        <p class="text-xl lg:text-2xl">Custom Pizza - (XL)</p>
-                        <p class="text-sm lg:text-xl text-highlight-content">
-                            Mozzarela Chees , Nuttela Chocolate , Peanut Butter , Bluberry
-                            Jam
-                        </p>
-                        <p class="text-xl lg:text-2xl">Total : Rp.250.000</p>
+                    @csrf
+                    <!-- Informasi Pesanan -->
+                    <div class="lg:w-[60%] w-full space-y-1 wrap">
+                        <p id="selected-size" class="text-xl lg:text-2xl">Custom Pizza</p>
+                        <input type="hidden" name="size_name" id="size-input" value="">
+                        <p id="selected-toppings" class="text-sm lg:text-xl text-highlight-content"></p>
+                        <input type="hidden" name="toppings" id="toppings-input" value="">
+                        <p id="total-price" class="text-xl lg:text-2xl">Total : </p>
+                        <input type="hidden" name="total_price" id="total-price-input" value="">
                     </div>
+                    <!-- Kontrol Jumlah dan Tombol Add to Cart -->
                     <div
                         class="flex flex-col items-center justify-between lg:w-[20%] w-full gap-3 rounded-lg add-to-cart">
                         <div class="flex items-center justify-between w-full gap-3 wrap">
-                            <button
-                                class="gap-3 2xl:px-4 px-3 py-0.5 md:py-2.5 rounded-lg w-full outline outline-1 flex justify-center outline-accent-color">
-                                <?xml version="1.0" ?>
-                                <!DOCTYPE svg
-                                    PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
-                                <svg height="32px" id="Layer_1" fill="white"
-                                    style="enable-background: new 0 0 512 512" version="1.1" viewBox="0 0 512 512"
-                                    width="24px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
-                                    xmlns:xlink="http://www.w3.org/1999/xlink">
-                                    <path
-                                        d="M417.4,224H94.6C77.7,224,64,238.3,64,256c0,17.7,13.7,32,30.6,32h322.8c16.9,0,30.6-14.3,30.6-32  C448,238.3,434.3,224,417.4,224z" />
-                                </svg>
-                            </button>
-                            <button
-                                class="w-full gap-3 px-2 py-1 text-lg font-semibold rounded-lg md:py-3 2xl:text-lg 2xl:px-8 outline outline-1 outline-accent-color">
-                                1
-                            </button>
-                            <button
-                                class="gap-3 2xl:px-4 px-3 py-0.5 md:py-2.5 rounded-lg w-full flex justify-center outline outline-1 outline-accent-color">
-                                <?xml version="1.0" ?>
-                                <!DOCTYPE svg
-                                    PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
-                                <svg height="32px" id="Layer_1" fill="white"
-                                    style="enable-background: new 0 0 512 512" version="1.1" viewBox="0 0 512 512"
-                                    width="24px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
-                                    xmlns:xlink="http://www.w3.org/1999/xlink">
-                                    <path
-                                        d="M417.4,224H288V94.6c0-16.9-14.3-30.6-32-30.6c-17.7,0-32,13.7-32,30.6V224H94.6C77.7,224,64,238.3,64,256  c0,17.7,13.7,32,30.6,32H224v129.4c0,16.9,14.3,30.6,32,30.6c17.7,0,32-13.7,32-30.6V288h129.4c16.9,0,30.6-14.3,30.6-32  C448,238.3,434.3,224,417.4,224z" />
-                                </svg>
-                            </button>
+                            <p class="text-base font-semibold text-highlight-content">! Max buy For Custom Order only 1
+                                each transaction</p>
                         </div>
-                        <button
-                            class="w-full gap-3 px-2 py-3 text-sm font-semibold rounded-lg 2xl:text-lg 2xl:px-5 bg-secondary-color">
+                        <!-- Tombol Add to Cart -->
+                        <button type="submit"
+                            class="w-full gap-3 px-2 py-3 text-sm font-semibold rounded-lg 2xl:px-5 2xl:text-lg bg-secondary-color">
                             ADD TO CART
                         </button>
                     </div>
-                </div>
+                </form>
             </div>
         </section>
         @include('layout.Sidebar')
@@ -271,5 +164,140 @@
         });
     });
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let selectedSize = null; // Ukuran yang dipilih
+        let selectedToppings = []; // Daftar topping yang dipilih
+        let totalPrice = 0; // Total harga
+
+        const sizeOutput = document.querySelector('.add-to-cart-custom-order #selected-size');
+        const toppingsOutput = document.querySelector('.add-to-cart-custom-order #selected-toppings');
+        const totalPriceOutput = document.querySelector('#total-price');
+        const hiddenToppingsInput = document.getElementById('toppings-input');
+        const hiddenTotalPriceInput = document.getElementById('total-price-input');
+        const hiddenSizeInput = document.getElementById(
+        'size-input'); // Elemen input tersembunyi untuk size_name
+
+        // Fungsi untuk menghitung total harga menggunakan AJAX
+        function calculateTotal() {
+            if (!selectedSize) {
+                notyf.error("Please select a size first.");
+                return;
+            }
+
+            let toppingPrice = 0;
+            selectedToppings.forEach(toppingName => {
+                const topping = document.querySelector(`.topping-button[data-name="${toppingName}"]`);
+                if (topping) {
+                    toppingPrice += parseFloat(topping.getAttribute('data-price'));
+                }
+            });
+
+            totalPrice = selectedSize.price + toppingPrice;
+
+            // Jika selectedToppings kosong, kirimkan array kosong
+            const toppingsData = selectedToppings.length > 0 ? selectedToppings : [];
+
+            fetch('/calculate-total', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
+                            'content'),
+                    },
+                    body: JSON.stringify({
+                        size_id: selectedSize.id,
+                        size_name: selectedSize.name, // Pastikan ini terisi dengan benar
+                        toppings: toppingsData, // Kirim topping yang dipilih, atau array kosong
+                        total_price: totalPrice,
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        notyf.error(data.error);
+                        return;
+                    }
+
+                    // Update total harga
+                    totalPriceOutput.innerHTML = `Rp.${totalPrice.toLocaleString('id-ID')}`;
+                    updateHiddenInputs(); // Panggil untuk memperbarui input tersembunyi
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    notyf.error("An error occurred while calculating the total.");
+                });
+        }
+
+        // Fungsi untuk memperbarui input tersembunyi
+        function updateHiddenInputs() {
+            hiddenToppingsInput.value = selectedToppings.join(', ');
+            hiddenTotalPriceInput.value = totalPrice;
+            hiddenSizeInput.value = selectedSize.name; // Menyimpan nama size pada input tersembunyi
+        }
+
+        // Event Listener untuk tombol Size
+        document.querySelectorAll('.size-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const sizePrice = parseFloat(this.getAttribute('data-price'));
+                const maxToppings = parseInt(this.getAttribute('data-max-toppings'));
+                const sizeId = this.getAttribute('data-id');
+
+                selectedSize = {
+                    id: sizeId,
+                    name: this.innerText.trim(), // Pastikan nama size terisi
+                    price: sizePrice,
+                    maxToppings: maxToppings,
+                };
+
+                sizeOutput.innerHTML = `Custom Pizza - (${selectedSize.name})`;
+                selectedToppings = [];
+                totalPrice = selectedSize.price;
+                toppingsOutput.innerHTML = 'No Toppings Selected';
+                totalPriceOutput.innerHTML = `Rp.${totalPrice.toLocaleString('id-ID')}`;
+                updateHiddenInputs(); // Memperbarui input tersembunyi dengan nama size
+            });
+        });
+
+        // Event Listener untuk tombol Topping
+        document.querySelectorAll('.topping-button').forEach(button => {
+            button.addEventListener('click', function() {
+                if (!selectedSize) {
+                    notyf.error("Please select a size first.");
+                    return;
+                }
+
+                const toppingPrice = parseFloat(this.getAttribute('data-price'));
+                const toppingName = this.getAttribute('data-name');
+
+                if (selectedToppings.includes(toppingName)) {
+                    selectedToppings = selectedToppings.filter(item => item !== toppingName);
+                } else {
+                    if (selectedToppings.length >= selectedSize.maxToppings) {
+                        notyf.open({
+                            type: 'warning',
+                            message: `Max only ${selectedSize.maxToppings} toppings for this size.`,
+                        });
+                        return;
+                    }
+                    selectedToppings.push(toppingName);
+                }
+
+                toppingsOutput.innerHTML = selectedToppings.length > 0 ?
+                    selectedToppings.join(', ') :
+                    'No Toppings Selected';
+
+                calculateTotal();
+            });
+        });
+
+        // Set default value kosong saat halaman dimuat
+        sizeOutput.innerHTML = 'Custom Pizza - (No Size)';
+        toppingsOutput.innerHTML = 'No Toppings Selected';
+        totalPriceOutput.innerHTML = 'Rp.0';
+        updateHiddenInputs(); // Pastikan input tersembunyi disetel saat pertama kali dimuat
+    });
+</script>
+
 
 </html>

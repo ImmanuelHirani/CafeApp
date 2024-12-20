@@ -88,12 +88,16 @@
                 type: 'warning',
                 background: 'orange',
                 icon: {
-                    className: 'material-icons',
+                    className: 'material-icons  flex item-center  !text-white',
                     tagName: 'i',
-                    text: 'warning',
-                },
+                    text: 'warning'
+                }
             },
             {
+                type: 'info',
+                background: 'blue',
+                icon: false
+            }, {
                 type: 'success',
                 background: '#2ECC71',
                 dismissible: true,
@@ -112,6 +116,13 @@
 
     @if (session('success'))
         notyf.success("{{ session('success') }}");
+    @endif
+
+    @if (session('warning'))
+        notyf.open({
+            type: 'warning',
+            message: {{ session('warning') }},
+        });
     @endif
 
     @if ($errors->any())

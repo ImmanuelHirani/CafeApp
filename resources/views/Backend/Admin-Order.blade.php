@@ -55,7 +55,7 @@
                                     {{ $orderCustomer->customer->username ?? 'Not Set The Username Yet' }}
                                 </td>
                                 <td class="text-base text-center text-secondary-accent-color">
-                                    Rp {{ number_format($orderCustomer->total_amount, 0, ',', '.') }}
+                                    Rp {{ number_format($orderCustomer->total_amounts, 0, ',', '.') }}
                                 </td>
                                 <td class="">
                                     <form action="{{ route('order.updateStatus', $orderCustomer->order_ID) }}"
@@ -72,8 +72,8 @@
                                                     </option>
                                                 </optgroup>
                                                 <hr>
-                                                <option value="pendding" class="cursor-pointer">
-                                                    pendding
+                                                <option value="pending" class="cursor-pointer">
+                                                    pending
                                                 </option>
                                                 <option value="in-progress" class="cursor-pointer">
                                                     in-progress
@@ -173,7 +173,7 @@
                                     <p class="!text-gray-500">Size: {{ $detail->size ?? 'unknown' }}</p>
                                 </div>
                                 <!-- Total -->
-                                <p class="font-semibold">Total: Rp {{ number_format($detail->price, 0, ',', '.') }}
+                                <p class="font-semibold">Total: Rp {{ number_format($detail->subtotal, 0, ',', '.') }}
                                 </p>
                                 <hr />
                             @empty

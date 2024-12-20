@@ -78,38 +78,38 @@
                                         class="object-cover w-full rounded h-44 md:w-full md:h-[13rem]" />
                                     <div class="flex flex-col w-full gap-2 md:gap-3 text-wrap">
                                         <p class="text-xl font-semibold md:text-xl line-clamp-1">
-                                            {{ $item->menu->name }}
+                                            {{ $item->menu_name }}
                                         </p>
                                         <p class="text-xl uppercase md:text-lg text-highlight-content">
                                             Size : {{ $item->size }}
                                         </p>
                                         <div class="items-center hidden gap-3 md:flex wrap">
-                                            <form action="{{ route('cart.update', $item->temp_ID) }}" method="POST">
+                                            <form action="{{ route('cart.update', $item->order_ID) }}" method="POST">
                                                 @csrf
                                                 @method('PUT')
                                                 <div
                                                     class="flex items-center justify-center gap-8 px-4 py-1.5 rounded-full w-fit outline outline-1 outline-white">
                                                     <button type="button" class="decrease-btn"
-                                                        data-id="{{ $item->temp_ID }}">
+                                                        data-id="{{ $item->order_detail_ID }}">
                                                         <i class="ti ti-minus"></i>
                                                     </button>
                                                     <span class="text-base md:text-lg text-accent-color"
-                                                        id="quantity-{{ $item->temp_ID }}">
+                                                        id="quantity-{{ $item->order_detail_ID }}">
                                                         {{ $item->quantity }}
                                                     </span>
                                                     <button type="button" class="increase-btn"
-                                                        data-id="{{ $item->temp_ID }}">
+                                                        data-id="{{ $item->order_detail_ID }}">
                                                         <i class="ti ti-plus"></i>
                                                     </button>
                                                 </div>
                                             </form>
-                                            <form action="{{ route('delete.cart', $item->temp_ID) }}" method="POST"
+                                            <form action="{{ route('delete.cart', $item->order_ID) }}" method="POST"
                                                 class="delete-form">
                                                 @csrf
                                                 @method('delete')
                                                 <button type="button"
                                                     class="flex items-center justify-center p-1.5 rounded-full bg-secondary-color delete-cart-item"
-                                                    data-id="{{ $item->temp_ID }}">
+                                                    data-id="{{ $item->order_detail_ID }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"
                                                         fill="none" viewBox="0 0 26 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -119,7 +119,7 @@
                                             </form>
                                         </div>
                                         <div class="flex items-center justify-between wrap">
-                                            <p class="text-xl md:text-lg" id="subtotal-{{ $item->temp_ID }}">
+                                            <p class="text-xl md:text-lg" id="subtotal-{{ $item->order_detail_ID }}">
                                                 Rp {{ number_format($item->subtotal, 0, ',', '.') }}
                                             </p>
                                         </div>
@@ -165,78 +165,50 @@
     $(document).ready(function() {
         // Handle item delete via AJAX
         $('.delete-cart-item').on('click', function(e) {
-            e.preventDefault(); // Mencegah form dikirimkan secara normal
-            var itemId = $(this).data('id'); // Ambil temp_ID dari data-id
-            var form = $(this).closest('form'); // Ambil form yang mengandung tombol delete
+            e.preventDefault(); // Prevent default form submission
+            var itemId = $(this).data('id'); // Get orderDetail_ID from data-id
+            var form = $(this).closest('form'); // Get the closest form containing the delete button
 
             $.ajax({
-                url: '/cart/delete/' + itemId, // URL untuk menghapus item
+                url: '/cart/delete/' + itemId, // URL for deleting the item
                 method: 'POST',
                 data: {
-                    _token: $('input[name="_token"]').val(), // Sertakan CSRF token
-                    _method: 'DELETE' // Mengirimkan method DELETE
+                    _token: $('input[name="_token"]').val(), // Include CSRF token
+                    _method: 'DELETE' // Send DELETE method
                 },
                 success: function(response) {
                     if (response.success) {
-                        // Tampilkan notifikasi sukses
+                        // Show success notification
                         notyf.success(response.message);
 
-                        // Hapus item dari tampilan
+                        // Remove the item from the cart view (DOM)
                         form.closest('.swiper-slide')
-                            .remove(); // Atau selector yang sesuai dengan item yang akan dihapus
+                            .remove(); // Adjust selector if necessary
 
-                        // Update informasi keranjang jika diperlukan (misalnya total item atau harga)
-                        // $('#total-quantity').text(response.totalQuantity);
-                        // $('#total-price').text('Rp ' + response.totalPrice);
+                        // Optionally, update cart total or other elements here
+                        $('#total-subtotal').text('Rp ' + response
+                            .totalSubtotal); // Update total subtotal
                     } else {
-                        notyf.error(response.message); // Tampilkan pesan error jika gagal
+                        // Show error message if item is not deleted
+                        notyf.error(response.message);
                     }
                 },
                 error: function(xhr) {
-                    notyf.error(
-                        'Something went wrong. Please try again.'
-                    ); // Pesan error jika terjadi kesalahan
+                    // Handle AJAX error
+                    notyf.error('Something went wrong. Please try again.');
                 }
             });
         });
     });
 </script>
+
 <script>
     $(document).ready(function() {
-        // Update kuantitas saat tombol decrease diklik
-        $('.decrease-btn').on('click', function(e) {
-            e.preventDefault();
-            var itemId = $(this).data('id');
-            var currentQuantity = parseInt($('#quantity-' + itemId).text());
-
-            // Jika sudah di minimum (1), tampilkan pesan
-            if (currentQuantity <= 1) {
-                notyf.error('Minimum quantity is 1');
-                return;
-            }
-
-            updateQuantity(itemId, currentQuantity - 1);
-        });
-
-        // Update kuantitas saat tombol increase diklik
-        $('.increase-btn').on('click', function(e) {
-            e.preventDefault();
-            var itemId = $(this).data('id');
-            var currentQuantity = parseInt($('#quantity-' + itemId).text());
-
-            // Jika sudah di maksimum (2), tampilkan pesan
-            if (currentQuantity >= 2) {
-                notyf.error('Maximum quantity is 2');
-                return;
-            }
-
-            updateQuantity(itemId, currentQuantity + 1);
-        });
 
         // Fungsi untuk memperbarui kuantitas dan subtotal
         function updateQuantity(itemId, newQuantity) {
             $.ajax({
-                url: '/cart/update/' + itemId,
+                url: '/cart/update/' + itemId, // URL untuk update kuantitas
                 method: 'PUT',
                 data: {
                     _token: $('input[name="_token"]').val(),
@@ -274,5 +246,37 @@
                 }
             });
         }
+
+        // Update kuantitas saat tombol decrease diklik
+        $('.decrease-btn').on('click', function(e) {
+            e.preventDefault();
+            var itemId = $(this).data('id');
+            var currentQuantity = parseInt($('#quantity-' + itemId).text());
+
+            // Jika sudah di minimum (1), tampilkan pesan
+            if (currentQuantity <= 1) {
+                notyf.error('Minimum quantity is 1');
+                return;
+            }
+
+            // Perbarui kuantitas dengan menurunkan
+            updateQuantity(itemId, currentQuantity - 1);
+        });
+
+        // Update kuantitas saat tombol increase diklik
+        $('.increase-btn').on('click', function(e) {
+            e.preventDefault();
+            var itemId = $(this).data('id');
+            var currentQuantity = parseInt($('#quantity-' + itemId).text());
+
+            // Jika sudah di maksimum (2), tampilkan pesan
+            if (currentQuantity >= 2) {
+                notyf.error('Maximum quantity is 2');
+                return;
+            }
+
+            // Perbarui kuantitas dengan menambah
+            updateQuantity(itemId, currentQuantity + 1);
+        });
     });
 </script>

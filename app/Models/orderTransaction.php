@@ -10,8 +10,9 @@ class orderTransaction extends Model
     protected $primaryKey = 'order_ID';
 
     protected $fillable = [
+        'order_type',
         'customer_ID',
-        'total_amount',
+        'total_amounts',
         'status_order',
     ];
 

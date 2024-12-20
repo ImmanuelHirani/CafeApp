@@ -28,7 +28,7 @@ class MenuController extends Controller
             'menu_type' => 'required|string|min:1|max:10',
             'image' => 'required|mimes:jpg,jpeg,bmp,png|max:2048',
             'name' => 'required|string|regex:/^[a-zA-Z\s]+$/|min:1|max:40',
-            'stock' => 'required|integer|min:1|max:100',
+            'stock' => 'required|integer|min:0|max:100',
             'menu_description' => 'required|string|min:1|max:255',
             'is_active' => 'required|int|min:0|max:1',
         ]);
@@ -50,7 +50,7 @@ class MenuController extends Controller
             'menu_type' => 'required|string|min:1|max:10',
             'image' => 'nullable|mimes:jpg,jpeg,bmp,png|max:2048',
             'name' => 'required|string|regex:/^[a-zA-Z\s]+$/|min:1|max:40',
-            'stock' => 'required|integer|min:1|max:100',
+            'stock' => 'required|integer|min:0|max:100',
             'menu_description' => 'required|string|regex:/^[a-zA-Z\s]+$/|min:1|max:255',
             'is_active' => 'required|int|min:0|max:1',
             'price' => 'numeric|min:20000|max:200000',

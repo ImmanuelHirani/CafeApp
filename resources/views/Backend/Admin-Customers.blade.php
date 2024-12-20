@@ -100,7 +100,6 @@
                     </li>
                 </ul>
             </div>
-
             <form action="" class="">
                 <div class="px-6 pb-6 overflow-y-auto card-content sideMenu-tabs-content">
                     <div class="flex flex-col gap-3 text-lg">

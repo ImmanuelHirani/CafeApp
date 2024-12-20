@@ -18,7 +18,7 @@
                         <div class="relative flex wrap">
                             <div class="w-[20rem] h-2 rounded-lg line bg-secondary-accent-color"></div>
                             <p class="absolute text-sm font-semibold uppercase translate-x-1/2 top-4 right-1/2">
-                                Size & Price & Flavor
+                                Your First Menu
                             </p>
                         </div>
                     </div>
@@ -31,54 +31,27 @@
                         <input type="hidden" name="form_target[]" value="controller1">
                         <input type="text" name="from1[categories]"
                             class="w-full p-2 rounded-lg outline outline-2 outline-secondary-accent-color bg-secondary-accent-color-admin"
-                            placeholder="Enter New Category">
+                            placeholder="Enter New Category" required>
                         <label
                             class="w-full p-3 text-center text-white rounded-lg cursor-pointer bg-secondary-accent-color next-tabs">Next</label>
                     </div>
                 </div>
                 <div id="form2" class="flex flex-col gap-3 rounded-lg tabs-content">
-                    <!-- Input grup pertama -->
-                    <div class="flex items-center w-full gap-3 wrap">
-                        <input name="size[]" placeholder="Size"
-                            class="p-2 uppercase border-2 rounded-lg text-center text-secondary-accent-color border-secondary-accent-color w-[3.5rem] flex items-center justify-center h-[3rem]">
-                        <input type="text" name="price[]" placeholder="Price"
-                            class="w-full p-3 text-center rounded-lg outline outline-2 outline-secondary-accent-color bg-secondary-accent-color-admin">
-                        <p>Allowed Flavor : </p>
-                        <input name="allowed_flavor[]"
-                            class="p-2 uppercase border-2 rounded-lg text-center text-secondary-accent-color border-secondary-accent-color w-[3.5rem] flex items-center justify-center h-[3rem]">
-                    </div>
-                    <div class="flex items-center w-full gap-3 wrap">
-                        <input name="size[]" placeholder="Size"
-                            class="p-2 uppercase border-2 rounded-lg text-center text-secondary-accent-color border-secondary-accent-color w-[3.5rem] flex items-center justify-center h-[3rem]">
-                        <input type="text" name="price[]" placeholder="Price"
-                            class="w-full p-3 text-center rounded-lg outline outline-2 outline-secondary-accent-color bg-secondary-accent-color-admin">
-                        <p>Allowed Flavor : </p>
-                        <input name="allowed_flavor[]"
-                            class="p-2 uppercase border-2 rounded-lg text-center text-secondary-accent-color border-secondary-accent-color w-[3.5rem] flex items-center justify-center h-[3rem]">
-                    </div>
-                    <div class="flex items-center w-full gap-3 wrap">
-                        <input name="size[]" placeholder="Size"
-                            class="p-2 uppercase border-2 rounded-lg text-center text-secondary-accent-color border-secondary-accent-color w-[3.5rem] flex items-center justify-center h-[3rem]">
-                        <input type="text" name="price[]" placeholder="Price"
-                            class="w-full p-3 text-center rounded-lg outline outline-2 outline-secondary-accent-color bg-secondary-accent-color-admin">
-                        <p>Allowed Flavor : </p>
-                        <input name="allowed_flavor[]"
-                            class="p-2 uppercase border-2 rounded-lg text-center text-secondary-accent-color border-secondary-accent-color w-[3.5rem] flex items-center justify-center h-[3rem]">
-                    </div>
-                    <div class="flex items-center w-full gap-3 wrap">
-                        <input name="size[]" placeholder="Size"
-                            class="p-2 uppercase border-2 rounded-lg text-center text-secondary-accent-color border-secondary-accent-color w-[3.5rem] flex items-center justify-center h-[3rem]">
-                        <input type="text" name="price[]" placeholder="Price"
-                            class="w-full p-3 text-center rounded-lg outline outline-2 outline-secondary-accent-color bg-secondary-accent-color-admin">
-                        <p>Allowed Flavor : </p>
-                        <input name="allowed_flavor[]"
-                            class="p-2 uppercase border-2 rounded-lg text-center text-secondary-accent-color border-secondary-accent-color w-[3.5rem] flex items-center justify-center h-[3rem]">
+                    <!-- Input grup properti -->
+                    <div class="flex flex-col gap-3">
+                        <input type="text" name="properties_name[]"
+                            class="w-full p-2 text-base rounded-lg outline outline-1 outline-secondary-accent-color"
+                            placeholder="Add new Toppings" required>
+                        <input type="number" name="price[]"
+                            class="w-full p-2 text-base rounded-lg outline outline-1 outline-secondary-accent-color"
+                            placeholder="Price" required>
                     </div>
                     <!-- Submit -->
                     <button type="submit"
-                        class="p-3 text-white rounded-lg cursor-pointer bg-secondary-accent-color ">Insert</button>
+                        class="p-3 text-white rounded-lg cursor-pointer bg-secondary-accent-color">Insert</button>
                 </div>
             </form>
+
         </div>
     </div>
     <!-- Close Button -->

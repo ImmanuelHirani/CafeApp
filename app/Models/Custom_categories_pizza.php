@@ -24,10 +24,4 @@ class Custom_categories_pizza extends Model
     {
         return $this->hasMany(Custom_categories_properties::class, 'categories_ID', 'categories_ID');
     }
-
-    // Relasi ke Custom_categories_size_properties
-    public function sizeProperties()
-    {
-        return $this->hasMany(Custom_categories_size_properties::class, 'categories_ID', 'categories_ID');
-    }
 }

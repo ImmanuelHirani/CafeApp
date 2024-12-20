@@ -44,7 +44,7 @@
                                 Change Primary Location ?
                             </a>
                         </div>
-                        @forelse ($temp_cart as $cart)
+                        @forelse ($cart_items as $cart)
                             <div
                                 class="relative flex items-center self-start w-full gap-12 px-3 py-3 rounded-lg outline outline-1 outline-highlight-content md:justify-between h-fit md:px-4 md:py-4 cart-item font-aesthetnova bg-secondary-accent-color">
                                 <img src="{{ asset('storage/' . $cart->menu->image) }}"
@@ -83,31 +83,33 @@
                                     <p class="inline-block md:hidden">Rp 500.000</p>
                                 </div>
                                 <div class="items-center w-[20%]  hidden gap-3 md:flex wrap">
-                                    <form action="{{ route('cart.update', $cart->temp_ID) }}" method="POST"
+                                    <form action="{{ route('cart.update', $cart->order_ID) }}" method="POST"
                                         class="cart-form">
                                         @csrf
                                         @method('PUT')
                                         <div
                                             class="flex items-center justify-center gap-8 px-4 py-1.5 rounded-full w-fit outline outline-1 outline-white">
-                                            <button type="button" class="decrease-btn" data-id="{{ $cart->temp_ID }}">
+                                            <button type="button" class="decrease-btn"
+                                                data-id="{{ $cart->order_detail_ID }}">
                                                 <i class="ti ti-minus"></i>
                                             </button>
-                                            <span id="quantity-{{ $cart->temp_ID }}"
+                                            <span id="quantity-{{ $cart->order_detail_ID }}"
                                                 class="text-base md:text-lg text-accent-color">
                                                 {{ $cart->quantity }}
                                             </span>
-                                            <button type="button" class="increase-btn" data-id="{{ $cart->temp_ID }}">
+                                            <button type="button" class="increase-btn"
+                                                data-id="{{ $cart->order_detail_ID }}">
                                                 <i class="ti ti-plus"></i>
                                             </button>
                                         </div>
                                     </form>
-                                    <form action="{{ route('delete.cart', $cart->temp_ID) }}" method="POST"
+                                    <form action="{{ route('delete.cart', $cart->order_ID) }}" method="POST"
                                         class="delete-form">
                                         @csrf
                                         @method('delete')
                                         <button type="button"
                                             class="flex items-center justify-center p-1.5 rounded-full bg-secondary-color delete-cart-item"
-                                            data-id="{{ $cart->temp_ID }}">
+                                            data-id="{{ $cart->order_detail_ID }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
                                                 viewBox="0 0 26 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -117,7 +119,7 @@
                                     </form>
                                 </div>
                                 <div class="flex items-center justify-center w-[20%]  wrap">
-                                    <p class="text-xl md:text-lg" id="subtotal-{{ $cart->temp_ID }}">
+                                    <p class="text-xl md:text-lg" id="subtotal-{{ $cart->order_detail_ID }}">
                                         Rp {{ number_format($cart->subtotal, 0, ',', '.') }}
                                     </p>
                                 </div>
@@ -159,9 +161,9 @@
                             @if (isset($cart))
                                 <span class="flex items-center justify-between">
                                     <p class="text-xl">Total</p>
-                                    <p class="text-xl" id="totalsubtotal-{{ $cart->temp_ID }}">
-                                        Rp <span
-                                            id="totalAmount">{{ number_format($totalSubtotal, 0, ',', '.') }}</span>
+                                    <p class="text-xl" id="totalsubtotal-{{ $cart->order_detail_ID }}">
+                                        <span id="totalAmount">Rp
+                                            {{ number_format($totalSubtotal, 0, ',', '.') }}</span>
                                     </p>
                                 </span>
                             @else
@@ -198,13 +200,13 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
-        // Initialize the total subtotal from the backend
-        let totalSubtotal = parseFloat($('#totalAmount').text().replace('Rp ', '').replace('.', '').trim());
+        // Initialize the total subtotal from the backend - improved parser
+        let totalSubtotal = parseFloat($('#totalAmount').text().replace(/[^\d]/g, ''));
 
         // Handle item delete via AJAX
         $('.delete-cart-item').on('click', function(e) {
             e.preventDefault(); // Prevent form submission
-            var itemId = $(this).data('id'); // Get temp_ID from data-id
+            var itemId = $(this).data('id'); // Get order_ID from data-id
             var form = $(this).closest('form'); // Get the form containing the delete button
 
             $.ajax({
@@ -227,8 +229,8 @@
                             .deletedSubtotal); // Subtract the deleted item's subtotal
 
                         // Update the total displayed subtotal from the response
-                        $('#totalAmount').text(response.totalSubtotal
-                            .toLocaleString('id-ID'));
+                        $('#totalAmount').text('Rp ' + formatNumber(response
+                            .totalSubtotal));
                     } else {
                         notyf.error(response
                             .message); // Show error message if deletion fails
@@ -285,8 +287,7 @@
                         $('#quantity-' + itemId).text(response.quantity);
 
                         // Update subtotal display
-                        $('#subtotal-' + itemId).text('Rp ' + response.subtotal.toLocaleString(
-                            'id-ID'));
+                        $('#subtotal-' + itemId).text('Rp ' + formatNumber(response.subtotal));
 
                         // Update the total subtotal after quantity change
                         updateTotalSubtotal(response.subtotal - response.oldSubtotal);
@@ -295,8 +296,7 @@
                         notyf.success(response.message);
 
                         // Update the total displayed subtotal from the response
-                        $('#totalAmount').text(response.totalSubtotal.toLocaleString(
-                            'id-ID'));
+                        $('#totalAmount').text('Rp ' + formatNumber(response.totalSubtotal));
                     } else {
                         notyf.error(response.message); // Show error message
                     }
@@ -315,7 +315,12 @@
         // Function to update the total subtotal
         function updateTotalSubtotal(amount) {
             totalSubtotal += amount; // Add or subtract based on the action
-            $('#totalAmount').text('Rp ' + totalSubtotal.toLocaleString('id-ID')); // Update the display
+            $('#totalAmount').text('Rp ' + formatNumber(totalSubtotal)); // Update the display
+        }
+
+        // Helper function to format numbers to Indonesian Rupiah format
+        function formatNumber(number) {
+            return Math.round(number).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }
     });
 </script>

@@ -87,82 +87,82 @@ class OrderService
         }
     }
 
-    public function updateCart($id, $quantity)
-    {
-        $tempCart = $this->orderRepo->findTempTransactionById($id);
+    // public function updateCart($id, $quantity)
+    // {
+    //     $tempCart = $this->orderRepo->findTempTransactionById($id);
 
-        if (!$tempCart) {
-            return ['error' => 'Menu not found.', 'status' => 404];
-        }
+    //     if (!$tempCart) {
+    //         return ['error' => 'Menu not found.', 'status' => 404];
+    //     }
 
-        if ($quantity < 1) {
-            return ['error' => 'Min Qty 1.', 'status' => 400];
-        }
+    //     if ($quantity < 1) {
+    //         return ['error' => 'Min Qty 1.', 'status' => 400];
+    //     }
 
-        if ($quantity > 2) {
-            return ['error' => 'Maximal Qty 2.', 'status' => 400];
-        }
+    //     if ($quantity > 2) {
+    //         return ['error' => 'Maximal Qty 2.', 'status' => 400];
+    //     }
 
-        $updatedCart = $this->orderRepo->updateTempTransactionItem(
-            $tempCart,
-            $quantity,
-            $tempCart->menu->price
-        );
+    //     $updatedCart = $this->orderRepo->updateTempTransactionItem(
+    //         $tempCart,
+    //         $quantity,
+    //         $tempCart->menu->price
+    //     );
 
-        $totalSubtotal = $this->orderRepo->getTotalSubtotalForCustomer($tempCart->customer_ID);
+    //     $totalSubtotal = $this->orderRepo->getTotalSubtotalForCustomer($tempCart->customer_ID);
 
-        Log::info('Total Subtotal untuk customer ' . $tempCart->customer_ID . ': ' . $totalSubtotal);
+    //     Log::info('Total Subtotal untuk customer ' . $tempCart->customer_ID . ': ' . $totalSubtotal);
 
-        return [
-            'success' => 'Updated Successfully',
-            'quantity' => $updatedCart->quantity,
-            'subtotal' => number_format($updatedCart->subtotal, 0, ',', '.'),
-            'totalSubtotal' => number_format($totalSubtotal, 0, ',', '.'),
-        ];
-    }
+    //     return [
+    //         'success' => 'Updated Successfully',
+    //         'quantity' => $updatedCart->quantity,
+    //         'subtotal' => number_format($updatedCart->subtotal, 0, ',', '.'),
+    //         'totalSubtotal' => number_format($totalSubtotal, 0, ',', '.'),
+    //     ];
+    // }
 
-    public function addToCart($customerId, $menuId, $quantity)
-    {
-        try {
-            $existingItem = $this->orderRepo->findExistingTempTransactionItem($menuId, $customerId);
+    // public function addToCart($customerId, $menuId, $quantity)
+    // {
+    //     try {
+    //         $existingItem = $this->orderRepo->findExistingTempTransactionItem($menuId, $customerId);
 
-            if ($existingItem) {
-                $menu = $existingItem->menu;
+    //         if ($existingItem) {
+    //             $menu = $existingItem->menu;
 
-                if (!$menu) {
-                    return ['error' => 'Menu Not Found.'];
-                }
+    //             if (!$menu) {
+    //                 return ['error' => 'Menu Not Found.'];
+    //             }
 
-                if ($existingItem->quantity >= 2) {
-                    return ['error' => 'Max Qty 2'];
-                }
+    //             if ($existingItem->quantity >= 2) {
+    //                 return ['error' => 'Max Qty 2'];
+    //             }
 
-                $newQuantity = $existingItem->quantity + $quantity;
-                if ($newQuantity > 2) {
-                    $newQuantity = 2;
-                }
+    //             $newQuantity = $existingItem->quantity + $quantity;
+    //             if ($newQuantity > 2) {
+    //                 $newQuantity = 2;
+    //             }
 
-                $updatedItem = $this->orderRepo->updateTempTransactionItem($existingItem, $newQuantity, $menu->price);
+    //             $updatedItem = $this->orderRepo->updateTempTransactionItem($existingItem, $newQuantity, $menu->price);
 
-                return ['success' => 'Cart Updated'];
-            }
+    //             return ['success' => 'Cart Updated'];
+    //         }
 
-            $menuDetails = Menu::findOrFail($menuId);
-            $subtotal = $menuDetails->price * $quantity;
+    //         $menuDetails = Menu::findOrFail($menuId);
+    //         $subtotal = $menuDetails->price * $quantity;
 
-            $data = [
-                'menu_ID' => $menuId,
-                'customer_ID' => $customerId,
-                'quantity' => $quantity,
-                'subtotal' => $subtotal,
-            ];
+    //         $data = [
+    //             'menu_ID' => $menuId,
+    //             'customer_ID' => $customerId,
+    //             'quantity' => $quantity,
+    //             'subtotal' => $subtotal,
+    //         ];
 
-            $this->orderRepo->addNewItemToTempTransaction($data);
+    //         $this->orderRepo->addNewItemToTempTransaction($data);
 
-            return ['success' => 'Menu Added'];
-        } catch (\Exception $e) {
-            Log::error('Add to Cart Error: ' . $e->getMessage());
-            return ['error' => 'Something Wrongs'];
-        }
-    }
+    //         return ['success' => 'Menu Added'];
+    //     } catch (\Exception $e) {
+    //         Log::error('Add to Cart Error: ' . $e->getMessage());
+    //         return ['error' => 'Something Wrongs'];
+    //     }
+    // }
 }

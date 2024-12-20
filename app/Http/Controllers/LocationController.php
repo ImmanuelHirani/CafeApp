@@ -14,7 +14,7 @@ class LocationController extends Controller
         // Validasi data input
         $validatedData = $request->validate([
             'location_label' => 'required|string|regex:/^[a-zA-Z\s]+$/|min:1|max:30',
-            'reciver_address' => 'required|string|regex:/^[a-zA-Z\s]+$/|min:1|max:500',
+            'reciver_address' => 'required|string|min:1|max:500',
             'reciver_name' => 'required|string|regex:/^[a-zA-Z\s]+$/|min:1|max:30',
             'reciver_number' => 'required|regex:/^[0-9]{10,15}$/',
         ]);

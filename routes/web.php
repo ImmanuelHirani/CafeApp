@@ -33,16 +33,23 @@ Route::put('/profile/location/update/primary/{locationID}', [LocationController:
 Route::get('/menu/custom', [CustomerOrderController::class, 'customPizza'])->name('frontend.menu.custom');
 Route::post('/custom-categories/store', [CustomCategoriesController::class, 'store'])->name('custom.categories.store');
 Route::delete('admin/menu/custom/delete/{id}', [CustomCategoriesController::class, 'delete'])->name('custom.categories.delete');
-
-Route::get('admin/menu/custom/details/{id}', [OrderController::class, 'getCategoriesDetails'])->name('custom.categories.details');
+Route::get('admin/menu/custom/details/{id}', [CustomCategoriesController::class, 'getCategoriesDetails'])->name('custom.categories.details');
+Route::post('/update-properties', [CustomCategoriesController::class, 'updateProperties'])->name('update.properties');
+Route::post('/custom-properties/{id}/insert', [CustomCategoriesController::class, 'storeProperties'])->name('custom.properties.store');
+Route::post('/custom-categories/size/store', [CustomCategoriesController::class, 'storeSizeProperties'])
+    ->name('custom.categories.size.store');
+Route::post('/calculate-total', [CustomerOrderController::class, 'calculateTotal']);
 
 
 
 // Cart
 Route::get('/cart', [CartController::class, 'cartMenu'])->name('cart.view');
-Route::put('/cart/update/{tempID}', [CartController::class, 'updateCartQuantity'])->name('cart.update');
-Route::delete('/cart/delete/{tempID}', [CartController::class, 'deleteCart'])->name('delete.cart');
-Route::post('/cart/add', [CartController::class, 'AddToCart'])->name('cart.add');
+Route::put('/cart/update/{orderID}', [CartController::class, 'updateCartQuantity'])->name('cart.update');
+Route::delete('/cart/delete/{orderID}', [CartController::class, 'deleteCart'])->name('delete.cart');
+Route::post('/cart/add/', [CartController::class, 'AddToCart'])->name('cart.add');
+Route::post('/store-custom-order', [CartController::class, 'store'])->name('store.custom.order');
+
+
 
 
 // Order
@@ -73,9 +80,8 @@ Route::get('/admin/product', [MenuController::class, 'Product'])->name('admin.pr
 Route::get('/admin/product/detail/{id}', [MenuController::class, 'getMenuDetails'])->name('admin.product.detail');
 
 // Route untuk update ukuran menu
-
 Route::get('/admin/menu/order', [OrderController::class, 'adminOrder'])->name('admin.order');
-Route::get('/admin/menu/custom/order', [OrderController::class, 'adminCustomOrder'])->name('admin.custom.order');
+Route::get('/admin/menu/custom/order', [CustomCategoriesController::class, 'adminCustomOrder'])->name('admin.custom.order');
 Route::get('/admin/menu/order/{id}', [OrderController::class, 'getCustomerOrderDetails'])->name('admin.order.details');
 // Route untuk mengupdate status order
 Route::post('/order/update-status/{orderID}', [OrderController::class, 'updateStatus'])->name('order.updateStatus');

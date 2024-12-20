@@ -6,16 +6,16 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up(): void
+
+    public function up()
     {
         Schema::create('order_transaction', function (Blueprint $table) {
             $table->id('order_ID');
+            $table->string('order_type');
             $table->unsignedBigInteger('customer_ID');
-            $table->decimal('total_amount', 10, 2);
-            $table->string('status_order');
+            $table->decimal('total_amounts', 10);
+            $table->string('status_order')->nullable()->default(0);
             $table->timestamps();
-
-            // Foreign key
             $table->foreign('customer_ID')->references('customer_ID')->on('customers')->onDelete('cascade');
         });
     }

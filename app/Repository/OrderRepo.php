@@ -6,9 +6,8 @@ use App\Models\tempTransaction;
 
 interface orderRepo
 {
-    public function addTempTransaction(array $validatedData): tempTransaction;
-    public function deleteTempTransactionById($id): bool;
-    public function updateTempTransaction(tempTransaction $tempTransaction, array $data): tempTransaction;
+
+
     public function getPendingOrderTransactionByCustomerId($customerId);
     public function createNewOrderTransaction($customerId);
     public function getCartItemsByCustomerId($customerId);

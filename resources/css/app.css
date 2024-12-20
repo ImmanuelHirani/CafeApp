@@ -255,7 +255,7 @@ section {
     @apply bg-green-500 text-white;
 }
 
-.status-select select.pendding {
+.status-select select.pending {
     @apply bg-yellow-500 text-white;
 }
 
@@ -309,12 +309,35 @@ section {
     transition: all 0.3s ease-in-out allow-discrete;
 }
 
+#modal-add-properties {
+    @apply p-4 m-auto rounded-lg opacity-0;
+    transition: all 0.3s ease-in-out allow-discrete;
+}
+
+#modal-add-size {
+    @apply p-4 m-auto rounded-lg opacity-0;
+    transition: all 0.3s ease-in-out allow-discrete;
+}
+
 #modal-add-product[open] {
+    opacity: 1;
+}
+#modal-add-properties[open] {
+    opacity: 1;
+}
+
+#modal-add-size[open] {
     opacity: 1;
 }
 
 @starting-style {
     #modal-add-product[open] {
+        opacity: 0;
+    }
+    #modal-add-properties[open] {
+        opacity: 0;
+    }
+    #modal-add-size[open] {
         opacity: 0;
     }
 }
@@ -323,13 +346,36 @@ section {
     @apply bg-transparent;
     transition: all 0.3s ease-in-out allow-discrete;
 }
+#modal-add-size::backdrop {
+    @apply bg-transparent;
+    transition: all 0.3s ease-in-out allow-discrete;
+}
+
+#modal-add-properties::backdrop {
+    @apply bg-transparent;
+    transition: all 0.3s ease-in-out allow-discrete;
+}
 
 #modal-add-product[open]::backdrop {
+    @apply bg-black bg-opacity-50;
+}
+#modal-add-properties[open]::backdrop {
+    @apply bg-black bg-opacity-50;
+}
+#modal-add-size[open]::backdrop {
     @apply bg-black bg-opacity-50;
 }
 
 @starting-style {
     #modal-add-product[open]::backdrop {
+        @apply bg-transparent;
+    }
+
+    #modal-add-properties[open]::backdrop {
+        @apply bg-transparent;
+    }
+
+    #modal-add-size[open]::backdrop {
         @apply bg-transparent;
     }
 }

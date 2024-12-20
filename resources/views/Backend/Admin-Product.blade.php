@@ -22,15 +22,8 @@
             <div class="flex items-center justify-between header">
                 <p class="text-2xl font-semibold">Menus</p>
                 <div class="flex items-center gap-3 wrap">
-                    {{-- <div class="relative w-full max-w-xs">
-                        <input type="search" placeholder="Search Product"
-                            class="w-full p-3 pl-10 rounded-full outline-none bg-secondary-accent-color-admin" />
-                        <img src="{{ asset('asset/SVG/search-icon-admin.svg') }}" alt="Search Icon"
-                            class="absolute w-5 h-5 transform -translate-y-1/2 left-3 top-1/2" />
-                    </div> --}}
                     <button id="btn-add-product"
-                        class="flex items-center group transition-all ease-in-out duration-300 hover:bg-secondary-accent-color
-hover:!text-white gap-3  justify-center py-3 h-10 px-4  w-full outline outline-2 outline-accent-color-admin rounded-full !text-accent-color-admin">
+                        class="flex items-center group transition-all ease-in-out duration-300 hover:bg-secondary-accent-color hover:!text-white gap-3  justify-center py-3 h-10 px-4  w-full outline outline-2 outline-accent-color-admin rounded-full !text-accent-color-admin">
                         Add New Menu
                         <i class="ti ti-plus group-hover:!text-white !text-accent-color-admin text-xl"></i>
                     </button>

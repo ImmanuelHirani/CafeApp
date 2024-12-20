@@ -15,6 +15,7 @@
             <!-- Informasi Menu -->
             <input class="text-lg text-white bg-transparent outline-none" readonly
                 value="{{ $menuDetails->name ?? '' }}" disabled>
+
             @if ($selectedProperty)
                 <div class="flex items-center gap-2 wrap">
                     <p class="text-lg">SIZE : </p>
@@ -27,13 +28,10 @@
 
             <!-- Input Hidden Menu ID -->
             <input type="hidden" name="menu_ID" value="{{ $menuDetails->menu_ID ?? '' }}">
-
             <!-- Input Hidden Customer ID -->
             <input type="hidden" name="customer_ID" value="{{ Auth::user()->customer_ID ?? '' }}">
-
             <!-- Input Hidden Quantity -->
             <input type="hidden" name="quantity" id="hidden-quantity" value="1">
-
             <!-- Informasi Harga -->
             <p class="text-highlight-content">Max. Pembelian 2 pcs!</p>
 
@@ -52,21 +50,19 @@
                 <button id="decrease" type="button" class="gap-3 px-3 py-2.5 rounded-lg w-fit bg-secondary-color">
                     <svg height="24px" fill="white" viewBox="0 0 512 512" width="20px">
                         <path
-                            d="M417.4,224H94.6C77.7,224,64,238.3,64,256c0,17.7,13.7,32,30.6,32h322.8c16.9,0,30.6-14.3,30.6-32 C448,238.3,434.3,224,417.4,224z" />
+                            d="M417.4,224H94.6C77.7,224,64,238.3,64,256c0,17.7,13.7,32,30.6,32h322.8c16.9,0,30.6-14.3,30.6-32C448,238.3,434.3,224,417.4,224z" />
                     </svg>
                 </button>
-
                 <!-- Tombol Add to Cart -->
                 <button type="submit"
                     class="w-full gap-3 px-2 py-3 text-sm font-semibold rounded-lg 2xl:px-5 bg-secondary-color">
                     ADD TO CART <span>(<span id="quantity-display">1</span>)</span>
                 </button>
-
                 <!-- Tombol Increase -->
                 <button id="increase" type="button" class="gap-3 px-3 py-2.5 rounded-lg w-fit bg-secondary-color">
                     <svg height="24px" fill="white" viewBox="0 0 512 512" width="20px">
                         <path
-                            d="M417.4,224H288V94.6c0-16.9-14.3-30.6-32-30.6c-17.7,0-32,13.7-32,30.6V224H94.6C77.7,224,64,238.3,64,256 c0,17.7,13.7,32,30.6,32H224v129.4c0,16.9,14.3,30.6,32,30.6c17.7,0,32-13.7,32-30.6V288h129.4c16.9,0,30.6-14.3,30.6-32 C448,238.3,434.3,224,417.4,224z" />
+                            d="M417.4,224H288V94.6c0-16.9-14.3-30.6-32-30.6c-17.7,0-32,13.7-32,30.6V224H94.6C77.7,224,64,238.3,64,256c0,17.7,13.7,32,30.6,32H224v129.4c0,16.9,14.3,30.6,32,30.6c17.7,0,32-13.7,32-30.6V288h129.4c16.9,0,30.6-14.3,30.6-32C448,238.3,434.3,224,417.4,224z" />
                     </svg>
                 </button>
             </div>
@@ -84,15 +80,13 @@
 
         let quantity = 1; // Inisialisasi jumlah awal
 
-        // Fungsi untuk memperbarui tampilan dan input hidden
         function updateValues() {
-            quantityDisplay.textContent = quantity; // Perbarui tampilan jumlah
-            hiddenQuantityInput.value = quantity; // Perbarui input hidden
-            const subtotal = pricePerItem * quantity; // Hitung subtotal
-            subtotalElement.textContent = 'Rp ' + subtotal.toLocaleString('id-ID'); // Perbarui subtotal
+            quantityDisplay.textContent = quantity;
+            hiddenQuantityInput.value = quantity;
+            const subtotal = pricePerItem * quantity;
+            subtotalElement.textContent = 'Rp ' + subtotal.toLocaleString('id-ID');
         }
 
-        // Event listener untuk tombol decrease
         decreaseButton.addEventListener('click', function() {
             if (quantity > 1) {
                 quantity--;
@@ -100,15 +94,13 @@
             }
         });
 
-        // Event listener untuk tombol increase
         increaseButton.addEventListener('click', function() {
-            if (quantity < 2) { // Maksimum 2 pcs
+            if (quantity < 2) {
                 quantity++;
                 updateValues();
             }
         });
 
-        // Inisialisasi tampilan awal
         updateValues();
     });
 </script>

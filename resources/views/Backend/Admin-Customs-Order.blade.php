@@ -22,7 +22,7 @@
 <body id="Admin">
     @include('layout.header')
     <main class="grid grid-cols-10 gap-3 py-4">
-        <section class="flex flex-col col-span-7 p-6 rounded-lg gap-9 bg-primary-color-admin">
+        <section class="flex flex-col col-span-7 p-6 rounded-lg h-fit gap-9 bg-primary-color-admin">
             <div class="flex items-center justify-between wrap">
                 <p class="text-2xl font-semibold">Custom Pizza</p>
                 <button id="btn-add-product"
@@ -62,11 +62,11 @@
                                 <td class="text-base text-gray-500">{{ $category->categories_type }}</td>
                                 @if ($category->is_active == 1)
                                     <td class="text-base text-gray-500"><label
-                                            class="px-8 py-3 text-white bg-green-500 rounded-full shadow-lg">Active</label>
+                                            class="px-8 py-2 text-white bg-green-500 rounded-full shadow-lg">Active</label>
                                     </td>
                                 @else
                                     <td class="text-base text-gray-500"><label
-                                            class="px-8 py-3 text-white bg-red-500 rounded-full shadow-lg">Non-Active</label>
+                                            class="px-8 py-2 text-white bg-red-500 rounded-full shadow-lg">Non-Active</label>
                                     </td>
                                 @endif
                                 <td class="text-base text-gray-500">{{ $category->created_at }}</td>
@@ -81,12 +81,12 @@
                                     </div>
                                     <div
                                         class="flex items-center cursor-pointer justify-center !text-white bg-red-500 rounded-full w-9 h-9 btn">
-                                        <form
+                                        <form onclick="confirmation(event)"
                                             action="{{ Route('custom.categories.delete', $category->categories_ID ?? '') }}"
                                             method="POST">
                                             @csrf
                                             @method('delete')
-                                            <button type="submit" class="text-xl cursor-pointer">
+                                            <button id="trash" type="submit" class="text-xl cursor-pointer">
                                                 <i class="ti ti-trash"></i>
                                             </button>
                                         </form>
@@ -106,48 +106,122 @@
                 <ul class="flex items-center justify-between w-full gap-3 text-base">
                     <li
                         class="relative w-full px-4 py-2 text-center transition-all duration-300 ease-in-out rounded-full cursor-pointer group outline-1 sideMenu-tabs-toggle">
-                        <a class="!text-accent-color-admin">Categories Details</a>
+                        <a class="!text-accent-color-admin">Properties</a>
+                    </li>
+                    <li
+                        class="relative w-full px-4 py-2 text-center transition-all duration-300 ease-in-out rounded-full cursor-pointer group outline-1 sideMenu-tabs-toggle">
+                        <a class="!text-accent-color-admin">Size & Pricing</a>
                     </li>
                 </ul>
             </div>
-            <form action="" class="sideMenu-tabs-content">
-                <div class="px-6 pb-6 overflow-y-auto card-content">
-                    <div class="flex flex-col gap-3 text-lg">
-                        <label for="" class="flex flex-col gap-3">
-                            Customer Name
-                            <input type="text" class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin"
-                                placeholder="Max 20 Char" />
-                        </label>
-                        <label for="" class="flex flex-col gap-3">
-                            Phone Number
-                            <input type="number" class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin"
-                                placeholder="Max 20 Char" />
-                        </label>
-                        <label for="" class="flex flex-col gap-3">
-                            Email
-                            <input type="email" class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin"
-                                placeholder="Max 20 Char" />
-                        </label>
-                        <label for="" class="flex flex-col gap-3">
-                            Location Detail Order
-                            <textarea name="" rows="4" class="p-3 rounded-lg outline-none resize-none bg-secondary-color-admin"
-                                placeholder="Max 150 Char"></textarea>
-                        </label>
+            <form action="{{ route('update.properties') }}" method="POST">
+                @csrf
+                <div class="flex flex-col gap-3 px-6 py-1 pb-6 overflow-y-auto card-wrapper sideMenu-tabs-content">
+                    {{-- Topping List Section --}}
+                    <div class="flex flex-col gap-3 text-lg order-card">
+                        <div class="flex flex-col gap-3 topping-list">
+                            <div class="flex items-center justify-between gap-3 wrap">
+                                <p class="font-semibold">Topping List :</p>
+                                <label id="btn-add-properties"
+                                    class="cursor-pointer btn-add-product flex items-center group hover:bg-secondary-accent-color transition-all ease-in-out duration-300 hover:!text-white w-fit gap-3 px-4 justify-center text-base py-2 outline outline-2 outline-accent-color-admin rounded-full !text-accent-color-admin">
+                                    New Properties
+                                </label>
+                            </div>
+                            <div class="flex flex-wrap items-center gap-2 list-wrap">
+                                @isset($detailCategories)
+                                    @foreach ($detailCategories->properties as $detail)
+                                        <input type="text" name="properties[{{ $detail->properties_ID }}][name]"
+                                            value="{{ $detail->properties_name }}"
+                                            class="w-full px-4 py-2 text-base rounded-lg bg-secondary-accent-color-admin outline outline-1 outline-gray-300">
+
+                                        <input type="number" name="properties[{{ $detail->properties_ID }}][price]"
+                                            class="w-full p-2 rounded-lg outline-none bg-secondary-color-admin size-price"
+                                            min="0" value="{{ $detail->price }}" />
+                                    @endforeach
+                                @else
+                                    <p class="text-red-500">No categories selected.</p>
+                                @endisset
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+                <div class="px-6 pb-6 space-y-2 sideMenu-tabs-content">
+                    <div class="flex items-center justify-between gap-3 wrap">
+                        <p class="font-semibold">Size List :</p>
+                        @isset($sizes)
+                            @php
+                                $isSizesAvailable = $sizes->isNotEmpty();
+                            @endphp
+                            @if (!$isSizesAvailable)
+                                <label id="btn-add-size"
+                                    class="cursor-pointer btn-add-product flex items-center group hover:bg-secondary-accent-color transition-all ease-in-out duration-300 hover:!text-white w-fit gap-3 px-4 justify-center text-base py-2 outline outline-2 outline-accent-color-admin rounded-full !text-accent-color-admin">
+                                    Create Size Rules
+                                </label>
+                            @endif
+                        @endisset
+                    </div>
+                    @isset($sizes)
+                        @foreach ($sizes as $size)
+                            <div class="flex items-center gap-3 wrap">
+                                <input type="text" name="sizeProperties[{{ $size->size_ID }}][size]"
+                                    value="{{ $size->size }}" placeholder="Size"
+                                    class="p-2 uppercase border-2 rounded-lg text-center text-secondary-accent-color border-secondary-accent-color w-[3.5rem] h-[3rem]">
+
+                                <input type="number" name="sizeProperties[{{ $size->size_ID }}][price]"
+                                    class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin size-price"
+                                    min="0" value="{{ $size->price }}" />
+
+                                <p>Allowed Flavor:</p>
+                                <input type="text" name="sizeProperties[{{ $size->size_ID }}][allowed_flavor]"
+                                    value="{{ $size->allowed_flavor }}"
+                                    class="p-2 uppercase border-2 rounded-lg text-center text-secondary-accent-color border-secondary-accent-color w-[3.5rem] h-[3rem]">
+                            </div>
+                        @endforeach
+                    @else
+                        <p class="text-red-500">No sizes available.</p>
+                    @endisset
+                </div>
+
+                <div class="flex items-center w-full gap-3 p-4 mt-auto bg-white shadow-inner footer-toggle">
+                    <button type="submit" class="w-full h-12 text-white rounded-lg bg-secondary-accent-color">
+                        Update
+                    </button>
+                </div>
             </form>
-            <div class="flex items-center w-full gap-3 p-4 mt-auto bg-white shadow-inner h-fit footer-toggle">
-                <button type="submit" class="w-full h-12 !text-white rounded-lg bg-secondary-accent-color">
-                    Update
-                </button>
-            </div>
+
         </aside>
         @include('layout.modal.modal-custom-menu')
+        @include('layout.modal.modal-custom-menu-properties')
+        @include('layout.modal.modal-custom-menu-size')
     </main>
 </body>
 <script src="{{ asset('/js/table.js') }}"></script>
 <script src="{{ asset('/js/modal.js') }}"></script>
 <script src="{{ asset('/js/selectedStatus.js') }}"></script>
 <script src="{{ asset('/js/tabs-sideMenu.js') }}"></script>
+<script>
+    function confirmation(ev) {
+        ev.preventDefault(); // Mencegah pengiriman form default
+        ev.stopPropagation(); // Mencegah event bubbling ke parent (div)
+
+        const form = ev.currentTarget; // Mengambil elemen form yang memicu event
+        Swal.fire({
+            title: "Are you sure?",
+            text: "This action cannot be undone!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Jika pengguna mengonfirmasi, kirim form
+                form.submit();
+            }
+        });
+    }
+</script>
 
 </html>
