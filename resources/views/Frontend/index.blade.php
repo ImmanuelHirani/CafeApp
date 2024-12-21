@@ -355,7 +355,7 @@
                     </div>
                     <div id="btn-custom"
                         class="relative inline-flex items-center justify-center overflow-hidden transition-all duration-500 ease-in-out rounded-full outline outline-1 hover:outline-none hover:bg-secondary-color backdrop-blur-lg md:outline-white md:bg-transparent bg-secondary-color md:w-[4em] h-[2.5em] md:hover:w-[14em] will-change-transform md:h-[4em]">
-                        <a href="custom-pizza.html"
+                        <a href="{{ Route('frontend.menu.custom') }}"
                             class="flex items-center w-full gap-2 px-4 py-2 overflow-hidden text-sm transition-all duration-500 ease-in-out rounded-lg md:hover:px-4 md:gap-4 group 3xl:text-2xl md:px-8 md:py-3 md:text-xl font-aesthetnova">
                             <i
                                 class="self-center text-xl transition-all duration-500 ease-in-out md:-translate-x-1/2 md:text-3xl ti ti-pizza ti-pencil md:group-hover:translate-x-0"></i>
@@ -398,11 +398,10 @@
                             </p>
                             <div id="coffe-menu"
                                 class="relative moreMenu inline-flex items-center justify-center ms-auto overflow-hidden transition-all duration-500 ease-in-out rounded-full outline outline-1 hover:outline-none hover:bg-secondary-color backdrop-blur-lg md:outline-white md:bg-transparent bg-secondary-color w-fit md:w-[4em] h-[2.5em] md:hover:w-[21em] will-change-transform md:h-[4em]">
-                                <a href="custom-pizza.html"
+                                <a href="/menu#coffee"
                                     class="flex items-center w-full gap-2 px-6 py-3 overflow-hidden text-sm transition-all duration-500 ease-in-out rounded-lg jus md:gap-4 group 3xl:text-2xl md:px-8 md:py-3 md:text-xl font-aesthetnova">
                                     <i
                                         class="self-center text-xl transition-all duration-500 ease-in-out md:-translate-x-1/2 ti ti-coffee md:text-3xl md:group-hover:translate-x-0"></i>
-
                                     <div
                                         class="text-sm font-medium transition-opacity duration-500 ease-in-out md:opacity-0 whitespace-nowrap group-hover:opacity-100 md:text-2xl">
                                         See More Coffe Menu
@@ -426,7 +425,7 @@
                             </p>
                             <div id="bubble-menu"
                                 class="relative inline-flex moreMenu items-center justify-center overflow-hidden transition-all duration-500 ease-in-out rounded-full outline outline-1 hover:outline-none hover:bg-secondary-color backdrop-blur-lg md:outline-white md:bg-transparent bg-secondary-color md:w-[4em] w-fit h-[2.5em] md:hover:w-[22em] will-change-transform md:h-[4em]">
-                                <a href="custom-pizza.html"
+                                <a href="/menu#bubble"
                                     class="flex items-center w-full gap-2 px-6 py-2 overflow-hidden text-sm transition-all duration-500 ease-in-out rounded-lg md:gap-4 group 3xl:text-2xl md:px-8 md:py-3 md:text-xl font-aesthetnova">
                                     <i
                                         class="self-center text-xl transition-all duration-500 ease-in-out md:-translate-x-1/2 ti ti-bubble-tea md:text-3xl group-hover:translate-x-0"></i>

@@ -10,7 +10,6 @@ class orderTransaction extends Model
     protected $primaryKey = 'order_ID';
 
     protected $fillable = [
-        'order_type',
         'customer_ID',
         'total_amounts',
         'status_order',
@@ -19,6 +18,11 @@ class orderTransaction extends Model
     public function customer()
     {
         return $this->belongsTo(Customer::class, 'customer_ID', 'customer_ID');
+    }
+
+    public function location()
+    {
+        return $this->hasMany(transactionLocation::class, 'order_ID', 'order_ID');
     }
 
     public function details()

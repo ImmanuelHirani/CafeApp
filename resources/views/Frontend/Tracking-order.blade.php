@@ -29,26 +29,29 @@
                                     <p>Order Detail</p>
                                     <p
                                         class="py-1.5 px-4 font-semibold rounded-full lg:text-lg text-sm bg-highlight-content text-secondary-accent-color">
-                                        On Process
+                                        {{ $orderTransactions->first()->order->status_order }}
                                     </p>
                                 </span>
                                 <span class="flex items-center justify-between">
                                     <p>Invoice No.</p>
-                                    <p>INVCT/2024/01/04/1234567</p>
+                                    <p>INVCT/{{ $orderTransactions->first()->order->created_at->format('Y/m/d') }}/{{ $orderTransactions->first()->order->order_ID }}
+                                    </p>
                                 </span>
                                 <span class="flex items-center justify-between">
                                     <p>Order Date</p>
-                                    <p>2 Agustus 2024, 14:00</p>
+                                    <p>{{ $orderTransactions->first()->order->created_at->format('d M Y, H:i') }}</p>
                                 </span>
                             </div>
                             <hr />
                             <div id="location" class="flex flex-col">
                                 <p class="text-highlight-content">Delivery Information</p>
                                 <p>
-                                    Immanuel Christian Hirani | (0813-1480-1945) Kampus Kijang
-                                    Jl. Kemanggisan Ilir III No. 45, Kemanggisan / Palmerah
-                                    Jakarta Barat 11480, Indonesia
+                                    {{ $orderTransactions->first()->order->location->first()->reciver_name }} | (
+                                    {{ $orderTransactions->first()->order->location->first()->reciver_number }})
                                 </p>
+                                <p class="text-highlight-content">
+                                    ({{ $orderTransactions->first()->order->location->first()->location_label }})</p>
+                                <p> {{ $orderTransactions->first()->order->location->first()->reciver_address }}</p>
                             </div>
                             <hr />
                             <div class="space-y-4 Payment_informations">
@@ -58,22 +61,20 @@
                                     <p>Mid Trans</p>
                                 </span>
                                 <span class="flex items-center justify-between">
-                                    <p>Total (2 Items)</p>
-                                    <p>Rp250.000</p>
+                                    <p>Total ({{ $orderTransactions->count() }} Items)</p>
+                                    <p>Rp{{ number_format($orderTransactions->first()->order->total_amounts, 0, ',', '.') }}
+                                    </p>
                                 </span>
                                 <span class="flex items-center justify-between">
                                     <p>Delivery Fee</p>
                                     <p>Rp20.000</p>
                                 </span>
-                                <span class="flex items-center justify-between">
-                                    <p>Service Fee</p>
-                                    <p>Rp3.000</p>
-                                </span>
                             </div>
                             <hr class="border-[1px] border-gray-500" />
                             <div class="flex justify-between gap-3 wrap">
                                 <p class="text-highlight-content">Total</p>
-                                <p>Rp 1.520.000</p>
+                                <p>Rp{{ number_format($orderTransactions->first()->order->total_amounts, 0, ',', '.') }}
+                                </p>
                             </div>
                         </div>
                         <div
@@ -81,31 +82,39 @@
                             <p class="text-2xl text-highlight-content lg:text-3xl">
                                 Order Summary
                             </p>
-                            <div x-data="{ cardItemOrder: 3 }"
-                                :class="cardItemOrder === 1 ? 'h-fit' : 'lg:h-[20rem] h-[24rem] overflow-y-auto'"
-                                class="flex flex-col gap-6 wrap">
+                            <div class="flex flex-col gap-6 wrap">
                                 <!-- Repeated Content -->
-                                <template x-for="item in cardItemOrder" :key="item">
-                                    <div class="flex flex-col items-center p-0 gap-x-8 gap-y-3 md:flex-row md:gap-y-0">
-                                        <img src="../asset/Coffe menu/capuccino Coffe.jpg" alt="Capuccino Coffee"
-                                            class="object-cover w-full rounded-lg h-52 3xl:w-80 3xl:h-60 md:w-64 md:h-44" />
-                                        <div class="flex flex-col w-full gap-1.5 text-wrap md:w-fit">
+                                @foreach ($orderTransactions as $transaction)
+                                    <div
+                                        class="flex flex-col items-center w-full p-0 gap-x-8 gap-y-3 md:flex-row md:gap-y-0">
+                                        <!-- Normal Menu Image -->
+                                        <div class="img-wrap h-52 3xl:w-80 3xl:h-60 md:w-[45%] md:h-44">
+                                            @if ($transaction->order_type === 'normal_menu')
+                                                <img src="{{ asset('storage/' . $transaction->menu->image) }}"
+                                                    alt="{{ $transaction->menu_name }}"
+                                                    class="object-cover w-full h-full rounded-lg " />
+                                            @else
+                                                <img src="{{ asset('/asset/CustomOrder.png') }}"
+                                                    class="object-cover w-full h-full rounded-lg" alt="Custom Order" />
+                                            @endif
+                                        </div>
+                                        <div class="flex flex-col w-full gap-1.5 text-wrap md:w-[35%]">
                                             <p class="font-semibold line-clamp-1">
-                                                Capuccino Coffee
+                                                {{ $transaction->order_type === 'normal_menu' ? $transaction->menu_name : 'Custom menu' }}
                                             </p>
-                                            <p class="text-highlight-content">Extra</p>
+                                            <p class="text-highlight-content">Size {{ $transaction->size }}</p>
                                             <div class="flex">
-                                                <p>Rp 1.500.000</p>
+                                                <p>Rp {{ number_format($transaction->subtotal, 0, ',', '.') }}</p>
                                             </div>
                                         </div>
                                         <div
-                                            class="w-full px-4 py-2 rounded-full md:w-fit quantity-area bg-secondary-color">
+                                            class="w-full px-4 py-2 rounded-full md:w-[20%] quantity-area bg-secondary-color">
                                             <p class="text-center md:text-base ms-auto">
-                                                Qty : X 1
+                                                Qty : X {{ $transaction->quantity }}
                                             </p>
                                         </div>
                                     </div>
-                                </template>
+                                @endforeach
                                 <!-- Repeated Content End -->
                             </div>
                         </div>
@@ -121,7 +130,8 @@
                                     <p class="text-lg">Estimated in the kitchen 14.10</p>
                                 </div>
                                 <div class="flex items-center justify-between gap-2.5 mt-6 lg:gap-4 progress-bar">
-                                    <img src="../asset/CafeTravel.png" class="rounded-full w-7 lg:w-9" alt="" />
+                                    <img src="{{ asset('/asset/CafeTravel.png') }}" class="rounded-full w-7 lg:w-9"
+                                        alt="" />
                                     <div class="w-full bg-gray-200 rounded-full h-1.5 dark:bg-gray-700">
                                         <div class="bg-highlight-content h-1.5 rounded-full"></div>
                                     </div>
@@ -180,7 +190,7 @@
                                     <div class="space-y-1.5 wrap">
                                         <!-- Cafe Travel Location -->
                                         <div class="flex items-center gap-6 cafe">
-                                            <img src="../asset/CafeTravel.png" class="w-12 rounded-full"
+                                            <img src="{{ asset('/asset/CafeTravel.png') }}" class="w-12 rounded-full"
                                                 alt="Cafe Travel" />
                                             <div class="desc">
                                                 <p class="text-base lg:text-lg">
@@ -192,12 +202,12 @@
                                             </div>
                                         </div>
                                         <!-- Divider Line -->
-                                        <img src="../asset/line-location-order.png" class="w-0.5 ml-6"
+                                        <img src="{{ asset('/asset/line-location-order.png') }}" class="w-0.5 ml-6"
                                             alt="Divider Line" />
                                         <!-- University Location -->
                                         <div class="flex items-center gap-6 cafe">
-                                            <img src="../asset/Pin-Location.png" class="w-12 rounded-full"
-                                                alt="Location Pin" />
+                                            <img src="{{ asset('/asset/Pin-Location.png') }}"
+                                                class="w-12 rounded-full" alt="Location Pin" />
                                             <div class="desc">
                                                 <p class="text-base lg:text-lg">
                                                     Universitas Pelita Harapan
@@ -222,7 +232,8 @@
                                 <div class="mt-8 driver-location">
                                     <div class="flex items-center gap-6 cafe">
                                         <!-- Driver Info -->
-                                        <img src="../asset/driver.png" class="w-12 rounded-full" alt="Driver" />
+                                        <img src="{{ asset('/asset/driver.png') }}" class="w-12 rounded-full"
+                                            alt="Driver" />
                                         <div class="desc">
                                             <p class="text-lg">Irfan Dwi Yulianto</p>
                                             <span class="flex items-center gap-3">
@@ -232,7 +243,8 @@
                                         </div>
                                     </div>
                                     <!-- Location Image -->
-                                    <img src="../asset/Location.png" class="w-full mt-8" alt="Location" />
+                                    <img src="{{ asset('/asset/Location.png') }}" class="w-full mt-8"
+                                        alt="Location" />
                                 </div>
                                 <!-- Clean Code End -->
                             </div>
@@ -241,8 +253,8 @@
                 </div>
             </div>
         </section>
-        <!-- SideBar  -->
-        @include('layout.Sidebar')
+        {{-- <!-- SideBar  -->
+        @include('layout.Sidebar') --}}
     </main>
     @include('layout.Footer')
 </body>

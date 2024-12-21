@@ -98,7 +98,7 @@
                 </table>
             </div>
         </section>
-        <aside class="flex flex-col col-span-3 gap-8 pt-6 overflow-hidden rounded-lg bg-primary-color-admin">
+        <aside class="flex flex-col col-span-3 gap-8 pt-6 overflow-hidden rounded-lg h-fit bg-primary-color-admin">
             <div class="px-6 head-aside">
                 <p class="text-xl font-semibold">Edit Custom Menu</p>
             </div>
@@ -145,8 +145,7 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="px-6 pb-6 space-y-2 sideMenu-tabs-content">
+                <div class="px-6 pb-6 space-y-2 sideMenu-tabs-content h-[28.5rem]">
                     <div class="flex items-center justify-between gap-3 wrap">
                         <p class="font-semibold">Size List :</p>
                         @isset($sizes)

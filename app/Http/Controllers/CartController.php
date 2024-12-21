@@ -66,7 +66,6 @@ class CartController extends Controller
             if (!$Transaction) {
                 $Transaction = orderTransaction::create([
                     'customer_ID' => $customer->customer_ID,
-                    'order_type' => 'normal_menu',
                     'total_amounts' => $total_amount,
                     'status_order' => 'pending', // Set status "pending"
                 ]);
@@ -87,6 +86,7 @@ class CartController extends Controller
             // Tambahkan Item ke Detil Transaksi
             transactionDetails::create([
                 'order_ID' => $Transaction->order_ID,
+                'order_type' => 'normal_menu',
                 'menu_ID' => $request->menu_ID,
                 'size' => $request->size,
                 'menu_name' => $menu->name,
@@ -102,11 +102,8 @@ class CartController extends Controller
         }
     }
 
-    public function store(Request $request)
+    public function AddToCartCustom(Request $request)
     {
-        // // Debugging: Menampilkan semua data yang diterima
-        // dd($request->all());
-
         // Validasi Customer Login
         $customer = Auth::user();
 
@@ -119,42 +116,67 @@ class CartController extends Controller
 
         // Ambil data dari request
         $size = $request->input('size_name');
-        $toppings = $request->input('toppings');
+        $toppings = $request->input('toppings');  // Tidak perlu di-explode
         $totalPrice = $request->input('total_price');
 
-        // Buat transaksi baru pada orderTransaction
-        $order = orderTransaction::create([
-            'order_type' => 'custom_menu',
-            'customer_ID' => $customer->customer_ID,
-            'status' => 'pending',
-            'total_amounts' => $totalPrice,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        // Mulai transaksi
+        DB::beginTransaction();
 
-        // Buat detail transaksi untuk setiap topping
-        $toppingList = explode(', ', $toppings);  // Mengubah topping menjadi array
-        foreach ($toppingList as $topping) {
+        try {
+            // Cek apakah ada transaksi pending sebelumnya
+            $order = orderTransaction::where('customer_ID', $customer->customer_ID)
+                ->where('status_order', 'pending') // Pastikan status "pending"
+                ->first();
+
+            if (!$order) {
+                // Jika tidak ada transaksi pending, buat transaksi baru
+                $order = orderTransaction::create([
+                    'customer_ID' => $customer->customer_ID,
+                    'status_order' => 'pending',
+                    'total_amounts' => $totalPrice,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            } else {
+                // Jika ada transaksi pending, update total amount
+                $order->total_amounts += $totalPrice;
+                $order->save();
+            }
+
+            // Cek apakah sudah ada item custom_menu dalam transactionDetails
+            $existingCustomMenu = transactionDetails::where('order_ID', $order->order_ID)
+                ->where('order_type', 'custom_menu')
+                ->first();
+
+            if ($existingCustomMenu) {
+                // Jika sudah ada, tidak bisa menambahkan lagi
+                DB::rollBack();  // Rollback transaksi jika custom menu sudah ada
+                return redirect()->back()->with('error', 'Custom menu can only be added once per transaction');
+            }
+
+            // Simpan detail transaksi tanpa loop topping
             transactionDetails::create([
                 'order_ID' => $order->order_ID,
+                'order_type' => 'custom_menu',
                 'menu_ID' => -99,  // Custom menu, set menu_ID ke -99
                 'size' => $size,
-                'menu_name' => $topping,  // Menggunakan nama topping sebagai menu_name
+                'menu_name' => $toppings,  // Menggunakan seluruh topping sebagai menu_name
                 'quantity' => 1,  // Bisa disesuaikan jika quantity tersedia
                 'subtotal' => $totalPrice,  // Sesuaikan subtotal jika perlu
             ]);
+
+            // Commit transaksi
+            DB::commit();
+
+            // Menyusun respons jika berhasil
+            return redirect()->back()->with('success', 'Custom Menu added to cart.');
+        } catch (\Exception $e) {
+            // Rollback transaksi jika terjadi error
+            DB::rollBack();
+            // Menangani kesalahan dan mengembalikan error response
+            return redirect()->back()->with('error', 'An error occurred. Please try again later.');
         }
-
-        // Menyusun respons
-        return response()->json([
-            'order_ID' => $order->order_ID,
-            'total_price' => $totalPrice,
-            'toppings' => $toppingList,
-            'size_name' => $size,
-            'status' => 'pending',
-        ]);
     }
-
 
     public function deleteCart($orderDetailID)
     {
@@ -269,7 +291,7 @@ class CartController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Quantity updated successfully.',
+            'message' => 'Quantity updated.',
             'quantity' => $item->quantity,
             'subtotal' => $item->subtotal,
             'totalSubtotal' => $totalSubtotal,
@@ -279,32 +301,101 @@ class CartController extends Controller
 
     public function cartMenu()
     {
+        // Ambil data pengguna yang sedang login
         $customer = Auth::user();
+
+        // Periksa apakah pengguna belum login
         if (!$customer) {
-            return redirect()->back()->with('error', 'Login First!');
+            return redirect()->back()->with('error', 'log in first!');
         }
 
         $customerID = $customer->customer_ID;
 
-        // Gunakan relasi untuk mengakses 'order_transaction' yang memiliki customer_ID
+        // Ambil item dalam cart hanya dari pesanan dengan status 'pending'
         $cart_items = transactionDetails::whereHas('order', function ($query) use ($customerID) {
-            $query->where('customer_ID', $customerID);
+            $query->where('customer_ID', $customerID)->where('status_order', 'pending');
         })->with('menu')->get();
 
+        // Periksa jika cart kosong
         if ($cart_items->isEmpty()) {
-            return redirect('/menu')->with('error', 'Your cart is empty. Please add some menu.');
+            return redirect('/menu')->with('error', 'cart is empty , add some menu');
         }
 
+        // Hitung total subtotal dari semua item dalam cart
         $totalSubtotal = $cart_items->sum('subtotal');
 
-        // Ambil lokasi utama dari relasi
+        // Ambil lokasi utama pelanggan
         $primaryLocation = $customer->locationCustomer->firstWhere('is_primary', 1);
 
+        // Periksa apakah pelanggan belum mengatur lokasi utama
+        if (!$primaryLocation) {
+            return redirect()->route('frontend.profile')->with('error', 'Set location now to proceed.');
+        }
+
+        // Tampilkan halaman cart dengan data yang diperlukan
         return view('Frontend.cart', [
             'customer' => $customer,
             'cart_items' => $cart_items,
             'totalSubtotal' => $totalSubtotal,
             'primaryLocation' => $primaryLocation, // Kirim lokasi utama ke Blade
         ]);
+    }
+
+    // Cart Make order:
+    public function makeOrder()
+    {
+        // Mendapatkan user yang login
+        $customer = Auth::user();
+
+        // Validasi apakah user sudah login
+        if (!$customer) {
+            return redirect()->back()->with('error', 'You need to login to make an order.');
+        }
+
+        // Cek apakah ada order yang statusnya 'in-progress'
+        $existingInProgressOrder = orderTransaction::where('customer_ID', $customer->customer_ID)
+            ->where('status_order', 'in-progress')
+            ->exists();
+
+        if ($existingInProgressOrder) {
+            return redirect()->route('payment.view')->with('error', 'Finish your previous order before making a new one.');
+        }
+
+        // Cari transaksi dengan status 'pending' milik user yang login
+        $order = orderTransaction::where('customer_ID', $customer->customer_ID)
+            ->where('status_order', 'pending')
+            ->first();
+
+        // Validasi apakah ada order yang ditemukan
+        if (!$order) {
+            return redirect()->back()->with('error', 'No pending orders found to process.');
+        }
+
+        // Update status_order menjadi 'in-progress'
+        $order->update([
+            'status_order' => 'in-progress',
+            'updated_at' => now(),
+        ]);
+
+        // Redirect dengan pesan sukses
+        return redirect()->route('payment.view')->with('success', 'Order made');
+    }
+
+    public function cancelOrder($orderId)
+    {
+        // Find the order by its ID
+        $orderTransaction = OrderTransaction::find($orderId);
+
+        if (!$orderTransaction) {
+            // If the order does not exist, redirect back with an error message
+            return redirect()->back()->with('error', 'Order not found.');
+        }
+
+        // Update the status of the order to 'canceled'
+        $orderTransaction->status_order = 'canceled';
+        $orderTransaction->save();
+
+        // Redirect back with a success message
+        return redirect()->Route('frontend.menu')->with('error', 'Order Canceled');
     }
 }

@@ -22,7 +22,7 @@
 <body id="Admin">
     @include('layout.header')
     <main class="grid grid-cols-7 gap-4 py-4">
-        <section class="flex flex-col col-span-5 p-6 rounded-lg gap-9 bg-primary-color-admin">
+        <section class="flex flex-col col-span-5 p-6 rounded-lg h-fit gap-9 bg-primary-color-admin">
             <div class="overflow-x-auto">
                 <table id="tableCustomers" class="min-w-full font-semibold border shadow-sm stripe">
                     <thead class="">
@@ -78,6 +78,15 @@
                                                 <option value="in-progress" class="cursor-pointer">
                                                     in-progress
                                                 </option>
+                                                <option value="paid" class="cursor-pointer">
+                                                    paid
+                                                </option>
+                                                <option value="serve" class="cursor-pointer">
+                                                    serve
+                                                </option>
+                                                <option value="shipped" class="cursor-pointer">
+                                                    shipped
+                                                </option>
                                                 <option value="completed" class="cursor-pointer">
                                                     completed
                                                 </option>
@@ -104,15 +113,15 @@
                 </table>
             </div>
         </section>
-        <aside class="flex flex-col col-span-2 gap-8 pt-6 overflow-hidden rounded-lg bg-primary-color-admin">
+        <aside class="flex flex-col col-span-2 gap-8 pt-6 overflow-hidden rounded-lg h-fit bg-primary-color-admin">
             <div class="px-6 head-aside">
-                <p class="text-xl font-semibold">Custom Order Details</p>
+                <p class="text-xl font-semibold">Order Details</p>
             </div>
             <div class="px-6 quick-link">
                 <ul class="flex items-center justify-between w-full gap-3 text-base">
                     <li
                         class="relative w-full px-4 py-2 text-center transition-all duration-300 ease-in-out rounded-full cursor-pointer group outline-1 sideMenu-tabs-toggle">
-                        <a class="!text-accent-color-admin">Customer Details</a>
+                        <a class="!text-accent-color-admin">Reciver Details</a>
                     </li>
                     <li
                         class="relative w-full px-4 py-2 text-center transition-all duration-300 ease-in-out rounded-full cursor-pointer sideMenu-tabs-toggle group outline-1">
@@ -123,81 +132,119 @@
             <form action="" class="sideMenu-tabs-content">
                 <div class="px-6 pb-6 overflow-y-auto card-content">
                     <div class="flex flex-col gap-3 text-lg">
-                        <label for="" class="flex flex-col gap-3">
-                            Customer Name
-                            <input type="text"
-                                value="{{ $orderDetails->customer->username ?? 'Not Set The Username Yet' }}"
-                                class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin"
-                                placeholder="Max 20 Char" />
-                        </label>
-                        <label for="" class="flex flex-col gap-3">
-                            Phone Number
-                            <input type="text"
-                                value="{{ $orderDetails->customer->phone ?? 'Not Set The Phone Number Yet' }}"
-                                class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin"
-                                placeholder="Max 20 Char" />
-                        </label>
-                        <label for="" class="flex flex-col gap-3">
-                            Email
-                            <input type="email" value="{{ $orderDetails->customer->email ?? 'unknown' }}"
-                                class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin"
-                                placeholder="Max 20 Char" />
-                        </label>
-                        <label for="" class="flex flex-col gap-3">
-                            Location Detail Order
-                            <textarea name="" rows="4" class="p-3 rounded-lg outline-none resize-none bg-secondary-color-admin"
-                                placeholder="Max 150 Char"></textarea>
-                        </label>
+                        @isset($orderDetails)
+                            <label for="" class="flex flex-col gap-3">
+                                Reciver Name
+                                <input type="text"
+                                    value="{{ $orderDetails->location->first()->reciver_name ?? 'Not Set The Username Yet' }}"
+                                    class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin"
+                                    placeholder="Max 20 Char" />
+                            </label>
+                            <label for="" class="flex flex-col gap-3">
+                                Phone Number
+                                <input type="text"
+                                    value="{{ $orderDetails->location->first()->reciver_number ?? 'Not Set The Phone Number Yet' }}"
+                                    class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin"
+                                    placeholder="Max 20 Char" />
+                            </label>
+                            <label for="" class="flex flex-col gap-3">
+                                Location Reciver Detail
+                                <textarea name="" rows="4" class="p-3 rounded-lg outline-none resize-none bg-secondary-color-admin"
+                                    placeholder="Max 150 Char">{{ $orderDetails->location->first()->reciver_address ?? 'Not Set The Address Yet' }}</textarea>
+                            </label>
+                        @else
+                            <label for="" class="flex flex-col gap-3">
+                                Reciver Name
+                                <input type="text" value="Select order detail first"
+                                    class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin"
+                                    placeholder="Max 20 Char" />
+                            </label>
+                            <label for="" class="flex flex-col gap-3">
+                                Phone Number
+                                <input type="text" value="Select order detail first"
+                                    class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin"
+                                    placeholder="Max 20 Char" />
+                            </label>
+                            <label for="" class="flex flex-col gap-3">
+                                Location Reciver Detail
+                                <textarea name="" rows="4" class="p-3 rounded-lg outline-none resize-none bg-secondary-color-admin"
+                                    placeholder="Max 150 Char">Select order detail first</textarea>
+                            </label>
+                        @endisset
                     </div>
                 </div>
             </form>
             <form action="" class="sideMenu-tabs-content">
-                <div class="flex flex-col gap-3 px-6 pb-6 h-[40rem] overflow-y-auto card-wrapper">
+                <div class="flex flex-col gap-3 px-6 pb-6 h-[28.5rem] overflow-y-auto card-wrapper">
                     @isset($orderDetails)
                         <div class="flex flex-col gap-3 text-lg order-card">
                             @forelse ($orderDetails->details as $detail)
-                                <!-- Gambar Order -->
-                                <img src="{{ asset('storage/' . $detail->menu->image) }}"
-                                    class="object-cover w-full outline outline-1 outline-secondary-accent-color rounded-3xl img-preview h-72"
-                                    alt="{{ $detail->menu->name ?? 'Unknown Menu' }}" />
-                                <!-- Daftar Topping -->
-                                <div class="flex flex-wrap items-center gap-2 list-wrap">
-                                    <label
-                                        class="w-full px-4 py-2 text-base text-center rounded-full bg-secondary-accent-color-admin outline outline-1 outline-gray-300">
-                                        {{ $detail->menu->name ?? 'Unknown Menu' }}
-                                    </label>
-                                </div>
-                                <!-- Detail Transaksi -->
-                                <div class="flex items-center gap-6 tiny-details">
-                                    <p class="!text-gray-500">Quantity: {{ $detail->quantity ?? 'unknown' }}</p>
-                                    <p class="!text-gray-500">Size: {{ $detail->size ?? 'unknown' }}</p>
-                                </div>
-                                <!-- Total -->
-                                <p class="font-semibold">Total: Rp {{ number_format($detail->subtotal, 0, ',', '.') }}
-                                </p>
-                                <hr />
+                                @if ($detail)
+                                    <!-- Check if order_type is custom_menu -->
+                                    @if ($detail->order_type == 'custom_menu')
+                                        <!-- Custom Order -->
+                                        <img src="{{ asset('/asset/CustomOrder.png') }}"
+                                            class="object-cover w-full outline outline-1 outline-secondary-accent-color rounded-3xl img-preview h-72"
+                                            alt="Custom Order" />
+                                        <div class="flex flex-wrap items-center gap-2 list-wrap">
+                                            <label
+                                                class="w-full px-4 py-2 text-base text-center rounded-full bg-secondary-accent-color-admin outline outline-1 outline-gray-300">
+                                                Custom Order
+                                            </label>
+                                        </div>
+                                        <!-- Topping (explode menu_name into array and show it in textarea) -->
+                                        @php
+                                            $toppings = explode(',', $detail->menu_name); // Exploding menu_name into an array
+                                        @endphp
+                                        <p>Toppings : </p>
+                                        <div class="flex flex-wrap items-center w-full gap-2 wrap">
+                                            @foreach ($toppings as $topping)
+                                                <label
+                                                    class="px-4 py-2 text-base text-center rounded-full w-fit bg-secondary-accent-color-admin outline outline-1 outline-gray-300">
+                                                    {{ $topping }}
+                                                </label>
+                                            @endforeach
+                                        </div>
+                                    @else
+                                        <!-- Regular Menu Order -->
+                                        <img src="{{ asset('storage/' . $detail->menu->image) }}"
+                                            class="object-cover w-full outline outline-1 outline-secondary-accent-color rounded-3xl img-preview h-72"
+                                            alt="{{ $detail->menu_name ?? 'Unknown Menu' }}" />
+                                        <div class="flex flex-wrap items-center gap-2 list-wrap">
+                                            <label
+                                                class="w-full px-4 py-2 text-base text-center rounded-full bg-secondary-accent-color-admin outline outline-1 outline-gray-300">
+                                                {{ $detail->menu_name ?? 'Unknown Menu' }}
+                                            </label>
+                                        </div>
+                                    @endif
+                                    <!-- Detail Transaksi -->
+                                    <div class="flex items-center gap-6 tiny-details">
+                                        <p class="!text-gray-500">Quantity: {{ $detail->quantity ?? 'unknown' }}</p>
+                                        <p class="!text-gray-500">Size: {{ $detail->size ?? 'unknown' }}</p>
+                                    </div>
+                                    <!-- Total -->
+                                    <p class="font-semibold">Total: Rp
+                                        {{ number_format($detail->subtotal ?? 0, 0, ',', '.') }}</p>
+                                    <hr />
+                                @endif
                             @empty
                                 <p class="text-gray-500">No Toppings Found</p>
                             @endforelse
                         </div>
                     @else
                         <div class="flex flex-col gap-3 text-lg order-card">
-                            <!-- Gambar Order -->
                             <img src="" class="object-cover w-full rounded-lg h-[15rem]" alt="No Image Available"
                                 onerror="this.onerror=null; this.src='{{ asset('asset/Error-Image.png') }}';" />
-                            <!-- Daftar Topping -->
                             <div class="flex flex-wrap items-center gap-2 list-wrap">
                                 <label
                                     class="px-4 py-2 text-base rounded-full bg-secondary-accent-color-admin outline outline-1 outline-gray-300">
                                     No Menu found
                                 </label>
                             </div>
-                            <!-- Detail Transaksi -->
                             <div class="flex items-center gap-6 tiny-details">
                                 <p class="!text-gray-500">Quantity: Unknown</p>
                                 <p class="!text-gray-500">Size: Unknown</p>
                             </div>
-                            <!-- Total -->
                             <p class="font-semibold">Total: Rp 0</p>
                             <hr />
                         </div>

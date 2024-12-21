@@ -45,93 +45,173 @@
                             </a>
                         </div>
                         @forelse ($cart_items as $cart)
-                            <div
-                                class="relative flex items-center self-start w-full gap-12 px-3 py-3 rounded-lg outline outline-1 outline-highlight-content md:justify-between h-fit md:px-4 md:py-4 cart-item font-aesthetnova bg-secondary-accent-color">
-                                <img src="{{ asset('storage/' . $cart->menu->image) }}"
-                                    class="md:w-[30%] w-[140px] object-cover rounded-lg h-fit md:h-[180px]"
-                                    alt="" />
-                                <div class="flex w-[30%]  flex-col gap-3 wrap">
-                                    <p>{{ $cart->menu->name }}</p>
-                                    <p class="uppercase text-highlight-content">Size : {{ $cart->size }}</p>
-                                    <div class="flex items-center gap-3 md:hidden wrap">
-                                        <div
-                                            class="flex items-center justify-center gap-8 px-4 py-1.5 rounded-full w-fit outline outline-1 outline-white">
-                                            <button class="">
-                                                <svg height="24px" id="Layer_1" fill="white"
-                                                    style="enable-background: new 0 0 512 512" version="1.1"
-                                                    viewBox="0 0 512 512" width="16px" xml:space="preserve"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    xmlns:xlink="http://www.w3.org/1999/xlink">
-                                                    <path
-                                                        d="M417.4,224H94.6C77.7,224,64,238.3,64,256c0,17.7,13.7,32,30.6,32h322.8c16.9,0,30.6-14.3,30.6-32  C448,238.3,434.3,224,417.4,224z" />
-                                                </svg>
-                                            </button>
-                                            <span class="text-base md:text-lg text-accent-color">{{ $cart->quantity }}
-                                            </span>
-                                            <button class="">
-                                                <svg height="24px" id="Layer_1" fill="white"
-                                                    style="enable-background: new 0 0 512 512" version="1.1"
-                                                    viewBox="0 0 512 512" width="16px" xml:space="preserve"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    xmlns:xlink="http://www.w3.org/1999/xlink">
-                                                    <path
-                                                        d="M417.4,224H288V94.6c0-16.9-14.3-30.6-32-30.6c-17.7,0-32,13.7-32,30.6V224H94.6C77.7,224,64,238.3,64,256  c0,17.7,13.7,32,30.6,32H224v129.4c0,16.9,14.3,30.6,32,30.6c17.7,0,32-13.7,32-30.6V288h129.4c16.9,0,30.6-14.3,30.6-32  C448,238.3,434.3,224,417.4,224z" />
-                                                </svg>
-                                            </button>
+                            @if ($cart->order->status_order == 'pending')
+                                @if ($cart->order_type == 'normal_menu')
+                                    <div
+                                        class="relative flex items-center self-start w-full gap-12 px-3 py-3 rounded-lg outline outline-1 outline-highlight-content md:justify-between h-fit md:px-4 md:py-4 cart-item font-aesthetnova bg-secondary-accent-color">
+                                        <div class="wrap md:w-[30%] w-[140px] h-fit md:h-[180px] rounded-lg ">
+                                            <img src="{{ asset('storage/' . $cart->menu->image) }}"
+                                                class="object-cover w-full h-full " alt="" />
                                         </div>
-                                    </div>
-                                    <p class="inline-block md:hidden">Rp 500.000</p>
-                                </div>
-                                <div class="items-center w-[20%]  hidden gap-3 md:flex wrap">
-                                    <form action="{{ route('cart.update', $cart->order_ID) }}" method="POST"
-                                        class="cart-form">
-                                        @csrf
-                                        @method('PUT')
-                                        <div
-                                            class="flex items-center justify-center gap-8 px-4 py-1.5 rounded-full w-fit outline outline-1 outline-white">
-                                            <button type="button" class="decrease-btn"
-                                                data-id="{{ $cart->order_detail_ID }}">
-                                                <i class="ti ti-minus"></i>
-                                            </button>
-                                            <span id="quantity-{{ $cart->order_detail_ID }}"
-                                                class="text-base md:text-lg text-accent-color">
-                                                {{ $cart->quantity }}
-                                            </span>
-                                            <button type="button" class="increase-btn"
-                                                data-id="{{ $cart->order_detail_ID }}">
-                                                <i class="ti ti-plus"></i>
-                                            </button>
+                                        <div class="flex w-[30%]  flex-col gap-3 wrap">
+                                            <p>{{ $cart->menu->name }}</p>
+                                            <p class="uppercase text-highlight-content">Size : {{ $cart->size }}</p>
+                                            <div class="flex items-center gap-3 md:hidden wrap">
+                                                <div
+                                                    class="flex items-center justify-center gap-8 px-4 py-1.5 rounded-full w-fit outline outline-1 outline-white">
+                                                    <button class="">
+                                                        <svg height="24px" id="Layer_1" fill="white"
+                                                            style="enable-background: new 0 0 512 512" version="1.1"
+                                                            viewBox="0 0 512 512" width="16px" xml:space="preserve"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            xmlns:xlink="http://www.w3.org/1999/xlink">
+                                                            <path
+                                                                d="M417.4,224H94.6C77.7,224,64,238.3,64,256c0,17.7,13.7,32,30.6,32h322.8c16.9,0,30.6-14.3,30.6-32  C448,238.3,434.3,224,417.4,224z" />
+                                                        </svg>
+                                                    </button>
+                                                    <span
+                                                        class="text-base md:text-lg text-accent-color">{{ $cart->quantity }}
+                                                    </span>
+                                                    <button class="">
+                                                        <svg height="24px" id="Layer_1" fill="white"
+                                                            style="enable-background: new 0 0 512 512" version="1.1"
+                                                            viewBox="0 0 512 512" width="16px" xml:space="preserve"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            xmlns:xlink="http://www.w3.org/1999/xlink">
+                                                            <path
+                                                                d="M417.4,224H288V94.6c0-16.9-14.3-30.6-32-30.6c-17.7,0-32,13.7-32,30.6V224H94.6C77.7,224,64,238.3,64,256  c0,17.7,13.7,32,30.6,32H224v129.4c0,16.9,14.3,30.6,32,30.6c17.7,0,32-13.7,32-30.6V288h129.4c16.9,0,30.6-14.3,30.6-32  C448,238.3,434.3,224,417.4,224z" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <p class="inline-block md:hidden">Rp 500.000</p>
                                         </div>
-                                    </form>
-                                    <form action="{{ route('delete.cart', $cart->order_ID) }}" method="POST"
-                                        class="delete-form">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="button"
-                                            class="flex items-center justify-center p-1.5 rounded-full bg-secondary-color delete-cart-item"
-                                            data-id="{{ $cart->order_detail_ID }}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
+                                        <div class="items-center w-[20%]  hidden gap-3 md:flex wrap">
+                                            <form action="{{ route('cart.update', $cart->order_ID) }}" method="POST"
+                                                class="cart-form">
+                                                @csrf
+                                                @method('PUT')
+                                                <div
+                                                    class="flex items-center justify-center gap-8 px-4 py-1.5 rounded-full w-fit outline outline-1 outline-white">
+                                                    <button type="button" class="decrease-btn"
+                                                        data-id="{{ $cart->order_detail_ID }}">
+                                                        <i class="ti ti-minus"></i>
+                                                    </button>
+                                                    <span id="quantity-{{ $cart->order_detail_ID }}"
+                                                        class="text-base md:text-lg text-accent-color">
+                                                        {{ $cart->quantity }}
+                                                    </span>
+                                                    <button type="button" class="increase-btn"
+                                                        data-id="{{ $cart->order_detail_ID }}">
+                                                        <i class="ti ti-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </form>
+                                            <form action="{{ route('delete.cart', $cart->order_ID) }}" method="POST"
+                                                class="delete-form">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="button"
+                                                    class="flex items-center justify-center p-1.5 rounded-full bg-secondary-color delete-cart-item"
+                                                    data-id="{{ $cart->order_detail_ID }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"
+                                                        fill="none" viewBox="0 0 26 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                                    </svg>
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <div class="flex items-center justify-center w-[20%]  wrap">
+                                            <p class="text-xl md:text-lg" id="subtotal-{{ $cart->order_detail_ID }}">
+                                                Rp {{ number_format($cart->subtotal, 0, ',', '.') }}
+                                            </p>
+                                        </div>
+                                        <button
+                                            class="md:hidden flex items-center absolute -top-1 -right-1 justify-center p-1.5 rounded-full bg-secondary-color">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
                                                 viewBox="0 0 26 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M6 18L18 6M6 6l12 12" />
                                             </svg>
                                         </button>
-                                    </form>
-                                </div>
-                                <div class="flex items-center justify-center w-[20%]  wrap">
-                                    <p class="text-xl md:text-lg" id="subtotal-{{ $cart->order_detail_ID }}">
-                                        Rp {{ number_format($cart->subtotal, 0, ',', '.') }}
-                                    </p>
-                                </div>
-                                <button
-                                    class="md:hidden flex items-center absolute -top-1 -right-1 justify-center p-1.5 rounded-full bg-secondary-color">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
-                                        viewBox="0 0 26 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
-                                </button>
-                            </div>
+                                    </div>
+                                @endif
+                                @if ($cart->order_type == 'custom_menu')
+                                    <div
+                                        class="relative flex items-center self-start w-full gap-12 px-3 py-3 rounded-lg outline outline-1 outline-highlight-content md:justify-between h-fit md:px-4 md:py-4 cart-item font-aesthetnova bg-secondary-accent-color">
+                                        <div class="wrap md:w-[30%] w-[140px] h-fit md:h-[180px] rounded-lg ">
+                                            <img src="{{ asset('/asset/CustomOrder.png') }}"
+                                                class="object-cover w-full h-full " alt="" />
+                                        </div>
+                                        <div class="flex w-[30%]  flex-col gap-3 wrap">
+                                            <p>Custom Pizza</p>
+                                            <p class="uppercase text-highlight-content">Size : {{ $cart->size }}</p>
+                                            <div class="flex items-center gap-3 md:hidden wrap">
+                                                <div
+                                                    class="flex items-center justify-center gap-8 px-4 py-1.5 rounded-full w-fit outline outline-1 outline-white">
+                                                    <button class="">
+                                                        <svg height="24px" id="Layer_1" fill="white"
+                                                            style="enable-background: new 0 0 512 512" version="1.1"
+                                                            viewBox="0 0 512 512" width="16px" xml:space="preserve"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            xmlns:xlink="http://www.w3.org/1999/xlink">
+                                                            <path
+                                                                d="M417.4,224H94.6C77.7,224,64,238.3,64,256c0,17.7,13.7,32,30.6,32h322.8c16.9,0,30.6-14.3,30.6-32  C448,238.3,434.3,224,417.4,224z" />
+                                                        </svg>
+                                                    </button>
+                                                    <span
+                                                        class="text-base md:text-lg text-accent-color">{{ $cart->quantity }}
+                                                    </span>
+                                                    <button class="">
+                                                        <svg height="24px" id="Layer_1" fill="white"
+                                                            style="enable-background: new 0 0 512 512" version="1.1"
+                                                            viewBox="0 0 512 512" width="16px" xml:space="preserve"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            xmlns:xlink="http://www.w3.org/1999/xlink">
+                                                            <path
+                                                                d="M417.4,224H288V94.6c0-16.9-14.3-30.6-32-30.6c-17.7,0-32,13.7-32,30.6V224H94.6C77.7,224,64,238.3,64,256  c0,17.7,13.7,32,30.6,32H224v129.4c0,16.9,14.3,30.6,32,30.6c17.7,0,32-13.7,32-30.6V288h129.4c16.9,0,30.6-14.3,30.6-32  C448,238.3,434.3,224,417.4,224z" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <p class="inline-block md:hidden">Rp 500.000</p>
+                                        </div>
+                                        <div class="items-center w-[20%]  hidden gap-3 md:flex wrap">
+                                            <div class="wrap">
+                                                <p>Max Qty :1</p>
+                                            </div>
+                                            <form action="{{ route('delete.cart', $cart->order_ID) }}" method="POST"
+                                                class="delete-form">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="button"
+                                                    class="flex items-center justify-center p-1.5 rounded-full bg-secondary-color delete-cart-item"
+                                                    data-id="{{ $cart->order_detail_ID }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"
+                                                        fill="none" viewBox="0 0 26 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                                    </svg>
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <div class="flex items-center justify-center w-[20%]  wrap">
+                                            <p class="text-xl md:text-lg" id="subtotal-{{ $cart->order_detail_ID }}">
+                                                Rp {{ number_format($cart->subtotal, 0, ',', '.') }}
+                                            </p>
+                                        </div>
+                                        <button
+                                            class="md:hidden flex items-center absolute -top-1 -right-1 justify-center p-1.5 rounded-full bg-secondary-color">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                                                viewBox="0 0 26 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M6 18L18 6M6 6l12 12" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                @endif
+                            @endif
                         @empty
                             <div
                                 class="relative flex items-center self-start w-full gap-5 px-3 py-3 rounded-lg outline outline-1 outline-highlight-content md:justify-between h-fit md:px-4 md:py-4 box-Location font-aesthetnova bg-secondary-accent-color">

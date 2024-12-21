@@ -56,6 +56,62 @@ var swiper = new Swiper(".customTopping", {
     },
 });
 
+var swiper = new Swiper(".profile-order-wrapper", {
+    grabCursor: true,
+    loop: true,
+    loopAddBlankSlides: false, // Default is false, included for clarity
+    loopPreventsSliding: false, // Default is false, included for clarity
+
+    preventClicksPropagation: true,
+    // mousewheel: true,
+    observer: true,
+    speed: 800, // Slide transition speed
+    updateOnWindowResize: true,
+    // initialSlide: 20,
+
+    // Navigation arrows
+    navigation: {
+        nextEl: "#next",
+        prevEl: "#prev",
+    },
+
+    // autoplay: {
+    //   delay: 5000, // Delay between autoplay slides
+    // },
+    autoHeight: true, // Adjusts height based on slide content
+
+    breakpoints: {
+        360: {
+            slidesPerView: 1.19,
+            centeredSlides: true,
+        },
+        430: {
+            slidesPerView: 1.19,
+
+            centeredSlides: true,
+        },
+        540: {
+            slidesPerView: 1.5,
+        },
+        768: {
+            slidesPerView: 2.2,
+            spaceBetween: 10,
+        },
+        912: {
+            slidesPerView: 1.8,
+            spaceBetween: 16,
+        },
+        1024: {
+            slidesPerView: 1,
+            spaceBetween: 16,
+        },
+        1380: {
+            slidesPerView: 1.8,
+            spaceBetween: 16,
+        },
+    },
+});
+
 var swiperFooterImgSlide = new Swiper(".img-showcase-food", {
     grabCursor: false,
     allowTouchMove: false,

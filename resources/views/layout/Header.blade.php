@@ -3,7 +3,7 @@
         <p>Cafe Travel - CMS</p>
         <!-- middle Content -->
         <div class="middle-quick-link">
-            <ul class="flex items-center gap-6">
+            <ul class="flex items-center gap-2">
                 <li class="relative group">
                     <a href="/Dashboard"
                         class="!text-accent-color-admin px-6 flex items-center gap-3 nav-toggle py-2 rounded-full outline-1 outline-gray-300">
@@ -24,7 +24,7 @@
                 <li class="relative group">
                     <a href="/Customer"
                         class="!text-accent-color-admin flex items-center gap-3 nav-toggle px-6 py-2 rounded-full outline-1 outline-gray-300"><i
-                            class="text-2xl ti ti-headset"></i>Customers</a>
+                            class="text-2xl ti ti-users"></i>Customers</a>
                 </li>
                 <li class="relative group">
                     <a href="/admin/menu/order"

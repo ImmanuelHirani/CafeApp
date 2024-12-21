@@ -26,6 +26,7 @@ Route::get('/menu/detail/{id}/{size?}', [MenuController::class, 'getMenuDetails'
 Route::get('/profile', [profileController::class, 'profile'])->name('frontend.profile');
 Route::put('/profile/update/{customer_ID}', [CustomerController::class, 'updateCustomer'])->name('profile.update');
 Route::post('/profile/location/add', [LocationController::class, 'addLocation'])->name('profile.location.add');
+Route::delete('/profile/location/delete/{locationID}', [LocationController::class, 'deleteLocation'])->name('profile.location.delete');
 Route::put('/profile/location/update/primary/{locationID}', [LocationController::class, 'updatePrimary'])->name('profile.location.primary');
 
 
@@ -47,16 +48,16 @@ Route::get('/cart', [CartController::class, 'cartMenu'])->name('cart.view');
 Route::put('/cart/update/{orderID}', [CartController::class, 'updateCartQuantity'])->name('cart.update');
 Route::delete('/cart/delete/{orderID}', [CartController::class, 'deleteCart'])->name('delete.cart');
 Route::post('/cart/add/', [CartController::class, 'AddToCart'])->name('cart.add');
-Route::post('/store-custom-order', [CartController::class, 'store'])->name('store.custom.order');
+Route::post('/store-custom-order', [CartController::class, 'AddToCartCustom'])->name('store.custom.order');
 
 
 
 
 // Order
 Route::get('/payment', [OrderController::class, 'payment'])->name('payment.view');
-Route::get('/tracking/order', [OrderController::class, 'trackOrder'])->name('tracking.view');
-Route::get('/make-order', [OrderController::class, 'makeOrder'])->name('make.order');
-Route::put('/order/cancel/{orderId}', [OrderController::class, 'cancelOrder'])->name('order.cancel');
+Route::get('/tracking/order/{orderID}', [OrderController::class, 'trackOrder'])->name('tracking.view');
+Route::get('/make-order', [CartController::class, 'makeOrder'])->name('make.order');
+Route::put('/order/cancel/{orderId}', [CartController::class, 'cancelOrder'])->name('order.cancel');
 Route::put('/order/pay/{orderId}', [OrderController::class, 'payOrder'])->name('order.pay');
 
 

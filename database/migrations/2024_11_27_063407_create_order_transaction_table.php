@@ -11,7 +11,6 @@ return new class extends Migration
     {
         Schema::create('order_transaction', function (Blueprint $table) {
             $table->id('order_ID');
-            $table->string('order_type');
             $table->unsignedBigInteger('customer_ID');
             $table->decimal('total_amounts', 10);
             $table->string('status_order')->nullable()->default(0);

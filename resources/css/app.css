@@ -251,16 +251,28 @@ section {
     padding-right: 32px;
 }
 
-.status-select select.completed {
-    @apply bg-green-500 text-white;
-}
-
 .status-select select.pending {
     @apply bg-yellow-500 text-white;
 }
 
 .status-select select.in-progress {
     @apply bg-blue-500 text-white;
+}
+
+.status-select select.paid {
+    @apply bg-purple-500 text-white; /* Warna ungu untuk paid */
+}
+
+.status-select select.serve {
+    @apply bg-teal-500 text-white; /* Warna teal untuk serve */
+}
+
+.status-select select.shipped {
+    @apply bg-indigo-500 text-white; /* Warna biru keunguan untuk shipped */
+}
+
+.status-select select.completed {
+    @apply bg-green-500 text-white;
 }
 
 .status-select select.canceled {
@@ -280,11 +292,19 @@ section {
     @apply bg-secondary-accent-color-admin outline outline-gray-300;
 }
 
+.tab-active-profile > .line {
+    @apply bg-secondary-color;
+}
+
 .sideMenu-tabs-content {
     @apply transition-all duration-500 ease-in-out opacity-0;
 }
 .sideMenu-tabs-content:not(:has(.hidden)) {
     @apply opacity-100;
+}
+
+.tab-active-order {
+    @apply bg-secondary-color outline-none;
 }
 
 .tabs-content-product {

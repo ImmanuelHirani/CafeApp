@@ -22,7 +22,7 @@
 <body id="Admin">
     @include('layout.header')
     <main class="grid grid-cols-7 gap-4 py-4">
-        <section class="flex flex-col col-span-5 p-6 rounded-lg gap-9 bg-primary-color-admin">
+        <section class="flex flex-col col-span-5 p-6 rounded-lg gap-9 h-fit bg-primary-color-admin">
             <div class="overflow-x-auto">
                 <table id="tableCustomers" class="border shadow-sm min-w-fullborder stripe">
                     <thead class="">
@@ -84,7 +84,7 @@
                 </table>
             </div>
         </section>
-        <aside class="flex flex-col col-span-2 gap-8 pt-6 overflow-hidden rounded-lg bg-primary-color-admin">
+        <aside class="flex flex-col col-span-2 gap-8 pt-6 overflow-hidden rounded-lg h-fit bg-primary-color-admin">
             <div class="px-6 head-aside">
                 <p class="text-xl font-semibold">Customers Details</p>
             </div>
@@ -128,19 +128,39 @@
                         </button>
                     </div>
                 </div>
-                <div class="px-6 pb-6 overflow-y-auto card-content sideMenu-tabs-content">
-                    <div class="flex flex-col gap-3 text-lg">
-                        <label for="" class="flex flex-col gap-3">
-                            Location 1
-                            <textarea name="" rows="4" class="p-3 rounded-lg outline-none resize-none bg-secondary-color-admin"
-                                placeholder="Max 150 Char"></textarea>
-                        </label>
-                        <label for="" class="flex flex-col gap-3">
-                            Location 2
-                            <textarea name="" rows="4" class="p-3 rounded-lg outline-none resize-none bg-secondary-color-admin"
-                                placeholder="Max 150 Char"></textarea>
-                        </label>
-                    </div>
+                <div
+                    class="flex flex-col gap-3 px-6 pb-6 overflow-y-auto card-content h-[28.5rem] sideMenu-tabs-content">
+                    @isset($customerDetails)
+                        @php $i = 1; @endphp
+                        @foreach ($customerDetails->locationCustomer as $location)
+                            <div class="w-full py-2 text-center rounded-lg h-fit line bg-secondary-accent-color-admin">
+                                Location {{ $i }}
+                            </div>
+                            <div class="flex flex-col gap-3 text-lg">
+                                <label for="" class="flex flex-col gap-3">
+                                    Reciver Name
+                                    <input type="text" value="{{ $location->reciver_name }}"
+                                        class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin"
+                                        placeholder="Max 20 Char" />
+                                </label>
+                                <label for="" class="flex flex-col gap-3">
+                                    Phone Number
+                                    <input type="text" value="{{ $location->reciver_number }}"
+                                        class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin"
+                                        placeholder="Max 20 Char" />
+                                </label>
+                                <label for="" class="flex flex-col gap-3">
+                                    Location Detail
+                                    <textarea name="" rows="4" class="p-3 rounded-lg outline-none resize-none bg-secondary-color-admin"
+                                        placeholder="Max 150 Char">{{ $location->reciver_address }}</textarea>
+                                </label>
+                            </div>
+                            @php $i++; @endphp
+                        @endforeach
+                    @else
+                        <p class="text-lg text-center text-red-500">No Locations Available</p>
+                    @endisset
+
                 </div>
                 <input type="submit" id="update" value="Update" class="hidden">
             </form>

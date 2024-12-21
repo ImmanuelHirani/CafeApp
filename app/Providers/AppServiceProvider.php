@@ -58,10 +58,10 @@ class AppServiceProvider extends ServiceProvider
             // Jika user tidak login, tidak ada data cart
             $cartItems = $customerID
                 ? orderTransaction::where('customer_ID', $customerID)
-                ->where('status_order', 'pending') // Ambil hanya transaksi dengan status 'pending'
-                ->with(['details.menu']) // Eager load hubungan details dan menu
+                ->where('status_order', 'pending')
+                ->with(['details.menu']) // Eager load order_details untuk akses order_type
                 ->get()
-                ->flatMap(fn($transaction) => $transaction->details) // Ambil semua detail dari transaksi
+                ->flatMap(fn($transaction) => $transaction->details)
                 : collect();
 
             // Data ini akan tersedia di semua view

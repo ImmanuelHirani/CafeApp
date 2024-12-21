@@ -28,7 +28,7 @@ class LocationController extends Controller
 
         // Cek apakah user sudah memiliki 2 lokasi
         if ($customer->locationCustomer()->count() >= 2) {
-            return back()->withErrors(['error' => 'You can only add up to 2 locations.']);
+            return back()->withErrors(['error' => 'only 2 locations are allowed.']);
         }
 
         // Buat lokasi baru
@@ -42,6 +42,19 @@ class LocationController extends Controller
         $location->save();
 
         return back()->with('success', 'Location added successfully!');
+    }
+
+    public function delete($id) {}
+
+    public function deleteLocation($locationID)
+    {
+        // Cari item berdasarkan orderDetailID
+        $location = Location::find($locationID);
+
+        // Hapus item dari keranjang
+        $location->delete();
+
+        return redirect()->back()->with('success', 'Location Deleted');
     }
 
     public function updatePrimary($locationID)

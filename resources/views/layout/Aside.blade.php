@@ -1,5 +1,5 @@
 <aside id="showSelectedMenu"
-    class="flex flex-col col-span-2 gap-8 pt-6 overflow-hidden rounded-lg bg-primary-color-admin">
+    class="flex flex-col col-span-2 gap-8 pt-6 overflow-hidden rounded-lg h-fit bg-primary-color-admin">
     <div class="px-6 head-aside">
         <p class="text-xl font-semibold">Edit Menu</p>
     </div>
@@ -75,7 +75,7 @@
                     </select>
                 </div>
             </div>
-            <div class="px-6 pb-6 overflow-y-auto card-content sideMenu-tabs-content">
+            <div class="px-6 pb-6 overflow-y-auto card-content sideMenu-tabs-content ">
                 <div class="flex flex-col gap-3 text-lg">
                     <label for="stock" class="flex flex-col gap-3">
                         Stock

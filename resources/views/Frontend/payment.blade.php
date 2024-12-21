@@ -28,71 +28,88 @@
                                     <div
                                         class="flex flex-col items-center w-full gap-12 justify-between md:p-0 p-0.5 md:flex-row md:gap-y-0 gap-y-3">
                                         <div class="relative wrap w-[50%]">
-                                            <img src="{{ asset('storage/' . $orderDetail->menu->image) }}"
-                                                alt="{{ $orderDetail->menu->name }}"
-                                                class="object-cover w-full rounded h-52 3xl:w-96 3xl:h-60 md:w-64 md:h-44" />
+                                            @if ($orderDetail->order_type == 'normal_menu')
+                                                <img src="{{ asset('storage/' . $orderDetail->menu->image) }}"
+                                                    alt="{{ $orderDetail->menu_name }}"
+                                                    class="object-cover w-full rounded h-52 3xl:w-96 3xl:h-60 md:w-64 md:h-44" />
+                                            @else
+                                                <img src="{{ asset('/asset/CustomOrder.png') }}"
+                                                    class="object-cover w-full rounded h-52 3xl:w-96 3xl:h-60 md:w-64 md:h-44"
+                                                    alt="" />
+                                            @endif
                                             <div
-                                                class="absolute w-full z-10 -right-3 -top-3 px-5 py-2.5 rounded-full md:w-fit quantity-area bg-secondary-color">
+                                                class="absolute w-full z-10 -right-1 -top-3 px-5 py-2.5 rounded-full md:w-fit quantity-area bg-secondary-color">
                                                 <p class="text-xl text-center md:text-base ms-auto">
-                                                    {{ $orderDetail->quantity }}</p>
+                                                    {{ $orderDetail->quantity }}
+                                                </p>
                                             </div>
                                         </div>
                                         <div class="flex flex-col w-[50%] gap-2 text-wrap">
-                                            <p class="text-xl font-semibold md:text-lg line-clamp-1">
-                                                {{ $orderDetail->menu->name }}</p>
-                                            <p class="text-xl md:text-lg text-highlight-content">Extra</p>
+                                            @if ($orderDetail->order_type == 'normal_menu')
+                                                <p class="text-xl font-semibold md:text-lg line-clamp-1">
+                                                    {{ $orderDetail->menu_name }}
+                                                </p>
+                                            @else
+                                                <p class="text-xl font-semibold md:text-lg line-clamp-1">
+                                                    Custom Pizza
+                                                </p>
+                                            @endif
+                                            <p
+                                                class="text-xl font-semibold uppercase md:text-lg line-clamp-1 text-highlight-content">
+                                                ({{ $orderDetail->size }})
+                                            </p>
                                             <div class="flex wrap">
-                                                <p class="text-xl md:text-lg">Rp
-                                                    {{ number_format($orderDetail->price * $orderDetail->quantity, 0, ',', '.') }}
+                                                <p class="text-xl font-semibold md:text-lg">Rp
+                                                    {{ number_format($orderDetail->subtotal, 0, ',', '.') }}
                                                 </p>
                                             </div>
                                         </div>
                                     </div>
                                 @endforeach
-                                <!-- Repeted Content end -->
-                                <hr class="border-[1px] border-gray-500" />
-                                <div class="flex flex-col gap-3 wrap">
-                                    <!-- Subtotal -->
-                                    <span class="flex items-center justify-between">
-                                        <p class="text-lg">Subtotal</p>
-                                        <p class="text-lg">Rp
-                                            {{ number_format($orderTransaction->subtotal, 0, ',', '.') }}
-                                        </p>
-                                    </span>
-                                    <!-- Shipping -->
-                                    <span class="flex items-center justify-between">
-                                        <p class="flex items-center gap-3 text-lg text-highlight-content">
-                                            Shipping
-                                            <img src="../asset/QuestionMark-Shipping.png" class="w-[10%]"
-                                                alt="" />
-                                        </p>
-                                        <p class="text-lg text-highlight-content">Rp. 20.000</p>
-                                    </span>
-                                    <!-- Total Payment -->
-                                    <span class="flex items-center justify-between">
-                                        <p class="text-lg">Total Payment</p>
-                                        <p class="text-lg">Rp
-                                            {{ number_format($orderTransaction->subtotal, 0, ',', '.') }}
-                                        </p>
-                                    </span>
-                                </div>
-                                <!-- Cancel Order Form -->
-                                <form action="{{ route('order.cancel', $orderTransaction->order_ID) }}" method="POST">
-                                    @csrf
-                                    @method('PUT')
-                                    <button type="submit"
-                                        class="self-end w-full gap-3 py-3 text-base transition-all duration-300 ease-in-out rounded-lg bg-secondary-color">
-                                        Cancel Order
-                                    </button>
-                                </form>
                             @endforeach
+                            <!-- Repeated Content end -->
+                            <hr class="border-[1px] border-gray-500" />
+                            <div class="flex flex-col gap-3 wrap">
+                                <!-- Subtotal -->
+                                <span class="flex items-center justify-between">
+                                    <p class="text-lg">Subtotal</p>
+                                    <p class="text-lg">Rp
+                                        {{ number_format($orderTransaction->total_amounts, 0, ',', '.') }}
+                                    </p>
+                                </span>
+                                <!-- Shipping -->
+                                <span class="flex items-center justify-between">
+                                    <p class="flex items-center gap-3 text-lg text-highlight-content">
+                                        Shipping
+                                        <img src="../asset/QuestionMark-Shipping.png" class="w-[10%]" alt="" />
+                                    </p>
+                                    <p class="text-lg text-highlight-content">Rp. 20.000</p>
+                                </span>
+                                <!-- Total Payment -->
+                                <span class="flex items-center justify-between">
+                                    <p class="text-lg">Total Payment</p>
+                                    <p class="text-lg">Rp
+                                        {{ number_format($orderTransaction->total_amounts + 20000, 0, ',', '.') }}
+                                    </p>
+                                </span>
+                            </div>
+                            <!-- Cancel Order Form -->
+                            <form action="{{ route('order.cancel', $orderTransaction->order_ID) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit"
+                                    class="self-end w-full gap-3 py-3 text-base transition-all duration-300 ease-in-out rounded-lg bg-secondary-color">
+                                    Cancel Order
+                                </button>
+                            </form>
+
                         </div>
                     </div>
                     <div class="col-span-6 row-auto gap-4 text-base md:text-lg">
                         <div
                             class="sticky flex flex-col w-full gap-4 rounded-lg h-fit top-36 box-Location font-aesthetnova bg-secondary-accent-color">
                             <div class="px-4 py-4 rounded-t-lg bg-secondary-color header body md:px-8">
-                                <p class="uppercase">Payment Method</p>
+                                <p class="font-semibold uppercase">Payment Method</p>
                             </div>
                             <div class="px-4 py-4 body md:px-8">
                                 <div class="user-quick-details flex items-center justify-between gap-0.5">
@@ -115,6 +132,7 @@
                                         Pay Now
                                     </button>
                                 </form>
+
 
                             </div>
                         </div>

@@ -107,8 +107,7 @@ class CustomerController extends Controller
     {
         // Jika menu tidak ditemukan, kirimkan error
         try {
-            // Menemukan menu berdasarkan ID yang diberikan
-            $customerDetails = Customer::find($id);
+            $customerDetails = Customer::with('locationCustomer')->find($id);
             $customers = Customer::all();
             // Mengembalikan view dengan data JSON dan semua menu
             return view('Backend.Admin-Customers', [

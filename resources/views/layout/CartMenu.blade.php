@@ -25,7 +25,6 @@
             @else
                 <p>SIZE: Not selected</p>
             @endif
-
             <!-- Input Hidden Menu ID -->
             <input type="hidden" name="menu_ID" value="{{ $menuDetails->menu_ID ?? '' }}">
             <!-- Input Hidden Customer ID -->

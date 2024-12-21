@@ -45,12 +45,12 @@
                     </div>
                     <div
                         class="text-xl transition-all border-b-[1px] duration-300 ease-in-out accordion-content max-h-0">
-                        <div class="flex flex-wrap items-center gap-3 pb-6 mt-3 lg:mt-6 wrap">
+                        <div class="flex flex-wrap items-center px-0.5 gap-3 pb-6 mt-3 lg:mt-6 wrap">
                             @foreach ($sizes as $size)
                                 <!-- Iterasi pada sizeProperties per kategori -->
                                 <button data-id="{{ $size->size_ID }}" data-price="{{ $size->price }}"
                                     data-max-toppings="{{ $size->allowed_flavor }}"
-                                    class="w-[20%] p-3 size-button uppercase rounded-full bg-secondary-color">
+                                    class="w-[20%] p-3 size-button  rounded-full outline outline-2 outline-white ">
                                     {{ $size->size }}
                                     <!-- Ganti 'size' dengan field yang sesuai dari model SizeProperty -->
                                 </button>
@@ -86,7 +86,7 @@
                                 @foreach ($category->properties as $property)
                                     <button data-price="{{ $property->price }}"
                                         data-name="{{ $property->properties_name }}"
-                                        class="px-8 py-3 text-sm rounded-full topping-button w-fit bg-secondary-color 3xl:text-xl lg:text-xl">
+                                        class="px-8 py-3 text-sm rounded-full topping-button w-fit outline outline-2 outline-white 3xl:text-xl lg:text-xl">
                                         {{ $property->properties_name }}
                                     </button>
                                 @endforeach
@@ -176,7 +176,7 @@
         const hiddenToppingsInput = document.getElementById('toppings-input');
         const hiddenTotalPriceInput = document.getElementById('total-price-input');
         const hiddenSizeInput = document.getElementById(
-        'size-input'); // Elemen input tersembunyi untuk size_name
+            'size-input'); // Elemen input tersembunyi untuk size_name
 
         // Fungsi untuk menghitung total harga menggunakan AJAX
         function calculateTotal() {
@@ -298,6 +298,36 @@
         updateHiddenInputs(); // Pastikan input tersembunyi disetel saat pertama kali dimuat
     });
 </script>
+<script>
+    // Ambil semua tombol dengan kelas "size-button"
+    const sizeButtons = document.querySelectorAll('.size-button');
 
+    // Tambahkan event listener ke setiap tombol
+    sizeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Hapus warna merah dari semua tombol
+            sizeButtons.forEach(btn => btn.classList.remove('bg-red-500', 'text-white',
+                'outline-0'));
+
+            // Tambahkan warna merah ke tombol yang dipilih
+            button.classList.add('bg-red-500', 'text-white', 'outline-0');
+        });
+    });
+
+    // Ambil semua tombol dengan kelas "topping-button"
+    const toppingButtons = document.querySelectorAll('.topping-button');
+
+    // Tambahkan event listener ke setiap tombol
+    toppingButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Hapus warna merah dari semua tombol
+            toppingButtons.forEach(btn => btn.classList.remove('bg-red-500', 'text-white',
+                'outline-0'));
+
+            // Tambahkan warna merah ke tombol yang dipilih
+            button.classList.add('bg-red-500', 'text-white', 'outline-0');
+        });
+    });
+</script>
 
 </html>

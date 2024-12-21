@@ -6,10 +6,12 @@ use App\Models\Custom_categories_pizza;
 use App\Models\Custom_categories_properties;
 use App\Models\Custom_categories_size_properties;
 use App\Models\Customer;
+use App\Models\Location;
 use App\Models\Menu;
 use App\Models\orderTransaction;
 use App\Models\tempTransaction;
 use App\Models\transactionDetails;
+use App\Models\transactionLocation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Repository\orderRepo;
@@ -28,9 +30,6 @@ class OrderController extends Controller
         $this->orderRepo = $orderRepo;
         $this->orderService = $orderService;
     }
-
-
-
     public function payment()
     {
         $customer = Auth::user();
@@ -43,23 +42,20 @@ class OrderController extends Controller
         // Fetch order transactions with their details and menu
         $orderTransactions = orderTransaction::with(['details.menu'])
             ->where('customer_ID', $customerID)
-            ->where('status_order', 'pendding')
-            ->get(); // Get all records, not just the first one
+            ->where('status_order', 'in-progress') // Hanya transaksi dengan status "in-progress"
+            ->get();
 
-
-        if (!$orderTransactions || $orderTransactions->isEmpty()) {
-            // Redirect to another page if no order transaction with status "pending" found
-            return redirect()->route('frontend.menu')->with('error', 'No order transaction found!');
+        if ($orderTransactions->isEmpty()) {
+            return redirect()->route('frontend.menu')->with('error', 'No order transaction');
         }
 
-
-        // Prepare an array of subtotal for each order transaction
+        // Tambahkan subtotal untuk setiap transaksi
         $orderTransactions = $orderTransactions->map(function ($orderTransaction) {
             $subtotal = $orderTransaction->details->sum(function ($detail) {
                 return $detail->price * $detail->quantity;
             });
 
-            // Add subtotal to the order transaction object for easier access in the view
+            // Tambahkan subtotal ke objek transaksi
             $orderTransaction->subtotal = $subtotal;
 
             return $orderTransaction;
@@ -69,7 +65,6 @@ class OrderController extends Controller
             'orderTransactions' => $orderTransactions,
         ]);
     }
-
 
     public function makeOrder()
     {
@@ -82,13 +77,31 @@ class OrderController extends Controller
         }
     }
 
-    public function trackOrder()
+    public function trackOrder($orderID)
     {
+        $customer = Auth::user();
+        if (!$customer) {
+            return redirect()->back()->with('error', 'Login First!');
+        }
 
-        $menus = Menu::all();
+        $customerID = $customer->customer_ID;
+
+        // Fetch order transactions by order_ID and status
+        $orderTransactions = transactionDetails::whereHas('order', function ($query) use ($customerID, $orderID) {
+            $query->where('customer_ID', $customerID)
+                ->where('order_ID', $orderID) // Filter by order_ID
+                ->whereIn('status_order', ['paid', 'serve', 'shipped', 'completed']);
+        })->with(['menu', 'order.location'])->get();
+
+        if ($orderTransactions->isEmpty()) {
+            return redirect()->route('frontend.menu')->with('error', 'No order transaction found.');
+        }
+
+        $totalSubtotal = $orderTransactions->sum('subtotal');
 
         return view('Frontend.Tracking-order', [
-            'menus' => $menus,
+            'orderTransactions' => $orderTransactions,
+            'totalSubtotal' => $totalSubtotal,
         ]);
     }
 
@@ -105,10 +118,12 @@ class OrderController extends Controller
 
     public function getCustomerOrderDetails($id)
     {
-        // Ambil data customer berdasarkan ID, termasuk relasi orderTransaction dan orderDetails
-        $orderCustomers = orderTransaction::with(['customer', 'details.menu'])->get();
-        // Ambil data order berdasarkan order_ID, termasuk relasi customer dan details.menu
-        $orderDetails = orderTransaction::with(['customer', 'details.menu'])->find($id);
+        // Ambil data orderTransaction berdasarkan order_ID, termasuk relasi customer, details.menu, dan location
+        $orderDetails = orderTransaction::with([
+            'customer',        // Relasi ke customer
+            'details.menu',    // Relasi ke menu dalam details
+            'location'         // Relasi ke location
+        ])->find($id);        // Menemukan berdasarkan order_ID
 
         // Periksa apakah order ditemukan
         if (!$orderDetails) {
@@ -116,6 +131,13 @@ class OrderController extends Controller
                 'message' => 'Order not found',
             ], 404);
         }
+
+        // Ambil data orderCustomers yang mencakup semua orderTransaction dengan relasi customer, details.menu, dan location
+        $orderCustomers = orderTransaction::with([
+            'customer',        // Relasi ke customer
+            'details.menu',    // Relasi ke menu dalam details
+            'location'         // Relasi ke location
+        ])->get();            // Menampilkan semua data orderTransaction
 
         // Kembalikan data ke view atau dalam bentuk JSON
         return view('Backend.Admin-Order', [
@@ -129,7 +151,7 @@ class OrderController extends Controller
     {
         // Validasi input status
         $validated = $request->validate([
-            'status_order' => 'required|string|in:pending,in-progress,completed,canceled',
+            'status_order' => 'required|string|in:pending,in-progress,paid,serve,shipped,completed,canceled',
         ]);
 
         // Temukan order transaction berdasarkan order ID
@@ -168,19 +190,62 @@ class OrderController extends Controller
 
     public function payOrder($orderId)
     {
+        // Mendapatkan user yang login
+        $customer = Auth::user();
+
+        if (!$customer) {
+            return redirect()->back()->with('error', 'You need to login to make an order.');
+        }
+
         // Find the order by its ID
         $orderTransaction = OrderTransaction::find($orderId);
 
         if (!$orderTransaction) {
-            // If the order does not exist, redirect back with an error message
             return redirect()->back()->with('error', 'Order not found.');
         }
 
-        // Update the status of the order to 'canceled'
-        $orderTransaction->status_order = 'in-progress';
+        // Update the status of the order to 'paid'
+        $orderTransaction->status_order = 'paid';
         $orderTransaction->save();
 
-        // Redirect back with a success message
-        return redirect()->Route('tracking.view')->with('success', 'Order has been Pay.');
+        // Ambil lokasi utama customer
+        $primaryLocation = Location::where('customer_ID', $customer->customer_ID)
+            ->where('is_primary', 1)
+            ->first();
+
+        if (!$primaryLocation) {
+            return redirect()->back()->with('error', 'No primary address found.');
+        }
+
+        // Menyimpan data lokasi ke tabel order_transaction_location
+        transactionLocation::create([
+            'order_ID' => $orderTransaction->order_ID,
+            'location_label' => $primaryLocation->location_label,
+            'reciver_address' => $primaryLocation->reciver_address,
+            'reciver_number' => $primaryLocation->reciver_number,
+            'reciver_name' => $primaryLocation->reciver_name,
+        ]);
+
+        // Mengurangi stok untuk setiap item di transactionDetails
+        foreach ($orderTransaction->details as $detail) {
+            // Ambil menu terkait
+            $menu = $detail->menu;
+
+            // Kurangi stok menu berdasarkan quantity yang dipesan
+            if ($menu) {
+                $menu->stock -= $detail->quantity;
+
+                // Pastikan stok tidak negatif
+                if ($menu->stock < 0) {
+                    $menu->stock = 0;
+                }
+
+                $menu->save();
+            }
+        }
+
+        // Redirect ke tracking view dengan order_ID
+        return redirect()->route('tracking.view', ['orderID' => $orderTransaction->order_ID])
+            ->with('success', 'Order has been paid.');
     }
 }
