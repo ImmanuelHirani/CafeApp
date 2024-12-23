@@ -25,13 +25,20 @@ class Customer extends Authenticatable
 
     public function favoriteMenus()
     {
-        return $this->belongsToMany(Menu::class, 'favorite_menus', 'customer_ID', 'menu_ID');
+        return $this->belongsToMany(Menu::class, 'favorite_menu', 'customer_ID', 'menu_ID');
     }
 
     public function orderCustomer()
     {
         return $this->hasMany(orderTransaction::class, 'customer_ID', 'customer_ID');
     }
+
+    // Di model User
+    public function customer()
+    {
+        return $this->hasOne(Customer::class, 'customer_ID'); // pastikan kolom yang menghubungkan benar
+    }
+
 
     public function locationCustomer()
     {

@@ -11,77 +11,89 @@
 </button>
 <div id="addtoCartMobile"
     class="fixed inset-0 z-50 invisible flex flex-col justify-end w-full transition-all duration-[400ms] bg-opacity-60 ease-in-out translate-y-full shadow-inner opacity-0 md:hidden h-full shadow-secondary-accent-color bg-secondary-accent-color">
-    <div class="relative flex flex-col w-full gap-3 p-4 rounded-lg h-fit font-aesthetnova bg-secondary-accent-color">
+    <form method="POST" action="{{ route('cart.add') }}"
+        class="relative flex flex-col w-full gap-3 p-4 rounded-lg h-fit font-aesthetnova bg-secondary-accent-color">
+        @csrf
+        <!-- Input Hidden Menu ID -->
+        <input type="hidden" name="menu_ID" value="{{ $menuDetails->menu_ID ?? '' }}">
+        <!-- Input Hidden Customer ID -->
+        <input type="hidden" name="customer_ID" value="{{ Auth::user()->customer_ID ?? '' }}">
+        <!-- Input Hidden Quantity -->
+        <input type="hidden" name="quantity" id="hidden-quantity-mobile" value="1">
+
         <div class="flex items-center gap-5 menu-selection">
-            <img src="../asset/Booba Menu/Choco bobba.jpg" class="w-[150px] h-[150px] object-cover rounded-lg"
-                alt="Melted Choco Bubble Image" />
-            <div class="flex flex-col gap-3 text-wrap">
-                <p class="text-base">SIZE : LG</p>
-                <p class="text-base">Melted Choco Bubble</p>
+            <img src="{{ asset('storage/' . $menuDetails->image ?? '') }}"
+                class="w-[150px] h-[150px] object-cover rounded-lg" alt="{{ $menuDetails->name ?? 'Image' }}" />
+            <div class="flex flex-col gap-2 text-wrap">
+                @if ($selectedProperty)
+                    <div class="flex items-center gap-2 wrap">
+                        <p class="text-lg">SIZE: </p>
+                        <input name="size" class="text-lg text-white uppercase bg-transparent outline-none w-[4rem]"
+                            readonly value="{{ $selectedProperty->size ?? '' }}">
+                    </div>
+                @else
+                    <p>SIZE: Not selected</p>
+                @endif
+                <p class="text-lg">{{ $menuDetails->name ?? '' }}</p>
                 <p class="text-base text-highlight-content">
-                    Max.Pembelian 2 pcs
+                    Max. Pembelian 2 pcs
                 </p>
             </div>
         </div>
+
         <!-- Size Selection -->
         <div class="flex flex-col gap-3">
             <p class="text-lg md:text-2xl">Size :</p>
             <div class="flex flex-wrap items-center gap-3 menu-selection-wrapper">
-                <button class="w-[22%] py-1.5 bg-secondary-color rounded-full">
-                    XL
-                </button>
-                <button
-                    class="w-[22%] py-1.5 outline outline-2 outline-white hover:bg-red-500 transition-all ease-in-out duration-500 rounded-full">
-                    LG
-                </button>
-                <button
-                    class="w-[22%] py-1.5 outline outline-2 outline-white hover:bg-red-500 transition-all ease-in-out duration-500 rounded-full">
-                    MD
-                </button>
-                <button
-                    class="w-[22%] py-1.5 outline outline-2 outline-white hover:bg-red-500 transition-all ease-in-out duration-500 rounded-full">
-                    SM
-                </button>
+                @isset($menuDetails)
+                    @foreach ($menuDetails->properties as $property)
+                        <a href="{{ route('frontend.menu.details', ['id' => $menuDetails->menu_ID, 'size' => $property->size]) }}"
+                            class="w-[22%] px-3 py-3 uppercase rounded-full outline text-center outline-2 {{ $selectedProperty && $selectedProperty->size == $property->size ? 'bg-secondary-color outline-secondary-color' : 'outline-white hover:bg-secondary-color transition-all ease-in-out duration-300 hover:outline-none' }}">
+                            {{ $property->size }}
+                        </a>
+                    @endforeach
+                @else
+                    <p>No sizes available for this menu.</p>
+                @endisset
             </div>
         </div>
-        <!-- Extra Selection -->
-        <div class="flex flex-col gap-3">
-            <p class="text-lg md:text-2xl">Extra :</p>
-            <div class="flex flex-wrap items-center gap-3 menu-selection-wrapper">
-                <p class="text-highlight-content">
-                    No extra item for this product
-                </p>
-            </div>
-        </div>
+
         <!-- Quantity Selection -->
         <div class="flex flex-col gap-3">
             <p class="text-lg md:text-2xl">Qty :</p>
             <div class="flex items-center justify-between gap-1 rounded-lg add-to-cart">
-                <button class="w-fit px-3 2xl:px-4 py-2.5 bg-secondary-color rounded-lg">
-                    <svg width="20px" height="24px" fill="white" viewBox="0 0 512 512"
-                        xmlns="http://www.w3.org/2000/svg">
+                <button id="decrease-mobile" type="button"
+                    class="gap-3 px-3 py-2.5 rounded-lg w-fit bg-secondary-color">
+                    <svg height="24px" fill="white" viewBox="0 0 512 512" width="20px">
                         <path
-                            d="M417.4,224H94.6C77.7,224,64,238.3,64,256c0,17.7,13.7,32,30.6,32h322.8c16.9,0,30.6-14.3,30.6-32  C448,238.3,434.3,224,417.4,224z" />
+                            d="M417.4,224H94.6C77.7,224,64,238.3,64,256c0,17.7,13.7,32,30.6,32h322.8c16.9,0,30.6-14.3,30.6-32C448,238.3,434.3,224,417.4,224z" />
                     </svg>
                 </button>
-                <button class="w-full px-2 py-3 text-sm rounded-lg 2xl:px-5 bg-secondary-color">
-                    ADD TO CART (3)
+                <button type="submit"
+                    class="w-full gap-3 px-2 py-3 text-sm font-semibold rounded-lg 2xl:px-5 bg-secondary-color">
+                    ADD TO CART <span>(<span id="quantity-display-mobile">1</span>)</span>
                 </button>
-                <button class="w-fit px-3 2xl:px-4 py-2.5 bg-secondary-color rounded-lg">
-                    <svg width="20px" height="24px" fill="white" viewBox="0 0 512 512"
-                        xmlns="http://www.w3.org/2000/svg">
+                <button id="increase-mobile" type="button"
+                    class="gap-3 px-3 py-2.5 rounded-lg w-fit bg-secondary-color">
+                    <svg height="24px" fill="white" viewBox="0 0 512 512" width="20px">
                         <path
-                            d="M417.4,224H288V94.6c0-16.9-14.3-30.6-32-30.6c-17.7,0-32,13.7-32,30.6V224H94.6C77.7,224,64,238.3,64,256  c0,17.7,13.7,32,30.6,32H224v129.4c0,16.9,14.3,30.6,32,30.6c17.7,0,32-13.7,32-30.6V288h129.4c16.9,0,30.6-14.3,30.6-32  C448,238.3,434.3,224,417.4,224z" />
+                            d="M417.4,224H288V94.6c0-16.9-14.3-30.6-32-30.6c-17.7,0-32,13.7-32,30.6V224H94.6C77.7,224,64,238.3,64,256c0,17.7,13.7,32,30.6,32H224v129.4c0,16.9,14.3,30.6,32,30.6c17.7,0,32-13.7,32-30.6V288h129.4c16.9,0,30.6-14.3,30.6-32C448,238.3,434.3,224,417.4,224z" />
                     </svg>
                 </button>
             </div>
         </div>
+
         <!-- Subtotal -->
         <hr />
-        <div class="flex items-center justify-between">
-            <p class="text-lg">SUBTOTAL</p>
-            <p class="text-lg">Rp 500.000</p>
-        </div>
+        @if ($selectedProperty)
+            <div class="flex items-center justify-between gap-2 wrap">
+                <p>Subtotal</p>
+                <p id="subtotal-mobile">Rp {{ number_format($selectedProperty->price, 0, ',', '.') }}</p>
+            </div>
+        @else
+            <p>SIZE: Not selected</p>
+        @endif
+
         <!-- Close Button -->
         <svg id="closecartMobile" xmlns="http://www.w3.org/2000/svg" class="absolute cursor-pointer top-4 right-4"
             width="20" height="20" viewBox="0 0 12 12" fill="none">
@@ -89,5 +101,41 @@
                 d="M0.29289 0.29289C0.68342 -0.09763 1.31658 -0.09763 1.70711 0.29289L6 4.58579L10.2929 0.29289C10.6834 -0.09763 11.3166 -0.09763 11.7071 0.29289C12.0976 0.68342 12.0976 1.31658 11.7071 1.70711L7.4142 6L11.7071 10.2929C12.0976 10.6834 12.0976 11.3166 11.7071 11.7071C11.3166 12.0976 10.6834 12.0976 10.2929 11.7071L6 7.4142L1.70711 11.7071C1.31658 12.0976 0.68342 12.0976 0.29289 11.7071C-0.09763 11.3166 -0.09763 10.6834 0.29289 10.2929L4.58579 6L0.29289 1.70711C-0.09763 1.31658 -0.09763 0.68342 0.29289 0.29289Z"
                 fill="none" />
         </svg>
-    </div>
+    </form>
+
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const decreaseMobileButton = document.getElementById('decrease-mobile');
+        const increaseMobileButton = document.getElementById('increase-mobile');
+        const quantityDisplay = document.getElementById('quantity-display-mobile');
+        const hiddenQuantityInput = document.getElementById('hidden-quantity-mobile');
+        const subtotalMobileElement = document.getElementById('subtotal-mobile');
+        const pricePerItem = {{ $selectedProperty->price ?? 0 }}; // Harga per item dari server-side
+
+        let quantity = 1; // Inisialisasi jumlah awal
+
+        function updateValues() {
+            quantityDisplay.textContent = quantity;
+            hiddenQuantityInput.value = quantity;
+            const subtotalMobile = pricePerItem * quantity;
+            subtotalMobileElement.textContent = 'Rp ' + subtotalMobile.toLocaleString('id-ID');
+        }
+
+        decreaseMobileButton.addEventListener('click', function() {
+            if (quantity > 1) {
+                quantity--;
+                updateValues();
+            }
+        });
+
+        increaseMobileButton.addEventListener('click', function() {
+            if (quantity < 2) { // Sesuai batasan pembelian
+                quantity++;
+                updateValues();
+            }
+        });
+
+        updateValues();
+    });
+</script>

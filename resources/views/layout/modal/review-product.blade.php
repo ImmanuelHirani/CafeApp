@@ -10,7 +10,7 @@
         </p>
         <!-- Product Image -->
         <img src="{{ asset('storage/' . $menuDetails->image) }}" alt="{{ $menuDetails->name }}"
-            class="md:w-[50%] w-full h-[18rem]  object-cover rounded-lg" />
+            class="md:w-[50%] w-full md:h-[18rem] h-[10rem]  object-cover rounded-lg" />
         <!-- Star Rating SVG Icons -->
         <div class="flex items-center gap-1.5 star">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 md:w-7" viewBox="0 0 21 20" fill="none">

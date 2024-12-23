@@ -21,6 +21,12 @@ Route::post('/customer/logout', [CustomerController::class, 'logout'])->name('lo
 // frontend menu
 Route::get('/menu', [MenuController::class, 'Product'])->name('frontend.menu');
 Route::get('/menu/detail/{id}/{size?}', [MenuController::class, 'getMenuDetails'])->name('frontend.menu.details');
+Route::post('/favorite-menu/add', [MenuController::class, 'addToFav'])->name('favorite.menu.addremove');
+Route::delete('/favorite-menu/remove/{menuID}', [profileController::class, 'removeToFav']);
+Route::delete('/favorite-menu/clear-all', [profileController::class, 'clearAllFavorites']);
+
+
+
 
 // Profile
 Route::get('/profile', [profileController::class, 'profile'])->name('frontend.profile');
@@ -86,7 +92,6 @@ Route::get('/admin/menu/custom/order', [CustomCategoriesController::class, 'admi
 Route::get('/admin/menu/order/{id}', [OrderController::class, 'getCustomerOrderDetails'])->name('admin.order.details');
 // Route untuk mengupdate status order
 Route::post('/order/update-status/{orderID}', [OrderController::class, 'updateStatus'])->name('order.updateStatus');
-
 
 
 Route::put('/update/product/{id}', [MenuController::class, 'updateMenu'])->name('update.menu');

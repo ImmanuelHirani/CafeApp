@@ -17,7 +17,7 @@
 <body>
     @include('layout.Navbar')
     <main>
-        <section class="mt-14 md:mt-20 cart">
+        <section class="mt-10 md:mt-20 cart">
             <div class="container">
                 <div class="flex flex-col grid-cols-12 gap-4 md:grid">
                     <div
@@ -27,8 +27,29 @@
                             <div id="order_notice" class="flex flex-col gap-3">
                                 <span class="flex items-center justify-between">
                                     <p>Order Detail</p>
+                                    @php
+                                        // Menentukan kelas warna berdasarkan status_order
+                                        $statusClass = '';
+                                        switch ($orderTransactions->first()->order->status_order) {
+                                            case 'paid':
+                                                $statusClass = 'bg-purple-500 text-white'; // Warna hijau untuk 'paid'
+                                                break;
+                                            case 'serve':
+                                                $statusClass = 'bg-teal-500 text-white'; // Warna biru untuk 'serve'
+                                                break;
+                                            case 'shipped':
+                                                $statusClass = 'bg-indigo-500 text-white'; // Warna kuning untuk 'shipped'
+                                                break;
+                                            case 'completed':
+                                                $statusClass = 'bg-green-500 text-white'; // Warna ungu untuk 'completed'
+                                                break;
+                                            default:
+                                                $statusClass = 'bg-gray-500 text-white'; // Warna abu-abu untuk status lainnya
+                                                break;
+                                        }
+                                    @endphp
                                     <p
-                                        class="py-1.5 px-4 font-semibold rounded-full lg:text-lg text-sm bg-highlight-content text-secondary-accent-color">
+                                        class="py-1.5 w-[8rem] text-center font-medium rounded-full lg:text-lg text-sm {{ $statusClass }}">
                                         {{ $orderTransactions->first()->order->status_order }}
                                     </p>
                                 </span>
@@ -78,7 +99,7 @@
                             </div>
                         </div>
                         <div
-                            class="flex flex-col p-4 rounded-lg md:p-8 lg:gap-y-6 gap-y-5 content-body bg-secondary-accent-color outline outline-1 outline-highlight-content">
+                            class="flex flex-col w-full p-4 rounded-lg md:p-8 lg:gap-y-6 gap-y-5 content-body bg-secondary-accent-color outline outline-1 outline-highlight-content">
                             <p class="text-2xl text-highlight-content lg:text-3xl">
                                 Order Summary
                             </p>
@@ -88,7 +109,7 @@
                                     <div
                                         class="flex flex-col items-center w-full p-0 gap-x-8 gap-y-3 md:flex-row md:gap-y-0">
                                         <!-- Normal Menu Image -->
-                                        <div class="img-wrap h-52 3xl:w-80 3xl:h-60 md:w-[45%] md:h-44">
+                                        <div class="img-wrap h-52 3xl:w-80 3xl:h-60 w-full md:w-[45%] md:h-44">
                                             @if ($transaction->order_type === 'normal_menu')
                                                 <img src="{{ asset('storage/' . $transaction->menu->image) }}"
                                                     alt="{{ $transaction->menu_name }}"
@@ -99,10 +120,11 @@
                                             @endif
                                         </div>
                                         <div class="flex flex-col w-full gap-1.5 text-wrap md:w-[35%]">
-                                            <p class="font-semibold line-clamp-1">
+                                            <p class="text-xl font-medium line-clamp-1">
                                                 {{ $transaction->order_type === 'normal_menu' ? $transaction->menu_name : 'Custom menu' }}
                                             </p>
-                                            <p class="text-highlight-content">Size {{ $transaction->size }}</p>
+                                            <p class="text-xl text-highlight-content">Size ({{ $transaction->size }})
+                                            </p>
                                             <div class="flex">
                                                 <p>Rp {{ number_format($transaction->subtotal, 0, ',', '.') }}</p>
                                             </div>
@@ -253,8 +275,8 @@
                 </div>
             </div>
         </section>
-        {{-- <!-- SideBar  -->
-        @include('layout.Sidebar') --}}
+        <!-- SideBar  -->
+        @include('layout.Sidebar')
     </main>
     @include('layout.Footer')
 </body>

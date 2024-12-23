@@ -58,7 +58,6 @@ var swiper = new Swiper(".customTopping", {
 
 var swiper = new Swiper(".profile-order-wrapper", {
     grabCursor: true,
-    loop: true,
     loopAddBlankSlides: false, // Default is false, included for clarity
     loopPreventsSliding: false, // Default is false, included for clarity
 
@@ -82,13 +81,12 @@ var swiper = new Swiper(".profile-order-wrapper", {
 
     breakpoints: {
         360: {
-            slidesPerView: 1.19,
-            centeredSlides: true,
+            slidesPerView: 1,
+            spaceBetween: 12,
         },
         430: {
-            slidesPerView: 1.19,
-
-            centeredSlides: true,
+            slidesPerView: 1,
+            spaceBetween: 12,
         },
         540: {
             slidesPerView: 1.5,
@@ -107,6 +105,90 @@ var swiper = new Swiper(".profile-order-wrapper", {
         },
         1380: {
             slidesPerView: 1.8,
+            spaceBetween: 10,
+        },
+
+        1800: {
+            slidesPerView: 2.2,
+            spaceBetween: 16,
+        },
+    },
+});
+
+var swiper = new Swiper(".whislist-swiper", {
+    grabCursor: true,
+    speed: 800,
+    preventClicksPropagation: true,
+
+    // Navigation
+    navigation: {
+        nextEl: "#next",
+        prevEl: "#prev",
+    },
+
+    // Breakpoints for responsiveness
+    breakpoints: {
+        360: {
+            slidesPerView: 1,
+            spaceBetween: 16,
+        },
+        540: {
+            slidesPerView: 1.5,
+        },
+        768: {
+            slidesPerView: 2.2,
+            spaceBetween: 10,
+        },
+        912: {
+            slidesPerView: 1.8,
+            spaceBetween: 16,
+        },
+        1380: {
+            slidesPerView: 2.4,
+            spaceBetween: 16,
+        },
+
+        1800: {
+            slidesPerView: 2.9,
+            spaceBetween: 16,
+        },
+    },
+});
+var swiper = new Swiper(".button-profile-order", {
+    grabCursor: true,
+    speed: 800,
+    preventClicksPropagation: true,
+
+    // Navigation
+    navigation: {
+        nextEl: "#next",
+        prevEl: "#prev",
+    },
+
+    // Breakpoints for responsiveness
+    breakpoints: {
+        360: {
+            slidesPerView: 2.4,
+            spaceBetween: 12,
+        },
+        540: {
+            slidesPerView: 1.5,
+        },
+        768: {
+            slidesPerView: 2.2,
+            spaceBetween: 10,
+        },
+        912: {
+            slidesPerView: 1.8,
+            spaceBetween: 16,
+        },
+        1380: {
+            slidesPerView: 4.5,
+            spaceBetween: 16,
+        },
+
+        1800: {
+            slidesPerView: 4.5,
             spaceBetween: 16,
         },
     },

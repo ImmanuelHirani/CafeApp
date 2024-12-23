@@ -97,11 +97,15 @@ class OrderController extends Controller
             return redirect()->route('frontend.menu')->with('error', 'No order transaction found.');
         }
 
+        $menus = Menu::all();
+
+
         $totalSubtotal = $orderTransactions->sum('subtotal');
 
         return view('Frontend.Tracking-order', [
             'orderTransactions' => $orderTransactions,
             'totalSubtotal' => $totalSubtotal,
+            'menus' => $menus
         ]);
     }
 

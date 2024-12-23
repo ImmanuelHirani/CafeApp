@@ -18,16 +18,16 @@
     @include('layout.Navbar')
     <main>
         <section class="mt-12 md:mt-20 contact-us">
-            <div class="container flex flex-col grid-cols-12 gap-8 md:grid 2xl:gap-8">
+            <div class="container flex flex-col grid-cols-12 gap-2 md:gap-8 md:grid 2xl:gap-8">
                 <div class="col-span-5">
                     <img src="{{ asset('storage/' . $menuDetails->image ?? '') }}"
-                        class="{{ $menuDetails->image ?? '' ? 'object-cover' : 'object-cover' }}  w-full 3xl:h-[35rem] h-[31rem] rounded-lg"
+                        class="{{ $menuDetails->image ?? '' ? 'object-cover' : 'object-cover' }}  w-full 3xl:h-[35rem] 2xl:h-[31rem] h-[21rem] rounded-lg"
                         alt="{{ $menuDetails->name ?? 'Default Image' }}"
                         onerror="this.onerror=null; this.src='{{ asset('asset/Error-Image.png') }}';" />
                 </div>
-                <div class="flex flex-col col-span-4 gap-4 font-aesthetnova">
-                    <span class="flex flex-row-reverse justify-between md:gap-4 md:flex-col">
-                        <div class="flex items-center gap-1.5 star">
+                <div class="flex flex-col col-span-4 gap-4 font-aesthetnova ">
+                    <span class="flex flex-col-reverse justify-between gap-3 md:gap-4 md:flex-col">
+                        <div class="items-center gap-1.5 star md:flex hidden">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 md:w-7" viewBox="0 0 21 20"
                                 fill="none">
                                 <path
@@ -60,7 +60,8 @@
                             </svg>
                             <p class="text-xs">(20)</p>
                         </div>
-                        <p class="text-4xl 3xl:text-5xl" class="py-1 line-clamp-1">{{ $menuDetails->name ?? '' }}</p>
+                        <p class="text-2xl md:text-4xl 3xl:text-5xl" class="py-1 line-clamp-1">
+                            {{ $menuDetails->name ?? '' }}</p>
                     </span>
                     <span class="flex flex-row justify-between md:gap-4 md:flex-col">
                         <p class="w-full text-xl md:text-2xl">
@@ -111,6 +112,7 @@
                     <p class="text-base text-justify md:text-lg line-clamp-3">
                         {{ $menuDetails->menu_description ?? '' }}
                     </p>
+                    <hr />
                 </div>
                 {{-- Sidecart Quick Add --}}
                 @include('layout.CartMenu')
@@ -120,7 +122,7 @@
                     <div
                         class="flex flex-col gap-3 md:gap-0 md:items-end md:justify-between md:flex-row product-overview">
                         <div class="flex flex-col gap-2 left-content">
-                            <h6>Product Review</h6>
+                            <p class="text-2xl">Product Review</p>
                             <span class="flex items-center gap-6">
                                 <h3>3.0</h3>
                                 <div class="flex items-center gap-1.5 star">

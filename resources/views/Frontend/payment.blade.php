@@ -27,7 +27,7 @@
                                 @foreach ($orderTransaction->details as $orderDetail)
                                     <div
                                         class="flex flex-col items-center w-full gap-12 justify-between md:p-0 p-0.5 md:flex-row md:gap-y-0 gap-y-3">
-                                        <div class="relative wrap w-[50%]">
+                                        <div class="relative wrap md:w-[50%] w-full">
                                             @if ($orderDetail->order_type == 'normal_menu')
                                                 <img src="{{ asset('storage/' . $orderDetail->menu->image) }}"
                                                     alt="{{ $orderDetail->menu_name }}"
@@ -38,28 +38,28 @@
                                                     alt="" />
                                             @endif
                                             <div
-                                                class="absolute w-full z-10 -right-1 -top-3 px-5 py-2.5 rounded-full md:w-fit quantity-area bg-secondary-color">
+                                                class="absolute  z-10 -right-1 -top-3 px-5 py-2.5 rounded-full w-fit quantity-area bg-secondary-color">
                                                 <p class="text-xl text-center md:text-base ms-auto">
                                                     {{ $orderDetail->quantity }}
                                                 </p>
                                             </div>
                                         </div>
-                                        <div class="flex flex-col w-[50%] gap-2 text-wrap">
+                                        <div class="flex flex-col md:w-[50%] w-full gap-2 text-wrap">
                                             @if ($orderDetail->order_type == 'normal_menu')
-                                                <p class="text-xl font-semibold md:text-lg line-clamp-1">
+                                                <p class="text-xl font-medium md:text-lg line-clamp-1">
                                                     {{ $orderDetail->menu_name }}
                                                 </p>
                                             @else
-                                                <p class="text-xl font-semibold md:text-lg line-clamp-1">
+                                                <p class="text-xl font-medium md:text-lg line-clamp-1">
                                                     Custom Pizza
                                                 </p>
                                             @endif
                                             <p
-                                                class="text-xl font-semibold uppercase md:text-lg line-clamp-1 text-highlight-content">
+                                                class="text-xl font-medium uppercase md:text-lg line-clamp-1 text-highlight-content">
                                                 ({{ $orderDetail->size }})
                                             </p>
                                             <div class="flex wrap">
-                                                <p class="text-xl font-semibold md:text-lg">Rp
+                                                <p class="text-xl font-medium md:text-lg">Rp
                                                     {{ number_format($orderDetail->subtotal, 0, ',', '.') }}
                                                 </p>
                                             </div>
@@ -120,15 +120,16 @@
                                 </div>
                             </div>
                             <div
-                                class="flex flex-col items-center justify-between gap-4 px-4 py-4 md:gap-0 md:flex-row md:px-8 footer">
+                                class="flex flex-col items-center justify-between w-full gap-4 px-4 py-4 md:gap-0 md:flex-row md:px-8 footer">
                                 <p class="text-sm text-highlight-content">
                                     Order That Been Pay Cannot Be Cancle *
                                 </p>
-                                <form action="{{ route('order.pay', $orderTransaction->order_ID) }}" method="POST">
+                                <form class="w-full" action="{{ route('order.pay', $orderTransaction->order_ID) }}"
+                                    method="POST">
                                     @csrf
                                     @method('PUT')
                                     <button type="submit"
-                                        class="self-end w-full gap-3 px-2 py-2.5 text-base text-center transition-all duration-300 ease-in-out rounded-lg md:w-fit 2xl:px-12 bg-secondary-color">
+                                        class="self-end w-full gap-3 px-2 py-2.5 text-base text-center transition-all duration-300 ease-in-out rounded-lg  2xl:px-12 bg-secondary-color">
                                         Pay Now
                                     </button>
                                 </form>

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\favorite_menu;
 use Illuminate\Http\Request;
 use App\Repository\MenuRepo;
 use App\Models\Menu;
 use App\Models\menuProperties;
 use App\Services\MenuService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Contracts\Service\Attribute\Required;
@@ -51,7 +53,7 @@ class MenuController extends Controller
             'image' => 'nullable|mimes:jpg,jpeg,bmp,png|max:2048',
             'name' => 'required|string|regex:/^[a-zA-Z\s]+$/|min:1|max:40',
             'stock' => 'required|integer|min:0|max:100',
-            'menu_description' => 'required|string|regex:/^[a-zA-Z\s]+$/|min:1|max:255',
+            'menu_description' => 'required|string|min:1|max:255',
             'is_active' => 'required|int|min:0|max:1',
             'price' => 'numeric|min:20000|max:200000',
         ]);
@@ -168,5 +170,49 @@ class MenuController extends Controller
                 'menus' => $menus,
             ]);
         }
+    }
+
+    public function addToFav(Request $request)
+    {
+        // Mendapatkan data customer yang sedang login
+        $customer = Auth::user();
+
+        $customer = Auth::user();
+
+        if (!$customer) {
+            return response()->json([
+                'message' => 'Login First!',
+            ], 400);
+        }
+
+
+        // Validasi input untuk memastikan menu_ID diberikan
+        $request->validate([
+            'menu_ID' => 'required|exists:menu_items,menu_ID',
+        ]);
+
+        // Mendapatkan ID menu dari request
+        $menuID = $request->input('menu_ID');
+
+        // Memastikan menu belum ada di daftar favorit
+        $existingFavorite = favorite_menu::where('customer_ID', $customer->customer_ID)
+            ->where('menu_ID', $menuID)
+            ->first();
+
+        if ($existingFavorite) {
+            return response()->json([
+                'message' => 'Already Added to Favorite',
+            ], 400);
+        }
+
+        // Menambahkan menu ke daftar favorit
+        favorite_menu::create([
+            'customer_ID' => $customer->customer_ID,
+            'menu_ID' => $menuID,
+        ]);
+
+        return response()->json([
+            'message' => 'Menu Added To Favorite',
+        ], 200);
     }
 }

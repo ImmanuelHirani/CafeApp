@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
@@ -99,10 +100,10 @@
                                                             <div class="flex items-center md:gap-2 gap-1.5 wrap">
                                                                 <a href="{{ Route('frontend.menu.details', $menu->menu_ID ?? '') }}"
                                                                     class="px-6 py-1 text-lg rounded-lg md:px-8 md:py-1.5 bg-secondary-color">Details</a>
-                                                                <a
-                                                                    class="px-2 h-[2.5rem] flex items-center text-base rounded-lg cursor-pointer md:px-3 outline outline-2 outline-secondary-color transition-all ease-in-out duration-500 hover:bg-secondary-color">
+                                                                <button data-menu-id="{{ $menu->menu_ID }}"
+                                                                    class="px-2 md:h-[2.5rem] h-[2.2rem] flex items-center text-base rounded-lg cursor-pointer md:px-3 outline outline-2 outline-secondary-color transition-all ease-in-out duration-500 hover:bg-secondary-color">
                                                                     <i class="text-2xl ti ti-heart-filled"></i>
-                                                                </a>
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -157,10 +158,10 @@
                                                             <div class="flex items-center md:gap-2 gap-1.5 wrap">
                                                                 <a href="{{ Route('frontend.menu.details', $menu->menu_ID ?? '') }}"
                                                                     class="px-6 py-1 text-lg rounded-lg md:px-8 md:py-1.5 bg-secondary-color">Details</a>
-                                                                <a
-                                                                    class="px-2 h-[2.5rem] flex items-center text-base rounded-lg cursor-pointer md:px-3 outline outline-2 outline-secondary-color transition-all ease-in-out duration-500 hover:bg-secondary-color">
+                                                                <button data-menu-id="{{ $menu->menu_ID }}"
+                                                                    class="px-2 md:h-[2.5rem] h-[2.2rem] flex items-center text-base rounded-lg cursor-pointer md:px-3 outline outline-2 outline-secondary-color transition-all ease-in-out duration-500 hover:bg-secondary-color">
                                                                     <i class="text-2xl ti ti-heart-filled"></i>
-                                                                </a>
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -215,10 +216,10 @@
                                                             <div class="flex items-center md:gap-2 gap-1.5 wrap">
                                                                 <a href="{{ Route('frontend.menu.details', $menu->menu_ID ?? '') }}"
                                                                     class="px-6 py-1 text-lg rounded-lg md:px-8 md:py-1.5 bg-secondary-color">Details</a>
-                                                                <a
-                                                                    class="px-2 h-[2.5rem] flex items-center text-base rounded-lg cursor-pointer md:px-3 outline outline-2 outline-secondary-color transition-all ease-in-out duration-500 hover:bg-secondary-color">
+                                                                <button data-menu-id="{{ $menu->menu_ID }}"
+                                                                    class="px-2 md:h-[2.5rem] h-[2.2rem] flex items-center text-base rounded-lg cursor-pointer md:px-3 outline outline-2 outline-secondary-color transition-all ease-in-out duration-500 hover:bg-secondary-color">
                                                                     <i class="text-2xl ti ti-heart-filled"></i>
-                                                                </a>
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -235,7 +236,6 @@
                 <!-- Menu End -->
             </div>
         </section>
-
         <!-- SideBar  -->
         @include('layout.Sidebar')
         <!-- Login & register Box -->
@@ -255,5 +255,46 @@
 <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
 <script src="{{ asset('/js/sidebar.js') }}"></script>
 <script src="{{ asset('/js/boxLogin.js') }}"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Seleksi semua tombol dengan atribut data-menu-id
+        const favoriteButtons = document.querySelectorAll("button[data-menu-id]");
+
+        favoriteButtons.forEach((button) => {
+            button.addEventListener("click", async () => {
+                const menuID = button.getAttribute("data-menu-id");
+                const csrfToken = document.querySelector('meta[name="csrf-token"]')
+                    .getAttribute("content");
+
+                try {
+                    const response = await fetch(`/favorite-menu/add`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-TOKEN": csrfToken,
+                        },
+                        body: JSON.stringify({
+                            menu_ID: menuID
+                        }),
+                    });
+                    const data = await response.json();
+                    if (response.ok) {
+                        // Menampilkan pemberitahuan sukses menggunakan Notyf
+                        notyf.success(data.message || "Perubahan favorit berhasil!");
+                    } else {
+                        // Menampilkan pemberitahuan error menggunakan Notyf
+                        notyf.error(data.message ||
+                            "Terjadi kesalahan, silakan coba lagi.");
+                    }
+                } catch (error) {
+                    console.error("Error:", error);
+                    // Menampilkan pemberitahuan error jika terjadi kesalahan jaringan
+                    notyf.error(
+                        "Gagal memproses favorit. Periksa koneksi Anda dan coba lagi.");
+                }
+            });
+        });
+    });
+</script>
 
 </html>

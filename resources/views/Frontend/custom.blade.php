@@ -23,10 +23,7 @@
             class="container flex flex-col-reverse grid-cols-12 mt-12 lg:grid font-aesthetnova md:mt-20 gap-x-12 lg:gap-y-0 gap-y-8">
             <div class="relative flex flex-col col-span-7 gap-4 wrap">
                 <div class="space-y-2 detail-order">
-                    <h5>Custom Pizza - (XL)</h5>
-                    <p class="text-lg text-highlight-content">
-                        Mozzarela Chees , Nuttela Chocolate , Peanut Butter , Bluberry Jam
-                    </p>
+                    <h6 class="font-semibold uppercase text-highlight-content">Customize your own pizza </h6>
                 </div>
                 <hr />
                 <div class="flex flex-col overflow-hidden accordion-wrapper">
@@ -100,7 +97,7 @@
             <div
                 class="container fixed z-50 w-full text-white translate-x-1/2 right-1/2 bottom-4 add-to-cart-custom-order">
                 <form action="{{ route('store.custom.order') }}" method="POST"
-                    class="flex flex-col items-center justify-between w-full p-6 rounded-lg lg:gap-y-0 gap-y-4 lg:flex-row wrap outline outline-1 outline-highlight-content bg-secondary-accent-color">
+                    class="flex flex-col items-center justify-between w-full p-4 rounded-lg md:p-6 lg:gap-y-0 gap-y-4 lg:flex-row wrap outline outline-1 outline-highlight-content bg-secondary-accent-color">
                     @csrf
                     <!-- Informasi Pesanan -->
                     <div class="lg:w-[60%] w-full space-y-1 wrap">
@@ -115,7 +112,8 @@
                     <div
                         class="flex flex-col items-center justify-between lg:w-[20%] w-full gap-3 rounded-lg add-to-cart">
                         <div class="flex items-center justify-between w-full gap-3 wrap">
-                            <p class="text-base font-semibold text-highlight-content">! Max buy For Custom Order only 1
+                            <p class="text-sm font-medium md:text-base text-highlight-content">! Max buy For Custom
+                                Order only 1
                                 each transaction</p>
                         </div>
                         <!-- Tombol Add to Cart -->

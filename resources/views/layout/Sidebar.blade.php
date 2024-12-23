@@ -80,16 +80,16 @@
                                         <div class="wrap w-[30rem]">
                                             <img src="{{ asset('storage/' . $item->menu->image) }}"
                                                 alt="{{ $item->menu->name }}"
-                                                class="object-cover w-full rounded h-44 md:w-full md:h-[13rem]" />
+                                                class="object-cover w-full rounded-lg h-44 md:w-full md:h-[13rem]" />
                                         </div>
-                                        <div class="flex flex-col w-full gap-2 md:gap-3 text-wrap">
+                                        <div class="flex-col hidden w-full gap-2 md:flex md:gap-3 text-wrap">
                                             <p class="text-xl font-semibold md:text-xl line-clamp-1">
                                                 {{ $item->menu_name }}
                                             </p>
                                             <p class="text-xl uppercase md:text-lg text-highlight-content">
                                                 Size : {{ $item->size }}
                                             </p>
-                                            <div class="items-center hidden gap-3 md:flex wrap">
+                                            <div class="flex items-center gap-3 wrap ">
                                                 <form action="{{ route('cart.update', $item->order_ID) }}"
                                                     method="POST">
                                                     @csrf
@@ -132,6 +132,61 @@
                                                 </p>
                                             </div>
                                         </div>
+                                        <div class="w-full space-y-2 md:hidden wrap-mobile">
+                                            <p class="text-xl font-medium line-clamp-1">
+                                                {{ $item->menu_name }}
+                                            </p>
+                                            <div class="flex items-center wrap ">
+                                                <div class="flex-col w-full gap-2 md:hidden md:gap-3 text-wrap">
+                                                    <p class="text-xl uppercase md:text-lg text-highlight-content">
+                                                        Size : {{ $item->size }}
+                                                    </p>
+                                                    <div class="flex items-center justify-between wrap">
+                                                        <p class="text-xl md:text-lg"
+                                                            id="subtotal-mobile{{ $item->order_detail_ID }}">
+                                                            Rp {{ number_format($item->subtotal, 0, ',', '.') }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-center gap-2 wrap">
+                                                    <form action="{{ route('cart.update', $item->order_ID) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <div
+                                                            class="flex items-center justify-center gap-8 px-2 py-1.5 rounded-full w-fit outline outline-1 outline-white">
+                                                            <button type="button" class="decrease-btn"
+                                                                data-id="{{ $item->order_detail_ID }}">
+                                                                <i class="ti ti-minus"></i>
+                                                            </button>
+                                                            <span class="text-base md:text-lg text-accent-color"
+                                                                id="quantity-mobile{{ $item->order_detail_ID }}">
+                                                                {{ $item->quantity }}
+                                                            </span>
+                                                            <button type="button" class="increase-btn"
+                                                                data-id="{{ $item->order_detail_ID }}">
+                                                                <i class="ti ti-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                    <form action="{{ route('delete.cart', $item->order_ID) }}"
+                                                        method="POST" class="delete-form">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button type="button"
+                                                            class="flex items-center justify-center p-1.5 rounded-full bg-secondary-color delete-cart-item"
+                                                            data-id="{{ $item->order_detail_ID }}">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"
+                                                                fill="none" viewBox="0 0 26 24"
+                                                                stroke="currentColor">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                                            </svg>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             @endif
@@ -142,7 +197,7 @@
                                         class="flex flex-col items-center p-0.5 md:flex-row gap-x-6 md:gap-y-0 gap-y-3">
                                         <div class="wrap w-[30rem]">
                                             <img src="{{ asset('/asset/CustomOrder.png') }}"
-                                                class="object-cover w-full rounded h-44 md:w-full md:h-[13rem]"
+                                                class="object-cover w-full rounded-lg h-44 md:w-full md:h-[13rem]"
                                                 alt="" />
                                         </div>
                                         <div class="flex items-center justify-between w-full gap-2 md:gap-3 text-wrap">
@@ -253,7 +308,6 @@
 </script>
 <script>
     $(document).ready(function() {
-
         // Fungsi untuk memperbarui kuantitas dan subtotal
         function updateQuantity(itemId, newQuantity) {
             $.ajax({
@@ -267,11 +321,16 @@
                     if (response.success) {
                         // Update tampilan kuantitas
                         $('#quantity-' + itemId).text(response.quantity);
+                        $('#quantity-mobile' + itemId).text(response
+                            .quantity); // Tambahan untuk kuantitas mobile
 
                         // Update subtotal
                         $('#subtotal-' + itemId).text('Rp ' + response.subtotal.toLocaleString(
                             'id-ID'));
-
+                        // Update subtotal
+                        $('#subtotal-mobile' + itemId).text('Rp ' + response.subtotal
+                            .toLocaleString(
+                                'id-ID'));
                         // Tampilkan notifikasi sukses
                         notyf.success(response.message);
                     } else {
@@ -281,6 +340,8 @@
                         // Jika ada currentQuantity dalam response, kembalikan ke kuantitas semula
                         if (response.currentQuantity !== undefined) {
                             $('#quantity-' + itemId).text(response.currentQuantity);
+                            $('#quantity-mobile' + itemId).text(response
+                                .currentQuantity); // Tambahan untuk kuantitas mobile
                         }
                     }
                 },
