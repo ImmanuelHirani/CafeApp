@@ -16,10 +16,13 @@ class CustomerOrderController extends Controller
         $menus = Menu::with('properties')->get();
         $sizes = Custom_categories_size_properties::all(); // Size dengan harga dan jumlah topping yang diperbolehkan
 
+
+
         return view('Frontend.custom', [
             'categories' => $categories,
             'menus' => $menus,
             'sizes' => $sizes,
+
         ]);
     }
 

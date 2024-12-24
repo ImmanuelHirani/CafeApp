@@ -11,64 +11,45 @@
         <!-- Product Image -->
         <img src="{{ asset('storage/' . $menuDetails->image) }}" alt="{{ $menuDetails->name }}"
             class="md:w-[50%] w-full md:h-[18rem] h-[10rem]  object-cover rounded-lg" />
-        <!-- Star Rating SVG Icons -->
-        <div class="flex items-center gap-1.5 star">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 md:w-7" viewBox="0 0 21 20" fill="none">
-                <path
-                    d="M8.8229 0.993308C9.63036 -0.0251352 11.1762 -0.0251331 11.9836 0.99331L14.4502 4.10433C14.6789 4.39282 14.9822 4.61319 15.3272 4.74157L19.0482 6.12602C20.2663 6.57924 20.744 8.04941 20.0249 9.13206L17.8284 12.4392C17.6247 12.7459 17.5088 13.1025 17.4934 13.4703L17.3265 17.437C17.2719 18.7355 16.0213 19.6441 14.7694 19.2948L10.9453 18.2277C10.5907 18.1288 10.2158 18.1288 9.8612 18.2277L6.03712 19.2948C4.78525 19.6441 3.53466 18.7355 3.48004 17.437L3.31318 13.4703C3.29771 13.1025 3.18185 12.7459 2.97817 12.4392L0.781612 9.13206C0.0625328 8.04941 0.540215 6.57924 1.75833 6.12602L5.47929 4.74157C5.82433 4.61319 6.12765 4.39282 6.35637 4.10433L8.8229 0.993308Z"
-                    class="fill-highlight-content" />
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 md:w-7" viewBox="0 0 21 20" fill="none">
-                <path
-                    d="M8.8229 0.993308C9.63036 -0.0251352 11.1762 -0.0251331 11.9836 0.99331L14.4502 4.10433C14.6789 4.39282 14.9822 4.61319 15.3272 4.74157L19.0482 6.12602C20.2663 6.57924 20.744 8.04941 20.0249 9.13206L17.8284 12.4392C17.6247 12.7459 17.5088 13.1025 17.4934 13.4703L17.3265 17.437C17.2719 18.7355 16.0213 19.6441 14.7694 19.2948L10.9453 18.2277C10.5907 18.1288 10.2158 18.1288 9.8612 18.2277L6.03712 19.2948C4.78525 19.6441 3.53466 18.7355 3.48004 17.437L3.31318 13.4703C3.29771 13.1025 3.18185 12.7459 2.97817 12.4392L0.781612 9.13206C0.0625328 8.04941 0.540215 6.57924 1.75833 6.12602L5.47929 4.74157C5.82433 4.61319 6.12765 4.39282 6.35637 4.10433L8.8229 0.993308Z"
-                    class="fill-highlight-content" />
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 md:w-7" viewBox="0 0 21 20" fill="none">
-                <path
-                    d="M8.8229 0.993308C9.63036 -0.0251352 11.1762 -0.0251331 11.9836 0.99331L14.4502 4.10433C14.6789 4.39282 14.9822 4.61319 15.3272 4.74157L19.0482 6.12602C20.2663 6.57924 20.744 8.04941 20.0249 9.13206L17.8284 12.4392C17.6247 12.7459 17.5088 13.1025 17.4934 13.4703L17.3265 17.437C17.2719 18.7355 16.0213 19.6441 14.7694 19.2948L10.9453 18.2277C10.5907 18.1288 10.2158 18.1288 9.8612 18.2277L6.03712 19.2948C4.78525 19.6441 3.53466 18.7355 3.48004 17.437L3.31318 13.4703C3.29771 13.1025 3.18185 12.7459 2.97817 12.4392L0.781612 9.13206C0.0625328 8.04941 0.540215 6.57924 1.75833 6.12602L5.47929 4.74157C5.82433 4.61319 6.12765 4.39282 6.35637 4.10433L8.8229 0.993308Z"
-                    class="fill-highlight-content" />
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 md:w-7" viewBox="0 0 21 20" fill="none">
-                <path
-                    d="M8.8229 0.993308C9.63036 -0.0251352 11.1762 -0.0251331 11.9836 0.99331L14.4502 4.10433C14.6789 4.39282 14.9822 4.61319 15.3272 4.74157L19.0482 6.12602C20.2663 6.57924 20.744 8.04941 20.0249 9.13206L17.8284 12.4392C17.6247 12.7459 17.5088 13.1025 17.4934 13.4703L17.3265 17.437C17.2719 18.7355 16.0213 19.6441 14.7694 19.2948L10.9453 18.2277C10.5907 18.1288 10.2158 18.1288 9.8612 18.2277L6.03712 19.2948C4.78525 19.6441 3.53466 18.7355 3.48004 17.437L3.31318 13.4703C3.29771 13.1025 3.18185 12.7459 2.97817 12.4392L0.781612 9.13206C0.0625328 8.04941 0.540215 6.57924 1.75833 6.12602L5.47929 4.74157C5.82433 4.61319 6.12765 4.39282 6.35637 4.10433L8.8229 0.993308Z"
-                    fill="white" />
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 md:w-7" viewBox="0 0 21 20" fill="none">
-                <path
-                    d="M8.8229 0.993308C9.63036 -0.0251352 11.1762 -0.0251331 11.9836 0.99331L14.4502 4.10433C14.6789 4.39282 14.9822 4.61319 15.3272 4.74157L19.0482 6.12602C20.2663 6.57924 20.744 8.04941 20.0249 9.13206L17.8284 12.4392C17.6247 12.7459 17.5088 13.1025 17.4934 13.4703L17.3265 17.437C17.2719 18.7355 16.0213 19.6441 14.7694 19.2948L10.9453 18.2277C10.5907 18.1288 10.2158 18.1288 9.8612 18.2277L6.03712 19.2948C4.78525 19.6441 3.53466 18.7355 3.48004 17.437L3.31318 13.4703C3.29771 13.1025 3.18185 12.7459 2.97817 12.4392L0.781612 9.13206C0.0625328 8.04941 0.540215 6.57924 1.75833 6.12602L5.47929 4.74157C5.82433 4.61319 6.12765 4.39282 6.35637 4.10433L8.8229 0.993308Z"
-                    fill="white" />
-            </svg>
-        </div>
-        <!-- Feedback Form -->
-        <div class="flex flex-col w-full gap-3">
-            <p class="text-lg text-center md:text-start md:text-xl">
-                Tell us your feedback about this product
-            </p>
-            <form class="grid grid-cols-4 gap-3.5 items-end">
-                <!-- Feedback Textarea -->
-                <textarea required name="feedback" class="w-full col-span-4 px-4 py-2 rounded-lg outline-none" rows="2"
-                    placeholder="Max Character Limit - (100 Words)"></textarea>
-                <!-- Name Input -->
-                <input required type="text" name="name"
-                    class="w-full h-10 col-span-4 px-4 rounded-lg outline-none md:col-span-2 md:h-14"
-                    placeholder="Your Name" />
-                <!-- Email Input -->
-                <input required type="email" name="email"
-                    class="w-full h-10 col-span-4 px-4 rounded-lg outline-none md:col-span-2 md:h-14"
-                    placeholder="Your Email" />
-                <!-- Submit and Cancel Buttons -->
-                <div class="flex justify-end col-span-4 gap-3.5">
-                    <button type="submit"
-                        class="w-full px-6 py-1.5 rounded-lg md:py-3 md:w-fit md:px-16 bg-secondary-color">
-                        Submit
-                    </button>
-                    <button type="button"
-                        class="w-full px-6 py-1.5 border border-white rounded-lg md:py-3 md:w-fit md:px-16">
-                        Cancel
-                    </button>
+        <form action="{{ route('menu.reviews.store') }}" method="POST" class="flex flex-col items-center w-full gap-3">
+            @csrf
+            <!-- Star Rating SVG Icons -->
+            <div class="flex items-center gap-1.5 star">
+                @for ($i = 1; $i <= 5; $i++)
+                    <i class="text-3xl text-white transition-all duration-500 ease-in-out cursor-pointer ti ti-carambola-filled hover:text-highlight-content"
+                        data-value="{{ $i }}"></i>
+                @endfor
+            </div>
+            <input type="hidden" name="rating" id="rating" value="0">
+            <input type="hidden" name="menu_ID" value="{{ $menuDetails->menu_ID }}">
+            @auth
+                <input type="hidden" name="customer_ID" value="{{ Auth::user()->customer_ID }}">
+            @endauth
+            <!-- Feedback Form -->
+            <div class="flex flex-col w-full gap-3">
+                <p class="text-lg text-center md:text-start md:text-xl">
+                    Tell us your feedback about this product
+                </p>
+                <div class="grid grid-cols-4 gap-3.5 items-end">
+                    <!-- Feedback Textarea -->
+                    <textarea required name="review_desc" class="w-full col-span-4 px-4 py-2 rounded-lg outline-none" rows="4"
+                        placeholder="Max Character Limit - (100 Words)"></textarea>
+                    <!-- Submit and Cancel Buttons -->
+                    <div class="flex justify-end col-span-4 gap-3.5">
+                        <button type="submit"
+                            class="w-full px-6 py-1.5 rounded-lg md:py-3 md:w-fit md:px-16 bg-secondary-color">
+                            Submit
+                        </button>
+                        <button type="button"
+                            class="w-full px-6 py-1.5 border border-white rounded-lg md:py-3 md:w-fit md:px-16">
+                            Cancel
+                        </button>
+                    </div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
+
+
         <!-- Close Button (X Icon) -->
         <svg id="closeReviwe" xmlns="http://www.w3.org/2000/svg" class="absolute cursor-pointer top-6 right-6"
             width="20" height="20" viewBox="0 0 12 12" fill="none">
@@ -78,3 +59,29 @@
         </svg>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const stars = document.querySelectorAll(".star i");
+        const ratingInput = document.querySelector("input[name='rating']");
+
+        stars.forEach((star) => {
+            star.addEventListener("click", () => {
+                const selectedRating = star.getAttribute("data-value");
+
+                // Update the hidden rating input
+                ratingInput.value = selectedRating;
+
+                // Update the visual state of the stars
+                stars.forEach((s, i) => {
+                    if (i < selectedRating) {
+                        s.classList.add("text-highlight-content");
+                        s.classList.remove("text-white");
+                    } else {
+                        s.classList.add("text-white");
+                        s.classList.remove("text-highlight-content");
+                    }
+                });
+            });
+        });
+    });
+</script>

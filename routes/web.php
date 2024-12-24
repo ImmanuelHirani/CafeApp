@@ -24,6 +24,7 @@ Route::get('/menu/detail/{id}/{size?}', [MenuController::class, 'getMenuDetails'
 Route::post('/favorite-menu/add', [MenuController::class, 'addToFav'])->name('favorite.menu.addremove');
 Route::delete('/favorite-menu/remove/{menuID}', [profileController::class, 'removeToFav']);
 Route::delete('/favorite-menu/clear-all', [profileController::class, 'clearAllFavorites']);
+Route::post('/menu-reviews', [MenuController::class, 'storeReview'])->name('menu.reviews.store');
 
 
 

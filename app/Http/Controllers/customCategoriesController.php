@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Custom_categories_pizza;
 use App\Models\Custom_categories_properties;
 use App\Models\Custom_categories_size_properties;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class CustomCategoriesController extends Controller
@@ -44,7 +45,6 @@ class CustomCategoriesController extends Controller
             'sizes' => $sizes,
         ]);
     }
-
 
     public function store(Request $request)
     {

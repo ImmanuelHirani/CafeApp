@@ -165,12 +165,12 @@
                                                 </form>
                                             </div>
                                         </div>
-                                        <div class="check-status md:w-[40%] w-full text-end">
+                                        <div class="check-status flex  h-fit justify-end md:w-[40%] w-full text-end">
                                             @if ($location->is_primary == 1)
                                                 <i
                                                     class="hidden text-2xl md:block text-secondary-color ti ti-check text-end"></i>
                                                 <button
-                                                    class="w-full px-8 py-2 text-white rounded-lg md:hidden bg-secondary-accent-color">Location
+                                                    class="w-full px-8 py-2 text-white rounded-lg text-end md:w-fit md:hidden bg-secondary-accent-color">Location
                                                     Choose</button>
                                             @else
                                                 <form
@@ -179,7 +179,7 @@
                                                     @csrf
                                                     @method('put')
                                                     <button
-                                                        class="hidden w-full px-8 py-2 text-white bg-green-600 rounded-lg md:block">Choose</button>
+                                                        class="hidden w-full px-8 py-2 text-white bg-green-600 rounded-lg md:w-fit md:block">Choose</button>
                                                     <button
                                                         class="w-full px-8 py-2 text-white rounded-lg bg-primary-color md:hidden">Choose
                                                         Location</button>

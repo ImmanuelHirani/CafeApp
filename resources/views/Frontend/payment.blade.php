@@ -121,20 +121,18 @@
                             </div>
                             <div
                                 class="flex flex-col items-center justify-between w-full gap-4 px-4 py-4 md:gap-0 md:flex-row md:px-8 footer">
-                                <p class="text-sm text-highlight-content">
+                                <p class="text-sm  text-highlight-content">
                                     Order That Been Pay Cannot Be Cancle *
                                 </p>
-                                <form class="w-full" action="{{ route('order.pay', $orderTransaction->order_ID) }}"
-                                    method="POST">
+                                <form class="w-full md:w-fit"
+                                    action="{{ route('order.pay', $orderTransaction->order_ID) }}" method="POST">
                                     @csrf
                                     @method('PUT')
                                     <button type="submit"
-                                        class="self-end w-full gap-3 px-2 py-2.5 text-base text-center transition-all duration-300 ease-in-out rounded-lg  2xl:px-12 bg-secondary-color">
+                                        class="self-end  w-full gap-3 px-2 py-2.5 text-base text-center transition-all duration-300 ease-in-out rounded-lg  2xl:px-12 bg-secondary-color">
                                         Pay Now
                                     </button>
                                 </form>
-
-
                             </div>
                         </div>
                     </div>

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Repository\MenuRepo;
 use App\Models\Menu;
 use App\Models\menuProperties;
+use App\Models\MenuReview;
 use App\Services\MenuService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -102,46 +103,38 @@ class MenuController extends Controller
     public function getMenuDetails($id, $size = null)
     {
         try {
-            // Menemukan menu berdasarkan ID dengan relasi menu_properties
-            $menuDetails = Menu::with('properties')->where('menu_ID', $id)->first();
+            // Menemukan menu berdasarkan ID dengan relasi menu_properties dan reviews beserta customer-nya
+            $menuDetails = Menu::with(['properties', 'reviews.customer'])->where('menu_ID', $id)->first();
 
-            // Mengecek apakah menu ditemukan
             if (!$menuDetails) {
                 return redirect()->route('menu.index')->withErrors(['error' => 'Menu not found']);
             }
 
-            // Jika size diberikan, kita cari property berdasarkan size yang dipilih
-            if ($size) {
-                // Mencari property berdasarkan size yang dipilih
-                $selectedProperty = $menuDetails->properties->firstWhere('size', $size);
-            } else {
-                // Jika size tidak diberikan, pilih property pertama (default)
-                $selectedProperty = $menuDetails->properties->first();
-            }
+            // Jika size diberikan, cari property berdasarkan size
+            $selectedProperty = $size ? $menuDetails->properties->firstWhere('size', $size) : $menuDetails->properties->first();
+            $selectedPrice = $selectedProperty ? $selectedProperty->price : null;
 
-            // Mengecek apakah properti dengan ukuran yang dipilih ada
-            if ($selectedProperty) {
-                $selectedPrice = $selectedProperty->price;
-            } else {
-                $selectedPrice = null; // Jika tidak ada harga untuk ukuran yang dipilih
-            }
+            // Ambil data review terkait menu
+            $menuReviews = $menuDetails->reviews; // Pastikan ini mengambil semua review terkait menu
+
+            // Menghitung rata-rata rating
+            $averageRating = $menuReviews->avg('rating');
+            $averageRating = round($averageRating, 1); // Pembulatan ke 1 desimal
 
             // Mendapatkan semua menu untuk digunakan dalam view
             $menus = Menu::all();
 
-            // Mengecek apakah request ini untuk halaman admin atau frontend
+            // Tentukan tampilan berdasarkan rute (admin atau frontend)
             if (request()->is('admin/*')) {
-                // Jika rute dimulai dengan 'admin/', tampilkan tampilan admin
-                return view('Backend.Admin-Product', compact('menuDetails', 'menus', 'selectedProperty', 'selectedPrice'));
+                return view('Backend.Admin-Product', compact('menuDetails', 'menus', 'selectedProperty', 'selectedPrice', 'menuReviews', 'averageRating'));
             } else {
-                // Jika bukan admin, tampilkan tampilan frontend
-                return view('Frontend.menu-detail', compact('menuDetails', 'menus', 'selectedProperty', 'selectedPrice'));
+                return view('Frontend.menu-detail', compact('menuDetails', 'menus', 'selectedProperty', 'selectedPrice', 'menuReviews', 'averageRating'));
             }
         } catch (\Exception $e) {
-            // Menangani error dan mengarahkan kembali dengan pesan kesalahan
             return redirect()->back()->withErrors(['error' => 'Failed to get details: ' . $e->getMessage()]);
         }
     }
+
 
     public function deleteMenu($id)
     {
@@ -214,5 +207,42 @@ class MenuController extends Controller
         return response()->json([
             'message' => 'Menu Added To Favorite',
         ], 200);
+    }
+
+    public function storeReview(Request $request)
+    {
+        // Mendapatkan user yang login
+        $customer = Auth::user();
+
+        if (!$customer) {
+            return redirect()->back()->with('error', 'login First!');
+        }
+
+        // Validasi data yang diterima dari request
+        $request->validate([
+            'rating' => 'required|integer|min:1|max:5',
+            'review_desc' => 'required|string|max:100',
+            'menu_ID' => 'required|exists:menu_items,menu_ID',
+            'customer_ID' => 'required|exists:customers,customer_ID',
+        ]);
+
+        // Cek apakah customer sudah memberikan review untuk menu ini
+        $existingReview = MenuReview::where('menu_ID', $request->menu_ID)
+            ->where('customer_ID', $request->customer_ID)
+            ->first();
+
+        if ($existingReview) {
+            return redirect()->back()->with('error', 'You have already reviewed this menu!');
+        }
+
+        // Menyimpan review baru
+        MenuReview::create([
+            'customer_ID' => $request->customer_ID,
+            'menu_ID' => $request->menu_ID,
+            'rating' => $request->rating,
+            'review_desc' => $request->review_desc,
+        ]);
+
+        return redirect()->back()->with('success', 'Review submitted successfully!');
     }
 }

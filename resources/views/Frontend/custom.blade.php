@@ -47,7 +47,7 @@
                                 <!-- Iterasi pada sizeProperties per kategori -->
                                 <button data-id="{{ $size->size_ID }}" data-price="{{ $size->price }}"
                                     data-max-toppings="{{ $size->allowed_flavor }}"
-                                    class="w-[20%] p-3 size-button  rounded-full outline outline-2 outline-white ">
+                                    class="w-[20%] p-3 hover:bg-secondary-color transition-all ease-in-out duration-300 size-button  rounded-full outline outline-2 outline-white ">
                                     {{ $size->size }}
                                     <!-- Ganti 'size' dengan field yang sesuai dari model SizeProperty -->
                                 </button>
@@ -63,7 +63,7 @@
                     </div>
                 </div>
                 @foreach ($categories as $category)
-                    <div class="flex flex-col overflow-hidden accordion-wrapper">
+                    <div class="flex flex-col px-1 overflow-hidden accordion-wrapper">
                         <div class="accordion-head">
                             <div
                                 class="flex items-center justify-between pb-3 cursor-pointer lg:pb-6 head-wrapper-accordion">
@@ -83,7 +83,7 @@
                                 @foreach ($category->properties as $property)
                                     <button data-price="{{ $property->price }}"
                                         data-name="{{ $property->properties_name }}"
-                                        class="px-8 py-3 text-sm rounded-full topping-button w-fit outline outline-2 outline-white 3xl:text-xl lg:text-xl">
+                                        class="px-8 py-3 text-sm transition-all duration-300 ease-in-out rounded-full hover:bg-secondary-color topping-button w-fit outline outline-2 outline-white 3xl:text-xl lg:text-xl">
                                         {{ $property->properties_name }}
                                     </button>
                                 @endforeach
@@ -173,10 +173,12 @@
         const totalPriceOutput = document.querySelector('#total-price');
         const hiddenToppingsInput = document.getElementById('toppings-input');
         const hiddenTotalPriceInput = document.getElementById('total-price-input');
-        const hiddenSizeInput = document.getElementById(
-            'size-input'); // Elemen input tersembunyi untuk size_name
+        const hiddenSizeInput = document.getElementById('size-input');
 
-        // Fungsi untuk menghitung total harga menggunakan AJAX
+        const sizeButtons = document.querySelectorAll('.size-button');
+        const toppingButtons = document.querySelectorAll('.topping-button');
+
+        // Fungsi untuk menghitung total harga
         function calculateTotal() {
             if (!selectedSize) {
                 notyf.error("Please select a size first.");
@@ -205,8 +207,8 @@
                     },
                     body: JSON.stringify({
                         size_id: selectedSize.id,
-                        size_name: selectedSize.name, // Pastikan ini terisi dengan benar
-                        toppings: toppingsData, // Kirim topping yang dipilih, atau array kosong
+                        size_name: selectedSize.name,
+                        toppings: toppingsData,
                         total_price: totalPrice,
                     }),
                 })
@@ -231,34 +233,46 @@
         function updateHiddenInputs() {
             hiddenToppingsInput.value = selectedToppings.join(', ');
             hiddenTotalPriceInput.value = totalPrice;
-            hiddenSizeInput.value = selectedSize.name; // Menyimpan nama size pada input tersembunyi
+            hiddenSizeInput.value = selectedSize.name;
         }
 
         // Event Listener untuk tombol Size
-        document.querySelectorAll('.size-button').forEach(button => {
+        sizeButtons.forEach(button => {
             button.addEventListener('click', function() {
+                // Hapus kelas "bg-red-500" dan "outline-none" dari semua tombol ukuran
+                sizeButtons.forEach(btn => btn.classList.remove('bg-red-500', 'text-white',
+                    '!outline-none'));
+
+                // Tambahkan kelas ke tombol yang dipilih
+                this.classList.add('bg-red-500', 'text-white', '!outline-none');
+
                 const sizePrice = parseFloat(this.getAttribute('data-price'));
                 const maxToppings = parseInt(this.getAttribute('data-max-toppings'));
                 const sizeId = this.getAttribute('data-id');
 
                 selectedSize = {
                     id: sizeId,
-                    name: this.innerText.trim(), // Pastikan nama size terisi
+                    name: this.innerText.trim(),
                     price: sizePrice,
                     maxToppings: maxToppings,
                 };
 
                 sizeOutput.innerHTML = `Custom Pizza - (${selectedSize.name})`;
+
+                // Reset topping saat ukuran berubah
                 selectedToppings = [];
-                totalPrice = selectedSize.price;
+                toppingButtons.forEach(btn => btn.classList.remove('bg-red-500', 'text-white',
+                    '!outline-none'));
+
                 toppingsOutput.innerHTML = 'No Toppings Selected';
+                totalPrice = selectedSize.price;
                 totalPriceOutput.innerHTML = `Rp.${totalPrice.toLocaleString('id-ID')}`;
-                updateHiddenInputs(); // Memperbarui input tersembunyi dengan nama size
+                updateHiddenInputs();
             });
         });
 
         // Event Listener untuk tombol Topping
-        document.querySelectorAll('.topping-button').forEach(button => {
+        toppingButtons.forEach(button => {
             button.addEventListener('click', function() {
                 if (!selectedSize) {
                     notyf.error("Please select a size first.");
@@ -270,6 +284,7 @@
 
                 if (selectedToppings.includes(toppingName)) {
                     selectedToppings = selectedToppings.filter(item => item !== toppingName);
+                    this.classList.remove('bg-red-500', 'text-white', '!outline-none');
                 } else {
                     if (selectedToppings.length >= selectedSize.maxToppings) {
                         notyf.open({
@@ -279,12 +294,11 @@
                         return;
                     }
                     selectedToppings.push(toppingName);
+                    this.classList.add('bg-red-500', 'text-white', '!outline-none');
                 }
 
-                toppingsOutput.innerHTML = selectedToppings.length > 0 ?
-                    selectedToppings.join(', ') :
-                    'No Toppings Selected';
-
+                toppingsOutput.innerHTML = selectedToppings.length > 0 ? selectedToppings.join(
+                    ', ') : 'No Toppings Selected';
                 calculateTotal();
             });
         });
@@ -293,39 +307,11 @@
         sizeOutput.innerHTML = 'Custom Pizza - (No Size)';
         toppingsOutput.innerHTML = 'No Toppings Selected';
         totalPriceOutput.innerHTML = 'Rp.0';
-        updateHiddenInputs(); // Pastikan input tersembunyi disetel saat pertama kali dimuat
+        updateHiddenInputs();
     });
 </script>
-<script>
-    // Ambil semua tombol dengan kelas "size-button"
-    const sizeButtons = document.querySelectorAll('.size-button');
 
-    // Tambahkan event listener ke setiap tombol
-    sizeButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            // Hapus warna merah dari semua tombol
-            sizeButtons.forEach(btn => btn.classList.remove('bg-red-500', 'text-white',
-                'outline-0'));
 
-            // Tambahkan warna merah ke tombol yang dipilih
-            button.classList.add('bg-red-500', 'text-white', 'outline-0');
-        });
-    });
 
-    // Ambil semua tombol dengan kelas "topping-button"
-    const toppingButtons = document.querySelectorAll('.topping-button');
-
-    // Tambahkan event listener ke setiap tombol
-    toppingButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            // Hapus warna merah dari semua tombol
-            toppingButtons.forEach(btn => btn.classList.remove('bg-red-500', 'text-white',
-                'outline-0'));
-
-            // Tambahkan warna merah ke tombol yang dipilih
-            button.classList.add('bg-red-500', 'text-white', 'outline-0');
-        });
-    });
-</script>
 
 </html>

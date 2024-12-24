@@ -13,9 +13,8 @@
             class="flex flex-col gap-3 px-3 py-3 rounded-b-lg content-body bg-secondary-accent-color">
             @csrf
             <!-- Informasi Menu -->
-            <input class="text-lg text-white bg-transparent outline-none" readonly
+            <input class="text-lg text-white bg-transparent outline-none line-clamp-1" readonly
                 value="{{ $menuDetails->name ?? '' }}" disabled>
-
             @if ($selectedProperty)
                 <div class="flex items-center gap-2 wrap">
                     <p class="text-lg">SIZE : </p>
@@ -28,12 +27,13 @@
             <!-- Input Hidden Menu ID -->
             <input type="hidden" name="menu_ID" value="{{ $menuDetails->menu_ID ?? '' }}">
             <!-- Input Hidden Customer ID -->
-            <input type="hidden" name="customer_ID" value="{{ Auth::user()->customer_ID ?? '' }}">
+            @auth
+                <input type="hidden" name="customer_ID" value="{{ Auth::user()->customer_ID }}">
+            @endauth
             <!-- Input Hidden Quantity -->
             <input type="hidden" name="quantity" id="hidden-quantity" value="1">
             <!-- Informasi Harga -->
             <p class="text-highlight-content">Max. Pembelian 2 pcs!</p>
-
             @if ($selectedProperty)
                 <div class="flex items-center justify-between gap-2 wrap">
                     <p>SUBTOTAL</p>
@@ -42,7 +42,6 @@
             @else
                 <p>SIZE: Not selected</p>
             @endif
-
             <!-- Tombol Add Quantity -->
             <div class="flex items-center justify-between gap-1 rounded-lg add-to-cart">
                 <!-- Tombol Decrease -->

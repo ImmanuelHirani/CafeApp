@@ -23,4 +23,9 @@ class Menu extends Model
     {
         return $this->hasMany(menuProperties::class, 'menu_ID', 'menu_ID');
     }
+
+    public function reviews()
+    {
+        return $this->hasMany(MenuReview::class, 'menu_ID');
+    }
 }
