@@ -68,7 +68,7 @@
                                                             data-id="{{ $cart->order_detail_ID }}">
                                                             <i class="ti ti-minus"></i>
                                                         </button>
-                                                        <span id="quantity-{{ $cart->order_detail_ID }}"
+                                                        <span id="quantity-mobile{{ $cart->order_detail_ID }}"
                                                             class="text-base md:text-lg text-accent-color">
                                                             {{ $cart->quantity }}
                                                         </span>
@@ -94,7 +94,7 @@
                                                 </form>
                                             </div>
                                             <p class="inline-block text-base md:hidden"
-                                                id="subtotal-{{ $cart->order_detail_ID }}">
+                                                id="subtotal-mobile{{ $cart->order_detail_ID }}">
                                                 Rp {{ number_format($cart->subtotal, 0, ',', '.') }}
                                             </p>
                                         </div>
@@ -172,7 +172,7 @@
                                                 </form>
                                             </div>
                                             <p class="inline-block text-base md:hidden"
-                                                id="subtotal-{{ $cart->order_detail_ID }}">
+                                                id="subtotal-mobile{{ $cart->order_detail_ID }}">
                                                 Rp {{ number_format($cart->subtotal, 0, ',', '.') }}
                                             </p>
                                         </div>
@@ -356,8 +356,11 @@
                     if (response.success) {
                         // Update quantity display
                         $('#quantity-' + itemId).text(response.quantity);
+                        $('#quantity-mobile' + itemId).text(response.quantity);
 
                         // Update subtotal display
+                        $('#subtotal-mobile' + itemId).text('Rp ' + formatNumber(response
+                            .subtotal));
                         $('#subtotal-' + itemId).text('Rp ' + formatNumber(response.subtotal));
 
                         // Update the total subtotal after quantity change

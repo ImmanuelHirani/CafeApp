@@ -1,5 +1,5 @@
 <div id="reviewBox"
-    class="fixed inset-0 z-50 flex items-center justify-center invisible bg-black opacity-30 bg-opacity-70 box-review-wrapper font-aesthetnova">
+    class="fixed inset-0 z-50 items-center justify-center hidden bg-black opacity-30 bg-opacity-70 box-review-wrapper font-aesthetnova">
     <!-- Review Box Container -->
     <div
         class="review-box relative w-[90%] md:w-[50%] h-fit md:h-fit bg-secondary-accent-color p-4 md:p-8 rounded-lg flex flex-col gap-3 items-center">
@@ -48,8 +48,6 @@
                 </div>
             </div>
         </form>
-
-
         <!-- Close Button (X Icon) -->
         <svg id="closeReviwe" xmlns="http://www.w3.org/2000/svg" class="absolute cursor-pointer top-6 right-6"
             width="20" height="20" viewBox="0 0 12 12" fill="none">
@@ -61,6 +59,22 @@
 </div>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
+        const reviewTrigger = document.getElementById("reviewTrigger"),
+            reviewBox = document.getElementById("reviewBox"),
+            closeReviwe = document.getElementById("closeReviwe");
+
+        // Handling the review box visibility
+        reviewTrigger.addEventListener("click", () => {
+            reviewTrigger.classList.add("trigger-active-review");
+            reviewBox.classList.add("box-active-review");
+        });
+
+        closeReviwe.addEventListener("click", () => {
+            reviewTrigger.classList.remove("trigger-active-review");
+            reviewBox.classList.remove("box-active-review");
+        });
+
+        // Handling the star rating
         const stars = document.querySelectorAll(".star i");
         const ratingInput = document.querySelector("input[name='rating']");
 

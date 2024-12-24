@@ -16,7 +16,7 @@
 <body>
     @include('layout.Navbar')
     <main>
-        <section class="mt-14 md:mt-20 cart">
+        <section class="mt-10 md:mt-20 cart">
             <div class="container">
                 <div class="flex flex-col grid-cols-12 gap-4 md:grid">
                     <div class="col-span-6 transition-all duration-300 ease-in-out box-cart font-aesthetnova">
@@ -121,7 +121,7 @@
                             </div>
                             <div
                                 class="flex flex-col items-center justify-between w-full gap-4 px-4 py-4 md:gap-0 md:flex-row md:px-8 footer">
-                                <p class="text-sm  text-highlight-content">
+                                <p class="text-sm text-highlight-content">
                                     Order That Been Pay Cannot Be Cancle *
                                 </p>
                                 <form class="w-full md:w-fit"

@@ -154,7 +154,7 @@
                                                         @csrf
                                                         @method('PUT')
                                                         <div
-                                                            class="flex items-center justify-center gap-8 px-2 py-1.5 rounded-full w-fit outline outline-1 outline-white">
+                                                            class="flex items-center justify-center gap-8 px-3 py-1.5 rounded-full w-fit outline outline-1 outline-white">
                                                             <button type="button" class="decrease-btn"
                                                                 data-id="{{ $item->order_detail_ID }}">
                                                                 <i class="ti ti-minus"></i>

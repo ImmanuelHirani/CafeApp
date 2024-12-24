@@ -129,7 +129,7 @@
 }
 
 .box-active-review {
-    @apply visible transition-all duration-300 ease-in-out opacity-100;
+    @apply flex transition-all duration-300 ease-in-out opacity-100;
 }
 
 .box-active-location {

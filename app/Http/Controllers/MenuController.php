@@ -135,7 +135,6 @@ class MenuController extends Controller
         }
     }
 
-
     public function deleteMenu($id)
     {
         // Menemukan menu yang ingin dihapus
@@ -215,25 +214,26 @@ class MenuController extends Controller
         $customer = Auth::user();
 
         if (!$customer) {
-            return redirect()->back()->with('error', 'login First!');
+            return redirect()->back()->with('error', 'Login first!');
         }
+
+        // Pesan kesalahan kustom
+        $customMessages = [
+            'rating.required' => 'At least put 1 star to review!',
+            'rating.min' => 'At least put 1 star to review!',
+            'rating.integer' => 'The rating must be a valid number.',
+            'review_desc.required' => 'Please provide a description for your review.',
+            'menu_ID.exists' => 'The selected menu item is invalid.',
+            'customer_ID.exists' => 'The customer ID is invalid.',
+        ];
 
         // Validasi data yang diterima dari request
         $request->validate([
             'rating' => 'required|integer|min:1|max:5',
-            'review_desc' => 'required|string|max:100',
+            'review_desc' => 'required|string|max:500',
             'menu_ID' => 'required|exists:menu_items,menu_ID',
             'customer_ID' => 'required|exists:customers,customer_ID',
-        ]);
-
-        // Cek apakah customer sudah memberikan review untuk menu ini
-        $existingReview = MenuReview::where('menu_ID', $request->menu_ID)
-            ->where('customer_ID', $request->customer_ID)
-            ->first();
-
-        if ($existingReview) {
-            return redirect()->back()->with('error', 'You have already reviewed this menu!');
-        }
+        ], $customMessages);
 
         // Menyimpan review baru
         MenuReview::create([

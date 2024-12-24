@@ -17,7 +17,7 @@
 <body>
     @include('layout.Navbar')
     <main>
-        <section class="mt-12 md:mt-20 contact-us">
+        <section class="mt-10 md:mt-20 contact-us">
             <div class="container flex flex-col grid-cols-12 gap-2 md:gap-8 md:grid 2xl:gap-8">
                 <div class="col-span-5">
                     <img src="{{ asset('storage/' . $menuDetails->image ?? '') }}"
@@ -28,37 +28,15 @@
                 <div class="flex flex-col col-span-4 gap-4 font-aesthetnova ">
                     <span class="flex flex-col-reverse justify-between gap-3 md:gap-4 md:flex-col">
                         <div class="items-center gap-1.5 star md:flex hidden">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 md:w-7" viewBox="0 0 21 20"
-                                fill="none">
-                                <path
-                                    d="M8.8229 0.993308C9.63036 -0.0251352 11.1762 -0.0251331 11.9836 0.99331L14.4502 4.10433C14.6789 4.39282 14.9822 4.61319 15.3272 4.74157L19.0482 6.12602C20.2663 6.57924 20.744 8.04941 20.0249 9.13206L17.8284 12.4392C17.6247 12.7459 17.5088 13.1025 17.4934 13.4703L17.3265 17.437C17.2719 18.7355 16.0213 19.6441 14.7694 19.2948L10.9453 18.2277C10.5907 18.1288 10.2158 18.1288 9.8612 18.2277L6.03712 19.2948C4.78525 19.6441 3.53466 18.7355 3.48004 17.437L3.31318 13.4703C3.29771 13.1025 3.18185 12.7459 2.97817 12.4392L0.781612 9.13206C0.0625328 8.04941 0.540215 6.57924 1.75833 6.12602L5.47929 4.74157C5.82433 4.61319 6.12765 4.39282 6.35637 4.10433L8.8229 0.993308Z"
-                                    class="fill-highlight-content" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 md:w-7" viewBox="0 0 21 20"
-                                fill="none">
-                                <path
-                                    d="M8.8229 0.993308C9.63036 -0.0251352 11.1762 -0.0251331 11.9836 0.99331L14.4502 4.10433C14.6789 4.39282 14.9822 4.61319 15.3272 4.74157L19.0482 6.12602C20.2663 6.57924 20.744 8.04941 20.0249 9.13206L17.8284 12.4392C17.6247 12.7459 17.5088 13.1025 17.4934 13.4703L17.3265 17.437C17.2719 18.7355 16.0213 19.6441 14.7694 19.2948L10.9453 18.2277C10.5907 18.1288 10.2158 18.1288 9.8612 18.2277L6.03712 19.2948C4.78525 19.6441 3.53466 18.7355 3.48004 17.437L3.31318 13.4703C3.29771 13.1025 3.18185 12.7459 2.97817 12.4392L0.781612 9.13206C0.0625328 8.04941 0.540215 6.57924 1.75833 6.12602L5.47929 4.74157C5.82433 4.61319 6.12765 4.39282 6.35637 4.10433L8.8229 0.993308Z"
-                                    class="fill-highlight-content" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 md:w-7" viewBox="0 0 21 20"
-                                fill="none">
-                                <path
-                                    d="M8.8229 0.993308C9.63036 -0.0251352 11.1762 -0.0251331 11.9836 0.99331L14.4502 4.10433C14.6789 4.39282 14.9822 4.61319 15.3272 4.74157L19.0482 6.12602C20.2663 6.57924 20.744 8.04941 20.0249 9.13206L17.8284 12.4392C17.6247 12.7459 17.5088 13.1025 17.4934 13.4703L17.3265 17.437C17.2719 18.7355 16.0213 19.6441 14.7694 19.2948L10.9453 18.2277C10.5907 18.1288 10.2158 18.1288 9.8612 18.2277L6.03712 19.2948C4.78525 19.6441 3.53466 18.7355 3.48004 17.437L3.31318 13.4703C3.29771 13.1025 3.18185 12.7459 2.97817 12.4392L0.781612 9.13206C0.0625328 8.04941 0.540215 6.57924 1.75833 6.12602L5.47929 4.74157C5.82433 4.61319 6.12765 4.39282 6.35637 4.10433L8.8229 0.993308Z"
-                                    class="fill-highlight-content" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 md:w-7" viewBox="0 0 21 20"
-                                fill="none">
-                                <path
-                                    d="M8.8229 0.993308C9.63036 -0.0251352 11.1762 -0.0251331 11.9836 0.99331L14.4502 4.10433C14.6789 4.39282 14.9822 4.61319 15.3272 4.74157L19.0482 6.12602C20.2663 6.57924 20.744 8.04941 20.0249 9.13206L17.8284 12.4392C17.6247 12.7459 17.5088 13.1025 17.4934 13.4703L17.3265 17.437C17.2719 18.7355 16.0213 19.6441 14.7694 19.2948L10.9453 18.2277C10.5907 18.1288 10.2158 18.1288 9.8612 18.2277L6.03712 19.2948C4.78525 19.6441 3.53466 18.7355 3.48004 17.437L3.31318 13.4703C3.29771 13.1025 3.18185 12.7459 2.97817 12.4392L0.781612 9.13206C0.0625328 8.04941 0.540215 6.57924 1.75833 6.12602L5.47929 4.74157C5.82433 4.61319 6.12765 4.39282 6.35637 4.10433L8.8229 0.993308Z"
-                                    fill="white" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 md:w-7" viewBox="0 0 21 20"
-                                fill="none">
-                                <path
-                                    d="M8.8229 0.993308C9.63036 -0.0251352 11.1762 -0.0251331 11.9836 0.99331L14.4502 4.10433C14.6789 4.39282 14.9822 4.61319 15.3272 4.74157L19.0482 6.12602C20.2663 6.57924 20.744 8.04941 20.0249 9.13206L17.8284 12.4392C17.6247 12.7459 17.5088 13.1025 17.4934 13.4703L17.3265 17.437C17.2719 18.7355 16.0213 19.6441 14.7694 19.2948L10.9453 18.2277C10.5907 18.1288 10.2158 18.1288 9.8612 18.2277L6.03712 19.2948C4.78525 19.6441 3.53466 18.7355 3.48004 17.437L3.31318 13.4703C3.29771 13.1025 3.18185 12.7459 2.97817 12.4392L0.781612 9.13206C0.0625328 8.04941 0.540215 6.57924 1.75833 6.12602L5.47929 4.74157C5.82433 4.61319 6.12765 4.39282 6.35637 4.10433L8.8229 0.993308Z"
-                                    fill="white" />
-                            </svg>
-                            <p class="text-xs">(20)</p>
+                            @for ($i = 1; $i <= 5; $i++)
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 md:w-7" viewBox="0 0 21 20"
+                                    fill="none">
+                                    <path
+                                        d="M8.8229 0.993308C9.63036 -0.0251352 11.1762 -0.0251331 11.9836 0.99331L14.4502 4.10433C14.6789 4.39282 14.9822 4.61319 15.3272 4.74157L19.0482 6.12602C20.2663 6.57924 20.744 8.04941 20.0249 9.13206L17.8284 12.4392C17.6247 12.7459 17.5088 13.1025 17.4934 13.4703L17.3265 17.437C17.2719 18.7355 16.0213 19.6441 14.7694 19.2948L10.9453 18.2277C10.5907 18.1288 10.2158 18.1288 9.8612 18.2277L6.03712 19.2948C4.78525 19.6441 3.53466 18.7355 3.48004 17.437L3.31318 13.4703C3.29771 13.1025 3.18185 12.7459 2.97817 12.4392L0.781612 9.13206C0.0625328 8.04941 0.540215 6.57924 1.75833 6.12602L5.47929 4.74157C5.82433 4.61319 6.12765 4.39282 6.35637 4.10433L8.8229 0.993308Z"
+                                        class="{{ $i <= $averageRating ? 'fill-highlight-content' : 'fill-white' }}" />
+                                </svg>
+                            @endfor
+                            <p class="text-xs">({{ $menuReviews->count() }})</p>
                         </div>
                         <p class="text-2xl md:text-4xl 3xl:text-5xl" class="py-1 line-clamp-1">
                             {{ $menuDetails->name ?? '' }}</p>
@@ -150,65 +128,45 @@
                         <p class="text-lg text-center text-gray-500">No reviews available for this menu at the moment.
                         </p>
                     @else
-                        @foreach ($menuReviews as $menuReview)
-                            <div class="flex flex-col grid-cols-12 gap-4 md:grid customers-review">
-                                <p class="col-span-2 text-base">{{ $menuReview->customer->username }}</p>
-                                <!-- Nama Customer -->
-                                <div class="flex flex-col col-span-9 gap-3 review-comment">
-                                    <div class="flex items-center gap-1.5 star">
-                                        @for ($i = 0; $i < 5; $i++)
-                                            @if ($i < $menuReview->rating)
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 md:w-7"
-                                                    viewBox="0 0 21 20" fill="none">
-                                                    <path
-                                                        d="M8.8229 0.993308C9.63036 -0.0251352 11.1762 -0.0251331 11.9836 0.99331L14.4502 4.10433C14.6789 4.39282 14.9822 4.61319 15.3272 4.74157L19.0482 6.12602C20.2663 6.57924 20.744 8.04941 20.0249 9.13206L17.8284 12.4392C17.6247 12.7459 17.5088 13.1025 17.4934 13.4703L17.3265 17.437C17.2719 18.7355 16.0213 19.6441 14.7694 19.2948L10.9453 18.2277C10.5907 18.1288 10.2158 18.1288 9.8612 18.2277L6.03712 19.2948C4.78525 19.6441 3.53466 18.7355 3.48004 17.437L3.31318 13.4703C3.29771 13.1025 3.18185 12.7459 2.97817 12.4392L0.781612 9.13206C0.0625328 8.04941 0.540215 6.57924 1.75833 6.12602L5.47929 4.74157C5.82433 4.61319 6.12765 4.39282 6.35637 4.10433L8.8229 0.993308Z"
-                                                        class="fill-highlight-content" />
-                                                </svg>
-                                            @else
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 md:w-7"
-                                                    viewBox="0 0 21 20" fill="none">
-                                                    <path
-                                                        d="M8.8229 0.993308C9.63036 -0.0251352 11.1762 -0.0251331 11.9836 0.99331L14.4502 4.10433C14.6789 4.39282 14.9822 4.61319 15.3272 4.74157L19.0482 6.12602C20.2663 6.57924 20.744 8.04941 20.0249 9.13206L17.8284 12.4392C17.6247 12.7459 17.5088 13.1025 17.4934 13.4703L17.3265 17.437C17.2719 18.7355 16.0213 19.6441 14.7694 19.2948L10.9453 18.2277C10.5907 18.1288 10.2158 18.1288 9.8612 18.2277L6.03712 19.2948C4.78525 19.6441 3.53466 18.7355 3.48004 17.437L3.31318 13.4703C3.29771 13.1025 3.18185 12.7459 2.97817 12.4392L0.781612 9.13206C0.0625328 8.04941 0.540215 6.57924 1.75833 6.12602L5.47929 4.74157C5.82433 4.61319 6.12765 4.39282 6.35637 4.10433L8.8229 0.993308Z"
-                                                        fill="white" />
-                                                </svg>
-                                            @endif
-                                        @endfor
+                        @foreach ($menuReviews as $index => $menuReview)
+                            <div class="flex flex-col gap-6 h-fit review-item page-{{ ceil(($index + 1) / 5) }}">
+                                <div id="customersReview" class="flex flex-col grid-cols-12 gap-4 md:grid">
+                                    <p class="col-span-2 text-base">{{ $menuReview->customer->username }}</p>
+                                    <!-- Nama Customer -->
+                                    <div class="flex flex-col col-span-9 gap-3 review-comment">
+                                        <div class="flex items-center gap-1.5 star">
+                                            @for ($i = 0; $i < 5; $i++)
+                                                @if ($i < $menuReview->rating)
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 md:w-7"
+                                                        viewBox="0 0 21 20" fill="none">
+                                                        <path
+                                                            d="M8.8229 0.993308C9.63036 -0.0251352 11.1762 -0.0251331 11.9836 0.99331L14.4502 4.10433C14.6789 4.39282 14.9822 4.61319 15.3272 4.74157L19.0482 6.12602C20.2663 6.57924 20.744 8.04941 20.0249 9.13206L17.8284 12.4392C17.6247 12.7459 17.5088 13.1025 17.4934 13.4703L17.3265 17.437C17.2719 18.7355 16.0213 19.6441 14.7694 19.2948L10.9453 18.2277C10.5907 18.1288 10.2158 18.1288 9.8612 18.2277L6.03712 19.2948C4.78525 19.6441 3.53466 18.7355 3.48004 17.437L3.31318 13.4703C3.29771 13.1025 3.18185 12.7459 2.97817 12.4392L0.781612 9.13206C0.0625328 8.04941 0.540215 6.57924 1.75833 6.12602L5.47929 4.74157C5.82433 4.61319 6.12765 4.39282 6.35637 4.10433L8.8229 0.993308Z"
+                                                            class="fill-highlight-content" />
+                                                    </svg>
+                                                @else
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 md:w-7"
+                                                        viewBox="0 0 21 20" fill="none">
+                                                        <path
+                                                            d="M8.8229 0.993308C9.63036 -0.0251352 11.1762 -0.0251331 11.9836 0.99331L14.4502 4.10433C14.6789 4.39282 14.9822 4.61319 15.3272 4.74157L19.0482 6.12602C20.2663 6.57924 20.744 8.04941 20.0249 9.13206L17.8284 12.4392C17.6247 12.7459 17.5088 13.1025 17.4934 13.4703L17.3265 17.437C17.2719 18.7355 16.0213 19.6441 14.7694 19.2948L10.9453 18.2277C10.5907 18.1288 10.2158 18.1288 9.8612 18.2277L6.03712 19.2948C4.78525 19.6441 3.53466 18.7355 3.48004 17.437L3.31318 13.4703C3.29771 13.1025 3.18185 12.7459 2.97817 12.4392L0.781612 9.13206C0.0625328 8.04941 0.540215 6.57924 1.75833 6.12602L5.47929 4.74157C5.82433 4.61319 6.12765 4.39282 6.35637 4.10433L8.8229 0.993308Z"
+                                                            fill="white" />
+                                                    </svg>
+                                                @endif
+                                            @endfor
+                                        </div>
+                                        <p class="text-justify line-clamp-4 text-[17px]">
+                                            {{ $menuReview->review_desc }}
+                                        </p>
                                     </div>
-                                    <p class="text-justify line-clamp-4 text-[17px]">
-                                        {{ $menuReview->review_desc }}
+                                    <p
+                                        class="self-start col-span-1 text-xs md:self-center text-end text-highlight-content">
+                                        {{ $menuReview->created_at->diffForHumans() }}
                                     </p>
                                 </div>
-                                <p
-                                    class="self-start col-span-1 text-xs md:self-center text-end text-highlight-content">
-                                    {{ $menuReview->created_at->diffForHumans() }}
-                                </p>
+                                <hr />
                             </div>
-                            <hr />
                         @endforeach
                     @endif
-
-                    <div class="flex items-center self-end md:gap-3 gap-1.5 wrap-button-next-prev">
-                        <button
-                            class="md:w-[52px] w-12 md:py-2.5 py-3 bg-secondary-color rounded-xl md:text-lg text-base text-balance">
-                            1
-                        </button>
-                        <button
-                            class="md:w-[52px] w-12 md:py-2.5 py-3 hover:bg-red-500 transition-all ease-in-out duration-500 rounded-xl md:text-lg text-balance text-base">
-                            2
-                        </button>
-                        <button
-                            class="md:w-[52px] w-12 md:py-2.5 py-3 hover:bg-red-500 transition-all ease-in-out duration-500 rounded-xl md:text-lg text-balance text-base">
-                            3
-                        </button>
-                        <button
-                            class="md:w-[52px] w-12 md:py-2.5 py-3 hover:bg-red-500 transition-all ease-in-out duration-500 rounded-xl md:text-lg text-balance text-base">
-                            4
-                        </button>
-                        <button
-                            class="md:w-[52px] w-12 md:py-2.5 py-3 hover:bg-red-500 transition-all ease-in-out duration-500 rounded-xl md:text-lg text-balance text-base">
-                            5
-                        </button>
-                    </div>
+                    <div class="flex items-center self-end md:gap-3 gap-1.5 wrap-button-next-prev"></div>
                 </div>
                 {{-- Review End --}}
             </div>
@@ -235,31 +193,58 @@
 <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 <script>
-    const reviewTrigger = document.getElementById("reviewTrigger"),
-        reviewBox = document.getElementById("reviewBox"),
-        closeReviwe = document.getElementById("closeReviwe");
+    document.addEventListener('DOMContentLoaded', () => {
+        const reviewsContainer = document.querySelector('.reviews-container');
+        const reviewItems = document.querySelectorAll('.review-item');
+        const paginationWrapper = document.querySelector('.wrap-button-next-prev');
+        const itemsPerPage = 5; // Jumlah maksimal konten per halaman
 
-    reviewTrigger.addEventListener("click", () => {
-        reviewTrigger.classList.add("trigger-active-review");
-        reviewBox.classList.add("box-active-review");
-    });
+        // Hitung jumlah halaman yang diperlukan
+        const totalPages = Math.ceil(reviewItems.length / itemsPerPage);
 
-    closeReviwe.addEventListener("click", () => {
-        reviewTrigger.classList.remove("trigger-active-review");
-        reviewBox.classList.remove("box-active-review");
-    });
-</script>
-<script>
-    const triggermenuMobile = document.getElementById("triggermenuMobile"),
-        closecartMobile = document.getElementById("closecartMobile"),
-        addtoCartMobile = document.getElementById("addtoCartMobile");
+        // Buat tombol paginasi secara dinamis
+        for (let i = 1; i <= totalPages; i++) {
+            const button = document.createElement('button');
+            button.classList.add('md:w-[52px]', 'toggle-pagination', 'w-12', 'md:py-2.5', 'py-3',
+                'hover:bg-red-500', 'transition-all', 'ease-in-out', 'duration-500', 'rounded-xl',
+                'md:text-lg', 'text-base', 'text-balance');
+            button.textContent = i;
+            button.setAttribute('data-page', i);
+            if (i === 1) button.classList.add('bg-red-500'); // Highlight halaman pertama secara default
+            paginationWrapper.appendChild(button);
+        }
 
-    triggermenuMobile.addEventListener("click", () => {
-        addtoCartMobile.classList.add("cart-mobile-menu-active");
-    });
+        // Fungsi untuk menampilkan halaman tertentu
+        function showPage(pageNumber) {
+            // Hitung indeks awal dan akhir untuk halaman yang dipilih
+            const startIndex = (pageNumber - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
 
-    closecartMobile.addEventListener("click", () => {
-        addtoCartMobile.classList.remove("cart-mobile-menu-active");
+            // Sembunyikan semua item
+            reviewItems.forEach((item, index) => {
+                item.style.display = (index >= startIndex && index < endIndex) ? 'flex' : 'none';
+            });
+
+            // Perbarui status tombol paginasi
+            const paginationButtons = document.querySelectorAll('.toggle-pagination');
+            paginationButtons.forEach(button => {
+                button.classList.remove('bg-red-500');
+                if (parseInt(button.getAttribute('data-page')) === pageNumber) {
+                    button.classList.add('bg-red-500');
+                }
+            });
+        }
+
+        // Tambahkan event listener ke tombol paginasi
+        paginationWrapper.addEventListener('click', (event) => {
+            if (event.target.classList.contains('toggle-pagination')) {
+                const pageNumber = parseInt(event.target.getAttribute('data-page'));
+                showPage(pageNumber);
+            }
+        });
+
+        // Tampilkan halaman pertama secara default
+        showPage(1);
     });
 </script>
 

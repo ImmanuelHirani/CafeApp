@@ -9,7 +9,7 @@
         </p>
         <form action="{{ route('profile.location.add', Auth::user()->customer_ID) }}" method="POST">
             @csrf
-            <div class="flex flex-col w-full gap-4 max-h-[30rem] md:p-4 px-1 py-3 overflow-y-auto">
+            <div class="flex flex-col w-full gap-4 max-h-[25rem] md:p-4 px-1 py-3 overflow-y-auto">
                 <!-- Location Label -->
                 <div class="flex flex-col w-full gap-3 contet-wrap">
                     <p class="w-full text-lg text-start md:text-xl">Locations Place</p>

@@ -124,7 +124,6 @@
                                 <p class="hidden text-red-500 error-message">File harus berupa gambar dengan format
                                     .JPEG, .PNG, atau .JPG</p>
                             </div>
-
                         </div>
                     </form>
                     <hr>
@@ -170,7 +169,7 @@
                                                 <i
                                                     class="hidden text-2xl md:block text-secondary-color ti ti-check text-end"></i>
                                                 <button
-                                                    class="w-full px-8 py-2 text-white rounded-lg text-end md:w-fit md:hidden bg-secondary-accent-color">Location
+                                                    class="w-full px-8 py-2 text-center text-white rounded-lg md:w-fit md:hidden bg-secondary-accent-color">Location
                                                     Choose</button>
                                             @else
                                                 <form
@@ -190,9 +189,8 @@
                                 </div>
                             @endforeach
                         @else
-                            <p>No location available</p>
+                            <p class="text-base md:text-xl">No location available</p>
                         @endif
-
                     </div>
                 </div>
             </div>
