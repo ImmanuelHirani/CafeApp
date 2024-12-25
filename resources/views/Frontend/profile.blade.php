@@ -174,7 +174,7 @@
                                             @else
                                                 <form
                                                     action="{{ Route('profile.location.primary', $location->location_ID) }}"
-                                                    method="POST">
+                                                    method="POST" class="w-full">
                                                     @csrf
                                                     @method('put')
                                                     <button

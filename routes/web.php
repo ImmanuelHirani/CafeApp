@@ -47,6 +47,7 @@ Route::post('/custom-properties/{id}/insert', [CustomCategoriesController::class
 Route::post('/custom-categories/size/store', [CustomCategoriesController::class, 'storeSizeProperties'])
     ->name('custom.categories.size.store');
 Route::post('/calculate-total', [CustomerOrderController::class, 'calculateTotal']);
+// Route::get('/check-auth', [CustomerOrderController::class, 'checkAuth'])->name('check.auth');
 
 
 

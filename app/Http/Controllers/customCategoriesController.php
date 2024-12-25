@@ -61,6 +61,7 @@ class CustomCategoriesController extends Controller
 
         try {
             // Begin transaction
+
             DB::beginTransaction();
 
             // Simpan data untuk Custom_categories_pizza

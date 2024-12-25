@@ -130,7 +130,6 @@
     </main>
     @include('layout.Footer')
 </body>
-
 <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 <script src="{{ asset('/js/swiper.js') }}"></script>
 <script src="{{ asset('/js/GSAP.js') }}"></script>
@@ -225,7 +224,7 @@
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    notyf.error("An error occurred while calculating the total.");
+                    notyf.error("Login First ! To Make an order");
                 });
         }
 
@@ -310,8 +309,5 @@
         updateHiddenInputs();
     });
 </script>
-
-
-
 
 </html>

@@ -7,6 +7,7 @@ use App\Models\Custom_categories_properties;
 use App\Models\Custom_categories_size_properties;
 use App\Models\Menu;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerOrderController extends Controller
 {
@@ -28,6 +29,14 @@ class CustomerOrderController extends Controller
 
     public function calculateTotal(Request $request)
     {
+
+        // Mendapatkan user yang login
+        $customer = Auth::user();
+
+        if (!$customer) {
+            return redirect()->back()->with('error', 'You need to login to make an order.');
+        }
+
         // Validasi jika size_id tidak dipilih
         if (!$request->has('size_id') || empty($request->size_id)) {
             return response()->json(['error' => 'Size is required before selecting toppings.']);
@@ -72,4 +81,16 @@ class CustomerOrderController extends Controller
             'total_price' => $totalPrice,
         ]);
     }
+
+    // public function checkAuth()
+    // {
+    //     // Mendapatkan user yang login
+    //     $customer = Auth::user();
+
+    //     if (!$customer) {
+    //         return redirect()->back()->with('error', 'You need to login to make an order.');
+    //     }
+
+    //     return response()->json(['isAuthenticated' => Auth::check()]);
+    // }
 }
