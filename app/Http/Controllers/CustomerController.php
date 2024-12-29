@@ -9,8 +9,7 @@ use App\Models\Customer;
 use App\Models\Menu;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-
-
+use Illuminate\Validation\Rule;
 
 class CustomerController extends Controller
 {
@@ -20,14 +19,13 @@ class CustomerController extends Controller
     {
         $this->customerService = $customerService;
     }
-
     // Bussines Logic
     public function Register(Request $request)
     {
         // Validasi input dari form
         $credentials = $request->validate([
             'email' => 'required|email|unique:customers,email', // Pastikan email unik
-            'phone' => 'required|regex:/^[0-9]{10,15}$/', // Validasi nomor telepon (opsional)
+            'phone' => 'required|unique:customers,phone|regex:/^[0-9]{10,15}$/', // Validasi nomor telepon (opsional)
             'password' => 'required|min:4', // Konfirmasi password
         ]);
 
@@ -50,27 +48,32 @@ class CustomerController extends Controller
     }
     public function updateCustomer(Request $request, $customer_ID)
     {
-        $request->validate([
-            'username' => 'required|string|max:30',
-            'email' => 'required|email',
-            'phone' => 'required|regex:/^[0-9]{10,15}$/',
-            'image' => 'nullable|image|mimes:jpeg,png|max:1024', // Maks. 1 MB
-        ]);
-
-        // Ambil data dari request
-        $data = $request->only(['username', 'email', 'phone']);
-        if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image'); // Simpan file langsung
-        }
-
-        // Validasi customer
+        // Ambil data customer dari database
         $customer = Auth::user();
+
+        // Validasi apakah customer valid
         if (!$customer || $customer->customer_ID != $customer_ID) {
             return redirect()->back()->with('error', 'Unauthorized or User Not Found');
         }
 
+        // Validasi data dengan pengecualian untuk email dan phone milik sendiri
+        $validatedData = $request->validate([
+            'username' => 'required|string|max:30',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('customers', 'email')->ignore($customer->customer_ID, 'customer_ID'),
+            ],
+            'phone' => [
+                'required',
+                'regex:/^[0-9]{10,15}$/',
+                Rule::unique('customers', 'phone')->ignore($customer->customer_ID, 'customer_ID'),
+            ],
+            'image' => 'nullable|image|mimes:jpeg,png|max:1024', // Maks. 1 MB
+        ]);
+
         // Panggil service untuk update
-        $this->customerService->updateCustomer($customer, $data);
+        $updatedCustomer = $this->customerService->updateCustomer($customer, $validatedData);
 
         return redirect()->back()->with('success', 'Profile updated successfully');
     }

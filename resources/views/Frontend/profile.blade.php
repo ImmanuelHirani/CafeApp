@@ -174,11 +174,11 @@
                                             @else
                                                 <form
                                                     action="{{ Route('profile.location.primary', $location->location_ID) }}"
-                                                    method="POST" class="w-full">
+                                                    method="POST" class="flex justify-end w-full ">
                                                     @csrf
                                                     @method('put')
                                                     <button
-                                                        class="hidden w-full px-8 py-2 text-white bg-green-600 rounded-lg md:w-fit md:block">Choose</button>
+                                                        class="hidden w-full px-8 py-2 text-white bg-green-600 rounded-lg text-end md:w-fit md:block">Choose</button>
                                                     <button
                                                         class="w-full px-8 py-2 text-white rounded-lg bg-primary-color md:hidden">Choose
                                                         Location</button>
