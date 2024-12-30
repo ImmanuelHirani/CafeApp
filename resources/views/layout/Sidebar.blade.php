@@ -68,7 +68,7 @@
             <hr />
             <div class="w-full swiper">
                 <div
-                    class="my-2 3xl:max-h-[630px] 2xl:max-h-[410px] xl:max-h-[31em] max-h-[24em] sm:max-h-[38em] w-full cart-added-content overflow-hidden">
+                    class="my-2 3xl:max-h-[670px] 2xl:max-h-[470px] xl:max-h-[31em] max-h-[27em] sm:max-h-[38em] w-full cart-added-content overflow-hidden">
                     <!-- Repeat this block for each cart item -->
                     <div class="h-fit swiper-wrapper">
                         @forelse ($cartItems as $item)

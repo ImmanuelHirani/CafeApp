@@ -440,7 +440,7 @@
                         <div class="p-1 whislist-swiper">
                             <div class="w-full swiper-wrapper">
                                 <!-- Card Menu -->
-                                @foreach ($menus as $menu)
+                                @foreach ($menusFav as $menu)
                                     <div
                                         class="swiper-slide outline outline-2 outline-highlight-content relative transition-all duration-300 ease-in-out card-wrapper rounded-2xl w-[23rem] h-fit bg-primary-color">
                                         <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}"

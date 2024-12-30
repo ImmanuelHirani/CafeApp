@@ -2,20 +2,20 @@
     <div class="container flex flex-col gap-12 py-12 md:py-20">
         <div class="flex flex-wrap w-full grid-cols-3 gap-20 md:grid wrapper-address">
             <div class="flex flex-col items-center justify-center gap-4 mx-auto Wrap">
-                <h5>ADDRESS</h5>
+                <h6>ADDRESS</h6>
                 <p class="3xl:w-1/2 w-[70%] md:text-xl text-lg text-center">
                     Cafe Travel Jalan Kakap Raya no 155 , Tanggerang ,
                     Karwaci
                 </p>
             </div>
             <div class="flex flex-col items-center justify-center gap-4 mx-auto Wrap">
-                <h5>RESERVATION</h5>
+                <h6>RESERVATION</h6>
                 <p class="3xl:w-1/2 w-[70%] md:text-xl text-lg text-center">
                     0813 - 1480 - 1945 /CafeTravel@gmail.com
                 </p>
             </div>
             <div class="flex flex-col items-center justify-center gap-4 mx-auto Wrap">
-                <h5>OPEN HOURS</h5>
+                <h6>OPEN HOURS</h6>
                 <p class="3xl:w-1/2 w-[70%] text-center md:text-xl text-lg">
                     Monday - Friday : 10 AM - 11 PM Saturday - Sunday :
                     9 AM - 1 PM

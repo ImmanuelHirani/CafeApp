@@ -23,7 +23,10 @@ class profileController extends Controller
             return redirect()->back()->with('error', 'Login First!');
         }
 
-        $menus = $customer->customer->favoriteMenus()->with('properties')->get();
+        $menusFav = $customer->customer->favoriteMenus()->with('properties')->get();
+
+        $menus = Menu::all();
+
 
         // Ambil semua transaksi berdasarkan customer_ID dengan status_order tertentu
         $orders = orderTransaction::with(['details'])
@@ -40,7 +43,8 @@ class profileController extends Controller
         // Kirim data ke view
         return view('Frontend.profile', [
             'customer' => $customer,
-            'menus' => $menus,  // Menampilkan hanya menu favorit
+            'menus' => $menus,
+            'menusFav' => $menusFav,  // Menampilkan hanya menu favorit
             'transactions' => $transactions,
         ]);
     }
