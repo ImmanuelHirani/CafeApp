@@ -5,7 +5,7 @@
         <div class="middle-quick-link">
             <ul class="flex items-center gap-2">
                 <li class="relative group">
-                    <a href="/Dashboard"
+                    <a href="/dashboard"
                         class="!text-accent-color-admin px-6 flex items-center gap-3 nav-toggle py-2 rounded-full outline-1 outline-gray-300">
                         <i class="text-2xl ti ti-layout-dashboard"></i>Dashboard</a>
                 </li>

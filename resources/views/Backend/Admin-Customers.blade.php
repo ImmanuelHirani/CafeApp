@@ -22,7 +22,7 @@
 <body id="Admin">
     @include('layout.header')
     <main class="grid grid-cols-7 gap-4 py-4">
-        <section class="flex flex-col col-span-5 p-6 rounded-lg gap-9 h-fit bg-primary-color-admin">
+        <section class="flex flex-col h-full col-span-5 p-6 rounded-lg gap-9 bg-primary-color-admin">
             <div class="overflow-x-auto">
                 <table id="tableCustomers" class="border shadow-sm min-w-fullborder stripe">
                     <thead class="">
@@ -37,9 +37,7 @@
                                 Email
                             </th>
 
-                            <th class="text-sm font-medium text-left text-gray-500 uppercase">
-                                Type
-                            </th>
+
 
                             <th class="text-sm font-medium text-left text-gray-500 uppercase">
                                 Join Date
@@ -57,18 +55,7 @@
                                     {{ $customer->username ?? 'Not Set Username Yet' }}
                                 </td>
                                 <td class="text-base text-gray-500">{{ $customer->email }}</td>
-                                <td class="">
-                                    <div class="status-select">
-                                        <select id="statusSelect" class="cursor-pointer focus:outline-none">
-                                            <option value="completed" class="cursor-pointer">
-                                                Reguler
-                                            </option>
-                                            <option value="in-progress" class="cursor-pointer">
-                                                Member
-                                            </option>
-                                        </select>
-                                    </div>
-                                </td>
+
                                 <td class="text-base text-gray-500">{{ $customer->created_at }}</td>
                                 <td class="flex justify-center text-base text-gray-500">
                                     <div
@@ -160,7 +147,6 @@
                     @else
                         <p class="text-lg text-center text-red-500">No Locations Available</p>
                     @endisset
-
                 </div>
                 <input type="submit" id="update" value="Update" class="hidden">
             </form>

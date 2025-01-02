@@ -125,8 +125,8 @@
                 </form>
             </div>
         </section>
-        @include('layout.Sidebar')
-        @include('layout.AuthCustomer')
+        @include('layout.popovers.aside.sidebar-frontend')
+        @include('layout.modal.login-registerBox.Auth-Customer')
     </main>
     @include('layout.Footer')
 </body>

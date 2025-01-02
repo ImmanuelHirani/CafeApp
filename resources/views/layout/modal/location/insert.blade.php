@@ -86,3 +86,18 @@
         document.getElementById('locationInput').value = value;
     }
 </script>
+<script>
+    const locationTrigger = document.getElementById("locationTrigger"),
+        locationBox = document.getElementById("locationBox"),
+        closelocation = document.getElementById("closelocation");
+
+    locationTrigger.addEventListener("click", () => {
+        locationTrigger.classList.add("trigger-active-location");
+        locationBox.classList.add("box-active-location");
+    });
+
+    closelocation.addEventListener("click", () => {
+        locationTrigger.classList.remove("trigger-active-location");
+        locationBox.classList.remove("box-active-location");
+    });
+</script>

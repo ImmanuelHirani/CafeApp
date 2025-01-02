@@ -22,7 +22,7 @@
 <body id="Admin">
     @include('layout.header')
     <main class="grid grid-cols-10 gap-3 py-4">
-        <section class="flex flex-col col-span-7 p-6 rounded-lg h-fit gap-9 bg-primary-color-admin">
+        <section class="flex flex-col h-full col-span-7 p-6 rounded-lg gap-9 bg-primary-color-admin">
             <div class="flex items-center justify-between wrap">
                 <p class="text-2xl font-semibold">Custom Pizza</p>
                 <button id="btn-add-product"
@@ -60,15 +60,36 @@
                             <tr class="hover:bg-gray-50">
                                 <td class="text-base text-gray-900">{{ $category->categories_ID }}</td>
                                 <td class="text-base text-gray-500">{{ $category->categories_type }}</td>
-                                @if ($category->is_active == 1)
-                                    <td class="text-base text-gray-500"><label
-                                            class="px-8 py-2 text-white bg-green-500 rounded-full shadow-lg">Active</label>
-                                    </td>
-                                @else
-                                    <td class="text-base text-gray-500"><label
-                                            class="px-8 py-2 text-white bg-red-500 rounded-full shadow-lg">Non-Active</label>
-                                    </td>
-                                @endif
+                                <td>
+                                    <form action="{{ route('custom.updateStatus', $category->categories_ID) }}"
+                                        method="POST">
+                                        @csrf
+                                        <div class="status-select">
+                                            <select name="is_active" id="statusSelect"
+                                                class="cursor-pointer focus:outline-none" onchange="this.form.submit()">
+                                                <hr>
+                                                <optgroup label="Status Currently">
+                                                    @if ($category->is_active == '1')
+                                                        <option class="cursor-pointer">
+                                                            Active
+                                                        </option>
+                                                    @else
+                                                        <option class="cursor-pointer">
+                                                            Non-Active
+                                                        </option>
+                                                    @endif
+                                                </optgroup>
+                                                <hr>
+                                                <option value="1" class="cursor-pointer">
+                                                    Active
+                                                </option>
+                                                <option value="0" class="cursor-pointer">
+                                                    Non-Active
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                </td>
                                 <td class="text-base text-gray-500">{{ $category->created_at }}</td>
                                 <td class="text-base text-gray-500">{{ $category->updated_at }}</td>
                                 <td class="flex justify-center gap-1 text-base text-gray-500">
@@ -98,7 +119,7 @@
                 </table>
             </div>
         </section>
-        <aside class="flex flex-col col-span-3 gap-8 pt-6 overflow-hidden rounded-lg h-fit bg-primary-color-admin">
+        <aside class="flex flex-col h-full col-span-3 gap-8 pt-6 overflow-hidden rounded-lg bg-primary-color-admin">
             <div class="px-6 head-aside">
                 <p class="text-xl font-semibold">Edit Custom Menu</p>
             </div>
@@ -114,7 +135,7 @@
                     </li>
                 </ul>
             </div>
-            <form action="{{ route('update.properties') }}" method="POST">
+            <form action="{{ route('update.properties') }}" class="flex flex-col h-full" method="POST">
                 @csrf
                 <div class="flex flex-col gap-3 px-6 py-1 pb-6 overflow-y-auto card-wrapper sideMenu-tabs-content">
                     {{-- Topping List Section --}}
@@ -181,7 +202,6 @@
                         <p class="text-red-500">No sizes available.</p>
                     @endisset
                 </div>
-
                 <div class="flex items-center w-full gap-3 p-4 mt-auto bg-white shadow-inner footer-toggle">
                     <button type="submit" class="w-full h-12 text-white rounded-lg bg-secondary-accent-color">
                         Update
@@ -190,9 +210,8 @@
             </form>
 
         </aside>
-        @include('layout.modal.modal-custom-menu')
-        @include('layout.modal.modal-custom-menu-properties')
-        @include('layout.modal.modal-custom-menu-size')
+        @include('layout.modal.custom-menu.categories')
+        @include('layout.modal.custom-menu.properties')
     </main>
 </body>
 <script src="{{ asset('/js/table.js') }}"></script>

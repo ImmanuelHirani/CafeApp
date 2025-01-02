@@ -17,7 +17,7 @@
 <body id="Admin">
     @include('layout.header')
     <main class="grid grid-cols-7 gap-4 py-4">
-        <section class="flex flex-col col-span-5 p-6 rounded-lg h-fit gap-9 bg-primary-color-admin">
+        <section class="flex flex-col h-full col-span-5 p-6 rounded-lg gap-9 bg-primary-color-admin">
             <!-- Header Content -->
             <div class="flex items-center justify-between header">
                 <p class="text-2xl font-semibold">Menus</p>
@@ -429,7 +429,7 @@
             <!-- Main Content Card end -->
         </section>
         @include('layout.Aside')
-        @include('layout.modal.modal-product')
+        @include('layout.modal.menu.insert-menu')
     </main>
 </body>
 <script src="{{ asset('/js/table.js') }}"></script>

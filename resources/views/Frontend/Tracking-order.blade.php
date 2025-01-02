@@ -86,10 +86,10 @@
                                     <p>Rp{{ number_format($orderTransactions->first()->order->total_amounts, 0, ',', '.') }}
                                     </p>
                                 </span>
-                                <span class="flex items-center justify-between">
+                                {{-- <span class="flex items-center justify-between">
                                     <p>Delivery Fee</p>
                                     <p>Rp20.000</p>
-                                </span>
+                                </span> --}}
                             </div>
                             <hr class="border-[1px] border-gray-500" />
                             <div class="flex justify-between gap-3 wrap">
@@ -98,50 +98,51 @@
                                 </p>
                             </div>
                         </div>
-                        <div
-                            class="flex flex-col w-full p-4 overflow-y-auto h-[30rem]  rounded-lg md:p-8 lg:gap-y-6 gap-y-5 content-body bg-secondary-accent-color outline outline-1 outline-highlight-content">
-                            <p class="text-2xl text-highlight-content lg:text-3xl">
-                                Order Summary
-                            </p>
-                            <div class="flex flex-col gap-6 wrap">
-                                <!-- Repeated Content -->
-                                @foreach ($orderTransactions as $transaction)
-                                    <div
-                                        class="flex flex-col items-center w-full p-0 gap-x-8 gap-y-3 md:flex-row md:gap-y-0">
-                                        <!-- Normal Menu Image -->
-                                        <div class="img-wrap h-52 3xl:w-80 3xl:h-60 w-full md:w-[45%] md:h-44">
-                                            @if ($transaction->order_type === 'normal_menu')
-                                                <img src="{{ asset('storage/' . $transaction->menu->image) }}"
-                                                    alt="{{ $transaction->menu_name }}"
-                                                    class="object-cover w-full h-full rounded-lg " />
-                                            @else
-                                                <img src="{{ asset('/asset/CustomOrder.png') }}"
-                                                    class="object-cover w-full h-full rounded-lg" alt="Custom Order" />
-                                            @endif
-                                        </div>
-                                        <div class="flex flex-col w-full gap-1.5 text-wrap md:w-[35%]">
-                                            <p class="text-xl font-medium line-clamp-1">
-                                                {{ $transaction->order_type === 'normal_menu' ? $transaction->menu_name : 'Custom menu' }}
-                                            </p>
-                                            <p class="text-xl text-highlight-content">Size ({{ $transaction->size }})
-                                            </p>
-                                            <div class="flex">
-                                                <p>Rp {{ number_format($transaction->subtotal, 0, ',', '.') }}</p>
-                                            </div>
-                                        </div>
-                                        <div
-                                            class="w-full px-4 py-2 rounded-full md:w-[20%] quantity-area bg-secondary-color">
-                                            <p class="text-center md:text-base ms-auto">
-                                                Qty : X {{ $transaction->quantity }}
-                                            </p>
+
+                    </div>
+                    <div
+                        class="sticky flex flex-col w-full col-span-6 row-auto gap-4 p-4 rounded-lg top-[130px] h-fit md:p-8 lg:gap-y-6 gap-y-5 content-body bg-secondary-accent-color outline outline-1 outline-highlight-content">
+                        <p class="text-2xl text-highlight-content lg:text-3xl">
+                            Order Summary
+                        </p>
+                        <div class="flex flex-col gap-6 wrap">
+                            <!-- Repeated Content -->
+                            @foreach ($orderTransactions as $transaction)
+                                <div
+                                    class="flex flex-col items-center w-full p-0 gap-x-8 gap-y-3 md:flex-row md:gap-y-0">
+                                    <!-- Normal Menu Image -->
+                                    <div class="img-wrap h-52 3xl:w-80 3xl:h-60 w-full md:w-[45%] md:h-44">
+                                        @if ($transaction->order_type === 'normal_menu')
+                                            <img src="{{ asset('storage/' . $transaction->menu->image) }}"
+                                                alt="{{ $transaction->menu_name }}"
+                                                class="object-cover w-full h-full rounded-lg " />
+                                        @else
+                                            <img src="{{ asset('/asset/CustomOrder.png') }}"
+                                                class="object-cover w-full h-full rounded-lg" alt="Custom Order" />
+                                        @endif
+                                    </div>
+                                    <div class="flex flex-col w-full gap-1.5 text-wrap md:w-[35%]">
+                                        <p class="text-xl font-medium line-clamp-1">
+                                            {{ $transaction->order_type === 'normal_menu' ? $transaction->menu_name : 'Custom menu' }}
+                                        </p>
+                                        <p class="text-xl text-highlight-content">Size ({{ $transaction->size }})
+                                        </p>
+                                        <div class="flex">
+                                            <p>Rp {{ number_format($transaction->subtotal, 0, ',', '.') }}</p>
                                         </div>
                                     </div>
-                                @endforeach
-                                <!-- Repeated Content End -->
-                            </div>
+                                    <div
+                                        class="w-full px-4 py-2 rounded-full md:w-[20%] quantity-area bg-secondary-color">
+                                        <p class="text-center md:text-base ms-auto">
+                                            Qty : X {{ $transaction->quantity }}
+                                        </p>
+                                    </div>
+                                </div>
+                            @endforeach
+                            <!-- Repeated Content End -->
                         </div>
                     </div>
-                    <div class="col-span-6 row-auto gap-4 text-base md:text-lg">
+                    {{-- <div class="col-span-6 row-auto gap-4 text-base md:text-lg">
                         <div
                             class="sticky flex flex-col w-full gap-4 rounded-lg h-fit top-36 box-Location font-aesthetnova bg-secondary-accent-color outline outline-1 outline-highlight-content">
                             <div class="px-4 py-4 md:py-8 body md:px-8">
@@ -271,12 +272,12 @@
                                 <!-- Clean Code End -->
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </section>
         <!-- SideBar  -->
-        @include('layout.Sidebar')
+        @include('layout.popovers.aside.sidebar-frontend')
     </main>
     @include('layout.Footer')
 </body>

@@ -6,9 +6,11 @@ use App\Http\Controllers\CustomCategoriesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerOrderController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\profileController;
 
 // FE
@@ -35,7 +37,9 @@ Route::put('/profile/update/{customer_ID}', [CustomerController::class, 'updateC
 Route::post('/profile/location/add', [LocationController::class, 'addLocation'])->name('profile.location.add');
 Route::delete('/profile/location/delete/{locationID}', [LocationController::class, 'deleteLocation'])->name('profile.location.delete');
 Route::put('/profile/location/update/primary/{locationID}', [LocationController::class, 'updatePrimary'])->name('profile.location.primary');
+Route::put('/profile/location/update/{locationID}', [LocationController::class, 'updateLocation'])->name('profile.location.update');
 
+Route::get('/profile/location/update/{locationId}', [LocationController::class, 'getLocationData'])->name('profile.location.detail');
 
 // Custom Order
 Route::get('/menu/custom', [CustomerOrderController::class, 'customPizza'])->name('frontend.menu.custom');
@@ -46,6 +50,7 @@ Route::post('/update-properties', [CustomCategoriesController::class, 'updatePro
 Route::post('/custom-properties/{id}/insert', [CustomCategoriesController::class, 'storeProperties'])->name('custom.properties.store');
 Route::post('/custom-categories/size/store', [CustomCategoriesController::class, 'storeSizeProperties'])
     ->name('custom.categories.size.store');
+Route::post('/custom/catgories/status/update/{categoriesID}', [CustomCategoriesController::class, 'updateStatus'])->name('custom.updateStatus');
 Route::post('/calculate-total', [CustomerOrderController::class, 'calculateTotal']);
 // Route::get('/check-auth', [CustomerOrderController::class, 'checkAuth'])->name('check.auth');
 
@@ -67,16 +72,14 @@ Route::get('/tracking/order/{orderID}', [OrderController::class, 'trackOrder'])-
 Route::get('/make-order', [CartController::class, 'makeOrder'])->name('make.order');
 Route::put('/order/cancel/{orderId}', [CartController::class, 'cancelOrder'])->name('order.cancel');
 Route::put('/order/pay/{orderId}', [OrderController::class, 'payOrder'])->name('order.pay');
-
+Route::post('/payment/get-transaction-token', [PaymentController::class, 'getTransactionToken']);
 
 
 // Contact US
 Route::get('/contact', [contactUsController::class, 'contactUS'])->name('contact.view');
+Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('Dashboard.view');
 
 
-Route::get('/Dashboard', function () {
-    return view('Backend.Admin-Dashboard');
-})->name('Dashboard');
 
 // BE
 

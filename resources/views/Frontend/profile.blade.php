@@ -152,8 +152,8 @@
                                         <div class="wrap md:w-[60%] w-full flex flex-col gap-3">
                                             <p>{{ $location->reciver_address }}</p>
                                             <div class="flex items-center w-full gap-3 wrap">
-                                                <button
-                                                    class="text-center md:w-[6rem] w-full py-1.5 bg-green-600 rounded-lg">Edit</button>
+                                                <a href="{{ route('profile.location.detail', $location->location_ID) }}"
+                                                    class="locationTriggerUpdate text-center md:w-[6rem] w-full py-1.5 bg-green-600 rounded-lg">Edit</a>
                                                 <form
                                                     action="{{ Route('profile.location.delete', $location->location_ID) }}"
                                                     method="POST" class="w-full">
@@ -489,8 +489,9 @@
         </section>
     </main>
     <!-- Review Box Wrapper -->
-    @include('layout.modal.modal-location')
-    @include('layout.Sidebar')
+    @include('layout.modal.location.insert')
+    @include('layout.modal.location.update')
+    @include('layout.popovers.aside.sidebar-frontend')
     @include('layout.Footer')
 </body>
 <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
@@ -502,21 +503,6 @@
 <script src="{{ asset('/js/tabs-profile.js') }}"></script>
 <script src="{{ asset('/js/boxLogin.js') }}"></script>
 <script src="{{ asset('/js/imgPicker.js') }}"></script>
-<script>
-    const locationTrigger = document.getElementById("locationTrigger"),
-        locationBox = document.getElementById("locationBox"),
-        closelocation = document.getElementById("closelocation");
-
-    locationTrigger.addEventListener("click", () => {
-        locationTrigger.classList.add("trigger-active-location");
-        locationBox.classList.add("box-active-location");
-    });
-
-    closelocation.addEventListener("click", () => {
-        locationTrigger.classList.remove("trigger-active-location");
-        locationBox.classList.remove("box-active-location");
-    });
-</script>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         // Seleksi semua tombol dengan atribut data-menu-id
@@ -602,7 +588,5 @@
         });
     });
 </script>
-
-
 
 </html>

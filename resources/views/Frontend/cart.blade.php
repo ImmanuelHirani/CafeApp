@@ -214,23 +214,17 @@
                         <div
                             class="flex items-center justify-between px-3 py-3 rounded-t-lg header bg-secondary-color">
                             <p class="text-xl md:text-xl">Order Summary</p>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                viewBox="0 0 16 16" fill="none">
-                                <path
-                                    d="M7.26606 11.3931L2.77871 6.26394C2.24914 5.66045 2.67954 4.71265 3.48325 4.71265H12.4579C12.6378 4.71249 12.8139 4.76419 12.9652 4.86155C13.1164 4.9589 13.2364 5.09779 13.3107 5.26158C13.3851 5.42537 13.4106 5.60712 13.3843 5.78506C13.3581 5.963 13.281 6.12959 13.1625 6.26488L8.67514 11.3922C8.58732 11.4927 8.47901 11.5732 8.3575 11.6284C8.23598 11.6836 8.10406 11.7122 7.9706 11.7122C7.83714 11.7122 7.70522 11.6836 7.5837 11.6284C7.46219 11.5732 7.35388 11.4927 7.26606 11.3922V11.3931Z"
-                                    fill="white" />
-                            </svg>
                         </div>
                         <div class="flex flex-col gap-3 px-3 py-3 rounded-b-lg content-body bg-secondary-accent-color">
                             <!-- Repeted Content -->
-                            <span class="flex items-center justify-between">
+                            {{-- <span class="flex items-center justify-between">
                                 <p class="flex items-center gap-3 text-lg text-highlight-content">
                                     Shipping
                                     <img src="../asset/QuestionMark-Shipping.png" class="w-[10%]" alt="" />
                                 </p>
-                            </span>
+                            </span> --}}
                             @if (isset($cart))
-                                <span class="flex items-center justify-between">
+                                <span class="flex items-center justify-between py-4">
                                     <p class="text-lg md:text-xl">Total</p>
                                     <p class="text-lg md:text-xl" id="totalsubtotal-{{ $cart->order_detail_ID }}">
                                         <span id="totalAmount">Rp
@@ -258,7 +252,7 @@
                 </div>
             </div>
         </section>
-        @include('layout.AuthCustomer')
+
     </main>
     @include('layout.Footer')
 </body>

@@ -192,6 +192,29 @@ class CustomCategoriesController extends Controller
         return redirect()->back()->with('success', 'Data updated successfully!');
     }
 
+    public function updateStatus(Request $request, $categoriesID)
+    {
+        // Validasi input status
+        $validated = $request->validate([
+            'is_active' => 'required',
+        ]);
+
+        // Temukan order transaction berdasarkan order ID
+        $customCategories = Custom_categories_pizza::where('categories_ID', $categoriesID)->first();
+
+        if ($customCategories) {
+            // Update status_order dengan nilai yang dipilih
+            $customCategories->is_active = $request->is_active;
+            $customCategories->save(); // simpan perubahan
+
+            // Kembalikan response sukses
+            return back()->with('success', 'status updated.');
+        } else {
+            // Jika order tidak ditemukan
+            return back()->with('error', 'not found.');
+        }
+    }
+
 
     public function storeSizeProperties(Request $request)
     {

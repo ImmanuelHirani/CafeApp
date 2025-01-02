@@ -50,8 +50,7 @@
                 </div>
             </div>
         </section>
-        @include('layout.Sidebar')
-        @include('layout.AuthCustomer')
+        @include('layout.popovers.aside.sidebar-frontend')
     </main>
     @include('layout.Footer')
 </body>

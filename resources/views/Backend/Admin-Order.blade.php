@@ -22,7 +22,7 @@
 <body id="Admin">
     @include('layout.header')
     <main class="grid grid-cols-7 gap-4 py-4">
-        <section class="flex flex-col col-span-5 p-6 rounded-lg h-fit gap-9 bg-primary-color-admin">
+        <section class="flex flex-col h-full col-span-5 p-6 rounded-lg gap-9 bg-primary-color-admin">
             <div class="overflow-x-auto">
                 <table id="tableCustomers" class="min-w-full font-semibold border shadow-sm stripe">
                     <thead class="">
@@ -113,7 +113,7 @@
                 </table>
             </div>
         </section>
-        <aside class="flex flex-col col-span-2 gap-8 pt-6 overflow-hidden rounded-lg h-fit bg-primary-color-admin">
+        <aside class="flex flex-col h-full col-span-2 gap-8 pt-6 overflow-hidden rounded-lg bg-primary-color-admin">
             <div class="px-6 head-aside">
                 <p class="text-xl font-semibold">Order Details</p>
             </div>
@@ -175,7 +175,7 @@
                 </div>
             </form>
             <form action="" class="sideMenu-tabs-content">
-                <div class="flex flex-col gap-3 px-6 pb-6 h-[28.5rem] overflow-y-auto card-wrapper">
+                <div class="flex flex-col gap-3 px-6 pt-0.5 pb-6 h-[28.5rem] overflow-y-auto card-wrapper">
                     @isset($orderDetails)
                         <div class="flex flex-col gap-3 text-lg order-card">
                             @forelse ($orderDetails->details as $detail)
@@ -253,12 +253,10 @@
             </form>
             <div class="flex items-center w-full gap-3 p-4 mt-auto bg-white shadow-inner h-fit footer-toggle">
                 <button type="submit"
-                    class="w-full h-12 rounded-full text-secondary-accent-color bg-secondary-accent-color-admin outline outline-gray-200 outline-[1px]">
+                    class="w-full h-12 rounded-full text-white bg-secondary-accent-color outline outline-gray-200 outline-[1px]">
                     Cancle Order
                 </button>
-                <button type="submit" class="w-full h-12 !text-white rounded-full bg-secondary-accent-color">
-                    Finish Order
-                </button>
+
             </div>
         </aside>
     </main>

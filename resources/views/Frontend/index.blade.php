@@ -10,6 +10,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <!-- Add this in your <head> section -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- @TODO: replace SET_YOUR_CLIENT_KEY_HERE with your client key -->
+    <!-- Pastikan ini ada di bagian HEAD, sebelum script payment -->
+    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
+        data-client-key="{{ config('midtrans.client_key') }}"></script>
+    <!-- Note: replace with src="https://app.midtrans.com/snap/snap.js" for Production environment -->
     <!-- <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" /> -->
     @vite('resources/css/app.css')
 </head>
@@ -446,8 +453,11 @@
                 </div>
             </div>
         </section>
-        @include('layout.Sidebar')
-        @include('layout.AuthCustomer')
+        <!-- HTML -->
+        <!-- Update your payment button and script -->
+        <!-- Di bagian head -->
+        @include('layout.popovers.aside.sidebar-frontend')
+        @include('layout.modal.login-registerBox.Auth-Customer')
     </main>
     @include('layout.Footer')
 </body>
@@ -461,5 +471,11 @@
 <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
 <script src="{{ asset('/js/sidebar.js') }}"></script>
 <script src="{{ asset('/js/boxLogin.js') }}"></script>
+<script>
+    checkoutBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const
+    })
+</script>
 
 </html>

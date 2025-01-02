@@ -44,8 +44,6 @@ class LocationController extends Controller
         return back()->with('success', 'Location added successfully!');
     }
 
-    public function delete($id) {}
-
     public function deleteLocation($locationID)
     {
         // Cari item berdasarkan orderDetailID
@@ -76,5 +74,54 @@ class LocationController extends Controller
 
         // Redirect kembali dengan pesan sukses
         return redirect()->back()->with('success', 'Location has been changed.');
+    }
+
+    public function getLocationData($locationId)
+    {
+        $location = Location::find($locationId);
+
+        if (!$location) {
+            return response()->json(['error' => 'Location not found'], 404);
+        }
+
+        return response()->json([
+            'location_ID' => $location->location_ID,
+            'location_label' => $location->location_label,
+            'reciver_address' => $location->reciver_address,
+            'reciver_name' => $location->reciver_name,
+            'reciver_number' => $location->reciver_number,
+        ]);
+    }
+
+    public function updateLocation(Request $request)
+    {
+        // Validasi data input
+        $validatedData = $request->validate([
+            'location_label' => 'required|string|regex:/^[a-zA-Z\s]+$/|min:1|max:30',
+            'reciver_address' => 'required|string|min:1|max:500',
+            'reciver_name' => 'required|string|regex:/^[a-zA-Z\s]+$/|min:1|max:30',
+            'reciver_number' => 'required|regex:/^[0-9]{10,15}$/',
+        ]);
+
+        // Ambil lokasi berdasarkan ID yang diberikan dari input tersembunyi
+        $location = Location::find($request->input('locationID'));
+
+        if (!$location) {
+            return back()->withErrors(['error' => 'Location not found.']);
+        }
+
+        // Periksa apakah lokasi ini milik customer yang sedang login
+        if ($location->customer_ID !== Auth::id()) {
+            return back()->withErrors(['error' => 'Unauthorized action.']);
+        }
+
+        // Update data lokasi
+        $location->location_label = $validatedData['location_label'];
+        $location->reciver_address = $validatedData['reciver_address'];
+        $location->reciver_name = $validatedData['reciver_name'];
+        $location->reciver_number = $validatedData['reciver_number'];
+        $location->save();
+
+        return back()->with('success', 'Location updated successfully!');
     }
 }

@@ -237,9 +237,9 @@
             </div>
         </section>
         <!-- SideBar  -->
-        @include('layout.Sidebar')
+        @include('layout.popovers.aside.sidebar-frontend')
         <!-- Login & register Box -->
-        @include('layout.AuthCustomer')
+        @include('layout.modal.login-registerBox.Auth-Customer')
     </main>
     @include('layout.Footer')
 </body>

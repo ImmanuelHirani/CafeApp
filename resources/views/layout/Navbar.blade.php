@@ -1,3 +1,5 @@
+{{-- <script type="text/javascript" src="https://app.stg.midtrans.com/snap/snap.js"
+    data-client-key="SB-Mid-client-dskTet5i7M47dhLP"></script> --}}
 <header class="fixed inset-x-0 top-0 z-50 md:top-12">
     <nav class="container relative w-full py-5 transition-all duration-300 ease-linear md:bg-transparent md:py-0">
         <div id="main-nav" class="relative flex items-center justify-between w-full md:pl-4 md:pr-5 group">
@@ -12,14 +14,14 @@
             <div class="box"></div>
             <div class="hidden translate-x-1/2 lg:absolute right-1/2 middle-nav font-magilo lg:block">
                 <div class="flex items-center justify-center gap-16 2xl:gap-20 link-wrapper">
-                    <a href="/" class="text-xl 3xl:text-2xl">Home</a>
-                    <a class="text-xl opacity-80 3xl:text-2xl" href="/menu">
+                    <a href="/" class="text-xl text-opacity-50 3xl:text-2xl">Home</a>
+                    <a class="text-xl text-opacity-50 3xl:text-2xl" href="/menu">
                         Menu
                     </a>
-                    <a class="text-xl opacity-80 3xl:text-2xl" href="/menu/custom">
+                    <a class="text-xl text-opacity-50 3xl:text-2xl" href="/menu/custom">
                         Custom Pizza
                     </a>
-                    <a class="text-xl opacity-80 3xl:text-2xl" href="/contact">
+                    <a class="text-xl text-opacity-50 3xl:text-2xl" href="/contact">
                         Contact
                     </a>
                 </div>
@@ -79,7 +81,7 @@
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 <script>
     const notyf = new Notyf({
-        duration: 2000, // Durasi default
+        duration: 10000,
         position: {
             x: 'right',
             y: 'top',
@@ -130,4 +132,22 @@
             notyf.error("{{ $error }}");
         @endforeach
     @endif
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const links = document.querySelectorAll('.link-wrapper a'); // Semua link di navbar
+
+        // Fungsi untuk memeriksa apakah URL link sama dengan URL saat ini
+        links.forEach(link => {
+            if (link.href === window.location.href) {
+                // Tambahkan kelas untuk link yang aktif
+                link.classList.remove('text-opacity-50');
+                link.classList.add('text-opacity-100');
+            } else {
+                // Tambahkan kelas untuk link yang tidak aktif
+                link.classList.remove('text-opacity-100');
+                link.classList.add('text-opacity-50');
+            }
+        });
+    });
 </script>

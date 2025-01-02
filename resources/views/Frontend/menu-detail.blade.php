@@ -46,29 +46,9 @@
                             Rp {{ number_format($selectedPrice, 0, ',', '.') }}
                         </p>
                         <div class="flex items-center justify-between w-full gap-3 md:justify-normal">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="hidden md:block stroke-highlight-content"
-                                width="48" height="48" viewBox="0 0 32 32" fill="none">
-                                <path
-                                    d="M22.94 9V22.6H13.28C13.2405 21.9864 12.9689 21.4108 12.5203 20.9902C12.0718 20.5696 11.4799 20.3355 10.865 20.3355C10.2501 20.3355 9.65824 20.5696 9.20969 20.9902C8.76113 21.4108 8.48951 21.9864 8.45 22.6H6V9H22.94Z"
-                                    stroke-linecap="round" stroke-linejoin="round" />
-                                <path
-                                    d="M30.9999 17.8V22.6H29.3899C29.3504 21.9864 29.0788 21.4108 28.6303 20.9902C28.1817 20.5696 27.5898 20.3355 26.9749 20.3355C26.36 20.3355 25.7682 20.5696 25.3196 20.9902C24.8711 21.4108 24.5994 21.9864 24.5599 22.6H22.9399V13H26.3099L30.9999 17.8Z"
-                                    stroke-linecap="round" stroke-linejoin="round" />
-                                <path
-                                    d="M30.9999 17.8V22.6H29.3899C29.3504 21.9864 29.0788 21.4108 28.6303 20.9902C28.1817 20.5696 27.5898 20.3355 26.9749 20.3355C26.36 20.3355 25.7682 20.5696 25.3196 20.9902C24.8711 21.4108 24.5994 21.9864 24.5599 22.6H22.9399V17.8H30.9999Z"
-                                    stroke-linecap="round" stroke-linejoin="round" />
-                                <path
-                                    d="M10.8599 25C12.1965 25 13.2799 23.9254 13.2799 22.6C13.2799 21.2745 12.1965 20.2 10.8599 20.2C9.52341 20.2 8.43994 21.2745 8.43994 22.6C8.43994 23.9254 9.52341 25 10.8599 25Z"
-                                    stroke-linecap="round" stroke-linejoin="round" />
-                                <path
-                                    d="M26.9698 25C28.3063 25 29.3898 23.9254 29.3898 22.6C29.3898 21.2745 28.3063 20.2 26.9698 20.2C25.6333 20.2 24.5498 21.2745 24.5498 22.6C24.5498 23.9254 25.6333 25 26.9698 25Z"
-                                    stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M1 10.6H3.61" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M1 13.8H3.61" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M1 17H3.61" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
+                            <i class="text-2xl ti ti-package text-highlight-content"></i>
                             <p class="w-full text-sm md:text-lg md:text-start text-end text-highlight-content">
-                                Tanggerang Karawaci Only
+                                Stock : ({{ $menuDetails->stock }})
                             </p>
                         </div>
                     </span>
@@ -171,13 +151,13 @@
                 {{-- Review End --}}
             </div>
         </section>
-        @include('layout.CartMenuMobile')
+        @include('layout.popovers.menu-details.cart-menu-mobile-insert')
         <!-- Review Box Wrapper -->
-        @include('layout.modal.review-product')
+        @include('layout.modal.menu.review-menu')
         <!-- SideBar  -->
-        @include('layout.Sidebar')
+        @include('layout.popovers.aside.sidebar-frontend')
         <!-- Login & register Box -->
-        @include('layout.AuthCustomer')
+        @include('layout.modal.login-registerBox.Auth-Customer')
     </main>
     @include('layout.Footer')
 </body>

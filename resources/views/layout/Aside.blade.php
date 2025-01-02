@@ -1,5 +1,5 @@
 <aside id="showSelectedMenu"
-    class="flex flex-col col-span-2 gap-8 pt-6 overflow-hidden rounded-lg h-fit bg-primary-color-admin">
+    class="flex flex-col h-full col-span-2 gap-8 pt-6 overflow-hidden rounded-lg bg-primary-color-admin">
     <div class="px-6 head-aside">
         <p class="text-xl font-semibold">Edit Menu</p>
     </div>

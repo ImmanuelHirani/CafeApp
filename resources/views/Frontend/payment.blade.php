@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
@@ -70,39 +72,24 @@
                             <!-- Repeated Content end -->
                             <hr class="border-[1px] border-gray-500" />
                             <div class="flex flex-col gap-3 wrap">
-                                <!-- Subtotal -->
-                                <span class="flex items-center justify-between">
-                                    <p class="text-lg">Subtotal</p>
-                                    <p class="text-lg">Rp
-                                        {{ number_format($orderTransaction->total_amounts, 0, ',', '.') }}
-                                    </p>
-                                </span>
-                                <!-- Shipping -->
-                                <span class="flex items-center justify-between">
-                                    <p class="flex items-center gap-3 text-lg text-highlight-content">
-                                        Shipping
-                                        <img src="../asset/QuestionMark-Shipping.png" class="w-[10%]" alt="" />
-                                    </p>
-                                    <p class="text-lg text-highlight-content">Rp. 20.000</p>
-                                </span>
                                 <!-- Total Payment -->
                                 <span class="flex items-center justify-between">
                                     <p class="text-lg">Total Payment</p>
                                     <p class="text-lg">Rp
-                                        {{ number_format($orderTransaction->total_amounts + 20000, 0, ',', '.') }}
+                                        {{ number_format($orderTransaction->total_amounts, 0, ',', '.') }}
                                     </p>
                                 </span>
                             </div>
                             <!-- Cancel Order Form -->
-                            <form action="{{ route('order.cancel', $orderTransaction->order_ID) }}" method="POST">
+                            <form id="cancel-form" action="{{ route('order.cancel', $orderTransaction->order_ID) }}"
+                                method="POST">
                                 @csrf
                                 @method('PUT')
-                                <button type="submit"
+                                <button id="cancel-button" type="submit"
                                     class="self-end w-full gap-3 py-3 text-base transition-all duration-300 ease-in-out rounded-lg bg-secondary-color">
                                     Cancel Order
                                 </button>
                             </form>
-
                         </div>
                     </div>
                     <div class="col-span-6 row-auto gap-4 text-base md:text-lg">
@@ -120,17 +107,24 @@
                                 </div>
                             </div>
                             <div
-                                class="flex flex-col items-center justify-between w-full gap-4 px-4 py-4 md:gap-0 md:flex-row md:px-8 footer">
-                                <p class="text-sm text-highlight-content">
-                                    Order That Been Pay Cannot Be Cancle *
-                                </p>
-                                <form class="w-full md:w-fit"
+                                class="flex flex-col items-center justify-between w-full gap-4 px-4 py-4 md:gap-0 md:px-8 footer">
+                                <div class="flex items-center justify-between w-full wrap">
+                                    <p class="text-sm text-highlight-content">
+                                        Order That Been Pay Cannot Be Cancle *
+                                    </p>
+                                    <button id="initiate-payment" type="button"
+                                        class="self-end gap-3 px-2 py-2 text-base text-center transition-all duration-300 ease-in-out rounded-lg w-fit 2xl:px-12 bg-secondary-color">
+                                        Pay Now
+                                    </button>
+                                </div>
+                                <form id="payment-form" class="w-full space-y-4"
                                     action="{{ route('order.pay', $orderTransaction->order_ID) }}" method="POST">
                                     @csrf
                                     @method('PUT')
-                                    <button type="submit"
-                                        class="self-end  w-full gap-3 px-2 py-2.5 text-base text-center transition-all duration-300 ease-in-out rounded-lg  2xl:px-12 bg-secondary-color">
-                                        Pay Now
+                                    <button id="complete-payment" type="submit"
+                                        class="self-end w-full gap-3 px-2 py-2.5 text-base text-center transition-all duration-300 ease-in-out rounded-lg 2xl:px-12 bg-secondary-color opacity-50 cursor-not-allowed"
+                                        disabled>
+                                        Payment Finish
                                     </button>
                                 </form>
                             </div>
@@ -139,11 +133,118 @@
                 </div>
             </div>
         </section>
-        <!-- Login & register Box -->
-        @include('layout.AuthCustomer')
+
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function() {
+                const initiatePaymentBtn = document.getElementById('initiate-payment');
+                const completePaymentBtn = document.getElementById('complete-payment');
+                const cancelButton = document.getElementById('cancel-button');
+                const paymentCheckbox = document.querySelector('.user-quick-details input[type="checkbox"]');
+
+                // Disable the "Pay Now" button by default
+                initiatePaymentBtn.disabled = true;
+                initiatePaymentBtn.classList.add('opacity-50', 'cursor-not-allowed');
+
+                // Add event listener to checkbox
+                paymentCheckbox.addEventListener('change', function() {
+                    if (paymentCheckbox.checked) {
+                        initiatePaymentBtn.disabled = false;
+                        initiatePaymentBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    } else {
+                        initiatePaymentBtn.disabled = true;
+                        initiatePaymentBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                    }
+                });
+
+                // Payment process logic
+                const handlePaymentProcess = () => {
+                    if (!paymentCheckbox.checked) {
+                        alert('Please select the checkbox before proceeding with payment.');
+                        return;
+                    }
+
+                    initiatePaymentBtn.disabled = true;
+                    initiatePaymentBtn.textContent = 'Processing...';
+
+                    fetch('/payment/get-transaction-token', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                                'Accept': 'application/json'
+                            },
+                            credentials: 'same-origin'
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`Network error: ${response.statusText}`);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.status === 'success' && data.token) {
+                                snap.pay(data.token, {
+                                    onSuccess: function(result) {
+                                        console.log('Payment success:', result);
+                                        alert('Payment successful!');
+
+                                        // Enable Payment Finish button and update styles
+                                        completePaymentBtn.disabled = false;
+                                        completePaymentBtn.classList.remove('opacity-50',
+                                            'cursor-not-allowed');
+
+                                        // Disable Cancel button and add opacity
+                                        cancelButton.disabled = true;
+                                        cancelButton.style.opacity = '0.5';
+                                        cancelButton.classList.add('cursor-not-allowed');
+
+                                        // Hide Pay Now button
+                                        initiatePaymentBtn.style.display = 'none';
+                                    },
+                                    onPending: function(result) {
+                                        console.log('Payment pending:', result);
+                                        alert('Payment pending. Please complete your payment');
+                                        initiatePaymentBtn.disabled = false;
+                                        initiatePaymentBtn.textContent = 'Pay Now';
+                                    },
+                                    onError: function(result) {
+                                        console.error('Payment error:', result);
+                                        alert('Payment failed!');
+                                        initiatePaymentBtn.disabled = false;
+                                        initiatePaymentBtn.textContent = 'Pay Now';
+                                    },
+                                    onClose: function() {
+                                        console.log(
+                                            'Customer closed the popup without finishing the payment'
+                                            );
+                                        alert('Payment cancelled');
+                                        initiatePaymentBtn.disabled = false;
+                                        initiatePaymentBtn.textContent = 'Pay Now';
+                                    }
+                                });
+                            } else {
+                                throw new Error(data.message || 'Failed to get transaction token');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error.message);
+                            alert(`Error: ${error.message}`);
+                            initiatePaymentBtn.disabled = false;
+                            initiatePaymentBtn.textContent = 'Pay Now';
+                        });
+                };
+
+                // Attach click event to "Pay Now" button
+                if (initiatePaymentBtn) {
+                    initiatePaymentBtn.addEventListener('click', handlePaymentProcess);
+                }
+            });
+        </script>
     </main>
     @include('layout.Footer')
 </body>
+<script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
+    data-client-key="{{ config('midtrans.client_key') }}"></script>
 <!-- <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
       AOS.init();
