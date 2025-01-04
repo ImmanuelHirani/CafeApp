@@ -55,7 +55,7 @@
                                 </span>
                                 <span class="flex items-center justify-between">
                                     <p>Invoice No.</p>
-                                    <p>INVCT/{{ $orderTransactions->first()->order->created_at->format('Y/m/d') }}/{{ $orderTransactions->first()->order->order_ID }}
+                                    <p>INVCT/{{ $orderTransactions->first()->order->created_at->format('Y/m/d') }}/{{ $orderTransactions->first()->order->transaction_ID }}
                                     </p>
                                 </span>
                                 <span class="flex items-center justify-between">
@@ -122,19 +122,21 @@
                                         @endif
                                     </div>
                                     <div class="flex flex-col w-full gap-1.5 text-wrap md:w-[35%]">
-                                        <p class="text-xl font-medium line-clamp-1">
+                                        <p class="text-2xl font-medium line-clamp-1">
                                             {{ $transaction->order_type === 'normal_menu' ? $transaction->menu_name : 'Custom menu' }}
                                         </p>
-                                        <p class="text-xl text-highlight-content">Size ({{ $transaction->size }})
+                                        <p class="text-xl uppercase text-highlight-content">Size
+                                            ({{ $transaction->size }})
                                         </p>
                                         <div class="flex">
-                                            <p>Rp {{ number_format($transaction->subtotal, 0, ',', '.') }}</p>
+                                            <p class="text-xl">Rp
+                                                {{ number_format($transaction->subtotal, 0, ',', '.') }}</p>
                                         </div>
                                     </div>
                                     <div
                                         class="w-full px-4 py-2 rounded-full md:w-[15%] quantity-area bg-secondary-color">
                                         <p class="text-center md:text-base ms-auto">
-                                            Qty : X {{ $transaction->quantity }}
+                                            Qty : {{ $transaction->quantity }}
                                         </p>
                                     </div>
                                 </div>

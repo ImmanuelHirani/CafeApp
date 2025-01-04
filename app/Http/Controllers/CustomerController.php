@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Customer;
 use App\Models\Menu;
+use App\Models\menus;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
@@ -134,9 +135,32 @@ class CustomerController extends Controller
     }
     public function index()
     {
-        $menus = Menu::all();
+        $menus = menus::all();
         return view('Frontend.index', [
             'menus' => $menus
         ]);
+    }
+
+    public function updateStatus(Request $request, $customerID)
+    {
+        // Validasi input status
+        $validated = $request->validate([
+            'is_active' => 'required',
+        ]);
+
+        // Temukan order transaction berdasarkan order ID
+        $customers = Customer::where('customer_ID', $customerID)->first();
+
+        if ($customers) {
+            // Update status_order dengan nilai yang dipilih
+            $customers->is_active = $request->is_active;
+            $customers->save(); // simpan perubahan
+
+            // Kembalikan response sukses
+            return back()->with('success', 'status updated.');
+        } else {
+            // Jika order tidak ditemukan
+            return back()->with('error', 'not found.');
+        }
     }
 }

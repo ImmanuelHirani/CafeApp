@@ -31,8 +31,8 @@
                                         class="flex flex-col items-center w-full gap-12 justify-between md:p-0 p-0.5 md:flex-row md:gap-y-0 gap-y-3">
                                         <div class="relative wrap md:w-[50%] w-full">
                                             @if ($orderDetail->order_type == 'normal_menu')
-                                                <img src="{{ asset('storage/' . $orderDetail->menu->image) }}"
-                                                    alt="{{ $orderDetail->menu_name }}"
+                                                <img src="{{ isset($orderDetail->menu) && $orderDetail->menu->image ? asset('storage/' . $orderDetail->menu->image) : 'https://salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled.png' }}"
+                                                    alt="{{ $orderDetail->menu_name ?? 'Unknown Menu' }}"
                                                     class="object-cover w-full rounded h-52 3xl:w-96 3xl:h-60 md:w-64 md:h-44" />
                                             @else
                                                 <img src="{{ asset('/asset/CustomOrder.png') }}"
@@ -81,8 +81,8 @@
                                 </span>
                             </div>
                             <!-- Cancel Order Form -->
-                            <form id="cancel-form" action="{{ route('order.cancel', $orderTransaction->order_ID) }}"
-                                method="POST">
+                            <form id="cancel-form"
+                                action="{{ route('order.cancel', $orderTransaction->transaction_ID) }}" method="POST">
                                 @csrf
                                 @method('PUT')
                                 <button id="cancel-button" type="submit"
@@ -118,7 +118,8 @@
                                     </button>
                                 </div>
                                 <form id="payment-form" class="w-full space-y-4"
-                                    action="{{ route('order.pay', $orderTransaction->order_ID) }}" method="POST">
+                                    action="{{ route('order.pay', $orderTransaction->transaction_ID) }}"
+                                    method="POST">
                                     @csrf
                                     @method('PUT')
                                     <button id="complete-payment" type="submit"
@@ -216,7 +217,7 @@
                                     onClose: function() {
                                         console.log(
                                             'Customer closed the popup without finishing the payment'
-                                            );
+                                        );
                                         alert('Payment cancelled');
                                         initiatePaymentBtn.disabled = false;
                                         initiatePaymentBtn.textContent = 'Pay Now';

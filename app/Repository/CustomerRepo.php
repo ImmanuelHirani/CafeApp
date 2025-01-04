@@ -2,10 +2,10 @@
 
 namespace App\Repository;
 
-use App\Models\Customer;
+use App\Models\customer;
 
 interface CustomerRepo
 {
-    public function insert(Customer $customer): Customer;
-    public function update(Customer $customer): Customer;
+    public function insert(customer $customer): customer;
+    public function update(customer $customer): customer;
 }

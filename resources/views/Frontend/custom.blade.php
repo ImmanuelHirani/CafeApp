@@ -40,27 +40,33 @@
                             </svg>
                         </div>
                     </div>
-                    <div
-                        class="text-xl transition-all border-b-[1px] duration-300 ease-in-out accordion-content max-h-0">
-                        <div class="flex flex-wrap items-center px-0.5 gap-3 pb-6 mt-3 lg:mt-6 wrap">
-                            @foreach ($sizes as $size)
-                                <!-- Iterasi pada sizeProperties per kategori -->
-                                <button data-id="{{ $size->size_ID }}" data-price="{{ $size->price }}"
-                                    data-max-toppings="{{ $size->allowed_flavor }}"
-                                    class="w-[20%] p-3 hover:bg-secondary-color transition-all ease-in-out duration-300 size-button  rounded-full outline outline-2 outline-white ">
-                                    {{ $size->size }}
-                                    <!-- Ganti 'size' dengan field yang sesuai dari model SizeProperty -->
-                                </button>
-                            @endforeach
-                        </div>
-                        <p class="text-highlight-content">Note :</p>
-                        <ul class="pb-6 space-y-1 list-disc list-inside text-accent-color">
-                            <li>Small Size ( {{ $sizes->get(0)->allowed_flavor }} Flavor )</li>
-                            <li>Medium Size ( {{ $sizes->get(1)->allowed_flavor }} Flavor )</li>
-                            <li>Large Size ( {{ $sizes->get(2)->allowed_flavor }} Flavor )</li>
-                            <li>Extra Large Size ( {{ $sizes->get(3)->allowed_flavor }} Flavor )</li>
-                        </ul>
-                    </div>
+                    @isset($sizes)
+                        @if ($sizes->isNotEmpty())
+                            <div
+                                class="text-xl transition-all border-b-[1px] duration-300 ease-in-out accordion-content max-h-0">
+                                <div class="flex flex-wrap items-center px-0.5 gap-3 pb-6 mt-3 lg:mt-6 wrap">
+                                    @foreach ($sizes as $size)
+                                        <button data-id="{{ $size->size_ID }}" data-price="{{ $size->price }}"
+                                            data-max-toppings="{{ $size->allowed_flavor }}"
+                                            class="w-[20%] p-3 hover:bg-secondary-color transition-all ease-in-out duration-300 size-button rounded-full outline outline-2 outline-white ">
+                                            {{ $size->size }}
+                                        </button>
+                                    @endforeach
+                                </div>
+                                <p class="text-highlight-content">Note :</p>
+                                <ul class="pb-6 space-y-1 list-disc list-inside text-accent-color">
+                                    @foreach ($sizes as $index => $size)
+                                        <li>{{ $size->size }} ({{ $size->allowed_flavor }} Flavor)</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @else
+                            <p class="text-lg text-highlight-content">No sizes available at the moment.
+                            </p>
+                        @endif
+                    @else
+                        <p class="text-lg text-highlight-content">Sizes information is unavailable.</p>
+                    @endisset
                 </div>
                 @foreach ($categories as $category)
                     <div class="flex flex-col px-1 overflow-hidden accordion-wrapper">

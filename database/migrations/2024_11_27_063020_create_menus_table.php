@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('menu_items', function (Blueprint $table) {
+        Schema::create('menus', function (Blueprint $table) {
             $table->id('menu_ID'); // Primary key dengan auto_increment
             $table->string('menu_type'); // Jenis menu
             $table->string('image')->nullable(); // Gambar menu, nullable
@@ -22,6 +22,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('menu_items'); // Menghapus tabel saat rollback
+        Schema::dropIfExists('menus'); // Menghapus tabel saat rollback
     }
 };

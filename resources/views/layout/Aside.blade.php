@@ -15,7 +15,7 @@
             </li>
         </ul>
     </div>
-    <div class="my-auto wrap">
+    <div class=" wrap">
         @php
             // Tentukan ID submit berdasarkan nama route
             $submitId = Route::currentRouteName() === 'menu-properties.update' ? 'update_properties' : 'update_menu';
@@ -71,12 +71,13 @@
                         <select name="is_active"
                             class="relative p-3 rounded-lg outline-none text-white
                            {{ $menuDetails->is_active == 1 ? 'bg-green-500' : 'bg-secondary-color' }}">
-                            <option value="1" {{ ($menuDetails->is_active ?? 0) == 1 ? 'selected' : '' }}>Active
+                            <option class="bg-green-500" value="1"
+                                {{ ($menuDetails->is_active ?? 0) == 1 ? 'selected' : '' }}>Active
                             </option>
-                            <option value="0" {{ ($menuDetails->is_active ?? 0) == 0 ? 'selected' : '' }}>Non-Active
+                            <option class="bg-secondary-color" value="0"
+                                {{ ($menuDetails->is_active ?? 0) == 0 ? 'selected' : '' }}>Non-Active
                             </option>
                         </select>
-
                     </div>
                 </div>
                 <div class="px-6 pb-6 overflow-y-auto card-content sideMenu-tabs-content ">
@@ -96,15 +97,15 @@
                                             class="p-2 uppercase border-2 rounded-lg text-secondary-accent-color border-secondary-accent-color w-[3.5rem] flex items-center justify-center h-[3rem]">{{ $property->size }}</label>
                                         <input type="number"
                                             class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin size-price"
-                                            min="0" name="properties[{{ $property->property_ID }}][price]"
+                                            min="0" name="properties[{{ $property->menu_size_ID }}][price]"
                                             value="{{ $property->price }}" />
                                     </div>
-                                    <input type="hidden" name="properties[{{ $property->property_ID }}][property_ID]"
-                                        value="{{ $property->property_ID }}">
-                                    <input type="hidden" name="properties[{{ $property->property_ID }}][size]"
+                                    <input type="hidden" name="properties[{{ $property->menu_size_ID }}][menu_size_ID]"
+                                        value="{{ $property->menu_size_ID }}">
+                                    <input type="hidden" name="properties[{{ $property->menu_size_ID }}][size]"
                                         value="{{ $property->size }}">
-                                    <input type="hidden" name="properties[{{ $property->property_ID }}][is_active_properties]"
-                                        value="1">
+                                    <input type="hidden"
+                                        name="properties[{{ $property->menu_size_ID }}][is_active_properties]" value="1">
                                     <input type="hidden" name="is_active_properties" value="1">
                                 @endforeach
                             @else

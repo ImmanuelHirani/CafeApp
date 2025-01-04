@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
-use App\Models\Location;
+use App\Models\customer;
+use App\Models\location;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class LocationController extends Controller
+class locationController extends Controller
 {
-    public function addLocation(Request $request)
+    public function addlocation(Request $request)
     {
         // Validasi data input
         $validatedData = $request->validate([
@@ -19,69 +19,69 @@ class LocationController extends Controller
             'reciver_number' => 'required|regex:/^[0-9]{10,15}$/',
         ]);
 
-        // Ambil model Customer berdasarkan ID pengguna yang login
-        $customer = Customer::find(Auth::id());
+        // Ambil model customer berdasarkan ID pengguna yang login
+        $customer = customer::find(Auth::id());
 
         if (!$customer) {
-            return back()->withErrors(['error' => 'Customer not found.']);
+            return back()->withErrors(['error' => 'customer not found.']);
         }
 
         // Cek apakah user sudah memiliki 2 lokasi
-        if ($customer->locationCustomer()->count() >= 2) {
+        if ($customer->locationcustomer()->count() >= 2) {
             return back()->withErrors(['error' => 'only 2 locations are allowed.']);
         }
 
         // Buat lokasi baru
-        $location = new Location();
+        $location = new location();
         $location->customer_ID = $customer->customer_ID;
         $location->location_label = $validatedData['location_label'];
         $location->reciver_address = $validatedData['reciver_address'];
         $location->reciver_name = $validatedData['reciver_name'];
         $location->reciver_number = $validatedData['reciver_number'];
-        $location->is_primary = $customer->locationCustomer()->count() === 0 ? 1 : 0; // Set lokasi pertama sebagai primary
+        $location->is_primary = $customer->locationcustomer()->count() === 0 ? 1 : 0; // Set lokasi pertama sebagai primary
         $location->save();
 
-        return back()->with('success', 'Location added successfully!');
+        return back()->with('success', 'location added successfully!');
     }
 
-    public function deleteLocation($locationID)
+    public function deletelocation($locationID)
     {
         // Cari item berdasarkan orderDetailID
-        $location = Location::find($locationID);
+        $location = location::find($locationID);
 
         // Hapus item dari keranjang
         $location->delete();
 
-        return redirect()->back()->with('success', 'Location Deleted');
+        return redirect()->back()->with('success', 'location Deleted');
     }
 
     public function updatePrimary($locationID)
     {
         // Cari lokasi berdasarkan ID
-        $Location = Location::find($locationID);
+        $location = location::find($locationID);
 
-        if (!$Location) {
+        if (!$location) {
             // Jika lokasi tidak ditemukan, redirect kembali dengan pesan error
-            return redirect()->back()->with('error', 'Location not found.');
+            return redirect()->back()->with('error', 'location not found.');
         }
 
         // Atur semua lokasi milik pengguna menjadi tidak primary
-        Location::where('customer_ID', $Location->customer_ID)->update(['is_primary' => 0]);
+        location::where('customer_ID', $location->customer_ID)->update(['is_primary' => 0]);
 
         // Atur lokasi yang dipilih menjadi primary
-        $Location->is_primary = 1;
-        $Location->save();
+        $location->is_primary = 1;
+        $location->save();
 
         // Redirect kembali dengan pesan sukses
-        return redirect()->back()->with('success', 'Location has been changed.');
+        return redirect()->back()->with('success', 'location has been changed.');
     }
 
-    public function getLocationData($locationId)
+    public function getlocationData($locationId)
     {
-        $location = Location::find($locationId);
+        $location = location::find($locationId);
 
         if (!$location) {
-            return response()->json(['error' => 'Location not found'], 404);
+            return response()->json(['error' => 'location not found'], 404);
         }
 
         return response()->json([
@@ -93,7 +93,7 @@ class LocationController extends Controller
         ]);
     }
 
-    public function updateLocation(Request $request)
+    public function updatelocation(Request $request)
     {
         // Validasi data input
         $validatedData = $request->validate([
@@ -104,10 +104,10 @@ class LocationController extends Controller
         ]);
 
         // Ambil lokasi berdasarkan ID yang diberikan dari input tersembunyi
-        $location = Location::find($request->input('locationID'));
+        $location = location::find($request->input('locationID'));
 
         if (!$location) {
-            return back()->withErrors(['error' => 'Location not found.']);
+            return back()->withErrors(['error' => 'location not found.']);
         }
 
         // Periksa apakah lokasi ini milik customer yang sedang login
@@ -122,6 +122,6 @@ class LocationController extends Controller
         $location->reciver_number = $validatedData['reciver_number'];
         $location->save();
 
-        return back()->with('success', 'Location updated successfully!');
+        return back()->with('success', 'location updated successfully!');
     }
 }

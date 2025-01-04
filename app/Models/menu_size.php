@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class MenuProperties extends Model
+class menu_size extends Model
 {
-    protected $table = 'menu_properties';
-    protected $primaryKey = 'property_ID'; // Sesuaikan dengan primary key di tabel
+    protected $table = 'menus_size';
+    protected $primaryKey = 'menu_size_ID'; // Sesuaikan dengan primary key di tabel
 
     protected $fillable = [
         'menu_ID',
@@ -18,6 +18,6 @@ class MenuProperties extends Model
 
     public function menu()
     {
-        return $this->belongsTo(Menu::class, 'menu_ID', 'menu_ID');
+        return $this->belongsTo(menus::class, 'menu_ID', 'menu_ID');
     }
 }

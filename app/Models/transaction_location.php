@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class transactionLocation extends Model
+class transaction_location extends Model
 {
-    protected $table = 'order_transaction_location';
-    protected $primaryKey = 'order_transaction_location_ID';
+    protected $table = 'transaction_location';
+    protected $primaryKey = 'transaction_location_ID';
 
     protected $fillable = [
-        'order_ID',
+        'transaction_ID',
         'location_label',
         'reciver_address',
         'reciver_number',
@@ -20,6 +20,6 @@ class transactionLocation extends Model
 
     public function order()
     {
-        return $this->belongsTo(orderTransaction::class, 'order_ID', 'order_ID');
+        return $this->belongsTo(transaction::class, 'order_ID', 'order_ID');
     }
 }

@@ -19,6 +19,7 @@ Route::get('/', [CustomerController::class, 'index'])->name('template');
 Route::post('/customer/register', [CustomerController::class, 'register'])->name('register');
 Route::post('/customer/login', [CustomerController::class, 'login'])->name('login');
 Route::post('/customer/logout', [CustomerController::class, 'logout'])->name('logout');
+Route::post('/customer/status/update/{customerID}', [CustomerController::class, 'updateStatus'])->name('customer.updateStatus');
 
 // frontend menu
 Route::get('/menu', [MenuController::class, 'Product'])->name('frontend.menu');
@@ -58,8 +59,8 @@ Route::post('/calculate-total', [CustomerOrderController::class, 'calculateTotal
 
 // Cart
 Route::get('/cart', [CartController::class, 'cartMenu'])->name('cart.view');
-Route::put('/cart/update/{orderID}', [CartController::class, 'updateCartQuantity'])->name('cart.update');
-Route::delete('/cart/delete/{orderID}', [CartController::class, 'deleteCart'])->name('delete.cart');
+Route::put('/cart/update/{transactionID}', [CartController::class, 'updateCartQuantity'])->name('cart.update');
+Route::delete('/cart/delete/{transactionID}', [CartController::class, 'deleteCart'])->name('delete.cart');
 Route::post('/cart/add/', [CartController::class, 'AddToCart'])->name('cart.add');
 Route::post('/store-custom-order', [CartController::class, 'AddToCartCustom'])->name('store.custom.order');
 
@@ -68,10 +69,10 @@ Route::post('/store-custom-order', [CartController::class, 'AddToCartCustom'])->
 
 // Order
 Route::get('/payment', [OrderController::class, 'payment'])->name('payment.view');
-Route::get('/tracking/order/{orderID}', [OrderController::class, 'trackOrder'])->name('tracking.view');
+Route::get('/order/details/{transactionID}', [OrderController::class, 'trackOrder'])->name('order-details.view');
 Route::get('/make-order', [CartController::class, 'makeOrder'])->name('make.order');
-Route::put('/order/cancel/{orderId}', [CartController::class, 'cancelOrder'])->name('order.cancel');
-Route::put('/order/pay/{orderId}', [OrderController::class, 'payOrder'])->name('order.pay');
+Route::put('/order/cancel/{transactionID}', [CartController::class, 'cancelOrder'])->name('order.cancel');
+Route::put('/order/pay/{transactionID}', [OrderController::class, 'payOrder'])->name('order.pay');
 Route::post('/payment/get-transaction-token', [PaymentController::class, 'getTransactionToken']);
 
 
@@ -96,7 +97,7 @@ Route::get('/admin/menu/order', [OrderController::class, 'adminOrder'])->name('a
 Route::get('/admin/menu/custom/order', [CustomCategoriesController::class, 'adminCustomOrder'])->name('admin.custom.order');
 Route::get('/admin/menu/order/{id}', [OrderController::class, 'getCustomerOrderDetails'])->name('admin.order.details');
 // Route untuk mengupdate status order
-Route::post('/order/update-status/{orderID}', [OrderController::class, 'updateStatus'])->name('order.updateStatus');
+Route::post('/order/update-status/{transactionID}', [OrderController::class, 'updateStatus'])->name('order.updateStatus');
 
 
 Route::put('/update/product/{id}', [MenuController::class, 'updateMenu'])->name('update.menu');

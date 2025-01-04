@@ -2,11 +2,11 @@
 
 namespace App\Repository\RepositoryImpl;
 
-use App\Models\Customer;
-use App\Repository\CustomerRepo;
+use App\Models\customer;
+use App\Repository\customerRepo;
 use Illuminate\Database\Connection;
 
-class CustomerRepoImpl implements CustomerRepo
+class customerRepoImpl implements customerRepo
 {
 
     private Connection $conn;
@@ -16,7 +16,7 @@ class CustomerRepoImpl implements CustomerRepo
         $this->conn = $conn;
     }
 
-    public function insert(Customer $customer): Customer
+    public function insert(customer $customer): customer
     {
         $data = [
             'email' => $customer->email,
@@ -29,7 +29,7 @@ class CustomerRepoImpl implements CustomerRepo
         return $customer;
     }
 
-    public function update(Customer $customer): Customer
+    public function update(customer $customer): customer
     {
         $data = $customer->only(['username', 'email', 'phone', 'image']);
 

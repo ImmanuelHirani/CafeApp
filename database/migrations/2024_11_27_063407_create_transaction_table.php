@@ -9,8 +9,8 @@ return new class extends Migration
 
     public function up()
     {
-        Schema::create('order_transaction', function (Blueprint $table) {
-            $table->id('order_ID');
+        Schema::create('transaction', function (Blueprint $table) {
+            $table->id('transaction_ID');
             $table->unsignedBigInteger('customer_ID');
             $table->decimal('total_amounts', 10);
             $table->string('status_order')->nullable()->default(0);
@@ -21,6 +21,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('order_transaction');
+        Schema::dropIfExists('transaction');
     }
 };

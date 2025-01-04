@@ -50,7 +50,7 @@
                     <tbody class="bg-white">
                         @foreach ($orderCustomers as $orderCustomer)
                             <tr class="hover:bg-gray-50">
-                                <td class="text-base text-gray-900">{{ $orderCustomer->order_ID }}</td>
+                                <td class="text-base text-gray-900">{{ $orderCustomer->transaction_ID }}</td>
                                 <td class="text-base text-gray-500">
                                     {{ $orderCustomer->customer->username ?? 'Not Set The Username Yet' }}
                                 </td>
@@ -58,7 +58,7 @@
                                     Rp {{ number_format($orderCustomer->total_amounts, 0, ',', '.') }}
                                 </td>
                                 <td class="">
-                                    <form action="{{ route('order.updateStatus', $orderCustomer->order_ID) }}"
+                                    <form action="{{ route('order.updateStatus', $orderCustomer->transaction_ID) }}"
                                         method="POST">
                                         @csrf
                                         <div class="status-select">
@@ -101,7 +101,7 @@
                                 <td class="flex justify-center text-base text-gray-500">
                                     <div
                                         class="flex items-center cursor-pointer justify-center !text-white bg-blue-300 rounded-full w-9 h-9 btn">
-                                        <a href="{{ route('admin.order.details', $orderCustomer->order_ID ?? '') }}"
+                                        <a href="{{ route('admin.order.details', $orderCustomer->transaction_ID ?? '') }}"
                                             class="text-xl">
                                             <i class="ti ti-eye-search"></i>
                                         </a>
@@ -241,13 +241,7 @@
                     @endisset
                 </div>
             </form>
-            <div class="flex items-center w-full gap-3 p-4 mt-auto bg-white shadow-inner h-fit footer-toggle">
-                <button type="submit"
-                    class="w-full h-12 rounded-full text-white bg-secondary-accent-color outline outline-gray-200 outline-[1px]">
-                    Cancle Order
-                </button>
 
-            </div>
         </aside>
     </main>
 </body>

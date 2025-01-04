@@ -6,6 +6,7 @@ namespace App\Repository\RepositoryImpl;
 use App\Repository\MenuRepo;
 use App\Models\Menu;
 use App\Models\menuProperties;
+use App\Models\menus;
 use Illuminate\Support\Facades\Log;
 
 class MenuRepoImpl implements MenuRepo
@@ -14,19 +15,19 @@ class MenuRepoImpl implements MenuRepo
     // Insert method di repository
 
 
-    public function create(array $data): Menu
+    public function create(array $data): menus
     {
-        return Menu::create($data);
+        return menus::create($data);
     }
 
     public function find($id)
     {
-        return Menu::find($id);
+        return menus::find($id);
     }
 
     // MenuRepository.php
 
-    public function update(Menu $menu, array $data)
+    public function update(menus $menu, array $data)
     {
         $menu->update($data);
     }
@@ -34,7 +35,7 @@ class MenuRepoImpl implements MenuRepo
 
     public function delete($id)
     {
-        $menu = Menu::find($id);
+        $menu = menus::find($id);
         if ($menu) {
             $menu->delete();
             return true;

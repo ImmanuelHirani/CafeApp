@@ -6,24 +6,29 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
-        Schema::create('customers_menu_review', function (Blueprint $table) {
-            $table->id('review_ID');
+
+        Schema::create('customer_messages', function (Blueprint $table) {
+            $table->id('message_ID');
             $table->unsignedBigInteger('customer_ID');
-            $table->unsignedBigInteger('menu_ID');
-            $table->integer('rating');
-            $table->text('review_desc')->nullable();
+            $table->string('name');
+            $table->string('email');
+            $table->string('messages');
             $table->timestamps();
 
-            // Foreign keys
             $table->foreign('customer_ID')->references('customer_ID')->on('customers')->onDelete('cascade');
-            $table->foreign('menu_ID')->references('menu_ID')->on('menu_items')->onDelete('cascade');
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
-        Schema::dropIfExists('customers_review');
+        Schema::dropIfExists('customer_messages');
     }
 };

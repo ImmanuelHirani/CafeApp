@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('custom_categories_pizza', function (Blueprint $table) {
-            $table->id('categories_ID');
-            $table->string('categories_type');
-            $table->tinyInteger('is_active');
+        Schema::create('custom_size', function (Blueprint $table) {
+            $table->id('size_ID');
+            $table->string('size');
+            $table->integer('allowed_flavor');
+            $table->decimal('price', 8, 2)->default(0); // Default price 0
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('custom_categories_pizza');
+        Schema::dropIfExists('custom_size');
     }
 };

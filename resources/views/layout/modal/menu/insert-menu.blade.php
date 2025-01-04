@@ -1,4 +1,4 @@
-<dialog id="modal-add-product" class=" relative max-w-[80%] max-h-[90%] m-auto">
+<dialog id="modal-add-product" class="relative m-auto  w-fit h-fit">
     <form action="{{ Route('create.new.product') }}" class="w-[65rem]" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="card-content">

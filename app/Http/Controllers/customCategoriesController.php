@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\custom_categories;
 use Illuminate\Http\Request;
 use App\Models\Custom_categories_pizza;
-use App\Models\Custom_categories_properties;
-use App\Models\Custom_categories_size_properties;
+use App\Models\custom_properties;
+use App\Models\custom_size;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -17,7 +19,7 @@ class CustomCategoriesController extends Controller
     public function adminCustomOrder()
     {
         // Mengambil data kategori beserta properties dan sizes
-        $categories = Custom_categories_pizza::with(['properties'])->get();
+        $categories = custom_categories::with(['properties'])->get();
 
         return view('Backend.Admin-Customs-Order', [
             'categories' => $categories,
@@ -27,9 +29,9 @@ class CustomCategoriesController extends Controller
     public function getCategoriesDetails($id)
     {
         // Ambil detail kategori berdasarkan ID
-        $detailCategories = Custom_categories_pizza::with(['properties'])->find($id);
-        $categories = Custom_categories_pizza::with(['properties'])->get();
-        $sizes = Custom_categories_size_properties::all();
+        $detailCategories = custom_categories::with(['properties'])->find($id);
+        $categories = custom_categories::with(['properties'])->get();
+        $sizes = custom_size::all();
 
         // Jika kategori tidak ditemukan
         if (!$categories) {
@@ -67,7 +69,7 @@ class CustomCategoriesController extends Controller
             DB::beginTransaction();
 
             // Simpan data untuk Custom_categories_pizza
-            $customPizza = Custom_categories_pizza::create([
+            $customPizza = custom_categories::create([
                 'categories_type' => $validatedData['from1']['categories'],
                 'is_active' => true,
             ]);
@@ -75,13 +77,13 @@ class CustomCategoriesController extends Controller
             // Ambil ID kategori yang baru dibuat
             $categoriesID = $customPizza->categories_ID;
 
-            // Simpan data untuk Custom_categories_properties
+            // Simpan data untuk custom_properties
             $propertiesNames = $validatedData['properties_name'];
             $prices = $validatedData['price'];
 
             foreach ($propertiesNames as $index => $property) {
                 if (!empty($property)) {
-                    Custom_categories_properties::create([
+                    custom_properties::create([
                         'categories_ID' => $categoriesID, // Gunakan ID kategori yang baru dibuat
                         'properties_name' => $property,
                         'price' => $prices[$index] ?? 0, // Menggunakan harga yang diberikan, atau default 0
@@ -105,7 +107,7 @@ class CustomCategoriesController extends Controller
     public function delete($id)
     {
         // Temukan menu berdasarkan ID
-        $menuCustom = Custom_categories_pizza::find($id);
+        $menuCustom = custom_categories::find($id);
 
         // Jika menu tidak ditemukan
         if (!$menuCustom) {
@@ -129,8 +131,8 @@ class CustomCategoriesController extends Controller
         ]);
 
         try {
-            // Insert data ke tabel custom_categories_properties
-            Custom_categories_properties::create([
+            // Insert data ke tabel custom_properties
+            custom_properties::create([
                 'categories_ID' => $id,
                 'properties_name' => $request->input('properties_name'),
                 'price' => $request->input('price'),
@@ -160,7 +162,7 @@ class CustomCategoriesController extends Controller
         // Update untuk Topping List (Table: properties)
         if ($request->has('properties')) {
             foreach ($request->properties as $id => $propertyData) {
-                $existingProperty = Custom_categories_properties::find($id);
+                $existingProperty = custom_properties::find($id);
 
                 if (!$existingProperty) {
                     continue; // Skip jika ID tidak ditemukan
@@ -185,10 +187,10 @@ class CustomCategoriesController extends Controller
             }
         }
 
-        // Update untuk Size List (Table: custom_categories_size_properties)
+        // Update untuk Size List (Table: custom_size)
         if ($request->has('sizeProperties')) {
             foreach ($request->sizeProperties as $id => $sizeData) {
-                $existingSize = Custom_categories_size_properties::find($id);
+                $existingSize = custom_size::find($id);
 
                 if (!$existingSize) {
                     continue; // Skip jika ID tidak ditemukan
@@ -226,7 +228,7 @@ class CustomCategoriesController extends Controller
         ]);
 
         // Temukan order transaction berdasarkan order ID
-        $customCategories = Custom_categories_pizza::where('categories_ID', $categoriesID)->first();
+        $customCategories = custom_categories::where('categories_ID', $categoriesID)->first();
 
         if ($customCategories) {
             // Update status_order dengan nilai yang dipilih
@@ -256,7 +258,7 @@ class CustomCategoriesController extends Controller
 
         // Loop untuk menyimpan setiap data berdasarkan indeks
         foreach ($request->size as $index => $size) {
-            Custom_categories_size_properties::updateOrCreate(
+            custom_size::updateOrCreate(
                 [
                     'size' => $size, // Kondisi unik jika ingin menghindari duplikat
                 ],

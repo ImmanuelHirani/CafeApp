@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class MenuReview extends Model
+class menu_review extends Model
 {
-    protected $table = 'customers_review';
+    protected $table = 'menu_review';
     protected $primaryKey = 'review_ID'; // Sesuaikan dengan primary key di tabel
 
     protected $fillable = [
@@ -18,11 +18,11 @@ class MenuReview extends Model
 
     public function menu()
     {
-        return $this->belongsTo(Menu::class, 'menu_ID', 'menu_ID');
+        return $this->belongsTo(menus::class, 'menu_ID', 'menu_ID');
     }
 
     public function customer()
     {
-        return $this->belongsTo(Customer::class, 'customer_ID', 'customer_ID');
+        return $this->belongsTo(customer::class, 'customer_ID', 'customer_ID');
     }
 }

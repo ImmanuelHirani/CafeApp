@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Custom_categories_pizza;
-use App\Models\Custom_categories_properties;
-use App\Models\Custom_categories_size_properties;
-use App\Models\Menu;
+use App\Models\custom_categories;
+use App\Models\custom_properties;
+use App\Models\custom_size;
+use App\Models\menus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,9 +13,9 @@ class CustomerOrderController extends Controller
 {
     public function customPizza()
     {
-        $categories = Custom_categories_pizza::with('properties')->where('is_active', 1)->get();
-        $menus = Menu::with('properties')->get();
-        $sizes = Custom_categories_size_properties::all(); // Size dengan harga dan jumlah topping yang diperbolehkan
+        $categories = custom_categories::with('properties')->where('is_active', 1)->get();
+        $menus = menus::with('properties')->get();
+        $sizes = custom_size::all(); // Size dengan harga dan jumlah topping yang diperbolehkan
 
 
 
@@ -43,7 +43,7 @@ class CustomerOrderController extends Controller
         }
 
         // Ambil data ukuran pizza berdasarkan size_id yang dipilih
-        $size = Custom_categories_size_properties::find($request->size_id);
+        $size = custom_size::find($request->size_id);
 
         if (!$size) {
             return response()->json(['error' => 'Invalid size selected.']);
@@ -66,7 +66,7 @@ class CustomerOrderController extends Controller
         $toppingPrice = 0;
         if ($request->has('toppings')) {
             foreach ($request->toppings as $toppingName) {
-                $topping = Custom_categories_properties::where('properties_name', $toppingName)->first();
+                $topping = custom_properties::where('properties_name', $toppingName)->first();
                 if ($topping) {
                     $toppingPrice += $topping->price;
                 }

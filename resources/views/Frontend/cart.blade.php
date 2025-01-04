@@ -58,33 +58,33 @@
                                             <p class="line-clamp-1">{{ $cart->menu->name }}</p>
                                             <p class="uppercase text-highlight-content">Size : {{ $cart->size }}</p>
                                             <div class="flex items-center gap-3 md:hidden wrap">
-                                                <form action="{{ route('cart.update', $cart->order_ID) }}"
+                                                <form action="{{ route('cart.update', $cart->transaction_ID) }}"
                                                     method="POST" class="cart-form">
                                                     @csrf
                                                     @method('PUT')
                                                     <div
                                                         class="flex items-center justify-center gap-8 px-4 py-1.5 rounded-full w-fit outline outline-1 outline-white">
                                                         <button type="button" class="decrease-btn"
-                                                            data-id="{{ $cart->order_detail_ID }}">
+                                                            data-id="{{ $cart->transaction_detail_ID }}">
                                                             <i class="ti ti-minus"></i>
                                                         </button>
-                                                        <span id="quantity-mobile{{ $cart->order_detail_ID }}"
+                                                        <span id="quantity-mobile{{ $cart->transaction_detail_ID }}"
                                                             class="text-base md:text-lg text-accent-color">
                                                             {{ $cart->quantity }}
                                                         </span>
                                                         <button type="button" class="increase-btn"
-                                                            data-id="{{ $cart->order_detail_ID }}">
+                                                            data-id="{{ $cart->transaction_detail_ID }}">
                                                             <i class="ti ti-plus"></i>
                                                         </button>
                                                     </div>
                                                 </form>
-                                                <form action="{{ route('delete.cart', $cart->order_ID) }}"
+                                                <form action="{{ route('delete.cart', $cart->transaction_ID) }}"
                                                     method="POST" class="delete-form">
                                                     @csrf
                                                     @method('delete')
                                                     <button type="button"
                                                         class="flex items-center justify-center p-1.5 rounded-full bg-secondary-color delete-cart-item"
-                                                        data-id="{{ $cart->order_detail_ID }}">
+                                                        data-id="{{ $cart->transaction_detail_ID }}">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"
                                                             fill="none" viewBox="0 0 26 24" stroke="currentColor">
                                                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -94,38 +94,38 @@
                                                 </form>
                                             </div>
                                             <p class="inline-block text-base md:hidden"
-                                                id="subtotal-mobile{{ $cart->order_detail_ID }}">
+                                                id="subtotal-mobile{{ $cart->transaction_detail_ID }}">
                                                 Rp {{ number_format($cart->subtotal, 0, ',', '.') }}
                                             </p>
                                         </div>
                                         <div class="items-center hidden w-[20%]   gap-3 md:flex wrap">
-                                            <form action="{{ route('cart.update', $cart->order_ID) }}" method="POST"
-                                                class="cart-form">
+                                            <form action="{{ route('cart.update', $cart->transaction_ID) }}"
+                                                method="POST" class="cart-form">
                                                 @csrf
                                                 @method('PUT')
                                                 <div
                                                     class="flex items-center justify-center gap-8 px-4 py-1.5 rounded-full w-fit outline outline-1 outline-white">
                                                     <button type="button" class="decrease-btn"
-                                                        data-id="{{ $cart->order_detail_ID }}">
+                                                        data-id="{{ $cart->transaction_detail_ID }}">
                                                         <i class="ti ti-minus"></i>
                                                     </button>
-                                                    <span id="quantity-{{ $cart->order_detail_ID }}"
+                                                    <span id="quantity-{{ $cart->transaction_detail_ID }}"
                                                         class="text-base md:text-lg text-accent-color">
                                                         {{ $cart->quantity }}
                                                     </span>
                                                     <button type="button" class="increase-btn"
-                                                        data-id="{{ $cart->order_detail_ID }}">
+                                                        data-id="{{ $cart->transaction_detail_ID }}">
                                                         <i class="ti ti-plus"></i>
                                                     </button>
                                                 </div>
                                             </form>
-                                            <form action="{{ route('delete.cart', $cart->order_ID) }}" method="POST"
-                                                class="delete-form">
+                                            <form action="{{ route('delete.cart', $cart->transaction_ID) }}"
+                                                method="POST" class="delete-form">
                                                 @csrf
                                                 @method('delete')
                                                 <button type="button"
                                                     class="flex items-center justify-center p-1.5 rounded-full bg-secondary-color delete-cart-item"
-                                                    data-id="{{ $cart->order_detail_ID }}">
+                                                    data-id="{{ $cart->transaction_detail_ID }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"
                                                         fill="none" viewBox="0 0 26 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -135,7 +135,8 @@
                                             </form>
                                         </div>
                                         <div class="md:flex hidden items-center justify-center w-[20%]  wrap">
-                                            <p class="text-xl md:text-lg" id="subtotal-{{ $cart->order_detail_ID }}">
+                                            <p class="text-xl md:text-lg"
+                                                id="subtotal-{{ $cart->transaction_detail_ID }}">
                                                 Rp {{ number_format($cart->subtotal, 0, ',', '.') }}
                                             </p>
                                         </div>
@@ -156,13 +157,13 @@
                                                 <div class="wrap">
                                                     <p>Max Qty :1</p>
                                                 </div>
-                                                <form action="{{ route('delete.cart', $cart->order_ID) }}"
+                                                <form action="{{ route('delete.cart', $cart->transaction_ID) }}"
                                                     method="POST" class="delete-form">
                                                     @csrf
                                                     @method('delete')
                                                     <button type="button"
                                                         class="flex items-center justify-center p-1.5 rounded-full bg-secondary-color delete-cart-item"
-                                                        data-id="{{ $cart->order_detail_ID }}">
+                                                        data-id="{{ $cart->transaction_detail_ID }}">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"
                                                             fill="none" viewBox="0 0 26 24" stroke="currentColor">
                                                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -172,7 +173,7 @@
                                                 </form>
                                             </div>
                                             <p class="inline-block text-base md:hidden"
-                                                id="subtotal-mobile{{ $cart->order_detail_ID }}">
+                                                id="subtotal-mobile{{ $cart->transaction_detail_ID }}">
                                                 Rp {{ number_format($cart->subtotal, 0, ',', '.') }}
                                             </p>
                                         </div>
@@ -180,13 +181,13 @@
                                             <div class="wrap">
                                                 <p>Max Qty :1</p>
                                             </div>
-                                            <form action="{{ route('delete.cart', $cart->order_ID) }}" method="POST"
-                                                class="delete-form">
+                                            <form action="{{ route('delete.cart', $cart->transaction_ID) }}"
+                                                method="POST" class="delete-form">
                                                 @csrf
                                                 @method('delete')
                                                 <button type="button"
                                                     class="flex items-center justify-center p-1.5 rounded-full bg-secondary-color delete-cart-item"
-                                                    data-id="{{ $cart->order_detail_ID }}">
+                                                    data-id="{{ $cart->transaction_detail_ID }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"
                                                         fill="none" viewBox="0 0 26 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -196,7 +197,8 @@
                                             </form>
                                         </div>
                                         <div class="md:flex  hidden items-center justify-center w-[20%]  wrap">
-                                            <p class="text-xl md:text-lg" id="subtotal-{{ $cart->order_detail_ID }}">
+                                            <p class="text-xl md:text-lg"
+                                                id="subtotal-{{ $cart->transaction_detail_ID }}">
                                                 Rp {{ number_format($cart->subtotal, 0, ',', '.') }}
                                             </p>
                                         </div>
@@ -226,7 +228,8 @@
                             @if (isset($cart))
                                 <span class="flex items-center justify-between py-4">
                                     <p class="text-lg md:text-xl">Total</p>
-                                    <p class="text-lg md:text-xl" id="totalsubtotal-{{ $cart->order_detail_ID }}">
+                                    <p class="text-lg md:text-xl"
+                                        id="totalsubtotal-{{ $cart->transaction_detail_ID }}">
                                         <span id="totalAmount">Rp
                                             {{ number_format($totalSubtotal, 0, ',', '.') }}</span>
                                     </p>
@@ -271,7 +274,7 @@
         // Handle item delete via AJAX
         $('.delete-cart-item').on('click', function(e) {
             e.preventDefault(); // Prevent form submission
-            var itemId = $(this).data('id'); // Get order_ID from data-id
+            var itemId = $(this).data('id'); // Get transaction_ID from data-id
             var form = $(this).closest('form'); // Get the form containing the delete button
 
             $.ajax({

@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
+use App\Models\menu_size;
 use App\Models\MenuProperties;
+use App\Models\menus;
 use App\Models\orderTransaction;
 use App\Models\orderTranscationDetails;
+use App\Models\transaction;
+use App\Models\transaction_details;
 use App\Models\transactionDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +27,7 @@ class CartController extends Controller
         }
 
         // Validasi Menu ID
-        $menu = Menu::find($request->menu_ID);
+        $menu = menus::find($request->menu_ID);
         if (!$menu) {
             return redirect()->back()->with('error', 'Menu not found.');
         }
@@ -44,7 +48,7 @@ class CartController extends Controller
         ]);
 
         // Cek Properti Menu Berdasarkan Ukuran
-        $property = MenuProperties::where('menu_ID', $request->menu_ID)
+        $property = menu_size::where('menu_ID', $request->menu_ID)
             ->where('size', $request->size)
             ->first();
 
@@ -59,12 +63,12 @@ class CartController extends Controller
 
         try {
             // Cek atau Buat Transaksi Baru
-            $Transaction = orderTransaction::where('customer_ID', $customer->customer_ID)
+            $Transaction = transaction::where('customer_ID', $customer->customer_ID)
                 ->where('status_order', 'pending') // Pastikan status "pending"
                 ->first();
 
             if (!$Transaction) {
-                $Transaction = orderTransaction::create([
+                $Transaction = transaction::create([
                     'customer_ID' => $customer->customer_ID,
                     'total_amounts' => $total_amount,
                     'status_order' => 'pending', // Set status "pending"
@@ -75,7 +79,7 @@ class CartController extends Controller
             }
 
             // Cek Duplikasi Menu dalam Transaksi
-            $existingDetail = transactionDetails::where('order_ID', $Transaction->order_ID)
+            $existingDetail = transaction_details::where('transaction_ID', $Transaction->transaction_ID)
                 ->where('menu_ID', $request->menu_ID)
                 ->first();
 
@@ -84,8 +88,8 @@ class CartController extends Controller
             }
 
             // Tambahkan Item ke Detil Transaksi
-            transactionDetails::create([
-                'order_ID' => $Transaction->order_ID,
+            transaction_details::create([
+                'transaction_ID' => $Transaction->transaction_ID,
                 'order_type' => 'normal_menu',
                 'menu_ID' => $request->menu_ID,
                 'size' => $request->size,
@@ -124,13 +128,13 @@ class CartController extends Controller
 
         try {
             // Cek apakah ada transaksi pending sebelumnya
-            $order = orderTransaction::where('customer_ID', $customer->customer_ID)
+            $order = transaction::where('customer_ID', $customer->customer_ID)
                 ->where('status_order', 'pending') // Pastikan status "pending"
                 ->first();
 
             if (!$order) {
                 // Jika tidak ada transaksi pending, buat transaksi baru
-                $order = orderTransaction::create([
+                $order = transaction::create([
                     'customer_ID' => $customer->customer_ID,
                     'status_order' => 'pending',
                     'total_amounts' => $totalPrice,
@@ -144,7 +148,7 @@ class CartController extends Controller
             }
 
             // Cek apakah sudah ada item custom_menu dalam transactionDetails
-            $existingCustomMenu = transactionDetails::where('order_ID', $order->order_ID)
+            $existingCustomMenu = transaction_details::where('transaction_ID', $order->transaction_ID)
                 ->where('order_type', 'custom_menu')
                 ->first();
 
@@ -155,8 +159,8 @@ class CartController extends Controller
             }
 
             // Simpan detail transaksi tanpa loop topping
-            transactionDetails::create([
-                'order_ID' => $order->order_ID,
+            transaction_details::create([
+                'transaction_ID' => $order->transaction_ID,
                 'order_type' => 'custom_menu',
                 'menu_ID' => -99,  // Custom menu, set menu_ID ke -99
                 'size' => $size,
@@ -181,35 +185,35 @@ class CartController extends Controller
     public function deleteCart($orderDetailID)
     {
         // Cari item berdasarkan orderDetailID
-        $item = transactionDetails::find($orderDetailID);
+        $item = transaction_details::find($orderDetailID);
 
         // Jika item tidak ditemukan, kembalikan error
         if (!$item) {
             return response()->json(['success' => false, 'message' => 'Item not found.']);
         }
 
-        // Ambil order_ID dari item
-        $orderID = $item->order_ID;
+        // Ambil transaction_ID dari item
+        $transactionID = $item->transaction_ID;
 
         // Hapus item dari keranjang
         $item->delete();
 
         // Hitung Total Subtotal Setelah Penambahan Item
-        $totalSubtotal = transactionDetails::where('order_ID', $orderID)->sum('subtotal');
+        $totalSubtotal = transaction_details::where('transaction_ID', $transactionID)->sum('subtotal');
 
         // Update total_amount di tabel order_transaction
-        $orderTransaction = orderTransaction::where('order_ID', $orderID)->first();
+        $orderTransaction = transaction::where('transaction_ID', $transactionID)->first();
         if ($orderTransaction) {
             $orderTransaction->total_amounts = $totalSubtotal; // Perbarui total_amount
             $orderTransaction->save();
         }
 
         // Periksa apakah masih ada item dalam order
-        $remainingItems = transactionDetails::where('order_ID', $orderID)->count();
+        $remainingItems = transaction_details::where('transaction_ID', $transactionID)->count();
 
         // Jika tidak ada item lagi dalam order, hapus order tersebut
         if ($remainingItems === 0) {
-            $order = orderTransaction::find($orderID);
+            $order = transaction::find($transactionID);
             if ($order) {
                 $order->delete();
             }
@@ -226,7 +230,7 @@ class CartController extends Controller
     public function updateCartQuantity(Request $request, $orderDetailID)
     {
         // Cari item berdasarkan order_detail_ID yang diterima melalui parameter
-        $item = transactionDetails::find($orderDetailID); // find() mencari berdasarkan primary key
+        $item = transaction_details::find($orderDetailID); // find() mencari berdasarkan primary key
 
         // Jika item tidak ditemukan, kembalikan error
         if (!$item) {
@@ -234,7 +238,7 @@ class CartController extends Controller
         }
 
         // Ambil harga berdasarkan menu_ID dan size
-        $property = MenuProperties::where('menu_ID', $item->menu_ID)
+        $property = menu_size::where('menu_ID', $item->menu_ID)
             ->where('size', $item->size)
             ->first();
 
@@ -243,7 +247,7 @@ class CartController extends Controller
         }
 
         // Cari menu untuk memeriksa stok
-        $menu = Menu::where('menu_ID', $item->menu_ID)->first();
+        $menu = menus::where('menu_ID', $item->menu_ID)->first();
         if (!$menu) {
             return response()->json(['success' => false, 'message' => 'Menu not found.']);
         }
@@ -280,10 +284,10 @@ class CartController extends Controller
         $item->save();
 
         // Hitung total subtotal sisa keranjang
-        $totalSubtotal = transactionDetails::where('order_ID', $item->order_ID)->sum('subtotal');
+        $totalSubtotal = transaction_details::where('transaction_ID', $item->transaction_ID)->sum('subtotal');
 
         // Update total_amount di tabel order_transaction
-        $orderTransaction = orderTransaction::where('order_ID', $item->order_ID)->first();
+        $orderTransaction = transaction::where('transaction_ID', $item->transaction_ID)->first();
         if ($orderTransaction) {
             $orderTransaction->total_amounts = $totalSubtotal; // Perbarui total_amount
             $orderTransaction->save();
@@ -312,7 +316,7 @@ class CartController extends Controller
         $customerID = $customer->customer_ID;
 
         // Ambil item dalam cart hanya dari pesanan dengan status 'pending'
-        $cart_items = transactionDetails::whereHas('order', function ($query) use ($customerID) {
+        $cart_items = transaction_details::whereHas('order', function ($query) use ($customerID) {
             $query->where('customer_ID', $customerID)->where('status_order', 'pending');
         })->with('menu')->get();
 
@@ -353,7 +357,7 @@ class CartController extends Controller
         }
 
         // Cek apakah ada order yang statusnya 'in-progress'
-        $existingInProgressOrder = orderTransaction::where('customer_ID', $customer->customer_ID)
+        $existingInProgressOrder = transaction::where('customer_ID', $customer->customer_ID)
             ->where('status_order', 'in-progress')
             ->exists();
 
@@ -362,7 +366,7 @@ class CartController extends Controller
         }
 
         // Cari transaksi dengan status 'pending' milik user yang login
-        $order = orderTransaction::where('customer_ID', $customer->customer_ID)
+        $order = transaction::where('customer_ID', $customer->customer_ID)
             ->where('status_order', 'pending')
             ->first();
 
@@ -381,10 +385,10 @@ class CartController extends Controller
         return redirect()->route('payment.view')->with('success', 'Order made');
     }
 
-    public function cancelOrder($orderId)
+    public function cancelOrder($transactionID)
     {
         // Find the order by its ID
-        $orderTransaction = OrderTransaction::find($orderId);
+        $orderTransaction = transaction::find($transactionID);
 
         if (!$orderTransaction) {
             // If the order does not exist, redirect back with an error message

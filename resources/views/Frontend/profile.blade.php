@@ -251,7 +251,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <a href="{{ Route('tracking.view', $transaction->order_ID ?? '') }}"
+                                                <a href="{{ Route('order-details.view', $transaction->transaction_ID ?? '') }}"
                                                     class="w-full px-4 py-2 font-medium text-center rounded-md bg-secondary-accent-color text-highlight-content">
                                                     See Details
                                                 </a>
@@ -292,7 +292,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <a href="{{ Route('tracking.view', $transaction->order_ID ?? '') }}"
+                                                <a href="{{ Route('order-details.view', $transaction->transaction_ID ?? '') }}"
                                                     class="w-full px-4 py-2 font-medium text-center rounded-md bg-secondary-accent-color text-highlight-content">
                                                     See Details
                                                 </a>
@@ -333,7 +333,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <a href="{{ Route('tracking.view', $transaction->order_ID ?? '') }}"
+                                                <a href="{{ Route('order-details.view', $transaction->transaction_ID ?? '') }}"
                                                     class="w-full px-4 py-2 font-medium text-center rounded-md bg-secondary-accent-color text-highlight-content">
                                                     See Details
                                                 </a>
@@ -374,7 +374,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <a href="{{ Route('tracking.view', $transaction->order_ID ?? '') }}"
+                                                <a href="{{ Route('order-details.view', $transaction->transaction_ID ?? '') }}"
                                                     class="w-full px-4 py-2 font-medium text-center rounded-md bg-secondary-accent-color text-highlight-content">
                                                     See Details
                                                 </a>
@@ -415,7 +415,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <a href="{{ Route('tracking.view', $transaction->order_ID ?? '') }}"
+                                                <a href="{{ Route('order-details.view', $transaction->transaction_ID ?? '') }}"
                                                     class="w-full px-4 py-2 font-medium text-center rounded-md bg-secondary-accent-color text-highlight-content">
                                                     See Details
                                                 </a>

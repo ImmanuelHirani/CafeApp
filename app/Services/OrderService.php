@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\transactionDetails;
 use App\Models\Menu;
+use App\Models\transaction_details;
 use App\Repository\orderRepo;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -44,7 +45,7 @@ class OrderService
             // Looping untuk setiap item di cart
             foreach ($tempTransactions as $tempTransaction) {
                 // Periksa apakah menu sudah ada di order transaction yang sedang pending
-                $existingDetail = transactionDetails::where('order_ID', $orderTransaction->order_ID)
+                $existingDetail = transaction_details::where('transaction_ID', $orderTransaction->transaction_ID)
                     ->where('menu_ID', $tempTransaction->menu_ID)
                     ->first();
 

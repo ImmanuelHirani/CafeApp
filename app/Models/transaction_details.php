@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class transactionDetails extends Model
+class transaction_details extends Model
 {
-    protected $table = 'order_transaction_details';
-    protected $primaryKey = 'order_detail_ID';
+    protected $table = 'transaction_details';
+    protected $primaryKey = 'transaction_detail_ID';
 
     protected $fillable = [
-        'order_ID',
+        'transaction_ID',
         'order_type',
         'menu_ID',
         'size',
@@ -22,11 +22,11 @@ class transactionDetails extends Model
 
     public function menu()
     {
-        return $this->belongsTo(Menu::class, 'menu_ID', 'menu_ID');
+        return $this->belongsTo(menus::class, 'menu_ID', 'menu_ID');
     }
 
     public function order()
     {
-        return $this->belongsTo(orderTransaction::class, 'order_ID', 'order_ID');
+        return $this->belongsTo(transaction::class, 'transaction_ID', 'transaction_ID');
     }
 }

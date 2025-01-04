@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class Customer extends Authenticatable
+class customer extends Authenticatable
 {
     use Notifiable;
 
@@ -25,18 +25,18 @@ class Customer extends Authenticatable
 
     public function favoriteMenus()
     {
-        return $this->belongsToMany(Menu::class, 'favorite_menu', 'customer_ID', 'menu_ID');
+        return $this->belongsToMany(menus::class, 'favorite_menu', 'customer_ID', 'menu_ID');
     }
 
     public function orderCustomer()
     {
-        return $this->hasMany(orderTransaction::class, 'customer_ID', 'customer_ID');
+        return $this->hasMany(transaction::class, 'customer_ID', 'customer_ID');
     }
 
     // Di model User
     public function customer()
     {
-        return $this->hasOne(Customer::class, 'customer_ID'); // pastikan kolom yang menghubungkan benar
+        return $this->hasOne(customer::class, 'customer_ID'); // pastikan kolom yang menghubungkan benar
     }
 
 

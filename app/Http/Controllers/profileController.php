@@ -6,7 +6,9 @@ use App\Models\Customer;
 use App\Models\favorite_menu;
 use App\Models\favoriteMenu;
 use App\Models\Menu;
+use App\Models\menus;
 use App\Models\orderTransaction;
+use App\Models\transaction;
 use App\Models\transactionDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,18 +27,18 @@ class profileController extends Controller
 
         $menusFav = $customer->customer->favoriteMenus()->with('properties')->get();
 
-        $menus = Menu::all();
+        $menus = menus::all();
 
 
         // Ambil semua transaksi berdasarkan customer_ID dengan status_order tertentu
-        $orders = orderTransaction::with(['details'])
+        $orders = transaction::with(['details'])
             ->where('customer_ID', $customer->customer_ID)
             ->whereIn('status_order', ['paid', 'serve', 'shipped', 'completed', 'canceled']) // Tambahkan kondisi status_order
             ->get();
 
         // Hitung banyaknya data di tabel details untuk setiap order
         $transactions = $orders->map(function ($order) {
-            $order->total_items = $order->details->count(); // Hitung banyaknya data berdasarkan order_ID
+            $order->total_items = $order->details->count(); // Hitung banyaknya data berdasarkan transaction_ID
             return $order;
         });
 
@@ -92,7 +94,7 @@ class profileController extends Controller
         }
 
         // Hapus semua data favorit untuk customer yang login
-        $deletedCount = favoriteMenu::where('customer_ID', $user->customer->customer_ID)->delete();
+        $deletedCount = favorite_menu::where('customer_ID', $user->customer->customer_ID)->delete();
 
         // Jika tidak ada data yang dihapus
         if ($deletedCount === 0) {

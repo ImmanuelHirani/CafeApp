@@ -8,8 +8,12 @@ use App\Models\Custom_categories_size_properties;
 use App\Models\Customer;
 use App\Models\Location;
 use App\Models\Menu;
+use App\Models\menus;
 use App\Models\orderTransaction;
 use App\Models\tempTransaction;
+use App\Models\transaction;
+use App\Models\transaction_details;
+use App\Models\transaction_location;
 use App\Models\transactionDetails;
 use App\Models\transactionLocation;
 use Illuminate\Http\Request;
@@ -40,7 +44,7 @@ class OrderController extends Controller
         $customerID = $customer->customer_ID;
 
         // Fetch order transactions with their details and menu
-        $orderTransactions = orderTransaction::with(['details.menu'])
+        $orderTransactions = transaction::with(['details.menu'])
             ->where('customer_ID', $customerID)
             ->where('status_order', 'in-progress') // Hanya transaksi dengan status "in-progress"
             ->get();
@@ -77,7 +81,7 @@ class OrderController extends Controller
         }
     }
 
-    public function trackOrder($orderID)
+    public function trackOrder($transactionID)
     {
         $customer = Auth::user();
         if (!$customer) {
@@ -86,10 +90,10 @@ class OrderController extends Controller
 
         $customerID = $customer->customer_ID;
 
-        // Fetch order transactions by order_ID and status
-        $orderTransactions = transactionDetails::whereHas('order', function ($query) use ($customerID, $orderID) {
+        // Fetch order transactions by transaction_ID and status
+        $orderTransactions = transaction_details::whereHas('order', function ($query) use ($customerID, $transactionID) {
             $query->where('customer_ID', $customerID)
-                ->where('order_ID', $orderID) // Filter by order_ID
+                ->where('transaction_ID', $transactionID) // Filter by transaction_ID
                 ->whereIn('status_order', ['paid', 'serve', 'shipped', 'completed']);
         })->with(['menu', 'order.location'])->get();
 
@@ -97,12 +101,12 @@ class OrderController extends Controller
             return redirect()->route('frontend.menu')->with('error', 'No order transaction found.');
         }
 
-        $menus = Menu::all();
+        $menus = menus::all();
 
 
         $totalSubtotal = $orderTransactions->sum('subtotal');
 
-        return view('Frontend.Tracking-order', [
+        return view('Frontend.order-details', [
             'orderTransactions' => $orderTransactions,
             'totalSubtotal' => $totalSubtotal,
             'menus' => $menus
@@ -112,7 +116,7 @@ class OrderController extends Controller
     public function adminOrder()
     {
 
-        $orderCustomers = orderTransaction::with(['customer', 'details.menu'])->get();
+        $orderCustomers = transaction::with(['customer', 'details.menu'])->get();
 
         // Kirim data ke view
         return view('Backend.Admin-Order', [
@@ -122,12 +126,12 @@ class OrderController extends Controller
 
     public function getCustomerOrderDetails($id)
     {
-        // Ambil data orderTransaction berdasarkan order_ID, termasuk relasi customer, details.menu, dan location
-        $orderDetails = orderTransaction::with([
+        // Ambil data orderTransaction berdasarkan transaction_ID, termasuk relasi customer, details.menu, dan location
+        $orderDetails = transaction::with([
             'customer',        // Relasi ke customer
             'details.menu',    // Relasi ke menu dalam details
             'location'         // Relasi ke location
-        ])->find($id);        // Menemukan berdasarkan order_ID
+        ])->find($id);        // Menemukan berdasarkan transaction_ID
 
         // Periksa apakah order ditemukan
         if (!$orderDetails) {
@@ -137,7 +141,7 @@ class OrderController extends Controller
         }
 
         // Ambil data orderCustomers yang mencakup semua orderTransaction dengan relasi customer, details.menu, dan location
-        $orderCustomers = orderTransaction::with([
+        $orderCustomers = transaction::with([
             'customer',        // Relasi ke customer
             'details.menu',    // Relasi ke menu dalam details
             'location'         // Relasi ke location
@@ -150,7 +154,7 @@ class OrderController extends Controller
         ]);
     }
 
-    public function updateStatus(Request $request, $orderID)
+    public function updateStatus(Request $request, $transactionID)
     {
         // Validasi input status
         $validated = $request->validate([
@@ -158,7 +162,7 @@ class OrderController extends Controller
         ]);
 
         // Temukan order transaction berdasarkan order ID
-        $orderTransaction = OrderTransaction::where('order_ID', $orderID)->first();
+        $orderTransaction = transaction::where('transaction_ID', $transactionID)->first();
 
         if ($orderTransaction) {
             // Update status_order dengan nilai yang dipilih
@@ -173,10 +177,10 @@ class OrderController extends Controller
         }
     }
 
-    public function cancelOrder($orderId)
+    public function cancelOrder($transactionID)
     {
         // Find the order by its ID
-        $orderTransaction = OrderTransaction::find($orderId);
+        $orderTransaction = transaction::find($transactionID);
 
         if (!$orderTransaction) {
             // If the order does not exist, redirect back with an error message
@@ -191,7 +195,7 @@ class OrderController extends Controller
         return redirect()->Route('frontend.menu')->with('error', 'Order has been canceled');
     }
 
-    public function payOrder($orderId)
+    public function payOrder($transactionID)
     {
         // Mendapatkan user yang login
         $customer = Auth::user();
@@ -201,7 +205,7 @@ class OrderController extends Controller
         }
 
         // Find the order by its ID
-        $orderTransaction = OrderTransaction::find($orderId);
+        $orderTransaction = transaction::find($transactionID);
 
         if (!$orderTransaction) {
             return redirect()->back()->with('error', 'Order not found.');
@@ -221,8 +225,8 @@ class OrderController extends Controller
         }
 
         // Menyimpan data lokasi ke tabel order_transaction_location
-        transactionLocation::create([
-            'order_ID' => $orderTransaction->order_ID,
+        transaction_location::create([
+            'transaction_ID' => $orderTransaction->transaction_ID,
             'location_label' => $primaryLocation->location_label,
             'reciver_address' => $primaryLocation->reciver_address,
             'reciver_number' => $primaryLocation->reciver_number,
@@ -247,8 +251,8 @@ class OrderController extends Controller
             }
         }
 
-        // Redirect ke tracking view dengan order_ID
-        return redirect()->route('tracking.view', ['orderID' => $orderTransaction->order_ID])
+        // Redirect ke tracking view dengan transaction_ID
+        return redirect()->route('order-details-view', ['transactionID' => $orderTransaction->transaction_ID])
             ->with('success', 'Order has been paid.');
     }
 }

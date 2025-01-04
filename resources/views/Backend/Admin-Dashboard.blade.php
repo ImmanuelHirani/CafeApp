@@ -22,8 +22,8 @@
 <body id="Admin">
     @include('layout.header')
     @include('layout.Dashboard')
-    <main class="grid grid-cols-10 gap-4 py-4">
-        <section class="flex flex-col col-span-7 p-6 rounded-lg gap-9 bg-primary-color-admin">
+    <main class="grid grid-cols-12 gap-4 py-4">
+        <section class="flex flex-col col-span-9 p-6 rounded-lg gap-9 bg-primary-color-admin">
             <div class="overflow-x-auto">
                 <table id="orderTable" class="w-auto text-center border shadow-sm table-auto stripe">
                     <thead class="">
@@ -49,7 +49,7 @@
                         @foreach ($orderCustomers as $orderCustomer)
                             <tr class="hover:bg-gray-50">
                                 <td class="px-4 py-2 text-base text-gray-900 whitespace-nowrap">
-                                    {{ $orderCustomer->order_ID }}</td>
+                                    {{ $orderCustomer->transaction_ID }}</td>
                                 <td class="px-4 py-2 text-base text-gray-500 whitespace-nowrap">
                                     {{ $orderCustomer->customer->username ?? 'Not Set The Username Yet' }}
                                 </td>
@@ -57,7 +57,7 @@
                                     Rp {{ number_format($orderCustomer->total_amounts, 0, ',', '.') }}
                                 </td>
                                 <td class="px-4 py-2 whitespace-nowrap">
-                                    <div class="w-[8rem] mx-auto py-2 text-center rounded-full status-order"
+                                    <div class="w-[7rem] mx-auto text-sm font-semibold py-2 text-center rounded-full status-order"
                                         data-status="{{ strtolower($orderCustomer->status_order) }}">
                                         {{ $orderCustomer->status_order }}
                                     </div>
@@ -69,12 +69,11 @@
                         @endforeach
                     </tbody>
                 </table>
-
             </div>
         </section>
         <aside class="flex flex-col h-full col-span-3 gap-3 pt-6 overflow-hidden rounded-lg bg-primary-color-admin">
             <div class="px-6 head-aside">
-                <p class="text-2xl font-semibold">Top Product - This Week</p>
+                <p class="text-2xl font-semibold">Top Product</p>
             </div>
             <div class="p-6 card-content flex flex-col gap-3 h-[36rem] overflow-y-auto">
                 @forelse ($topProducts as $index => $product)
@@ -89,18 +88,16 @@
                     </div>
                 @empty
                     <p class="my-auto text-lg font-semibold text-center text-red-500">
-                        No Top Products Available for This Week! <br>
+                        No Top Products Available <br>
                         <span class="text-sm text-gray-400">Please check back later for updates.</span>
                     </p>
                 @endforelse
             </div>
         </aside>
-
     </main>
 </body>
 <script src="{{ asset('/js/table.js') }}"></script>
 <script src="{{ asset('/js/selectedStatus.js') }}"></script>
-
 {{-- <script src="{{ asset('/js/tabs-sideMenu.js') }}"></script>
 <script src="{{ asset('/js/imgPicker.js') }}"></script>
 <script src="{{ asset('/js/tabs-menu.js') }}"></script>

@@ -6,9 +6,10 @@ use App\Models\favorite_menu;
 use Illuminate\Http\Request;
 use App\Repository\MenuRepo;
 use App\Models\Menu;
-use App\Models\menuProperties;
-use App\Models\MenuReview;
-use App\Models\transactionDetails;
+use App\Models\menu_size;
+use App\Models\menu_review;
+use App\Models\menus;
+use App\Models\transaction_details;
 use App\Services\MenuService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -75,7 +76,7 @@ class MenuController extends Controller
 
             try {
                 foreach ($propertiesData as $propertyData) {
-                    if (empty($propertyData['property_ID'])) {
+                    if (empty($propertyData['menu_size_ID'])) {
                         throw new \Exception('Invalid property ID.');
                     }
 
@@ -88,7 +89,7 @@ class MenuController extends Controller
                         'is_active_properties' => $propertyData['is_active_properties'] ?? 1,
                     ];
 
-                    MenuProperties::where('property_ID', $propertyData['property_ID'])
+                    menu_size::where('menu_size_ID', $propertyData['menu_size_ID'])
                         ->where('menu_ID', $id)
                         ->update($updateData);
                 }
@@ -106,7 +107,7 @@ class MenuController extends Controller
     {
         try {
             // Menemukan menu berdasarkan ID dengan relasi menu_properties dan reviews beserta customer-nya
-            $menuDetails = Menu::with(['properties', 'reviews.customer'])->where('menu_ID', $id)->first();
+            $menuDetails = menus::with(['properties', 'reviews.customer'])->where('menu_ID', $id)->first();
 
             if (!$menuDetails) {
                 return redirect()->route('menu.index')->withErrors(['error' => 'Menu not found']);
@@ -124,10 +125,10 @@ class MenuController extends Controller
             $averageRating = round($averageRating, 1); // Pembulatan ke 1 desimal
 
             // Mendapatkan semua menu untuk digunakan dalam view
-            $menus = Menu::all();
+            $menus = menus::all();
 
             // Mengambil semua menu yang paling sering dibeli (kecuali custom_menu)
-            $topProducts = transactionDetails::select('menu_ID', DB::raw('SUM(quantity) as total_quantity'))
+            $topProducts = transaction_details::select('menu_ID', DB::raw('SUM(quantity) as total_quantity'))
                 ->with('menu') // Memuat relasi menu
                 ->whereHas('menu', function ($query) {
                     $query->where('menu_type', '!=', 'custom_menu'); // Mengabaikan custom_menu
@@ -145,7 +146,7 @@ class MenuController extends Controller
                 ->filter();
 
             // Mengambil menu dengan rating tertinggi
-            $topRatings = MenuReview::select('menu_ID', DB::raw('AVG(rating) as avg_rating'))
+            $topRatings = menu_review::select('menu_ID', DB::raw('AVG(rating) as avg_rating'))
                 ->with(['menu', 'menu.properties']) // Memuat relasi menu dan properties
                 ->groupBy('menu_ID')
                 ->orderByDesc('avg_rating')
@@ -184,10 +185,10 @@ class MenuController extends Controller
 
     public function Product()
     {
-        $menus = Menu::with('properties')->get();
+        $menus = menus::with('properties')->get();
 
         // Mengambil semua menu yang paling sering dibeli (kecuali custom_menu)
-        $topProducts = transactionDetails::select('menu_ID', DB::raw('SUM(quantity) as total_quantity'))
+        $topProducts = transaction_details::select('menu_ID', DB::raw('SUM(quantity) as total_quantity'))
             ->with('menu') // Memuat relasi menu
             ->whereHas('menu', function ($query) {
                 $query->where('menu_type', '!=', 'custom_menu'); // Mengabaikan custom_menu
@@ -205,7 +206,7 @@ class MenuController extends Controller
             ->filter();
 
         // Mengambil menu dengan rating tertinggi
-        $topRatings = MenuReview::select('menu_ID', DB::raw('AVG(rating) as avg_rating'))
+        $topRatings = menu_review::select('menu_ID', DB::raw('AVG(rating) as avg_rating'))
             ->with(['menu', 'menu.properties']) // Memuat relasi menu dan properties
             ->groupBy('menu_ID')
             ->orderByDesc('avg_rating')
@@ -235,9 +236,6 @@ class MenuController extends Controller
         }
     }
 
-
-
-
     public function addToFav(Request $request)
     {
         // Mendapatkan data customer yang sedang login
@@ -254,7 +252,7 @@ class MenuController extends Controller
 
         // Validasi input untuk memastikan menu_ID diberikan
         $request->validate([
-            'menu_ID' => 'required|exists:menu_items,menu_ID',
+            'menu_ID' => 'required|exists:menus,menu_ID',
         ]);
 
         // Mendapatkan ID menu dari request
@@ -305,12 +303,12 @@ class MenuController extends Controller
         $request->validate([
             'rating' => 'required|integer|min:1|max:5',
             'review_desc' => 'required|string|max:500',
-            'menu_ID' => 'required|exists:menu_items,menu_ID',
+            'menu_ID' => 'required|exists:menus,menu_ID',
             'customer_ID' => 'required|exists:customers,customer_ID',
         ], $customMessages);
 
         // Menyimpan review baru
-        MenuReview::create([
+        menu_review::create([
             'customer_ID' => $request->customer_ID,
             'menu_ID' => $request->menu_ID,
             'rating' => $request->rating,

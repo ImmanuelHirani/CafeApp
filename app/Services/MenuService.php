@@ -3,7 +3,9 @@
 namespace App\Services;
 
 use App\Models\Menu;
+use App\Models\menu_size;
 use App\Models\MenuProperties;
+use App\Models\menus;
 use App\Repository\MenuRepo;
 use Illuminate\Foundation\Exceptions\Renderer\Exception;
 use Illuminate\Support\Facades\Log;
@@ -49,7 +51,7 @@ class MenuService
 
         // Loop untuk menambahkan menu properties dengan price = 0
         foreach ($sizes as $size) {
-            MenuProperties::create([
+            menu_size::create([
                 'menu_ID' => $menuId,
                 'size' => $size,
                 'price' => 0, // Set price default 0
@@ -81,7 +83,7 @@ class MenuService
 
     public function deleteMenuById(int $id): bool
     {
-        $menu = Menu::find($id);
+        $menu = menus::find($id);
 
         if ($menu) {
             $menu->delete();

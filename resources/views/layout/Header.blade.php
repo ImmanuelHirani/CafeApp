@@ -33,12 +33,12 @@
                 <li class="relative group">
                     <a href="/Customer"
                         class="!text-accent-color-admin flex items-center gap-3 nav-toggle px-6 py-2 rounded-full outline-1 outline-gray-300">
-                        <i class="text-2xl ti ti-headset"></i>Customers Service</a>
+                        <i class="text-2xl ti ti-headset"></i>Customer Service</a>
                 </li>
                 <li class="relative group">
                     <a href="/admin/menu/order"
                         class="!text-accent-color-admin flex items-center gap-3 nav-toggle px-6 py-2 rounded-full outline-1 outline-gray-300"><i
-                            class="text-2xl ti ti-checkup-list"></i>Orders</a>
+                            class="text-2xl ti ti-checkup-list"></i>Transaction</a>
                 </li>
             </ul>
         </div>

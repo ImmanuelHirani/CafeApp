@@ -20,7 +20,6 @@
         <input type="hidden" name="customer_ID" value="{{ Auth::user()->customer_ID ?? '' }}">
         <!-- Input Hidden Quantity -->
         <input type="hidden" name="quantity" id="hidden-quantity-mobile" value="1">
-
         <div class="flex items-center gap-5 menu-selection">
             <img src="{{ asset('storage/' . $menuDetails->image ?? '') }}"
                 class="w-[150px] h-[150px] object-cover rounded-lg" alt="{{ $menuDetails->name ?? 'Image' }}" />
@@ -40,7 +39,6 @@
                 </p>
             </div>
         </div>
-
         <!-- Size Selection -->
         <div class="flex flex-col gap-3">
             <p class="text-lg md:text-2xl">Size :</p>
@@ -57,7 +55,6 @@
                 @endisset
             </div>
         </div>
-
         <!-- Quantity Selection -->
         <div class="flex flex-col gap-3">
             <p class="text-lg md:text-2xl">Qty :</p>
@@ -82,7 +79,6 @@
                 </button>
             </div>
         </div>
-
         <!-- Subtotal -->
         <hr />
         @if ($selectedProperty)
@@ -93,7 +89,6 @@
         @else
             <p>SIZE: Not selected</p>
         @endif
-
         <!-- Close Button -->
         <svg id="closecartMobile" xmlns="http://www.w3.org/2000/svg" class="absolute cursor-pointer top-4 right-4"
             width="20" height="20" viewBox="0 0 12 12" fill="none">

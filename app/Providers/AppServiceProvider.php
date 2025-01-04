@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\orderTransaction;
 use App\Models\tempTransaction;
 use App\Models\tempTransactionDetails;
+use App\Models\transaction;
 use App\Models\transactionDetails;
 use Illuminate\Support\ServiceProvider;
 use App\Services\CustomerService;
@@ -57,7 +58,7 @@ class AppServiceProvider extends ServiceProvider
 
             // Jika user tidak login, tidak ada data cart
             $cartItems = $customerID
-                ? orderTransaction::where('customer_ID', $customerID)
+                ? transaction::where('customer_ID', $customerID)
                 ->where('status_order', 'pending')
                 ->with(['details.menu']) // Eager load order_details untuk akses order_type
                 ->get()

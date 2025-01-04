@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
+use App\Models\menus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,7 +15,7 @@ class contactUsController extends Controller
             return redirect()->back()->with('error', 'Login First!');
         }
         $customer = Auth::user();
-        $menus = Menu::all();
+        $menus = menus::all();
         return view('Frontend.contact-us', [
             'menus' => $menus
         ]);
