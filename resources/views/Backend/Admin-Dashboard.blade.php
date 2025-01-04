@@ -25,82 +25,51 @@
     <main class="grid grid-cols-10 gap-4 py-4">
         <section class="flex flex-col col-span-7 p-6 rounded-lg gap-9 bg-primary-color-admin">
             <div class="overflow-x-auto">
-                <table id="orderTable" class="border shadow-sm min-w-fullborder stripe">
+                <table id="orderTable" class="w-auto text-center border shadow-sm table-auto stripe">
                     <thead class="">
                         <tr>
-                            <th class="px-6 py-3 text-sm font-medium text-left text-gray-500 uppercase">
+                            <th class="px-4 py-2 text-sm font-medium text-gray-500 uppercase w-fit">
                                 Order ID
                             </th>
-                            <th class="px-6 py-3 text-sm font-medium text-left text-gray-500 uppercase">
+                            <th class="px-4 py-2 text-sm font-medium text-gray-500 uppercase w-fit">
                                 Customers
                             </th>
-                            <th class="px-6 py-3 text-sm font-medium text-left text-gray-500 uppercase">
+                            <th class="px-4 py-2 text-sm font-medium text-gray-500 uppercase w-fit">
                                 Payment Amount
                             </th>
-                            <th class="px-6 py-3 text-sm font-medium text-left text-gray-500 uppercase">
+                            <th class="px-4 py-2 text-sm font-medium text-gray-500 uppercase w-fit">
                                 Status
                             </th>
-                            <th class="px-6 py-3 text-sm font-medium text-left text-gray-500 uppercase">
+                            <th class="px-4 py-2 text-sm font-medium text-gray-500 uppercase w-fit">
                                 Purchase Date
                             </th>
                         </tr>
                     </thead>
                     <tbody class="bg-white">
-
                         @foreach ($orderCustomers as $orderCustomer)
                             <tr class="hover:bg-gray-50">
-                                <td class="text-base text-gray-900">{{ $orderCustomer->order_ID }}</td>
-                                <td class="text-base text-gray-500">
+                                <td class="px-4 py-2 text-base text-gray-900 whitespace-nowrap">
+                                    {{ $orderCustomer->order_ID }}</td>
+                                <td class="px-4 py-2 text-base text-gray-500 whitespace-nowrap">
                                     {{ $orderCustomer->customer->username ?? 'Not Set The Username Yet' }}
                                 </td>
-                                <td class="text-base text-center text-secondary-accent-color">
+                                <td class="px-4 py-2 text-base text-secondary-accent-color whitespace-nowrap">
                                     Rp {{ number_format($orderCustomer->total_amounts, 0, ',', '.') }}
                                 </td>
-                                <td class="">
-                                    <form action="{{ route('order.updateStatus', $orderCustomer->order_ID) }}"
-                                        method="POST">
-                                        @csrf
-                                        <div class="status-select">
-                                            <select name="status_order" id="statusSelect"
-                                                class="cursor-pointer focus:outline-none" onchange="this.form.submit()">
-                                                <hr>
-                                                <optgroup label="Status Currently">
-                                                    <option value="{{ $orderCustomer->status_order }}"
-                                                        class="cursor-pointer">
-                                                        {{ $orderCustomer->status_order }}
-                                                    </option>
-                                                </optgroup>
-                                                <hr>
-                                                <option value="pending" class="cursor-pointer">
-                                                    pending
-                                                </option>
-                                                <option value="in-progress" class="cursor-pointer">
-                                                    in-progress
-                                                </option>
-                                                <option value="paid" class="cursor-pointer">
-                                                    paid
-                                                </option>
-                                                <option value="serve" class="cursor-pointer">
-                                                    serve
-                                                </option>
-                                                <option value="shipped" class="cursor-pointer">
-                                                    shipped
-                                                </option>
-                                                <option value="completed" class="cursor-pointer">
-                                                    completed
-                                                </option>
-                                                <option value="canceled" class="cursor-pointer">
-                                                    canceled
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </form>
+                                <td class="px-4 py-2 whitespace-nowrap">
+                                    <div class="w-[8rem] mx-auto py-2 text-center rounded-full status-order"
+                                        data-status="{{ strtolower($orderCustomer->status_order) }}">
+                                        {{ $orderCustomer->status_order }}
+                                    </div>
                                 </td>
-                                <td class="text-base text-gray-500"> {{ $orderCustomer->customer->created_at }}</td>
+                                <td class="px-4 py-2 text-base text-gray-500 whitespace-nowrap">
+                                    {{ $orderCustomer->customer->created_at }}
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
+
             </div>
         </section>
         <aside class="flex flex-col col-span-3 gap-3 pt-6 overflow-hidden rounded-lg bg-primary-color-admin">

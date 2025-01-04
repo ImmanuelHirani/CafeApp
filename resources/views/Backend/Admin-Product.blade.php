@@ -124,14 +124,14 @@
                 </div>
                 <!-- Most Purchase -->
                 <div class="grid grid-cols-3 gap-4 tabs-content-product 3xl:grid-cols-4 auto-rows-auto">
-                    @foreach ($menus as $menu)
+                    @foreach ($topProducts as $topProduct)
                         <div class="relative p-3 overflow-hidden rounded-lg cursor-pointer card h-fit outline outline-2 outline-accent-color-admin"
-                            onclick="window.location.href='/admin/product/detail/{{ $menu->menu_ID }}'">
+                            onclick="window.location.href='/admin/product/detail/{{ $topProduct->menu_ID }}'">
                             <div class="relative overflow-hidden rounded-lg head-img">
-                                <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}"
+                                <img src="{{ asset('storage/' . $topProduct->image) }}" alt="{{ $topProduct->name }}"
                                     class="object-cover w-full h-[13em]" />
                                 <form onclick="confirmation(event)"
-                                    action="{{ route('delete.menu', $menu->menu_ID ?? '') }}" method="POST">
+                                    action="{{ route('delete.menu', $topProduct->menu_ID ?? '') }}" method="POST">
                                     @csrf
                                     @method('delete')
                                     <button id="trash" type="submit" class="absolute bottom-5 right-3">
@@ -139,7 +139,7 @@
                                     </button>
                                 </form>
                             </div>
-                            @if ($menu->is_active == 1)
+                            @if ($topProduct->is_active == 1)
                                 <div
                                     class="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full animate-pulse top-4 right-4 dot-status">
                                 </div>
@@ -150,10 +150,10 @@
                             @endif
                             <div class="flex flex-col h-[8rem] gap-6 wrap-body">
                                 <div class="mt-2 text-lg body-card">
-                                    <p class="font-medium line-clamp-1">{{ $menu->name }}</p>
+                                    <p class="font-medium line-clamp-1">{{ $topProduct->name }}</p>
                                     @php
                                         // Mencari property dengan size 'sm'
-                                        $property = $menu->properties->firstWhere('size', 'xl');
+                                        $property = $topProduct->properties->firstWhere('size', 'xl');
                                     @endphp
                                     @if ($property)
                                         <p class="font-medium">
@@ -168,11 +168,11 @@
                                 <div class="flex justify-between mt-auto footer-card">
                                     <div class="inline-flex gap-3 stock">
                                         <p class="!text-accent-color-admin">Stock</p>
-                                        <p class="font-semibold">{{ $menu->stock }}</p>
+                                        <p class="font-semibold">{{ $topProduct->stock }}</p>
                                     </div>
                                     <div class="inline-flex gap-3 categories">
                                         <p class="!text-accent-color-admin">Categories</p>
-                                        <p class="font-semibold">{{ ucfirst($menu->menu_type) }}</p>
+                                        <p class="font-semibold">{{ ucfirst($topProduct->menu_type) }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -181,14 +181,14 @@
                 </div>
                 <!-- Best Rating -->
                 <div class="grid grid-cols-3 gap-4 tabs-content-product 3xl:grid-cols-4 auto-rows-auto">
-                    @foreach ($menus as $menu)
+                    @foreach ($topRatings as $topRating)
                         <div class="relative p-3 overflow-hidden rounded-lg cursor-pointer card h-fit outline outline-2 outline-accent-color-admin"
-                            onclick="window.location.href='/admin/product/detail/{{ $menu->menu_ID }}'">
+                            onclick="window.location.href='/admin/product/detail/{{ $topRating->menu_ID }}'">
                             <div class="relative overflow-hidden rounded-lg head-img">
-                                <img src="{{ asset('storage/' . $menu->image) }}"
-                                    alt="{{ $menu->name }}"class="object-cover w-full h-[13em]" />
+                                <img src="{{ asset('storage/' . $topRating->image) }}" alt="{{ $topRating->name }}"
+                                    class="object-cover w-full h-[13em]" />
                                 <form onclick="confirmation(event)"
-                                    action="{{ route('delete.menu', $menu->menu_ID ?? '') }}" method="POST">
+                                    action="{{ route('delete.menu', $topRating->menu_ID ?? '') }}" method="POST">
                                     @csrf
                                     @method('delete')
                                     <button id="trash" type="submit" class="absolute bottom-5 right-3">
@@ -196,7 +196,7 @@
                                     </button>
                                 </form>
                             </div>
-                            @if ($menu->is_active == 1)
+                            @if ($topRating->is_active == 1)
                                 <div
                                     class="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full animate-pulse top-4 right-4 dot-status">
                                 </div>
@@ -207,10 +207,9 @@
                             @endif
                             <div class="flex flex-col h-[8rem] gap-6 wrap-body">
                                 <div class="mt-2 text-lg body-card">
-                                    <p class="font-medium line-clamp-1">{{ $menu->name }}</p>
+                                    <p class="font-medium line-clamp-1">{{ $topRating->name }}</p>
                                     @php
-                                        // Mencari property dengan size 'sm'
-                                        $property = $menu->properties->firstWhere('size', 'xl');
+                                        $property = $topRating->properties->firstWhere('size', 'xl');
                                     @endphp
                                     @if ($property)
                                         <p class="font-medium">
@@ -220,16 +219,15 @@
                                     @else
                                         <p class="text-xl md:text-2xl">Price Not Available</p>
                                     @endif
-
                                 </div>
                                 <div class="flex justify-between mt-auto footer-card">
                                     <div class="inline-flex gap-3 stock">
                                         <p class="!text-accent-color-admin">Stock</p>
-                                        <p class="font-semibold">{{ $menu->stock }}</p>
+                                        <p class="font-semibold">{{ $topRating->stock }}</p>
                                     </div>
                                     <div class="inline-flex gap-3 categories">
                                         <p class="!text-accent-color-admin">Categories</p>
-                                        <p class="font-semibold">{{ ucfirst($menu->menu_type) }}</p>
+                                        <p class="font-semibold">{{ ucfirst($topRating->menu_type) }}</p>
                                     </div>
                                 </div>
                             </div>

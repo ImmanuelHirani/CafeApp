@@ -80,13 +80,19 @@
                         <div
                             class="text-xl transition-all border-b-[1px] duration-300 ease-in-out accordion-content max-h-0">
                             <div class="flex flex-wrap items-center lg:gap-3 gap-2 pb-6 pl-0.5 lg:mt-6 mt-3 wrap">
-                                @foreach ($category->properties as $property)
-                                    <button data-price="{{ $property->price }}"
-                                        data-name="{{ $property->properties_name }}"
-                                        class="px-8 py-3 text-sm transition-all duration-300 ease-in-out rounded-full hover:bg-secondary-color topping-button w-fit outline outline-2 outline-white 3xl:text-xl lg:text-xl">
-                                        {{ $property->properties_name }}
-                                    </button>
-                                @endforeach
+                                @if ($category->properties->where('is_active', 1)->isNotEmpty())
+                                    @foreach ($category->properties as $property)
+                                        @if ($property->is_active == 1)
+                                            <button data-price="{{ $property->price }}"
+                                                data-name="{{ $property->properties_name }}"
+                                                class="px-8 py-3 text-sm transition-all duration-300 ease-in-out rounded-full hover:bg-secondary-color topping-button w-fit outline outline-2 outline-white 3xl:text-xl lg:text-xl">
+                                                {{ $property->properties_name }}
+                                            </button>
+                                        @endif
+                                    @endforeach
+                                @else
+                                    <p class="text-red-500">Topping untuk kategori ini belum ada.</p>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -224,7 +230,7 @@
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    notyf.error("Login First ! To Make an order");
+                    notyf.error("Login First! To Make an order");
                 });
         }
 
@@ -238,11 +244,8 @@
         // Event Listener untuk tombol Size
         sizeButtons.forEach(button => {
             button.addEventListener('click', function() {
-                // Hapus kelas "bg-red-500" dan "outline-none" dari semua tombol ukuran
                 sizeButtons.forEach(btn => btn.classList.remove('bg-red-500', 'text-white',
                     '!outline-none'));
-
-                // Tambahkan kelas ke tombol yang dipilih
                 this.classList.add('bg-red-500', 'text-white', '!outline-none');
 
                 const sizePrice = parseFloat(this.getAttribute('data-price'));
@@ -258,7 +261,6 @@
 
                 sizeOutput.innerHTML = `Custom Pizza - (${selectedSize.name})`;
 
-                // Reset topping saat ukuran berubah
                 selectedToppings = [];
                 toppingButtons.forEach(btn => btn.classList.remove('bg-red-500', 'text-white',
                     '!outline-none'));
@@ -300,6 +302,26 @@
                     ', ') : 'No Toppings Selected';
                 calculateTotal();
             });
+        });
+
+        // Event Listener untuk form submit
+        const form = document.querySelector('.add-to-cart-custom-order form');
+        form.addEventListener('submit', function(e) {
+            // Validasi sebelum submit
+            if (!selectedSize) {
+                e.preventDefault();
+                notyf.error("Please select a size first.");
+                return;
+            }
+
+            if (selectedToppings.length === 0) {
+                notyf.error("Please select at least one topping.");
+                e.preventDefault();
+                return;
+            }
+
+            // Lanjutkan submit jika semua valid
+            updateHiddenInputs(); // Pastikan data sudah ada di input tersembunyi
         });
 
         // Set default value kosong saat halaman dimuat

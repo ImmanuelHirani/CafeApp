@@ -1,12 +1,12 @@
 $(document).ready(function () {
     $("#orderTable").DataTable({
         lengthMenu: [[10], ["10"]],
-        paging: true,
+        paging: false,
         responsive: true,
         autoWidth: false, // Set autoWidth to false
-        searching: true,
-        ordering: true,
-        info: true,
+        searching: false,
+        ordering: false,
+        info: false,
         language: {
             // Konfigurasi bahasa lainnya
             lengthMenu: "Recent Order : _MENU_  per halaman",

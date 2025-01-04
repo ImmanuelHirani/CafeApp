@@ -9,6 +9,8 @@ use App\Models\Custom_categories_size_properties;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
+use function PHPUnit\Framework\isNull;
+
 class CustomCategoriesController extends Controller
 {
 
@@ -149,6 +151,7 @@ class CustomCategoriesController extends Controller
         $request->validate([
             'properties.*.name' => 'nullable|string|max:255',
             'properties.*.price' => 'nullable|numeric|min:0',
+            'properties.*.is_active' => 'nullable|boolean', // Validate as boolean
             'sizeProperties.*.size' => 'nullable|string|max:255',
             'sizeProperties.*.price' => 'nullable|numeric|min:0',
             'sizeProperties.*.allowed_flavor' => 'nullable|string|max:255',
@@ -157,14 +160,26 @@ class CustomCategoriesController extends Controller
         // Update untuk Topping List (Table: properties)
         if ($request->has('properties')) {
             foreach ($request->properties as $id => $propertyData) {
+                $existingProperty = Custom_categories_properties::find($id);
+
+                if (!$existingProperty) {
+                    continue; // Skip jika ID tidak ditemukan
+                }
+
                 $name = $propertyData['name'] ?? null;
                 $price = $propertyData['price'] ?? null;
+                $status = $propertyData['is_active'] ?? $existingProperty->is_active; // Gunakan nilai lama jika null
 
-                // Lakukan update hanya jika salah satu data tidak null
-                if (!is_null($name) || !is_null($price)) {
-                    Custom_categories_properties::where('properties_ID', $id)->update([
+                // Periksa apakah ada perubahan data
+                if (
+                    $name !== $existingProperty->properties_name ||
+                    $price != $existingProperty->price || // Gunakan == agar numeric dibandingkan
+                    $status != $existingProperty->is_active
+                ) {
+                    $existingProperty->update([
                         'properties_name' => $name,
                         'price' => $price,
+                        'is_active' => $status,
                     ]);
                 }
             }
@@ -173,13 +188,23 @@ class CustomCategoriesController extends Controller
         // Update untuk Size List (Table: custom_categories_size_properties)
         if ($request->has('sizeProperties')) {
             foreach ($request->sizeProperties as $id => $sizeData) {
+                $existingSize = Custom_categories_size_properties::find($id);
+
+                if (!$existingSize) {
+                    continue; // Skip jika ID tidak ditemukan
+                }
+
                 $size = $sizeData['size'] ?? null;
                 $price = $sizeData['price'] ?? null;
                 $allowed_flavor = $sizeData['allowed_flavor'] ?? null;
 
-                // Lakukan update hanya jika salah satu data tidak null
-                if (!is_null($size) || !is_null($price) || !is_null($allowed_flavor)) {
-                    Custom_categories_size_properties::where('size_ID', $id)->update([
+                // Periksa apakah ada perubahan data
+                if (
+                    $size !== $existingSize->size ||
+                    $price != $existingSize->price || // Gunakan == agar numeric dibandingkan
+                    $allowed_flavor !== $existingSize->allowed_flavor
+                ) {
+                    $existingSize->update([
                         'size' => $size,
                         'price' => $price,
                         'allowed_flavor' => $allowed_flavor,
@@ -191,6 +216,7 @@ class CustomCategoriesController extends Controller
         // Redirect back with success message
         return redirect()->back()->with('success', 'Data updated successfully!');
     }
+
 
     public function updateStatus(Request $request, $categoriesID)
     {

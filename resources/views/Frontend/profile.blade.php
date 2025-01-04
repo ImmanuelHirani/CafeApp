@@ -79,7 +79,7 @@
                 <div class="banner">
                     <img src="{{ asset('asset/Banner-profile.png') }}" alt="">
                 </div>
-                <div class="flex flex-col gap-4 p-4 md:p-6 3xl:p-12 body">
+                <div class="flex flex-col gap-4 p-4 md:p-6 3xl:p-8 body">
                     <div class="profile">
                         <p class="text-2xl">Profile</p>
                     </div>
@@ -201,23 +201,28 @@
                 </div>
                 <div class="w-full p-4 space-y-3 md:p-6 3xl:p-8 body">
                     <div class="swiper">
-                        <div class="w-full gap-4 button-profile-order">
-                            <div class="swiper-wrapper p-0.5">
-                                <label
-                                    class="w-full px-6 py-2 text-base text-center text-white transition-all duration-300 ease-in-out rounded-lg cursor-pointer swiper-slide outline outline-2 outline-white hover:bg-secondary-color hover:outline-none tabs-toggle-order ">Paid</label>
-                                <label
-                                    class="w-full px-6 py-2 text-base text-center text-white transition-all duration-300 ease-in-out rounded-lg cursor-pointer swiper-slide outline outline-2 outline-white hover:bg-secondary-color hover:outline-none tabs-toggle-order ">Completed</label>
-                                <label
-                                    class="w-full px-6 py-2 text-base text-center text-white transition-all duration-300 ease-in-out rounded-lg cursor-pointer swiper-slide outline outline-2 outline-white hover:bg-secondary-color hover:outline-none tabs-toggle-order ">Canceled</label>
-                                <label
-                                    class="w-full px-6 py-2 text-base text-center text-white transition-all duration-300 ease-in-out rounded-lg cursor-pointer swiper-slide outline outline-2 outline-white hover:bg-secondary-color hover:outline-none tabs-toggle-order ">Serve</label>
-                                <label
-                                    class="w-full px-6 py-2 text-base text-center text-white transition-all duration-300 ease-in-out rounded-lg cursor-pointer swiper-slide outline outline-2 outline-white hover:bg-secondary-color hover:outline-none tabs-toggle-order ">Shipping</label>
+                        <div class="w-full gap-4 p-0.5  button-profile-order">
+                            <div class="swiper-wrapper ">
+                                <div
+                                    class="py-2 text-base text-center text-white transition-all duration-300 ease-in-out rounded-lg cursor-pointer swiper-slide outline outline-2 outline-white hover:bg-secondary-color hover:outline-none tabs-toggle-order">
+                                    Paid</div>
+                                <div
+                                    class="py-2 text-base text-center text-white transition-all duration-300 ease-in-out rounded-lg cursor-pointer swiper-slide outline outline-2 outline-white hover:bg-secondary-color hover:outline-none tabs-toggle-order">
+                                    Completed</div>
+                                <div
+                                    class="py-2 text-base text-center text-white transition-all duration-300 ease-in-out rounded-lg cursor-pointer swiper-slide outline outline-2 outline-white hover:bg-secondary-color hover:outline-none tabs-toggle-order">
+                                    Canceled</div>
+                                <div
+                                    class="py-2 text-base text-center text-white transition-all duration-300 ease-in-out rounded-lg cursor-pointer swiper-slide outline outline-2 outline-white hover:bg-secondary-color hover:outline-none tabs-toggle-order">
+                                    Serve</div>
+                                <div
+                                    class="py-2 text-base text-center text-white transition-all duration-300 ease-in-out rounded-lg cursor-pointer swiper-slide outline outline-2 outline-white hover:bg-secondary-color hover:outline-none tabs-toggle-order">
+                                    Shipping</div>
                             </div>
                         </div>
                     </div>
                     <div class="w-full text-white tabs-content-order">
-                        <div class="w-full swiper">
+                        <div class=" swiper">
                             <div class="w-full p-1 profile-order-wrapper">
                                 <div class="w-full swiper-wrapper">
                                     @foreach ($transactions as $transaction)

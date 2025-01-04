@@ -255,6 +255,7 @@ section {
     padding-right: 32px;
 }
 
+/* Status Selection Option */
 .status-select select.pending {
     @apply text-white bg-yellow-500;
 }
@@ -290,6 +291,48 @@ section {
 .status-select select.Non-Active {
     @apply text-white bg-red-500;
 }
+/* Status Selection Option End */
+
+/* Lable Status Slection */
+/* Label Status Selection */
+.status-order[data-status="pending"] {
+    @apply text-white bg-yellow-500;
+}
+
+.status-order[data-status="in-progress"] {
+    @apply text-white bg-blue-500;
+}
+
+.status-order[data-status="paid"] {
+    @apply text-white bg-purple-500; /* Warna ungu untuk paid */
+}
+
+.status-order[data-status="serve"] {
+    @apply text-white bg-teal-500; /* Warna teal untuk serve */
+}
+
+.status-order[data-status="shipped"] {
+    @apply text-white bg-indigo-500; /* Warna biru keunguan untuk shipped */
+}
+
+.status-order[data-status="completed"] {
+    @apply text-white bg-green-500;
+}
+
+.status-order[data-status="canceled"] {
+    @apply text-white bg-red-500;
+}
+
+.status-order[data-status="active"] {
+    @apply text-white bg-green-500;
+}
+
+.status-order[data-status="non-active"] {
+    @apply text-white bg-red-500;
+}
+/* Label Status Selection end */
+
+/* Lable Status Slection end */
 
 .status-select select option {
     background: white;

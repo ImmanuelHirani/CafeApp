@@ -2,7 +2,7 @@
     <form action="{{ Route('create.new.product') }}" class="w-[65rem]" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="card-content">
-            <div class="grid h-full grid-cols-2  gap-6 text-lg auto-rows-[47rem]">
+            <div class="grid h-full grid-cols-2 gap-6 text-lg auto-rows-auto">
                 <!-- Image Container -->
                 <div class="relative w-full h-full overflow-hidden rounded-lg img-file-management">
                     <!-- Display Image -->

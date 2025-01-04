@@ -110,13 +110,13 @@ class CartController extends Controller
         // Validasi input
         $request->validate([
             'size_name' => 'required|string',
-            'toppings' => 'required|string',
+            'toppings' => 'required|string',  // Validasi topping sebagai string
             'total_price' => 'required|numeric',
         ]);
 
         // Ambil data dari request
         $size = $request->input('size_name');
-        $toppings = $request->input('toppings');  // Tidak perlu di-explode
+        $toppings = $request->input('toppings');  // Topping disimpan sebagai string
         $totalPrice = $request->input('total_price');
 
         // Mulai transaksi
@@ -160,7 +160,7 @@ class CartController extends Controller
                 'order_type' => 'custom_menu',
                 'menu_ID' => -99,  // Custom menu, set menu_ID ke -99
                 'size' => $size,
-                'menu_name' => $toppings,  // Menggunakan seluruh topping sebagai menu_name
+                'menu_name' => $toppings,  // Menyimpan topping sebagai string
                 'quantity' => 1,  // Bisa disesuaikan jika quantity tersedia
                 'subtotal' => $totalPrice,  // Sesuaikan subtotal jika perlu
             ]);
@@ -177,6 +177,8 @@ class CartController extends Controller
             return redirect()->back()->with('error', 'An error occurred. Please try again later.');
         }
     }
+
+
 
     public function deleteCart($orderDetailID)
     {

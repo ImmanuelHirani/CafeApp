@@ -158,14 +158,25 @@
                                         <input type="number" name="properties[{{ $detail->properties_ID }}][price]"
                                             class="w-full p-2 rounded-lg outline-none bg-secondary-color-admin size-price"
                                             min="0" value="{{ $detail->price }}" />
+                                        <select name="properties[{{ $detail->properties_ID }}][is_active]"
+                                            class="relative w-full p-3 rounded-lg outline-none bg-secondary-color-admin">
+                                            <option value="1" {{ ($detail->is_active ?? '') == 1 ? 'selected' : '' }}>
+                                                Active
+                                            </option>
+                                            <option value="0" {{ ($detail->is_active ?? '') == 0 ? 'selected' : '' }}>
+                                                Non-Active
+                                            </option>
+                                        </select>
                                     @endforeach
                                 @else
                                     <p class="text-red-500">No categories selected.</p>
                                 @endisset
                             </div>
                         </div>
+
                     </div>
                 </div>
+                {{-- Size --}}
                 <div class="px-6 pb-6 space-y-2 sideMenu-tabs-content h-[28.5rem]">
                     <div class="flex items-center justify-between gap-3 wrap">
                         <p class="font-semibold">Size List :</p>
@@ -202,13 +213,13 @@
                         <p class="text-red-500">No sizes available.</p>
                     @endisset
                 </div>
+                {{-- Size end --}}
                 <div class="flex items-center w-full gap-3 p-4 mt-auto bg-white shadow-inner footer-toggle">
                     <button type="submit" class="w-full h-12 text-white rounded-lg bg-secondary-accent-color">
                         Update
                     </button>
                 </div>
             </form>
-
         </aside>
         @include('layout.modal.custom-menu.categories')
         @include('layout.modal.custom-menu.properties')

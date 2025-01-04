@@ -17,11 +17,11 @@
 <body>
     @include('layout.Navbar')
     <main>
-        <section class="mt-10 md:mt-20 cart">
+        <section class="mt-10 md:mt-20 cart font-aesthetnova">
             <div class="container">
                 <div class="flex flex-col grid-cols-12 gap-4 md:grid">
                     <div
-                        class="flex flex-col col-span-6 gap-4 text-base transition-all duration-300 ease-in-out box-cart font-aesthetnova lg:text-xl">
+                        class="flex flex-col col-span-6 gap-4 text-base transition-all duration-300 ease-in-out box-cart lg:text-xl">
                         <div
                             class="flex flex-col p-4 rounded-lg md:p-8 gap-y-6 content-body bg-secondary-accent-color outline outline-1 outline-highlight-content">
                             <div id="order_notice" class="flex flex-col gap-3">
@@ -132,7 +132,7 @@
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full px-4 py-2 rounded-full md:w-[20%] quantity-area bg-secondary-color">
+                                        class="w-full px-4 py-2 rounded-full md:w-[15%] quantity-area bg-secondary-color">
                                         <p class="text-center md:text-base ms-auto">
                                             Qty : X {{ $transaction->quantity }}
                                         </p>

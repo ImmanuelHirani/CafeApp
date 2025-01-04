@@ -8,8 +8,10 @@ use App\Repository\MenuRepo;
 use App\Models\Menu;
 use App\Models\menuProperties;
 use App\Models\MenuReview;
+use App\Models\transactionDetails;
 use App\Services\MenuService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Contracts\Service\Attribute\Required;
@@ -124,9 +126,43 @@ class MenuController extends Controller
             // Mendapatkan semua menu untuk digunakan dalam view
             $menus = Menu::all();
 
+            // Mengambil semua menu yang paling sering dibeli (kecuali custom_menu)
+            $topProducts = transactionDetails::select('menu_ID', DB::raw('SUM(quantity) as total_quantity'))
+                ->with('menu') // Memuat relasi menu
+                ->whereHas('menu', function ($query) {
+                    $query->where('menu_type', '!=', 'custom_menu'); // Mengabaikan custom_menu
+                })
+                ->groupBy('menu_ID')
+                ->orderByDesc('total_quantity')
+                ->get()
+                ->map(function ($product) {
+                    $menu = $product->menu;
+                    if ($menu) {
+                        $menu->total_quantity = $product->total_quantity;
+                    }
+                    return $menu;
+                })
+                ->filter();
+
+            // Mengambil menu dengan rating tertinggi
+            $topRatings = MenuReview::select('menu_ID', DB::raw('AVG(rating) as avg_rating'))
+                ->with(['menu', 'menu.properties']) // Memuat relasi menu dan properties
+                ->groupBy('menu_ID')
+                ->orderByDesc('avg_rating')
+                ->get()
+                ->map(function ($review) {
+                    $menu = $review->menu;
+                    if ($menu) {
+                        $menu->avg_rating = round($review->avg_rating, 1); // Menambahkan rata-rata rating
+                    }
+                    return $menu;
+                })
+                ->filter();
+
+
             // Tentukan tampilan berdasarkan rute (admin atau frontend)
             if (request()->is('admin/*')) {
-                return view('Backend.Admin-Product', compact('menuDetails', 'menus', 'selectedProperty', 'selectedPrice', 'menuReviews', 'averageRating'));
+                return view('Backend.Admin-Product', compact('menuDetails', 'topProducts', 'topRatings',  'menus', 'selectedProperty', 'selectedPrice', 'menuReviews'));
             } else {
                 return view('Frontend.menu-detail', compact('menuDetails', 'menus', 'selectedProperty', 'selectedPrice', 'menuReviews', 'averageRating'));
             }
@@ -150,11 +186,46 @@ class MenuController extends Controller
     {
         $menus = Menu::with('properties')->get();
 
+        // Mengambil semua menu yang paling sering dibeli (kecuali custom_menu)
+        $topProducts = transactionDetails::select('menu_ID', DB::raw('SUM(quantity) as total_quantity'))
+            ->with('menu') // Memuat relasi menu
+            ->whereHas('menu', function ($query) {
+                $query->where('menu_type', '!=', 'custom_menu'); // Mengabaikan custom_menu
+            })
+            ->groupBy('menu_ID')
+            ->orderByDesc('total_quantity')
+            ->get()
+            ->map(function ($product) {
+                $menu = $product->menu;
+                if ($menu) {
+                    $menu->total_quantity = $product->total_quantity;
+                }
+                return $menu;
+            })
+            ->filter();
+
+        // Mengambil menu dengan rating tertinggi
+        $topRatings = MenuReview::select('menu_ID', DB::raw('AVG(rating) as avg_rating'))
+            ->with(['menu', 'menu.properties']) // Memuat relasi menu dan properties
+            ->groupBy('menu_ID')
+            ->orderByDesc('avg_rating')
+            ->get()
+            ->map(function ($review) {
+                $menu = $review->menu;
+                if ($menu) {
+                    $menu->avg_rating = round($review->avg_rating, 1); // Menambahkan rata-rata rating
+                }
+                return $menu;
+            })
+            ->filter();
+
         // Menentukan tampilan berdasarkan kondisi (misalnya, rute atau role)
         if (request()->is('admin/*')) {
             // Jika rute dimulai dengan 'admin/', tampilkan tampilan admin
             return view('Backend.Admin-Product', [
                 'menus' => $menus,
+                'topProducts' => $topProducts,
+                'topRatings' => $topRatings,
             ]);
         } else {
             // Jika bukan bagian admin, tampilkan tampilan frontend
@@ -163,6 +234,9 @@ class MenuController extends Controller
             ]);
         }
     }
+
+
+
 
     public function addToFav(Request $request)
     {
