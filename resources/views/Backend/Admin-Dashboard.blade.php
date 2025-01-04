@@ -72,12 +72,12 @@
 
             </div>
         </section>
-        <aside class="flex flex-col col-span-3 gap-3 pt-6 overflow-hidden rounded-lg bg-primary-color-admin">
+        <aside class="flex flex-col h-full col-span-3 gap-3 pt-6 overflow-hidden rounded-lg bg-primary-color-admin">
             <div class="px-6 head-aside">
                 <p class="text-2xl font-semibold">Top Product - This Week</p>
             </div>
             <div class="p-6 card-content flex flex-col gap-3 h-[36rem] overflow-y-auto">
-                @foreach ($topProducts as $index => $product)
+                @forelse ($topProducts as $index => $product)
                     <div class="flex items-center w-full gap-6 card-topProduct">
                         <p class="text-lg w-[10%]">#{{ $index + 1 }}</p>
                         <img src="{{ asset('storage/' . $product->menu->image ?? asset('default-image.jpg')) }}"
@@ -87,9 +87,15 @@
                             <p class="text-base">{{ $product->menu->menu_type }}</p>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <p class="my-auto text-lg font-semibold text-center text-red-500">
+                        No Top Products Available for This Week! <br>
+                        <span class="text-sm text-gray-400">Please check back later for updates.</span>
+                    </p>
+                @endforelse
             </div>
         </aside>
+
     </main>
 </body>
 <script src="{{ asset('/js/table.js') }}"></script>

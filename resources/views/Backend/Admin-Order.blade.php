@@ -24,7 +24,7 @@
     <main class="grid grid-cols-7 gap-4 py-4">
         <section class="flex flex-col h-full col-span-5 p-6 rounded-lg gap-9 bg-primary-color-admin">
             <div class="overflow-x-auto">
-                <table id="tableCustomers" class="min-w-full font-semibold border shadow-sm stripe">
+                <table id="table_transaction" class="min-w-full font-semibold border shadow-sm stripe">
                     <thead class="">
                         <tr>
                             <th class="text-sm font-medium text-left text-gray-500 uppercase">
@@ -115,7 +115,7 @@
         </section>
         <aside class="flex flex-col h-full col-span-2 gap-8 pt-6 overflow-hidden rounded-lg bg-primary-color-admin">
             <div class="px-6 head-aside">
-                <p class="text-xl font-semibold">Order Details</p>
+                <p class="text-xl font-semibold">Transaction Details</p>
             </div>
             <div class="px-6 quick-link">
                 <ul class="flex items-center justify-between w-full gap-3 text-base">
@@ -129,8 +129,8 @@
                     </li>
                 </ul>
             </div>
-            <form action="" class="sideMenu-tabs-content">
-                <div class="px-6 pb-6 overflow-y-auto card-content">
+            <form action="" class="my-auto sideMenu-tabs-content">
+                <div class="h-full px-6 pb-6 overflow-y-auto card-content">
                     <div class="flex flex-col gap-3 text-lg">
                         @isset($orderDetails)
                             <label for="" class="flex flex-col gap-3">
@@ -148,33 +148,31 @@
                                     placeholder="Max 20 Char" />
                             </label>
                             <label for="" class="flex flex-col gap-3">
+                                Location Reciver Lable
+                                <input type="text"
+                                    value="{{ $orderDetails->location->first()->location_label ?? 'Not Set The Username Yet' }}"
+                                    class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin"
+                                    placeholder="Max 20 Char" />
+                            </label>
+                            <label for="" class="flex flex-col gap-3">
                                 Location Reciver Detail
                                 <textarea name="" rows="4" class="p-3 rounded-lg outline-none resize-none bg-secondary-color-admin"
                                     placeholder="Max 150 Char">{{ $orderDetails->location->first()->reciver_address ?? 'Not Set The Address Yet' }}</textarea>
                             </label>
                         @else
-                            <label for="" class="flex flex-col gap-3">
-                                Reciver Name
-                                <input type="text" value="Select order detail first"
-                                    class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin"
-                                    placeholder="Max 20 Char" />
-                            </label>
-                            <label for="" class="flex flex-col gap-3">
-                                Phone Number
-                                <input type="text" value="Select order detail first"
-                                    class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin"
-                                    placeholder="Max 20 Char" />
-                            </label>
-                            <label for="" class="flex flex-col gap-3">
-                                Location Reciver Detail
-                                <textarea name="" rows="4" class="p-3 rounded-lg outline-none resize-none bg-secondary-color-admin"
-                                    placeholder="Max 150 Char">Select order detail first</textarea>
-                            </label>
+                            <div class="flex flex-col gap-3 my-auto text-lg">
+                                <p class="text-lg font-semibold text-center text-red-500">
+                                    No Transaction Details Available! <br>
+                                    <span class="text-sm text-gray-400">Please ensure order details are properly
+                                        selected.</span>
+                                </p>
+                            </div>
                         @endisset
+
                     </div>
                 </div>
             </form>
-            <form action="" class="sideMenu-tabs-content">
+            <form action="" class="my-auto sideMenu-tabs-content">
                 <div class="flex flex-col gap-3 px-6 pt-0.5 pb-6 h-[28.5rem] overflow-y-auto card-wrapper">
                     @isset($orderDetails)
                         <div class="flex flex-col gap-3 text-lg order-card">
@@ -196,7 +194,7 @@
                                         @php
                                             $toppings = explode(',', $detail->menu_name); // Exploding menu_name into an array
                                         @endphp
-                                        <p>Toppings : </p>
+                                        <p>Toppings: </p>
                                         <div class="flex flex-wrap items-center w-full gap-2 wrap">
                                             @foreach ($toppings as $topping)
                                                 <label
@@ -207,9 +205,10 @@
                                         </div>
                                     @else
                                         <!-- Regular Menu Order -->
-                                        <img src="{{ asset('storage/' . $detail->menu->image) }}"
+                                        <img src="{{ isset($detail->menu) && $detail->menu->image ? asset('storage/' . $detail->menu->image) : 'https://salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled.png' }}"
                                             class="object-cover w-full outline outline-1 outline-secondary-accent-color rounded-3xl img-preview h-72"
-                                            alt="{{ $detail->menu_name ?? 'Unknown Menu' }}" />
+                                            alt="{{ $detail->menu->name ?? 'Unknown Menu' }}" />
+
                                         <div class="flex flex-wrap items-center gap-2 list-wrap">
                                             <label
                                                 class="w-full px-4 py-2 text-base text-center rounded-full bg-secondary-accent-color-admin outline outline-1 outline-gray-300">
@@ -217,10 +216,10 @@
                                             </label>
                                         </div>
                                     @endif
-                                    <!-- Detail Transaksi -->
+                                    <!-- Transaction Details -->
                                     <div class="flex items-center gap-6 tiny-details">
-                                        <p class="!text-gray-500">Quantity: {{ $detail->quantity ?? 'unknown' }}</p>
-                                        <p class="!text-gray-500">Size: {{ $detail->size ?? 'unknown' }}</p>
+                                        <p class="!text-gray-500">Quantity: {{ $detail->quantity ?? 'Unknown' }}</p>
+                                        <p class="!text-gray-500">Size: {{ $detail->size ?? 'Unknown' }}</p>
                                     </div>
                                     <!-- Total -->
                                     <p class="font-semibold">Total: Rp
@@ -232,21 +231,12 @@
                             @endforelse
                         </div>
                     @else
-                        <div class="flex flex-col gap-3 text-lg order-card">
-                            <img src="" class="object-cover w-full rounded-lg h-[15rem]" alt="No Image Available"
-                                onerror="this.onerror=null; this.src='{{ asset('asset/Error-Image.png') }}';" />
-                            <div class="flex flex-wrap items-center gap-2 list-wrap">
-                                <label
-                                    class="px-4 py-2 text-base rounded-full bg-secondary-accent-color-admin outline outline-1 outline-gray-300">
-                                    No Menu found
-                                </label>
-                            </div>
-                            <div class="flex items-center gap-6 tiny-details">
-                                <p class="!text-gray-500">Quantity: Unknown</p>
-                                <p class="!text-gray-500">Size: Unknown</p>
-                            </div>
-                            <p class="font-semibold">Total: Rp 0</p>
-                            <hr />
+                        <div class="flex flex-col gap-3 my-auto text-lg">
+                            <p class="text-lg font-semibold text-center text-red-500">
+                                No Transaction Details Available! <br>
+                                <span class="text-sm text-gray-400">Please ensure order details are properly
+                                    selected.</span>
+                            </p>
                         </div>
                     @endisset
                 </div>

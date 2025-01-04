@@ -113,9 +113,9 @@
                                     <!-- Normal Menu Image -->
                                     <div class="img-wrap h-52 3xl:w-80 3xl:h-60 w-full md:w-[45%] md:h-44">
                                         @if ($transaction->order_type === 'normal_menu')
-                                            <img src="{{ asset('storage/' . $transaction->menu->image) }}"
-                                                alt="{{ $transaction->menu_name }}"
-                                                class="object-cover w-full h-full rounded-lg " />
+                                            <img src="{{ isset($transaction->menu) && $transaction->menu->image ? asset('storage/' . $transaction->menu->image) : 'https://salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled.png' }}"
+                                                alt="{{ $transaction->menu_name ?? 'Unknown Menu' }}"
+                                                class="object-cover w-full h-full rounded-lg" />
                                         @else
                                             <img src="{{ asset('/asset/CustomOrder.png') }}"
                                                 class="object-cover w-full h-full rounded-lg" alt="Custom Order" />

@@ -32,7 +32,7 @@
                 </button>
             </div>
             <div class="overflow-x-auto">
-                <table id="tableCustomers" class="border shadow-sm min-w-fullborder stripe">
+                <table id="table_custom_pizza" class="border shadow-sm min-w-fullborder stripe">
                     <thead class="">
                         <tr>
                             <th class="text-sm font-medium text-left text-gray-500 uppercase">
@@ -141,43 +141,50 @@
                     {{-- Topping List Section --}}
                     <div class="flex flex-col gap-3 text-lg order-card">
                         <div class="flex flex-col gap-3 topping-list">
-                            <div class="flex items-center justify-between gap-3 wrap">
+                            <div class="flex items-center justify-between gap-3 mb-4 wrap">
                                 <p class="font-semibold">Topping List :</p>
                                 <label id="btn-add-properties"
                                     class="cursor-pointer btn-add-product flex items-center group hover:bg-secondary-accent-color transition-all ease-in-out duration-300 hover:!text-white w-fit gap-3 px-4 justify-center text-base py-2 outline outline-2 outline-accent-color-admin rounded-full !text-accent-color-admin">
                                     New Properties
                                 </label>
                             </div>
-                            <div class="flex flex-wrap items-center gap-2 list-wrap">
+                            <div class="flex flex-wrap items-center justify-center gap-2 list-wrap">
                                 @isset($detailCategories)
                                     @foreach ($detailCategories->properties as $detail)
                                         <input type="text" name="properties[{{ $detail->properties_ID }}][name]"
                                             value="{{ $detail->properties_name }}"
                                             class="w-full px-4 py-2 text-base rounded-lg bg-secondary-accent-color-admin outline outline-1 outline-gray-300">
-
-                                        <input type="number" name="properties[{{ $detail->properties_ID }}][price]"
-                                            class="w-full p-2 rounded-lg outline-none bg-secondary-color-admin size-price"
-                                            min="0" value="{{ $detail->price }}" />
-                                        <select name="properties[{{ $detail->properties_ID }}][is_active]"
-                                            class="relative w-full p-3 rounded-lg outline-none bg-secondary-color-admin">
-                                            <option value="1" {{ ($detail->is_active ?? '') == 1 ? 'selected' : '' }}>
-                                                Active
-                                            </option>
-                                            <option value="0" {{ ($detail->is_active ?? '') == 0 ? 'selected' : '' }}>
-                                                Non-Active
-                                            </option>
-                                        </select>
+                                        <div class="flex items-center w-full gap-3 wrap">
+                                            <input type="number" name="properties[{{ $detail->properties_ID }}][price]"
+                                                class="w-full p-2 rounded-lg outline-none bg-secondary-color-admin size-price"
+                                                min="0" value="{{ $detail->price }}" />
+                                            <select name="properties[{{ $detail->properties_ID }}][is_active]"
+                                                class="relative w-full p-3 rounded-lg outline-none {{ $detail->is_active == 1 ? 'bg-green-500 text-white' : 'bg-secondary-color text-white' }}">
+                                                <option value="1" class="font-medium"
+                                                    {{ ($detail->is_active ?? '') == 1 ? 'selected' : '' }}>
+                                                    Active
+                                                </option>
+                                                <option value="0" class="font-medium"
+                                                    {{ ($detail->is_active ?? '') == 0 ? 'selected' : '' }}>
+                                                    Non-Active
+                                                </option>
+                                            </select>
+                                        </div>
                                     @endforeach
                                 @else
-                                    <p class="text-red-500">No categories selected.</p>
+                                    <p class="text-lg font-semibold text-center text-red-500">
+                                        No properties Details Available! <br>
+                                        <span class="text-sm text-gray-400">Please ensure Categories details are properly
+                                            select.</span>
+                                    </p>
                                 @endisset
                             </div>
                         </div>
-
                     </div>
                 </div>
-                {{-- Size --}}
-                <div class="px-6 pb-6 space-y-2 sideMenu-tabs-content h-[28.5rem]">
+
+                {{-- Size Section --}}
+                <div class="px-6 pb-6 space-y-2 sideMenu-tabs-content h-fit">
                     <div class="flex items-center justify-between gap-3 wrap">
                         <p class="font-semibold">Size List :</p>
                         @isset($sizes)
@@ -198,11 +205,9 @@
                                 <input type="text" name="sizeProperties[{{ $size->size_ID }}][size]"
                                     value="{{ $size->size }}" placeholder="Size"
                                     class="p-2 uppercase border-2 rounded-lg text-center text-secondary-accent-color border-secondary-accent-color w-[3.5rem] h-[3rem]">
-
                                 <input type="number" name="sizeProperties[{{ $size->size_ID }}][price]"
                                     class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin size-price"
                                     min="0" value="{{ $size->price }}" />
-
                                 <p>Allowed Flavor:</p>
                                 <input type="text" name="sizeProperties[{{ $size->size_ID }}][allowed_flavor]"
                                     value="{{ $size->allowed_flavor }}"
@@ -210,10 +215,16 @@
                             </div>
                         @endforeach
                     @else
-                        <p class="text-red-500">No sizes available.</p>
+                        <p class="text-lg font-semibold text-center text-red-500">
+                            No sizes Details Available! <br>
+                            <span class="text-sm text-gray-400">Please ensure Categories details are properly
+                                select.</span>
+                        </p>
+
                     @endisset
                 </div>
-                {{-- Size end --}}
+
+                {{-- Footer --}}
                 <div class="flex items-center w-full gap-3 p-4 mt-auto bg-white shadow-inner footer-toggle">
                     <button type="submit" class="w-full h-12 text-white rounded-lg bg-secondary-accent-color">
                         Update
@@ -221,8 +232,10 @@
                 </div>
             </form>
         </aside>
+
         @include('layout.modal.custom-menu.categories')
         @include('layout.modal.custom-menu.properties')
+        @include('layout.modal.custom-menu.size')
     </main>
 </body>
 <script src="{{ asset('/js/table.js') }}"></script>

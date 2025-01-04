@@ -1,6 +1,10 @@
 <header class="px-6 py-6 rounded-xl bg-primary-color-admin">
     <nav class="flex items-center justify-between text-lg font-medium">
-        <p>Cafe Travel - CMS</p>
+        <div class="flex items-center gap-4 user">
+            <img src="https://png.pngtree.com/background/20230426/original/pngtree-happy-old-man-wearing-glasses-is-smiling-picture-image_2485948.jpg"
+                alt="" class="object-cover w-10 h-10 rounded-full" />
+            <p>Super Admin</p>
+        </div>
         <!-- middle Content -->
         <div class="middle-quick-link">
             <ul class="flex items-center gap-2">
@@ -27,6 +31,11 @@
                             class="text-2xl ti ti-users"></i>Customers</a>
                 </li>
                 <li class="relative group">
+                    <a href="/Customer"
+                        class="!text-accent-color-admin flex items-center gap-3 nav-toggle px-6 py-2 rounded-full outline-1 outline-gray-300">
+                        <i class="text-2xl ti ti-headset"></i>Customers Service</a>
+                </li>
+                <li class="relative group">
                     <a href="/admin/menu/order"
                         class="!text-accent-color-admin flex items-center gap-3 nav-toggle px-6 py-2 rounded-full outline-1 outline-gray-300"><i
                             class="text-2xl ti ti-checkup-list"></i>Orders</a>
@@ -34,11 +43,6 @@
             </ul>
         </div>
         <!-- middle Content End -->
-        <div class="flex items-center gap-4 user">
-            <img src="https://png.pngtree.com/background/20230426/original/pngtree-happy-old-man-wearing-glasses-is-smiling-picture-image_2485948.jpg"
-                alt="" class="object-cover w-10 h-10 rounded-full" />
-            <p>Super Admin</p>
-        </div>
     </nav>
 </header>
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>

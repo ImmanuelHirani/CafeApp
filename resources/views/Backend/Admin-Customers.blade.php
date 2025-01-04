@@ -71,7 +71,7 @@
                 </table>
             </div>
         </section>
-        <aside class="flex flex-col col-span-2 gap-8 pt-6 overflow-hidden rounded-lg h-fit bg-primary-color-admin">
+        <aside class="flex flex-col h-full col-span-2 gap-8 pt-6 overflow-hidden rounded-lg bg-primary-color-admin">
             <div class="px-6 head-aside">
                 <p class="text-xl font-semibold">Customers Details</p>
             </div>
@@ -87,9 +87,10 @@
                     </li>
                 </ul>
             </div>
-            <form action="" class="">
-                <div class="px-6 pb-6 overflow-y-auto card-content sideMenu-tabs-content">
-                    <div class="flex flex-col gap-3 text-lg">
+
+            <div class="px-6 pb-6 overflow-y-auto card-content sideMenu-tabs-content">
+                <div class="flex flex-col gap-3 text-lg">
+                    @isset($customerDetails)
                         <label for="" class="flex flex-col gap-3">
                             Customer Name
                             <input type="text" value="{{ $customerDetails->username ?? 'Not Set Username Yet' }}"
@@ -108,16 +109,27 @@
                                 class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin"
                                 placeholder="Max 20 Char" />
                         </label>
-
-                        <button type="submit" id="SendRequestEmail"
-                            class="p-2 !text-gray-500 rounded-full outline outline-1 outline-gray-300 bg-secondary-color-admin">
-                            Send Request Reset Password
-                        </button>
-                    </div>
+                        {{-- <button type="submit" id="SendRequestEmail"
+                                class="p-2 !text-gray-500 rounded-full outline outline-1 outline-gray-300 bg-secondary-color-admin">
+                                Send Request Reset Password
+                            </button> --}}
+                    @else
+                        <p class="text-lg font-semibold text-center text-red-500">
+                            No Customer Details Available! <br>
+                            <span class="text-sm text-gray-400">Please ensure customer details are properly
+                                select.</span>
+                        </p>
+                    @endisset
                 </div>
-                <div
-                    class="flex flex-col gap-3 px-6 pb-6 overflow-y-auto card-content h-[28.5rem] sideMenu-tabs-content">
-                    @isset($customerDetails)
+            </div>
+            <div class="flex flex-col gap-3 px-6 pb-6 my-auto overflow-y-auto card-content h-fit sideMenu-tabs-content">
+                @isset($customerDetails)
+                    @if ($customerDetails->locationCustomer->isEmpty())
+                        <p class="text-lg font-semibold text-center text-red-500">
+                            No Locations Available! <br>
+                            <span class="text-sm text-gray-400">Please add a location to your profile.</span>
+                        </p>
+                    @else
                         @php $i = 1; @endphp
                         @foreach ($customerDetails->locationCustomer as $location)
                             <div class="w-full py-2 text-center rounded-lg h-fit line bg-secondary-accent-color-admin">
@@ -137,6 +149,12 @@
                                         placeholder="Max 20 Char" />
                                 </label>
                                 <label for="" class="flex flex-col gap-3">
+                                    Location Lable
+                                    <input type="text" value="{{ $location->location_label }}"
+                                        class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin"
+                                        placeholder="Max 20 Char" />
+                                </label>
+                                <label for="" class="flex flex-col gap-3">
                                     Location Detail
                                     <textarea name="" rows="4" class="p-3 rounded-lg outline-none resize-none bg-secondary-color-admin"
                                         placeholder="Max 150 Char">{{ $location->reciver_address }}</textarea>
@@ -144,12 +162,16 @@
                             </div>
                             @php $i++; @endphp
                         @endforeach
-                    @else
-                        <p class="text-lg text-center text-red-500">No Locations Available</p>
-                    @endisset
-                </div>
-                <input type="submit" id="update" value="Update" class="hidden">
-            </form>
+                    @endif
+                @else
+                    <p class="text-lg font-semibold text-center text-red-500">
+                        No Location Details Available! <br>
+                        <span class="text-sm text-gray-400">Please ensure customer details are properly select.</span>
+                    </p>
+                @endisset
+            </div>
+            <input type="submit" id="update" value="Update" class="hidden">
+
             <div class="flex items-center w-full gap-3 p-4 mt-auto bg-white shadow-inner h-fit footer-toggle">
                 <label for="update"
                     class="w-full h-12 text-center cursor-pointer items-center justify-center flex !text-white rounded-full bg-secondary-accent-color">
