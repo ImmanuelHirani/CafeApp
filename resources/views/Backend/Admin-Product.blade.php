@@ -67,360 +67,406 @@
             <!-- Main Content Card -->
             <div class="flex flex-col h-full gap-6 wrap">
                 <!-- All product -->
-                <div class="grid grid-cols-3 gap-4 tabs-content-product 3xl:grid-cols-4 auto-rows-auto">
-                    @foreach ($menus as $menu)
-                        <div class="relative p-3 overflow-hidden rounded-lg cursor-pointer card h-fit outline outline-2 outline-accent-color-admin"
-                            onclick="window.location.href='/admin/product/detail/{{ $menu->menu_ID }}'">
-                            <div class="relative overflow-hidden rounded-lg head-img">
-                                <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}"
-                                    class="object-cover w-full h-[13em]" />
-                                <form onclick="confirmation(event)"
-                                    action="{{ route('delete.menu', $menu->menu_ID ?? '') }}" method="POST">
-                                    @csrf
-                                    @method('delete')
-                                    <button id="trash" type="submit" class="absolute bottom-5 right-3">
-                                        <i class="p-2.5 text-lg bg-red-500 !text-white rounded-full ti ti-trash"></i>
-                                    </button>
-                                </form>
-                            </div>
-                            @if ($menu->is_active == 1)
-                                <div
-                                    class="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full animate-pulse top-4 right-4 dot-status">
-                                </div>
-                            @else
-                                <div
-                                    class="absolute w-4 h-4 bg-red-500 border-2 border-white rounded-full animate-pulse top-4 right-4 dot-status">
-                                </div>
-                            @endif
-                            <div class="flex flex-col h-[8rem] gap-6 wrap-body">
-                                <div class="mt-2 text-lg body-card">
-                                    <p class="font-medium line-clamp-1">{{ $menu->name }}</p>
-                                    @php
-                                        // Mencari property dengan size 'sm'
-                                        $property = $menu->properties->firstWhere('size', 'xl');
-                                    @endphp
-                                    @if ($property)
-                                        <p class="font-medium">
-                                            Rp
-                                            {{ number_format($property->price, 0, ',', '.') }}
-                                        </p>
+                <div class="grid w-full grid-cols-3 gap-4 tabs-content-product 3xl:grid-cols-4 auto-rows-auto">
+                    @isset($menus)
+                        @if ($menus->isEmpty())
+                            <p class="font-semibold text-center 2xl:col-span-3 3xl:col-span-4 ">
+                                No Menu was Found <br>
+                                <span class="text-sm text-gray-400">Add a new menu.</span>
+                            </p>
+                        @else
+                            @foreach ($menus as $menu)
+                                <div class="relative p-3 overflow-hidden rounded-lg cursor-pointer card h-fit outline outline-2 outline-accent-color-admin"
+                                    onclick="window.location.href='/admin/product/detail/{{ $menu->menu_ID }}'">
+                                    <div class="relative overflow-hidden rounded-lg head-img">
+                                        <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}"
+                                            class="object-cover w-full h-[13em]" />
+                                        <form onclick="confirmation(event)"
+                                            action="{{ route('delete.menu', $menu->menu_ID ?? '') }}" method="POST">
+                                            @csrf
+                                            @method('delete')
+                                            <button id="trash" type="submit" class="absolute bottom-5 right-3">
+                                                <i
+                                                    class="p-2.5 text-lg bg-red-500 !text-white rounded-full ti ti-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                    @if ($menu->is_active)
+                                        <div
+                                            class="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full animate-pulse top-4 right-4 dot-status">
+                                        </div>
                                     @else
-                                        <p class="text-base">Rp .0</p>
+                                        <div
+                                            class="absolute w-4 h-4 bg-red-500 border-2 border-white rounded-full animate-pulse top-4 right-4 dot-status">
+                                        </div>
                                     @endif
-                                </div>
-                                <div class="flex justify-between mt-auto footer-card">
-                                    <div class="inline-flex gap-3 stock">
-                                        <p class="!text-accent-color-admin">Stock</p>
-                                        <p class="font-semibold">{{ $menu->stock }}</p>
-                                    </div>
-                                    <div class="inline-flex gap-3 categories">
-                                        <p class="!text-accent-color-admin">Categories</p>
-                                        <p class="font-semibold">{{ ucfirst($menu->menu_type) }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-                <div class="grid grid-cols-3 gap-4 tabs-content-product 3xl:grid-cols-4 auto-rows-auto">
-                    @isset($topProducts)
-                        @foreach ($topProducts as $topProduct)
-                            <div class="relative p-3 overflow-hidden rounded-lg cursor-pointer card h-fit outline outline-2 outline-accent-color-admin"
-                                onclick="window.location.href='/admin/product/detail/{{ $topProduct->menu_ID }}'">
-                                <div class="relative overflow-hidden rounded-lg head-img">
-                                    <img src="{{ asset('storage/' . $topProduct->image) }}" alt="{{ $topProduct->name }}"
-                                        class="object-cover w-full h-[13em]" />
-                                    <form onclick="confirmation(event)"
-                                        action="{{ route('delete.menu', $topProduct->menu_ID ?? '') }}" method="POST">
-                                        @csrf
-                                        @method('delete')
-                                        <button id="trash" type="submit" class="absolute bottom-5 right-3">
-                                            <i class="p-2.5 text-lg bg-red-500 !text-white rounded-full ti ti-trash"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                                @if ($topProduct->is_active == 1)
-                                    <div
-                                        class="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full animate-pulse top-4 right-4 dot-status">
-                                    </div>
-                                @else
-                                    <div
-                                        class="absolute w-4 h-4 bg-red-500 border-2 border-white rounded-full animate-pulse top-4 right-4 dot-status">
-                                    </div>
-                                @endif
-                                <div class="flex flex-col h-[8rem] gap-6 wrap-body">
-                                    <div class="mt-2 text-lg body-card">
-                                        <p class="font-medium line-clamp-1">{{ $topProduct->name }}</p>
-                                        @php
-                                            // Mencari property dengan size 'sm'
-                                            $property = $topProduct->properties->firstWhere('size', 'xl');
-                                        @endphp
-                                        @if ($property)
+                                    <div class="flex flex-col h-[8rem] gap-6 wrap-body">
+                                        <div class="mt-2 text-lg body-card">
+                                            <p class="font-medium line-clamp-1">{{ $menu->name }}</p>
+                                            @php
+                                                // Fetch the property with size 'xl'
+                                                $property = $menu->properties->firstWhere('size', 'xl');
+                                            @endphp
                                             <p class="font-medium">
-                                                Rp
-                                                {{ number_format($property->price, 0, ',', '.') }}
+                                                Rp {{ number_format(optional($property)->price ?? 0, 0, ',', '.') }}
                                             </p>
-                                        @else
-                                            <p class="text-xl md:text-2xl">Price Not Available</p>
-                                        @endif
-                                    </div>
-                                    <div class="flex justify-between mt-auto footer-card">
-                                        <div class="inline-flex gap-3 stock">
-                                            <p class="!text-accent-color-admin">Stock</p>
-                                            <p class="font-semibold">{{ $topProduct->stock }}</p>
                                         </div>
-                                        <div class="inline-flex gap-3 categories">
-                                            <p class="!text-accent-color-admin">Categories</p>
-                                            <p class="font-semibold">{{ ucfirst($topProduct->menu_type) }}</p>
+                                        <div class="flex justify-between mt-auto footer-card">
+                                            <div class="inline-flex gap-3 stock">
+                                                <p class="!text-accent-color-admin">Stock</p>
+                                                <p class="font-semibold">{{ $menu->stock }}</p>
+                                            </div>
+                                            <div class="inline-flex gap-3 categories">
+                                                <p class="!text-accent-color-admin">Categories</p>
+                                                <p class="font-semibold">{{ ucfirst($menu->menu_type) }}</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        @endif
                     @endisset
                 </div>
                 <!-- Most Purchase -->
+                <div class="grid grid-cols-3 gap-4 tabs-content-product 3xl:grid-cols-4 auto-rows-auto">
+                    @isset($topProducts)
+                        @if ($topProducts->isEmpty())
+                            <p class="font-semibold text-center 2xl:col-span-3 3xl:col-span-4 ">
+                                No top-selling menu items yet. <br>
+                                <span class="text-sm text-gray-400"> Check back soon!</span>
+                            </p>
+                        @else
+                            @foreach ($topProducts as $topProduct)
+                                <div class="relative p-3 overflow-hidden rounded-lg cursor-pointer card h-fit outline outline-2 outline-accent-color-admin"
+                                    onclick="window.location.href='/admin/product/detail/{{ $topProduct->menu_ID }}'">
+                                    <div class="relative overflow-hidden rounded-lg head-img">
+                                        <img src="{{ asset('storage/' . $topProduct->image) }}"
+                                            alt="{{ $topProduct->name }}" class="object-cover w-full h-[13em]" />
+                                        <form onclick="confirmation(event)"
+                                            action="{{ route('delete.menu', $topProduct->menu_ID ?? '') }}" method="POST">
+                                            @csrf
+                                            @method('delete')
+                                            <button id="trash" type="submit" class="absolute bottom-5 right-3">
+                                                <i
+                                                    class="p-2.5 text-lg bg-red-500 !text-white rounded-full ti ti-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                    @if ($topProduct->is_active == 1)
+                                        <div
+                                            class="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full animate-pulse top-4 right-4 dot-status">
+                                        </div>
+                                    @else
+                                        <div
+                                            class="absolute w-4 h-4 bg-red-500 border-2 border-white rounded-full animate-pulse top-4 right-4 dot-status">
+                                        </div>
+                                    @endif
+                                    <div class="flex flex-col h-[8rem] gap-6 wrap-body">
+                                        <div class="mt-2 text-lg body-card">
+                                            <p class="font-medium line-clamp-1">{{ $topProduct->name }}</p>
+                                            @php
+                                                // Mencari property dengan size 'sm'
+                                                $property = $topProduct->properties->firstWhere('size', 'xl');
+                                            @endphp
+                                            @if ($property)
+                                                <p class="font-medium">
+                                                    Rp
+                                                    {{ number_format($property->price, 0, ',', '.') }}
+                                                </p>
+                                            @else
+                                                <p class="text-xl md:text-2xl">Price Not Available</p>
+                                            @endif
+                                        </div>
+                                        <div class="flex justify-between mt-auto footer-card">
+                                            <div class="inline-flex gap-3 stock">
+                                                <p class="!text-accent-color-admin">Stock</p>
+                                                <p class="font-semibold">{{ $topProduct->stock }}</p>
+                                            </div>
+                                            <div class="inline-flex gap-3 categories">
+                                                <p class="!text-accent-color-admin">Categories</p>
+                                                <p class="font-semibold">{{ ucfirst($topProduct->menu_type) }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endif
+                    @endisset
+                </div>
                 <!-- Best Rating -->
                 <div class="grid grid-cols-3 gap-4 tabs-content-product 3xl:grid-cols-4 auto-rows-auto">
-                    @foreach ($topRatings as $topRating)
-                        <div class="relative p-3 overflow-hidden rounded-lg cursor-pointer card h-fit outline outline-2 outline-accent-color-admin"
-                            onclick="window.location.href='/admin/product/detail/{{ $topRating->menu_ID }}'">
-                            <div class="relative overflow-hidden rounded-lg head-img">
-                                <img src="{{ asset('storage/' . $topRating->image) }}" alt="{{ $topRating->name }}"
-                                    class="object-cover w-full h-[13em]" />
-                                <form onclick="confirmation(event)"
-                                    action="{{ route('delete.menu', $topRating->menu_ID ?? '') }}" method="POST">
-                                    @csrf
-                                    @method('delete')
-                                    <button id="trash" type="submit" class="absolute bottom-5 right-3">
-                                        <i class="p-2.5 text-lg bg-red-500 !text-white rounded-full ti ti-trash"></i>
-                                    </button>
-                                </form>
-                            </div>
-                            @if ($topRating->is_active == 1)
-                                <div
-                                    class="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full animate-pulse top-4 right-4 dot-status">
-                                </div>
-                            @else
-                                <div
-                                    class="absolute w-4 h-4 bg-red-500 border-2 border-white rounded-full animate-pulse top-4 right-4 dot-status">
-                                </div>
-                            @endif
-                            <div class="flex flex-col h-[8rem] gap-6 wrap-body">
-                                <div class="mt-2 text-lg body-card">
-                                    <p class="font-medium line-clamp-1">{{ $topRating->name }}</p>
-                                    @php
-                                        $property = $topRating->properties->firstWhere('size', 'xl');
-                                    @endphp
-                                    @if ($property)
-                                        <p class="font-medium">
-                                            Rp
-                                            {{ number_format($property->price, 0, ',', '.') }}
-                                        </p>
+                    @isset($topRatings)
+                        @if ($topRatings->isEmpty())
+                            <p class="font-semibold text-center 2xl:col-span-3 3xl:col-span-4 ">
+                                No menu has achieved a best-rating status yet. <br>
+                                <span class="text-sm text-gray-400"> Check back soon!</span>
+                            </p>
+                        @else
+                            @foreach ($topRatings as $topRating)
+                                <div class="relative p-3 overflow-hidden rounded-lg cursor-pointer card h-fit outline outline-2 outline-accent-color-admin"
+                                    onclick="window.location.href='/admin/product/detail/{{ $topRating->menu_ID }}'">
+                                    <div class="relative overflow-hidden rounded-lg head-img">
+                                        <img src="{{ asset('storage/' . $topRating->image) }}"
+                                            alt="{{ $topRating->name }}" class="object-cover w-full h-[13em]" />
+                                        <form onclick="confirmation(event)"
+                                            action="{{ route('delete.menu', $topRating->menu_ID ?? '') }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('delete')
+                                            <button id="trash" type="submit" class="absolute bottom-5 right-3">
+                                                <i
+                                                    class="p-2.5 text-lg bg-red-500 !text-white rounded-full ti ti-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                    @if ($topRating->is_active == 1)
+                                        <div
+                                            class="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full animate-pulse top-4 right-4 dot-status">
+                                        </div>
                                     @else
-                                        <p class="text-xl md:text-2xl">Price Not Available</p>
+                                        <div
+                                            class="absolute w-4 h-4 bg-red-500 border-2 border-white rounded-full animate-pulse top-4 right-4 dot-status">
+                                        </div>
                                     @endif
-                                </div>
-                                <div class="flex justify-between mt-auto footer-card">
-                                    <div class="inline-flex gap-3 stock">
-                                        <p class="!text-accent-color-admin">Stock</p>
-                                        <p class="font-semibold">{{ $topRating->stock }}</p>
+                                    <div class="flex flex-col h-[8rem] gap-6 wrap-body">
+                                        <div class="mt-2 text-lg body-card">
+                                            <p class="font-medium line-clamp-1">{{ $topRating->name }}</p>
+                                            @php
+                                                $property = $topRating->properties->firstWhere('size', 'xl');
+                                            @endphp
+                                            @if ($property)
+                                                <p class="font-medium">
+                                                    Rp
+                                                    {{ number_format($property->price, 0, ',', '.') }}
+                                                </p>
+                                            @else
+                                                <p class="text-xl md:text-2xl">Price Not Available</p>
+                                            @endif
+                                        </div>
+                                        <div class="flex justify-between mt-auto footer-card">
+                                            <div class="inline-flex gap-3 stock">
+                                                <p class="!text-accent-color-admin">Stock</p>
+                                                <p class="font-semibold">{{ $topRating->stock }}</p>
+                                            </div>
+                                            <div class="inline-flex gap-3 categories">
+                                                <p class="!text-accent-color-admin">Categories</p>
+                                                <p class="font-semibold">{{ ucfirst($topRating->menu_type) }}</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="inline-flex gap-3 categories">
-                                        <p class="!text-accent-color-admin">Categories</p>
-                                        <p class="font-semibold">{{ ucfirst($topRating->menu_type) }}</p>
-                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    @endforeach
+                            @endforeach
+                        @endif
+                    @endisset
                 </div>
                 <!-- Pizza -->
                 <div class="grid grid-cols-3 gap-4 tabs-content-product 3xl:grid-cols-4 auto-rows-auto">
-                    @foreach ($menus as $menu)
-                        @if ($menu->menu_type == 'pizza')
-                            <div class="relative p-3 overflow-hidden rounded-lg cursor-pointer card h-fit outline outline-2 outline-accent-color-admin"
-                                onclick="window.location.href='/admin/product/detail/{{ $menu->menu_ID }}'">
-                                <div class="relative overflow-hidden rounded-lg head-img">
-                                    <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}"
-                                        class="object-cover w-full h-[13em]" />
-                                    <form onclick="confirmation(event)"
-                                        action="{{ route('delete.menu', $menu->menu_ID ?? '') }}" method="POST">
-                                        @csrf
-                                        @method('delete')
-                                        <button id="trash" type="submit" class="absolute bottom-5 right-3">
-                                            <i
-                                                class="p-2.5 text-lg bg-red-500 !text-white rounded-full ti ti-trash"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                                @if ($menu->is_active == 1)
-                                    <div
-                                        class="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full animate-pulse top-4 right-4 dot-status">
-                                    </div>
-                                @else
-                                    <div
-                                        class="absolute w-4 h-4 bg-red-500 border-2 border-white rounded-full animate-pulse top-4 right-4 dot-status">
+                    @isset($menus)
+                        @if ($menus->isEmpty())
+                            <p class="font-semibold text-center 2xl:col-span-3 3xl:col-span-4 ">
+                                No menu was found in this category yet.<br>
+                                <span class="text-sm text-gray-400">Add some menu</span>
+                            </p>
+                        @else
+                            @foreach ($menus as $menu)
+                                @if ($menu->menu_type == 'pizza')
+                                    <div class="relative p-3 overflow-hidden rounded-lg cursor-pointer card h-fit outline outline-2 outline-accent-color-admin"
+                                        onclick="window.location.href='/admin/product/detail/{{ $menu->menu_ID }}'">
+                                        <div class="relative overflow-hidden rounded-lg head-img">
+                                            <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}"
+                                                class="object-cover w-full h-[13em]" />
+                                            <form onclick="confirmation(event)"
+                                                action="{{ route('delete.menu', $menu->menu_ID ?? '') }}" method="POST">
+                                                @csrf
+                                                @method('delete')
+                                                <button id="trash" type="submit" class="absolute bottom-5 right-3">
+                                                    <i
+                                                        class="p-2.5 text-lg bg-red-500 !text-white rounded-full ti ti-trash"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                        @if ($menu->is_active == 1)
+                                            <div
+                                                class="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full animate-pulse top-4 right-4 dot-status">
+                                            </div>
+                                        @else
+                                            <div
+                                                class="absolute w-4 h-4 bg-red-500 border-2 border-white rounded-full animate-pulse top-4 right-4 dot-status">
+                                            </div>
+                                        @endif
+                                        <div class="flex flex-col h-[8rem] gap-6 wrap-body">
+                                            <div class="mt-2 text-lg body-card">
+                                                <p class="font-medium line-clamp-1">{{ $menu->name }}</p>
+                                                @php
+                                                    // Mencari property dengan size 'sm'
+                                                    $property = $menu->properties->firstWhere('size', 'xl');
+                                                @endphp
+                                                @if ($property)
+                                                    <p class="font-medium">
+                                                        Rp
+                                                        {{ number_format($property->price, 0, ',', '.') }}
+                                                    </p>
+                                                @else
+                                                    <p class="text-xl md:text-2xl">Price Not Available</p>
+                                                @endif
+
+                                            </div>
+                                            <div class="flex justify-between mt-auto footer-card">
+                                                <div class="inline-flex gap-3 stock">
+                                                    <p class="!text-accent-color-admin">Stock</p>
+                                                    <p class="font-semibold">{{ $menu->stock }}</p>
+                                                </div>
+                                                <div class="inline-flex gap-3 categories">
+                                                    <p class="!text-accent-color-admin">Categories</p>
+                                                    <p class="font-semibold">{{ ucfirst($menu->menu_type) }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 @endif
-                                <div class="flex flex-col h-[8rem] gap-6 wrap-body">
-                                    <div class="mt-2 text-lg body-card">
-                                        <p class="font-medium line-clamp-1">{{ $menu->name }}</p>
-                                        @php
-                                            // Mencari property dengan size 'sm'
-                                            $property = $menu->properties->firstWhere('size', 'xl');
-                                        @endphp
-                                        @if ($property)
-                                            <p class="font-medium">
-                                                Rp
-                                                {{ number_format($property->price, 0, ',', '.') }}
-                                            </p>
-                                        @else
-                                            <p class="text-xl md:text-2xl">Price Not Available</p>
-                                        @endif
-
-                                    </div>
-                                    <div class="flex justify-between mt-auto footer-card">
-                                        <div class="inline-flex gap-3 stock">
-                                            <p class="!text-accent-color-admin">Stock</p>
-                                            <p class="font-semibold">{{ $menu->stock }}</p>
-                                        </div>
-                                        <div class="inline-flex gap-3 categories">
-                                            <p class="!text-accent-color-admin">Categories</p>
-                                            <p class="font-semibold">{{ ucfirst($menu->menu_type) }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
                         @endif
-                    @endforeach
+                    @endisset
                 </div>
                 <!-- Coffee -->
                 <div class="grid grid-cols-3 gap-4 tabs-content-product 3xl:grid-cols-4 auto-rows-auto">
-                    @foreach ($menus as $menu)
-                        @if ($menu->menu_type == 'coffee')
-                            <div class="relative p-3 overflow-hidden rounded-lg cursor-pointer card h-fit outline outline-2 outline-accent-color-admin"
-                                onclick="window.location.href='/admin/product/detail/{{ $menu->menu_ID }}'">
-                                <div class="relative overflow-hidden rounded-lg head-img">
-                                    <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}"
-                                        class="object-cover w-full h-[13em]" />
-                                    <form onclick="confirmation(event)"
-                                        action="{{ route('delete.menu', $menu->menu_ID ?? '') }}" method="POST">
-                                        @csrf
-                                        @method('delete')
-                                        <button id="trash" type="submit" class="absolute bottom-5 right-3">
-                                            <i
-                                                class="p-2.5 text-lg bg-red-500 !text-white rounded-full ti ti-trash"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                                @if ($menu->is_active == 1)
-                                    <div
-                                        class="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full animate-pulse top-4 right-4 dot-status">
-                                    </div>
-                                @else
-                                    <div
-                                        class="absolute w-4 h-4 bg-red-500 border-2 border-white rounded-full animate-pulse top-4 right-4 dot-status">
+                    @isset($menus)
+                        @if ($menus->isEmpty())
+                            <p class="font-semibold text-center 2xl:col-span-3 3xl:col-span-4 ">
+                                No menu was found in this category yet.<br>
+                                <span class="text-sm text-gray-400">Add some menu</span>
+                            </p>
+                        @else
+                            @foreach ($menus as $menu)
+                                @if ($menu->menu_type == 'coffee')
+                                    <div class="relative p-3 overflow-hidden rounded-lg cursor-pointer card h-fit outline outline-2 outline-accent-color-admin"
+                                        onclick="window.location.href='/admin/product/detail/{{ $menu->menu_ID }}'">
+                                        <div class="relative overflow-hidden rounded-lg head-img">
+                                            <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}"
+                                                class="object-cover w-full h-[13em]" />
+                                            <form onclick="confirmation(event)"
+                                                action="{{ route('delete.menu', $menu->menu_ID ?? '') }}" method="POST">
+                                                @csrf
+                                                @method('delete')
+                                                <button id="trash" type="submit" class="absolute bottom-5 right-3">
+                                                    <i
+                                                        class="p-2.5 text-lg bg-red-500 !text-white rounded-full ti ti-trash"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                        @if ($menu->is_active == 1)
+                                            <div
+                                                class="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full animate-pulse top-4 right-4 dot-status">
+                                            </div>
+                                        @else
+                                            <div
+                                                class="absolute w-4 h-4 bg-red-500 border-2 border-white rounded-full animate-pulse top-4 right-4 dot-status">
+                                            </div>
+                                        @endif
+                                        <div class="flex flex-col h-[8rem] gap-6 wrap-body">
+                                            <div class="mt-2 text-lg body-card">
+                                                <p class="font-medium line-clamp-1">{{ $menu->name }}</p>
+                                                @php
+                                                    // Mencari property dengan size 'sm'
+                                                    $property = $menu->properties->firstWhere('size', 'xl');
+                                                @endphp
+                                                @if ($property)
+                                                    <p class="font-medium">
+                                                        Rp
+                                                        {{ number_format($property->price, 0, ',', '.') }}
+                                                    </p>
+                                                @else
+                                                    <p class="text-xl md:text-2xl">Price Not Available</p>
+                                                @endif
+
+                                            </div>
+                                            <div class="flex justify-between mt-auto footer-card">
+                                                <div class="inline-flex gap-3 stock">
+                                                    <p class="!text-accent-color-admin">Stock</p>
+                                                    <p class="font-semibold">{{ $menu->stock }}</p>
+                                                </div>
+                                                <div class="inline-flex gap-3 categories">
+                                                    <p class="!text-accent-color-admin">Categories</p>
+                                                    <p class="font-semibold">{{ ucfirst($menu->menu_type) }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 @endif
-                                <div class="flex flex-col h-[8rem] gap-6 wrap-body">
-                                    <div class="mt-2 text-lg body-card">
-                                        <p class="font-medium line-clamp-1">{{ $menu->name }}</p>
-                                        @php
-                                            // Mencari property dengan size 'sm'
-                                            $property = $menu->properties->firstWhere('size', 'xl');
-                                        @endphp
-                                        @if ($property)
-                                            <p class="font-medium">
-                                                Rp
-                                                {{ number_format($property->price, 0, ',', '.') }}
-                                            </p>
-                                        @else
-                                            <p class="text-xl md:text-2xl">Price Not Available</p>
-                                        @endif
-
-                                    </div>
-                                    <div class="flex justify-between mt-auto footer-card">
-                                        <div class="inline-flex gap-3 stock">
-                                            <p class="!text-accent-color-admin">Stock</p>
-                                            <p class="font-semibold">{{ $menu->stock }}</p>
-                                        </div>
-                                        <div class="inline-flex gap-3 categories">
-                                            <p class="!text-accent-color-admin">Categories</p>
-                                            <p class="font-semibold">{{ ucfirst($menu->menu_type) }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
                         @endif
-                    @endforeach
+                    @endisset
                 </div>
                 <!-- Bubble -->
                 <div class="grid grid-cols-3 gap-4 tabs-content-product 3xl:grid-cols-4 auto-rows-auto">
-                    @foreach ($menus as $menu)
-                        @if ($menu->menu_type == 'bobba')
-                            <div class="relative p-3 overflow-hidden rounded-lg cursor-pointer card h-fit outline outline-2 outline-accent-color-admin"
-                                onclick="window.location.href='/admin/product/detail/{{ $menu->menu_ID }}'">
-                                <div class="relative overflow-hidden rounded-lg head-img">
-                                    <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}"
-                                        class="object-cover w-full h-[13em]" />
-                                    <form onclick="confirmation(event)"
-                                        action="{{ route('delete.menu', $menu->menu_ID ?? '') }}" method="POST">
-                                        @csrf
-                                        @method('delete')
-                                        <button id="trash" type="submit" class="absolute bottom-5 right-3">
-                                            <i
-                                                class="p-2.5 text-lg bg-red-500 !text-white rounded-full ti ti-trash"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                                @if ($menu->is_active == 1)
-                                    <div
-                                        class="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full animate-pulse top-4 right-4 dot-status">
-                                    </div>
-                                @else
-                                    <div
-                                        class="absolute w-4 h-4 bg-red-500 border-2 border-white rounded-full animate-pulse top-4 right-4 dot-status">
+                    @isset($menus)
+                        @if ($menus->isEmpty())
+                            <p class="font-semibold text-center 2xl:col-span-3 3xl:col-span-4 ">
+                                No menu was found in this category yet.<br>
+                                <span class="text-sm text-gray-400">Add some menu</span>
+                            </p>
+                        @else
+                            @foreach ($menus as $menu)
+                                @if ($menu->menu_type == 'bobba')
+                                    <div class="relative p-3 overflow-hidden rounded-lg cursor-pointer card h-fit outline outline-2 outline-accent-color-admin"
+                                        onclick="window.location.href='/admin/product/detail/{{ $menu->menu_ID }}'">
+                                        <div class="relative overflow-hidden rounded-lg head-img">
+                                            <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}"
+                                                class="object-cover w-full h-[13em]" />
+                                            <form onclick="confirmation(event)"
+                                                action="{{ route('delete.menu', $menu->menu_ID ?? '') }}" method="POST">
+                                                @csrf
+                                                @method('delete')
+                                                <button id="trash" type="submit" class="absolute bottom-5 right-3">
+                                                    <i
+                                                        class="p-2.5 text-lg bg-red-500 !text-white rounded-full ti ti-trash"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                        @if ($menu->is_active == 1)
+                                            <div
+                                                class="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full animate-pulse top-4 right-4 dot-status">
+                                            </div>
+                                        @else
+                                            <div
+                                                class="absolute w-4 h-4 bg-red-500 border-2 border-white rounded-full animate-pulse top-4 right-4 dot-status">
+                                            </div>
+                                        @endif
+                                        <div class="flex flex-col h-[8rem] gap-6 wrap-body">
+                                            <div class="mt-2 text-lg body-card">
+                                                <p class="font-medium line-clamp-1">{{ $menu->name }}</p>
+                                                @php
+                                                    // Mencari property dengan size 'sm'
+                                                    $property = $menu->properties->firstWhere('size', 'xl');
+                                                @endphp
+                                                @if ($property)
+                                                    <p class="font-medium">
+                                                        Rp
+                                                        {{ number_format($property->price, 0, ',', '.') }}
+                                                    </p>
+                                                @else
+                                                    <p class="text-xl md:text-2xl">Price Not Available</p>
+                                                @endif
+
+                                            </div>
+                                            <div class="flex justify-between mt-auto footer-card">
+                                                <div class="inline-flex gap-3 stock">
+                                                    <p class="!text-accent-color-admin">Stock</p>
+                                                    <p class="font-semibold">{{ $menu->stock }}</p>
+                                                </div>
+                                                <div class="inline-flex gap-3 categories">
+                                                    <p class="!text-accent-color-admin">Categories</p>
+                                                    <p class="font-semibold">{{ ucfirst($menu->menu_type) }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 @endif
-                                <div class="flex flex-col h-[8rem] gap-6 wrap-body">
-                                    <div class="mt-2 text-lg body-card">
-                                        <p class="font-medium line-clamp-1">{{ $menu->name }}</p>
-                                        @php
-                                            // Mencari property dengan size 'sm'
-                                            $property = $menu->properties->firstWhere('size', 'xl');
-                                        @endphp
-                                        @if ($property)
-                                            <p class="font-medium">
-                                                Rp
-                                                {{ number_format($property->price, 0, ',', '.') }}
-                                            </p>
-                                        @else
-                                            <p class="text-xl md:text-2xl">Price Not Available</p>
-                                        @endif
-
-                                    </div>
-                                    <div class="flex justify-between mt-auto footer-card">
-                                        <div class="inline-flex gap-3 stock">
-                                            <p class="!text-accent-color-admin">Stock</p>
-                                            <p class="font-semibold">{{ $menu->stock }}</p>
-                                        </div>
-                                        <div class="inline-flex gap-3 categories">
-                                            <p class="!text-accent-color-admin">Categories</p>
-                                            <p class="font-semibold">{{ ucfirst($menu->menu_type) }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
                         @endif
-                    @endforeach
+                    @endisset
                 </div>
-                {{-- @isset($menus)
-                    <p class="my-auto text-lg font-semibold text-center text-red-500">
-                        No Menu was Found <br>
-                        <span class="text-sm text-gray-400">Add a new menu.</span>
-                    </p>
-                @endisset --}}
+
                 <!-- Pagination -->
                 <div class="flex items-center justify-between mt-auto footer-content-paging">
                     <p class="text-base !text-accent-color-admin reasult-paggination"></p>

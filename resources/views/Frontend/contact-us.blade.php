@@ -27,26 +27,29 @@
                 </div>
                 <div class="flex flex-col items-center grid-cols-7 gap-8 md:gap-24 md:grid content-wrapper">
                     <img src="../asset/Contact-us.png" class="w-full col-span-4" alt="" />
-                    <form action="" class="flex flex-col w-full col-span-3 gap-4">
-                        <label for="">
+                    <form action="{{ route('insertCS') }}" method="POST" class="flex flex-col w-full col-span-3 gap-4">
+                        @csrf
+                        <label for="name">
                             <h6>Name</h6>
                         </label>
-                        <input required type="text" class="w-full h-12 px-4 rounded-lg outline-none"
-                            placeholder="Your Name" />
-                        <label for="">
+                        <input required type="text" name="name" id="name"
+                            class="w-full h-12 px-4 rounded-lg outline-none" placeholder="Your Name" />
+
+                        <label for="email">
                             <h6>Email</h6>
                         </label>
-                        <input required type="text" class="w-full h-12 px-4 rounded-lg outline-none"
-                            placeholder="Your Email" />
-                        <label for="">
+                        <input required type="email" name="email" id="email"
+                            class="w-full h-12 px-4 rounded-lg outline-none" placeholder="Your Email" />
+                        <label for="messages">
                             <h6>Message</h6>
                         </label>
-                        <textarea required name="" class="p-4 rounded-l outline-none" id="" rows="3"
-                            placeholder="Tell Us What Is In Your Tought"></textarea>
+                        <textarea required name="messages" id="messages" class="p-4 rounded-lg outline-none" rows="3"
+                            placeholder="Tell Us What Is In Your Thought"></textarea>
                         <button type="submit" class="w-full py-3 rounded-lg bg-secondary-color">
                             Submit
                         </button>
                     </form>
+
                 </div>
             </div>
         </section>

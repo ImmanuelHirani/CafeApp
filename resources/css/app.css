@@ -333,7 +333,6 @@ section {
 /* Label Status Selection end */
 
 /* Lable Status Slection end */
-
 .status-select select option {
     background: white;
     color: black;
@@ -365,6 +364,7 @@ section {
 .tabs-content-product {
     @apply transition-all duration-500 ease-in-out opacity-0;
 }
+
 .tabs-content-product:not(:has(.hidden)) {
     @apply opacity-100;
 }
@@ -405,7 +405,23 @@ section {
     opacity: 1;
 }
 
+#box-admin-profile {
+    @apply transition-all duration-500 ease-in-out opacity-0;
+}
+
+#box-admin-profile:not(:has(.hidden)) {
+    @apply opacity-100;
+}
+
 @starting-style {
+    #box-admin-profile:not(:has(.hidden)) {
+        @apply opacity-0;
+    }
+
+    .sideMenu-tabs-content:not(:has(.hidden)) {
+        @apply opacity-0;
+    }
+
     #modal-add-product[open] {
         opacity: 0;
     }
@@ -421,6 +437,7 @@ section {
     @apply bg-transparent;
     transition: all 0.3s ease-in-out allow-discrete;
 }
+
 #modal-add-size::backdrop {
     @apply bg-transparent;
     transition: all 0.3s ease-in-out allow-discrete;

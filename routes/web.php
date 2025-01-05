@@ -1,9 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\contactUsController;
 use App\Http\Controllers\CustomCategoriesController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\customer_message;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerOrderController;
 use App\Http\Controllers\DashboardController;
@@ -79,6 +80,9 @@ Route::post('/payment/get-transaction-token', [PaymentController::class, 'getTra
 // Contact US
 Route::get('/contact', [contactUsController::class, 'contactUS'])->name('contact.view');
 Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('Dashboard.view');
+Route::post('/customer-message', [customer_message::class, 'insertCS'])->name('insertCS');
+
+
 
 
 
@@ -87,6 +91,9 @@ Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('Dashb
 // Admin Customer
 Route::get('/Customer', [CustomerController::class, 'viewAdmin'])->name('customer.admin');
 Route::get('/customer/detail/{id}', [CustomerController::class, 'getCustomerDetails'])->name('customer.details');
+
+// Admin Contact Us CS
+Route::get('/contactUS/CS/Admin', [contactUsController::class, 'CSAdmin']);
 
 // Admin Product
 Route::get('/admin/product', [MenuController::class, 'Product'])->name('admin.product');

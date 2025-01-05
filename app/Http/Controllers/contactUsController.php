@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Menu;
+use App\Models\customer_message;
 use App\Models\menus;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class contactUsController extends Controller
@@ -18,6 +17,15 @@ class contactUsController extends Controller
         $menus = menus::all();
         return view('Frontend.contact-us', [
             'menus' => $menus
+        ]);
+    }
+    public function CSAdmin()
+    {
+        // Use the correct method to fetch all messages from the database
+        $CSMessages = customer_message::all();
+
+        return view('Backend.Admin-CService', [
+            'CSMessages' => $CSMessages,
         ]);
     }
 }
