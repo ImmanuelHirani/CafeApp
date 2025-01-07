@@ -133,7 +133,6 @@
                 </div>
             </div>
         </section>
-
         <script type="text/javascript">
             document.addEventListener('DOMContentLoaded', function() {
                 const initiatePaymentBtn = document.getElementById('initiate-payment');
@@ -177,9 +176,9 @@
                         })
                         .then(response => {
                             if (!response.ok) {
-                                throw new Error(Network error: $ {
-                                    response.statusText
-                                });
+                                notyf.error(
+                                    "");
+                                throw new Error(`Network error: ${response.statusText}`);
                             }
                             return response.json();
                         })
@@ -188,7 +187,8 @@
                                 snap.pay(data.token, {
                                     onSuccess: function(result) {
                                         console.log('Payment success:', result);
-                                        alert('Payment successful!');
+                                        notyf.success('Payment successful');
+
 
                                         // Enable Payment Finish button and update styles
                                         completePaymentBtn.disabled = false;
@@ -205,13 +205,15 @@
                                     },
                                     onPending: function(result) {
                                         console.log('Payment pending:', result);
-                                        alert('Payment pending. Please complete your payment');
+                                        notyf.error(
+                                            'Payment pending. Please complete your payment');
+
                                         initiatePaymentBtn.disabled = false;
                                         initiatePaymentBtn.textContent = 'Pay Now';
                                     },
                                     onError: function(result) {
                                         console.error('Payment error:', result);
-                                        alert('Payment failed!');
+                                        notyf.error('Payment failed!');
                                         initiatePaymentBtn.disabled = false;
                                         initiatePaymentBtn.textContent = 'Pay Now';
                                     },
@@ -219,7 +221,7 @@
                                         console.log(
                                             'Customer closed the popup without finishing the payment'
                                         );
-                                        alert('Payment cancelled');
+                                        notyf.error('Payment cancelled');
                                         initiatePaymentBtn.disabled = false;
                                         initiatePaymentBtn.textContent = 'Pay Now';
                                     }
@@ -230,9 +232,7 @@
                         })
                         .catch(error => {
                             console.error('Error:', error.message);
-                            alert(Error: $ {
-                                error.message
-                            });
+                            alert(`Error: ${error.message}`);
                             initiatePaymentBtn.disabled = false;
                             initiatePaymentBtn.textContent = 'Pay Now';
                         });

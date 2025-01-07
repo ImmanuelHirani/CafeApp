@@ -182,16 +182,16 @@ class userController extends Controller
     }
 
 
-
-
-    public function getuserDetails($id)
+    public function getCustomerDetails($id)
     {
         // Jika menu tidak ditemukan, kirimkan error
         try {
-            $userDetails = user::with('locationuser')->find($id);
-            $users = user::all();
+            // Menampilkan data hanya untuk user dengan type 'customer'
+            $userDetails = user::with('locationuser')->where('user_type', 'customer')->find($id);
+            $users = user::where('user_type', 'customer')->get(); // Menampilkan hanya user dengan type 'customer'
+
             // Mengembalikan view dengan data JSON dan semua menu
-            return view('Backend.Admin-users', [
+            return view('Backend.Admin-Customers', [
                 'users' => $users,
                 'userDetails' =>  $userDetails, // Data detail menu berdasarkan ID
             ]);
@@ -201,15 +201,18 @@ class userController extends Controller
             }
         }
     }
+
     // View
     public function viewAdmin()
     {
-        $users = user::all();
+        // Menampilkan hanya user dengan type 'customer'
+        $users = user::where('user_type', 'customer')->get();
 
-        return view('Backend.Admin-users', [
+        return view('Backend.Admin-Customers', [
             'users' => $users,
         ]);
     }
+
 
     public function index()
     {

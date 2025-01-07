@@ -40,10 +40,6 @@
                             class="w-full px-6 py-1.5 rounded-lg md:py-3 md:w-fit md:px-16 bg-secondary-color">
                             Submit
                         </button>
-                        <button type="button"
-                            class="w-full px-6 py-1.5 border border-white rounded-lg md:py-3 md:w-fit md:px-16">
-                            Cancel
-                        </button>
                     </div>
                 </div>
             </div>

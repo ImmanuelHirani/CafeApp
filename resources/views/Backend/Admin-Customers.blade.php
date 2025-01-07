@@ -43,23 +43,22 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white">
-                        @foreach ($customers as $customer)
+                        @foreach ($users as $user)
                             <tr class="hover:bg-gray-50">
-                                <td class="text-base text-gray-900">{{ $customer->customer_ID }}</td>
+                                <td class="text-base text-gray-900">{{ $user->user_ID }}</td>
                                 <td class="text-base text-gray-500">
-                                    {{ $customer->username ?? 'Not Set Username Yet' }}
+                                    {{ $user->username ?? 'Not Set Username Yet' }}
                                 </td>
-                                <td class="text-base text-gray-500">{{ $customer->email }}</td>
+                                <td class="text-base text-gray-500">{{ $user->email }}</td>
                                 <td class="px-4 py-2 whitespace-nowrap">
-                                    <form action="{{ route('customer.updateStatus', $customer->customer_ID) }}"
-                                        method="POST">
+                                    <form action="{{ route('customer.updateStatus', $user->user_ID) }}" method="POST">
                                         @csrf
                                         <div class="status-select">
                                             <select name="is_active" id="statusSelect"
                                                 class="cursor-pointer focus:outline-none" onchange="this.form.submit()">
                                                 <hr>
                                                 <optgroup label="Status Currently">
-                                                    @if ($customer->is_active == '1')
+                                                    @if ($user->is_active == '1')
                                                         <option class="cursor-pointer">
                                                             Active
                                                         </option>
@@ -80,11 +79,11 @@
                                         </div>
                                     </form>
                                 </td>
-                                <td class="text-base text-gray-500">{{ $customer->created_at }}</td>
+                                <td class="text-base text-gray-500">{{ $user->created_at }}</td>
                                 <td class="flex justify-center text-base text-gray-500">
                                     <div
                                         class="flex items-center cursor-pointer justify-center !text-white bg-blue-300 rounded-full w-9 h-9 btn">
-                                        <a href="/customer/detail/{{ $customer->customer_ID ?? '' }}" class="text-xl">
+                                        <a href="/customer/detail/{{ $user->user_ID ?? '' }}" class="text-xl">
                                             <i class="ti ti-eye-search"></i>
                                         </a>
                                     </div>
@@ -113,20 +112,20 @@
             </div>
             <div
                 class="flex flex-col gap-3 px-6 pb-6 my-auto overflow-y-auto text-lg card-content h-fit sideMenu-tabs-content">
-                @isset($customerDetails)
+                @isset($userDetails)
                     <label for="" class="flex flex-col gap-3">
                         Customer Name
-                        <input type="text" value="{{ $customerDetails->username ?? 'Not Set Username Yet' }}"
+                        <input type="text" value="{{ $userDetails->username ?? 'Not Set Username Yet' }}"
                             class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin" placeholder="Max 20 Char" />
                     </label>
                     <label for="" class="flex flex-col gap-3">
                         Phone Number
-                        <input type="number" value="{{ $customerDetails->phone ?? '' }}"
+                        <input type="number" value="{{ $userDetails->phone ?? '' }}"
                             class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin" placeholder="Max 20 Char" />
                     </label>
                     <label for="" class="flex flex-col gap-3">
                         Email
-                        <input type="email" value="{{ $customerDetails->email ?? '' }}"
+                        <input type="email" value="{{ $userDetails->email ?? '' }}"
                             class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin" placeholder="Max 20 Char" />
                     </label>
                     {{-- <button type="submit" id="SendRequestEmail"
@@ -142,9 +141,9 @@
                 @endisset
             </div>
             <div class="flex flex-col gap-3 px-6 pb-6 my-auto overflow-y-auto card-content h-fit sideMenu-tabs-content">
-                @isset($customerDetails)
+                @isset($userDetails)
                     @php $i = 1; @endphp
-                    @foreach ($customerDetails->locationCustomer as $location)
+                    @foreach ($userDetails->locationuser as $location)
                         <div class="w-full py-2 text-center rounded-lg h-fit line bg-secondary-accent-color-admin">
                             Location {{ $i }}
                         </div>

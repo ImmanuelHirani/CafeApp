@@ -32,6 +32,11 @@ Route::post('/favorite-menu/add', [MenuController::class, 'addToFav'])->name('fa
 Route::delete('/favorite-menu/remove/{menuID}', [profileController::class, 'removeToFav']);
 Route::delete('/favorite-menu/clear-all', [profileController::class, 'clearAllFavorites']);
 Route::post('/menu-reviews', [MenuController::class, 'storeReview'])->name('menu.reviews.store');
+Route::delete('/menu-reviews/delete/{reviewID}', [MenuController::class, 'deleteReview'])->name('menu.reviews.delete');
+
+
+
+
 
 
 // Profile

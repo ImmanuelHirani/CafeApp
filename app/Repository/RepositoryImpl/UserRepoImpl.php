@@ -31,6 +31,8 @@ class userRepoImpl implements userRepo
             'user_type'      => 'customer', // Default user type
             'remember_token' => Str::random(60), // Generate random token
             'email_verified_at' => now(), // Set email as verified
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
 
         $this->conn->table('users')->insert($data);
@@ -49,6 +51,8 @@ class userRepoImpl implements userRepo
             'user_type' => $user->user_type, // Gunakan user_type yang diterima
             'remember_token' => Str::random(60),
             'email_verified_at' => now(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
 
         $this->conn->table('users')->insert($data);

@@ -21,7 +21,7 @@
             <div class="container">
                 <div class="flex flex-col grid-cols-12 gap-4 md:grid">
                     <div
-                        class="flex flex-col col-span-6 gap-4 text-base transition-all duration-300 ease-in-out box-cart lg:text-xl">
+                        class="sticky top-[20px] flex flex-col col-span-6 row-auto gap-4 text-base transition-all duration-300 ease-in-out h-fit box-cart lg:text-xl">
                         <div
                             class="flex flex-col p-4 rounded-lg md:p-8 gap-y-6 content-body bg-secondary-accent-color outline outline-1 outline-highlight-content">
                             <div id="order_notice" class="flex flex-col gap-3">
@@ -106,7 +106,7 @@
                         </div>
                     </div>
                     <div
-                        class="sticky flex flex-col w-full col-span-6 row-auto gap-4 p-4 rounded-lg top-[130px] h-fit md:p-8 lg:gap-y-6 gap-y-5 content-body bg-secondary-accent-color outline outline-1 outline-highlight-content">
+                        class="flex flex-col w-full col-span-6 row-auto gap-4 p-4 rounded-lg h-fit md:p-8 lg:gap-y-6 gap-y-5 content-body bg-secondary-accent-color outline outline-1 outline-highlight-content">
                         <p class="text-2xl text-highlight-content lg:text-3xl">
                             Order Summary
                         </p>

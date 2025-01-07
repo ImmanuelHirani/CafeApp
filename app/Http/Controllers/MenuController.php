@@ -10,6 +10,7 @@ use App\Models\menu_size;
 use App\Models\menu_review;
 use App\Models\menus;
 use App\Models\transaction_details;
+use App\Models\user;
 use App\Services\MenuService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -32,7 +33,7 @@ class MenuController extends Controller
     {
         $validated = $request->validate([
             'menu_type' => 'required|string|min:1|max:10',
-            'image' => 'required|mimes:jpg,jpeg,bmp,png|max:2048',
+            'image' => 'required|mimes:jpg,jpeg,bmp,png',
             'name' => 'required|string|regex:/^[a-zA-Z\s]+$/|min:1|max:40',
             'stock' => 'required|integer|min:0|max:100',
             'menu_description' => 'required|string|min:1|max:255',
@@ -42,7 +43,7 @@ class MenuController extends Controller
             // Panggil service untuk menangani logika pembuatan menu
             $newMenu = $this->menuService->createNewMenu($validated);
 
-            return redirect()->back()->with('success', 'New Menu and Default Sizes Added');
+            return redirect()->back()->with('success', 'Menu Added');
         } catch (\Exception $e) {
             Log::error('Menu creation error: ' . $e->getMessage());
             return redirect()->back()->withErrors(['error' => 'Failed to add menu: ' . $e->getMessage()]);
@@ -303,6 +304,7 @@ class MenuController extends Controller
             'rating.min' => 'At least put 1 star to review!',
             'rating.integer' => 'The rating must be a valid number.',
             'review_desc.required' => 'Please provide a description for your review.',
+            'review_desc.max' => 'Your review is too long. Max 255 characters allowed.',
             'menu_ID.exists' => 'The selected menu item is invalid.',
             'user_ID.exists' => 'The customer ID is invalid.',
         ];
@@ -310,7 +312,7 @@ class MenuController extends Controller
         // Validasi data yang diterima dari request
         $request->validate([
             'rating' => 'required|integer|min:1|max:5',
-            'review_desc' => 'required|string|max:500',
+            'review_desc' => 'required|string|max:255', // Validasi panjang maksimal 255 karakter
             'menu_ID' => 'required|exists:menus,menu_ID',
             'user_ID' => 'required|exists:users,user_ID',
         ], $customMessages);
@@ -321,7 +323,7 @@ class MenuController extends Controller
             ->first();
 
         if ($existingReview) {
-            return redirect()->back()->with('error', 'You have already reviewed this menu!');
+            return redirect()->back()->with('error', 'Only 1 review is allow');
         }
 
         // Menyimpan review baru
@@ -333,5 +335,25 @@ class MenuController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Review submitted successfully!');
+    }
+
+
+    public function deleteReview($reviewID)
+    {
+        // Temukan review atau gagal dengan 404
+        $review = menu_review::findOrFail($reviewID);
+
+        // Cek apakah review milik pengguna yang sedang login
+
+        if ($review->user_ID !== user::find(Auth::id())) {
+            // Jika tidak, tampilkan pesan error atau redirect
+            return redirect()->back()->with('error', '!Unauthorized not Yours');
+        }
+
+        // Hapus review
+        $review->delete();
+
+        // Redirect kembali dengan pesan sukses
+        return redirect()->back()->with('success', 'Review berhasil dihapus.');
     }
 }

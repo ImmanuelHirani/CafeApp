@@ -98,7 +98,7 @@
                         </div>
                         <div class="right-content">
                             <button id="reviewTrigger"
-                                class="md:px-8 px-6 py-1.5 md:text-lg rounded-lg md:py-2 text-base bg-secondary-color">
+                                class="md:px-8 px-6 py-1.5 md:text-lg rounded-lg md:py-2 !text-base bg-secondary-color">
                                 Write Review
                             </button>
                         </div>
@@ -111,9 +111,9 @@
                         @foreach ($menuReviews as $index => $menuReview)
                             <div class="flex flex-col gap-6 h-fit review-item page-{{ ceil(($index + 1) / 5) }}">
                                 <div id="customersReview" class="flex flex-col grid-cols-12 gap-4 md:grid">
-                                    <p class="col-span-2 text-base">{{ $menuReview->user->username }}</p>
+                                    <p class="col-span-2 text-lg">{{ $menuReview->user->username }}</p>
                                     <!-- Nama Customer -->
-                                    <div class="flex flex-col col-span-9 gap-3 review-comment">
+                                    <div class="flex flex-col col-span-8 gap-3 review-comment">
                                         <div class="flex items-center gap-1.5 star">
                                             @for ($i = 0; $i < 5; $i++)
                                                 @if ($i < $menuReview->rating)
@@ -137,10 +137,35 @@
                                             {{ $menuReview->review_desc }}
                                         </p>
                                     </div>
-                                    <p
-                                        class="self-start col-span-1 text-xs md:self-center text-end text-highlight-content">
-                                        {{ $menuReview->created_at->diffForHumans() }}
-                                    </p>
+                                    @auth
+                                        <div class="flex flex-col items-center justify-center col-span-2 gap-2 wrap">
+
+                                            <div class="flex items-center justify-end w-full gap-4 wrap">
+                                                <p
+                                                    class="self-start text-sm md:self-center text-end text-highlight-content">
+                                                    {{ $menuReview->created_at->diffForHumans() }}
+                                                </p>
+                                                @if ($menuReview->user_ID === Auth::id())
+                                                    <form
+                                                        action="{{ route('menu.reviews.delete', $menuReview->review_ID) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            class="px-2 py-1 rounded-full bg-secondary-color">
+                                                            <i class="text-2xl text-white ti ti-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    @endauth
+                                    @guest
+                                        <p
+                                            class="self-start col-span-2 text-sm md:self-center text-end text-highlight-content">
+                                            {{ $menuReview->created_at->diffForHumans() }}
+                                        </p>
+                                    @endguest
                                 </div>
                                 <hr />
                             </div>
@@ -154,6 +179,7 @@
         @include('layout.popovers.menu-details.cart-menu-mobile-insert')
         <!-- Review Box Wrapper -->
         @include('layout.modal.menu.review-menu')
+
         <!-- SideBar  -->
         @include('layout.popovers.aside.sidebar-frontend')
         <!-- Login & register Box -->
@@ -168,8 +194,8 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 <script src="{{ asset('/js/swiper.js') }}"></script>
 <script src="{{ asset('/js/GSAP.js') }}"></script>
-<script src="{{ asset('/js/sidebar.js') }}"></script>
-<script src="{{ asset('/js/boxLogin.js') }}"></script>
+
+
 <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 <script>

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class user extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -20,6 +20,8 @@ class User extends Authenticatable
 
     protected $table = 'users';
     protected $primaryKey = 'user_ID';
+    // Pastikan ini tidak di set ke false
+    public $timestamps = true;
 
     protected $fillable = [
         'username',

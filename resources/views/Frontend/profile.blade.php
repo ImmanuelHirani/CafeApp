@@ -558,40 +558,57 @@
     document.addEventListener("DOMContentLoaded", () => {
         const clearAllButton = document.getElementById("clearAll");
 
-        clearAllButton.addEventListener("click", async () => {
-            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute(
-                "content");
+        clearAllButton.addEventListener("click", async (ev) => {
+            ev.preventDefault(); // Mencegah aksi default tombol
+            ev.stopPropagation(); // Mencegah bubbling
 
-            if (confirm("Are you sure you want to clear all favorite menus?")) {
-                try {
-                    const response = await fetch(`/favorite-menu/clear-all`, {
-                        method: "DELETE",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "X-CSRF-TOKEN": csrfToken,
-                        },
-                    });
+            Swal.fire({
+                title: "Are you sure?",
+                text: "This action will clear all favorite menus and cannot be undone!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, clear all!",
+                cancelButtonText: "No, cancel!",
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    const csrfToken = document
+                        .querySelector('meta[name="csrf-token"]')
+                        .getAttribute("content");
 
-                    const data = await response.json();
+                    try {
+                        const response = await fetch(`/favorite-menu/clear-all`, {
+                            method: "DELETE",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "X-CSRF-TOKEN": csrfToken,
+                            },
+                        });
 
-                    if (response.ok) {
-                        // Menampilkan pemberitahuan sukses menggunakan Notyf
-                        notyf.success(data.message || "All favorites cleared");
+                        const data = await response.json();
 
-                        // Menghapus semua elemen card-wrapper dari DOM
-                        const cardWrappers = document.querySelectorAll(".card-wrapper");
-                        cardWrappers.forEach((card) => card.remove());
-                    } else {
-                        // Menampilkan pemberitahuan error menggunakan Notyf
-                        notyf.error(data.message || "Failed to clear favorites!");
+                        if (response.ok) {
+                            // Menampilkan pemberitahuan sukses menggunakan Notyf
+                            notyf.success(data.message || "All favorites cleared");
+
+                            // Menghapus semua elemen card-wrapper dari DOM
+                            const cardWrappers = document.querySelectorAll(
+                                ".card-wrapper");
+                            cardWrappers.forEach((card) => card.remove());
+                        } else {
+                            // Menampilkan pemberitahuan error menggunakan Notyf
+                            notyf.error(data.message || "Failed to clear favorites!");
+                        }
+                    } catch (error) {
+                        console.error("Error:", error);
+                        notyf.error("Failed to clear favorites. Please try again.");
                     }
-                } catch (error) {
-                    console.error("Error:", error);
-                    notyf.error("Failed to clear favorites. Please try again.");
                 }
-            }
+            });
         });
     });
 </script>
+
 
 </html>
