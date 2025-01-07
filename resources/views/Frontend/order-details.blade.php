@@ -43,6 +43,9 @@
                                             case 'completed':
                                                 $statusClass = 'bg-green-500 text-white'; // Warna ungu untuk 'completed'
                                                 break;
+                                            case 'canceled':
+                                                $statusClass = 'bg-secondary-color text-white'; // Warna ungu untuk 'completed'
+                                                break;
                                             default:
                                                 $statusClass = 'bg-gray-500 text-white'; // Warna abu-abu untuk status lainnya
                                                 break;
@@ -67,12 +70,15 @@
                             <div id="location" class="flex flex-col">
                                 <p class="text-highlight-content">Delivery Information</p>
                                 <p>
-                                    {{ $orderTransactions->first()->order->location->first()->reciver_name }} | (
-                                    {{ $orderTransactions->first()->order->location->first()->reciver_number }})
+                                    {{ $orderTransactions->first()->order->location->first()->reciver_name ?? 'None' }}
+                                    | (
+                                    {{ $orderTransactions->first()->order->location->first()->reciver_number ?? 'None' }})
                                 </p>
                                 <p class="text-highlight-content">
-                                    ({{ $orderTransactions->first()->order->location->first()->location_label }})</p>
-                                <p> {{ $orderTransactions->first()->order->location->first()->reciver_address }}</p>
+                                    ({{ $orderTransactions->first()->order->location->first()->location_labe ?? 'None' }})
+                                </p>
+                                <p> {{ $orderTransactions->first()->order->location->first()->reciver_address ?? 'None' }}
+                                </p>
                             </div>
                             <hr />
                             <div class="space-y-4 Payment_informations">
@@ -98,7 +104,6 @@
                                 </p>
                             </div>
                         </div>
-
                     </div>
                     <div
                         class="sticky flex flex-col w-full col-span-6 row-auto gap-4 p-4 rounded-lg top-[130px] h-fit md:p-8 lg:gap-y-6 gap-y-5 content-body bg-secondary-accent-color outline outline-1 outline-highlight-content">

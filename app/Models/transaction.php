@@ -10,14 +10,14 @@ class transaction extends Model
     protected $primaryKey = 'transaction_ID';
 
     protected $fillable = [
-        'customer_ID',
+        'user_ID',
         'total_amounts',
         'status_order',
     ];
 
-    public function customer()
+    public function user()
     {
-        return $this->belongsTo(customer::class, 'customer_ID', 'customer_ID');
+        return $this->belongsTo(User::class, 'user_ID', 'user_ID');
     }
 
     public function location()

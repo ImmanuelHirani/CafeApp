@@ -9,11 +9,11 @@ class location extends Model
 {
     use Notifiable;
 
-    protected $table = 'customers_location';
+    protected $table = 'customer_location';
     protected $primaryKey = 'location_ID';
 
     protected $fillable = [
-        'customer_ID',
+        'user_ID',
         'location_label',
         'reciver_address',
         'reciver_number',
@@ -21,8 +21,8 @@ class location extends Model
         'is_primary',
     ];
 
-    public function customer()
+    public function user()
     {
-        return $this->belongsTo(Customer::class, 'customer_ID', 'customer_ID');
+        return $this->belongsTo(User::class, 'user_ID', 'user_ID');
     }
 }

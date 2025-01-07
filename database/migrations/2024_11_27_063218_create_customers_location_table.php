@@ -8,9 +8,9 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('customers_location', function (Blueprint $table) {
+        Schema::create('customer_location', function (Blueprint $table) {
             $table->id('location_ID');
-            $table->unsignedBigInteger('customer_ID');
+            $table->unsignedBigInteger('user_ID');
             $table->string('location_label');
             $table->string('reciver_address');
             $table->string('reciver_number');
@@ -19,12 +19,12 @@ return new class extends Migration
             $table->timestamps();
 
             // Foreign key
-            $table->foreign('customer_ID')->references('customer_ID')->on('customers')->onDelete('cascade');
+            $table->foreign('user_ID')->references('user_ID')->on('users')->onDelete('cascade');
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('customers_location');
+        Schema::dropIfExists('customer_location');
     }
 };

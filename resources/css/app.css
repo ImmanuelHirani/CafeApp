@@ -84,10 +84,10 @@
     }
 
     #Admin {
-        @apply flex flex-col h-screen p-4 overflow-x-hidden bg-secondary-color-admin;
+        @apply flex flex-col h-full p-4 overflow-x-hidden bg-secondary-color-admin;
     }
     #Admin {
-        @apply font-inter;
+        @apply font-aesthetnova;
     }
 
     #Admin,

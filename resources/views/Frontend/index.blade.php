@@ -470,7 +470,7 @@
 <script src="{{ asset('/js/GSAP.js') }}"></script>
 <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
 <script src="{{ asset('/js/sidebar.js') }}"></script>
-<script src="{{ asset('/js/boxLogin.js') }}"></script>
+
 <script>
     checkoutBtn.addEventListener('click', function(e) {
         e.preventDefault();

@@ -26,14 +26,9 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    private $orderRepo;
-    protected $orderService;
 
-    public function __construct(orderRepo $orderRepo, OrderService $orderService)
-    {
-        $this->orderRepo = $orderRepo;
-        $this->orderService = $orderService;
-    }
+
+
     public function payment()
     {
         $customer = Auth::user();
@@ -41,11 +36,11 @@ class OrderController extends Controller
             return redirect()->back()->with('error', 'Login First!');
         }
 
-        $customerID = $customer->customer_ID;
+        $customerID = $customer->user_ID;
 
         // Fetch order transactions with their details and menu
         $orderTransactions = transaction::with(['details.menu'])
-            ->where('customer_ID', $customerID)
+            ->where('user_ID', $customerID)
             ->where('status_order', 'in-progress') // Hanya transaksi dengan status "in-progress"
             ->get();
 
@@ -70,17 +65,6 @@ class OrderController extends Controller
         ]);
     }
 
-    public function makeOrder()
-    {
-        $result = $this->orderService->makeOrder();
-
-        if ($result['status']) {
-            return redirect('/payment')->with('success', $result['message']);
-        } else {
-            return redirect()->back()->with('error', $result['message']);
-        }
-    }
-
     public function trackOrder($transactionID)
     {
         $customer = Auth::user();
@@ -88,13 +72,13 @@ class OrderController extends Controller
             return redirect()->back()->with('error', 'Login First!');
         }
 
-        $customerID = $customer->customer_ID;
+        $customerID = $customer->user_ID;
 
         // Fetch order transactions by transaction_ID and status
         $orderTransactions = transaction_details::whereHas('order', function ($query) use ($customerID, $transactionID) {
-            $query->where('customer_ID', $customerID)
+            $query->where('user_ID', $customerID)
                 ->where('transaction_ID', $transactionID) // Filter by transaction_ID
-                ->whereIn('status_order', ['paid', 'serve', 'shipped', 'completed']);
+                ->whereIn('status_order', ['paid', 'serve', 'shipped', 'completed', 'canceled']);
         })->with(['menu', 'order.location'])->get();
 
         if ($orderTransactions->isEmpty()) {
@@ -116,7 +100,7 @@ class OrderController extends Controller
     public function adminOrder()
     {
 
-        $orderCustomers = transaction::with(['customer', 'details.menu'])->get();
+        $orderCustomers = transaction::with(['user', 'details.menu'])->get();
 
         // Kirim data ke view
         return view('Backend.Admin-Order', [
@@ -128,7 +112,7 @@ class OrderController extends Controller
     {
         // Ambil data orderTransaction berdasarkan transaction_ID, termasuk relasi customer, details.menu, dan location
         $orderDetails = transaction::with([
-            'customer',        // Relasi ke customer
+            'user',        // Relasi ke customer
             'details.menu',    // Relasi ke menu dalam details
             'location'         // Relasi ke location
         ])->find($id);        // Menemukan berdasarkan transaction_ID
@@ -142,7 +126,7 @@ class OrderController extends Controller
 
         // Ambil data orderCustomers yang mencakup semua orderTransaction dengan relasi customer, details.menu, dan location
         $orderCustomers = transaction::with([
-            'customer',        // Relasi ke customer
+            'user',        // Relasi ke customer
             'details.menu',    // Relasi ke menu dalam details
             'location'         // Relasi ke location
         ])->get();            // Menampilkan semua data orderTransaction
@@ -216,7 +200,7 @@ class OrderController extends Controller
         $orderTransaction->save();
 
         // Ambil lokasi utama customer
-        $primaryLocation = Location::where('customer_ID', $customer->customer_ID)
+        $primaryLocation = Location::where('user_ID', $customer->user_ID)
             ->where('is_primary', 1)
             ->first();
 
@@ -252,7 +236,7 @@ class OrderController extends Controller
         }
 
         // Redirect ke tracking view dengan transaction_ID
-        return redirect()->route('order-details-view', ['transactionID' => $orderTransaction->transaction_ID])
+        return redirect()->route('order-details.view', ['transactionID' => $orderTransaction->transaction_ID])
             ->with('success', 'Order has been paid.');
     }
 }

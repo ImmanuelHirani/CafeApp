@@ -19,7 +19,7 @@ class customer_message extends Controller
 
         // Menyimpan pesan ke database
         ModelMessage::create([
-            'customer_ID' => Auth::id() ?? null, // Jika user login, ambil ID, jika tidak null
+            'user_ID' => Auth::id() ?? null, // Jika user login, ambil ID, jika tidak null
             'name' => $request->name,
             'email' => $request->email,
             'messages' => $request->messages,

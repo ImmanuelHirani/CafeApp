@@ -24,6 +24,12 @@ class menus extends Model
         return $this->hasMany(menu_size::class, 'menu_ID', 'menu_ID');
     }
 
+    public function favoriteMenus()
+    {
+        return $this->belongsToMany(User::class, 'favorite_menu', 'menu_ID', 'user_ID');
+    }
+
+
     public function reviews()
     {
         return $this->hasMany(menu_review::class, 'menu_ID');

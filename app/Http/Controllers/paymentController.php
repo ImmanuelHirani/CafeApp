@@ -1,12 +1,13 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 use App\Models\transaction;
+use App\Models\user;
 use Illuminate\Support\Facades\Auth;
-use Midtrans\Config;
-// use Midtrans\Transaction;
 use Illuminate\Support\Facades\Log;
+use Midtrans\Config;
 use Midtrans\Snap;
 
 class PaymentController extends Controller
@@ -14,7 +15,7 @@ class PaymentController extends Controller
     public function __construct()
     {
         Config::$serverKey = config('midtrans.server_key');
-        Config::$isProduction = false;
+        Config::$isProduction = false; // Pastikan nilai ini sesuai dengan environment Anda
         Config::$isSanitized = true;
         Config::$is3ds = true;
     }
@@ -28,15 +29,16 @@ class PaymentController extends Controller
                 'Is Production' => Config::$isProduction
             ]);
 
-            $customer = Auth::user();
-            if (!$customer) {
+            $user = user::find(Auth::id());
+            if (!$user) {
                 return redirect()->back()->with('error', 'Login First!');
             }
 
-            $customerID = $customer->customer_ID;
+            $userID = $user->user_ID; // Pastikan 'user_ID' adalah kolom yang benar di tabel 'users'
 
+            // Cek apakah ada transaksi dengan status 'in-progress' untuk pengguna
             $order = transaction::where('status_order', 'in-progress')
-                ->where('customer_ID', $customerID)
+                ->where('user_ID', $userID) // Sesuaikan dengan kolom yang ada pada tabel transaksi
                 ->first();
 
             if (!$order) {
@@ -48,17 +50,18 @@ class PaymentController extends Controller
 
             $transactionDetails = [
                 'transaction_details' => [
-                    'order_id' => $order->transaction_ID,
-                    'gross_amount' => $order->total_amounts,
+                    'order_id' => $order->transaction_ID, // Pastikan kolom ini benar
+                    'gross_amount' => $order->total_amounts, // Sesuaikan dengan kolom yang benar
                 ],
                 'customer_details' => [
-                    'customer_ID' => $customer->customer_ID,
-                    'first_name' => $customer->username,
-                    'email' => $customer->email,
-                    'phone' => $customer->phone,
+                    'user_id' => $user->user_ID,
+                    'first_name' => $user->username, // Pastikan username ada di tabel user
+                    'email' => $user->email,
+                    'phone' => $user->phone,
                 ]
             ];
 
+            // Mendapatkan Snap Token dari Midtrans
             $snapToken = Snap::getSnapToken($transactionDetails);
 
             return response()->json([
@@ -66,6 +69,7 @@ class PaymentController extends Controller
                 'token' => $snapToken
             ]);
         } catch (\Exception $e) {
+            // Menangani error dan logging
             Log::error('Midtrans Error:', [
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()

@@ -7,8 +7,8 @@
         <p class="text-lg font-semibold text-center uppercase md:text-start md:text-xl">
             Update Location
         </p>
-        <form id="locationFormUpdate" class="w-full"
-            action="{{ route('profile.location.update', Auth::user()->customer_ID) }}" method="POST">
+        <form id="locationFormUpdate" class="w-full" action="{{ route('profile.location.update', Auth::user()->user_ID) }}"
+            method="POST">
             @csrf
             @method('put')
             <div class="flex flex-col w-full gap-4 max-h-[25rem] md:p-4 px-1 py-3 overflow-y-auto">

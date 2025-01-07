@@ -6,14 +6,21 @@
             <button id="toggle-profile-box" class="flex items-center gap-3 text-gray-500">Super Admin <i
                     class="text-lg font-semibold ti ti-chevron-down"></i></button>
             <div id="box-admin-profile"
-                class="w-[13rem] bg-secondary-accent-color-admin  z-50 hidden absolute left-0 top-14 rounded-lg p-4 bg-wh backdrop-blur-2xl h-fit outline outline-1 outline-black">
-                <div class="flex flex-col gap-3 uppercase wrap">
+                class="w-[13rem] bg-secondary-accent-color-admin  z-50 hidden absolute left-0 top-14 rounded-lg p-2 bg-wh backdrop-blur-2xl h-fit outline outline-1 outline-black">
+                <div class="flex flex-col gap-1 uppercase wrap">
                     <a href=""
                         class="flex items-center gap-3 p-2 text-sm font-semibold text-black transition-all duration-300 ease-in-out rounded-lg hover:bg-gray-300 "><i
                             class="text-lg ti ti-edit"></i> Profile</a>
-                    <a href=""
-                        class="flex items-center gap-3 p-2 text-sm font-semibold text-black transition-all duration-300 ease-in-out rounded-lg hover:bg-gray-300"><i
-                            class="text-lg ti ti-logout-2"></i> Log Out</a>
+                    <form action="{{ route('logout.admin') }}" method="POST" class=""
+                        class="flex items-center gap-3 p-2 font-semibold text-black transition-all duration-300 ease-in-out rounded-lg hover:bg-gray-300 ">
+                        @csrf
+
+                        <button type="submit"
+                            class="flex items-center w-full gap-3 p-2 text-sm font-semibold text-black uppercase transition-all duration-300 ease-in-out rounded-lg cursor-pointer hover:bg-gray-300 ">
+                            <i class="text-lg ti ti-logout-2"></i>
+                            Log Out
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -81,14 +88,14 @@
             {
                 type: 'success',
                 background: '#2ECC71',
-                duration: 10000,
+                duration: 1000,
                 dismissible: true,
                 color: 'white', // Set text color to white
             },
             {
                 type: 'error',
                 background: 'indianred',
-                duration: 10000,
+                duration: 1000,
                 dismissible: true,
                 color: 'white', // Set text color to white
             },
@@ -102,17 +109,30 @@
         @endforeach
     @endif
 
+    @if (session('error'))
+        notyf.error("{{ session('error') }}");
+    @endif
+
     // Display a success notification if there is a success message in the session
     @if (session('success'))
         notyf.success("{{ session('success') }}");
     @endif
 </script>
 <script>
-    const toggleProfile = document.getElementById("toggle-profile-box"); // Corrected the method name
-    const box = document.getElementById("box-admin-profile"); // Corrected the method name
+    const toggleProfile = document.getElementById("toggle-profile-box");
+    const box = document.getElementById("box-admin-profile");
 
-    toggleProfile.addEventListener("click", function() {
-        // Corrected event listener syntax
-        box.classList.toggle("hidden"); // Toggle the "hidden" class when the toggle button is clicked
+    // Toggle box visibility on button click
+    toggleProfile.addEventListener("click", function(event) {
+        event.stopPropagation(); // Prevent click event from propagating to document
+        box.classList.toggle("hidden");
+    });
+
+    // Close box when clicking outside of it
+    document.addEventListener("click", function(event) {
+        if (!box.contains(event.target) && !toggleProfile.contains(event.target)) {
+            // If click is outside the box and the toggle button
+            box.classList.add("hidden");
+        }
     });
 </script>

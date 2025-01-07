@@ -5,7 +5,6 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\contactUsController;
 use App\Http\Controllers\CustomCategoriesController;
 use App\Http\Controllers\customer_message;
-use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerOrderController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LocationController;
@@ -13,14 +12,18 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\profileController;
+use App\Http\Controllers\userController;
 
 // FE
 // Customer
-Route::get('/', [CustomerController::class, 'index'])->name('template');
-Route::post('/customer/register', [CustomerController::class, 'register'])->name('register');
-Route::post('/customer/login', [CustomerController::class, 'login'])->name('login');
-Route::post('/customer/logout', [CustomerController::class, 'logout'])->name('logout');
-Route::post('/customer/status/update/{customerID}', [CustomerController::class, 'updateStatus'])->name('customer.updateStatus');
+Route::get('/', [UserController::class, 'index'])->name('template');
+Route::post('/customer/register', [UserController::class, 'Register'])->name('register');
+Route::post('/admin/register', [UserController::class, 'RegisterAdmin'])->name('register.admin');
+Route::post('/customer/login', [UserController::class, 'loginUser'])->name('login');
+Route::post('/admin/login', [UserController::class, 'loginAdmin'])->name('login.admin');
+Route::post('/customer/logout', [UserController::class, 'logoutUser'])->name('logout');
+Route::post('/admin/logout', [UserController::class, 'logoutAdmin'])->name('logout.admin');
+Route::post('/customer/status/update/{customerID}', [UserController::class, 'updateStatus'])->name('customer.updateStatus');
 
 // frontend menu
 Route::get('/menu', [MenuController::class, 'Product'])->name('frontend.menu');
@@ -31,11 +34,9 @@ Route::delete('/favorite-menu/clear-all', [profileController::class, 'clearAllFa
 Route::post('/menu-reviews', [MenuController::class, 'storeReview'])->name('menu.reviews.store');
 
 
-
-
 // Profile
 Route::get('/profile', [profileController::class, 'profile'])->name('frontend.profile');
-Route::put('/profile/update/{customer_ID}', [CustomerController::class, 'updateCustomer'])->name('profile.update');
+Route::put('/profile/update/{user_ID}', [UserController::class, 'updateuser'])->name('profile.update');
 Route::post('/profile/location/add', [LocationController::class, 'addLocation'])->name('profile.location.add');
 Route::delete('/profile/location/delete/{locationID}', [LocationController::class, 'deleteLocation'])->name('profile.location.delete');
 Route::put('/profile/location/update/primary/{locationID}', [LocationController::class, 'updatePrimary'])->name('profile.location.primary');
@@ -89,8 +90,10 @@ Route::post('/customer-message', [customer_message::class, 'insertCS'])->name('i
 // BE
 
 // Admin Customer
-Route::get('/Customer', [CustomerController::class, 'viewAdmin'])->name('customer.admin');
-Route::get('/customer/detail/{id}', [CustomerController::class, 'getCustomerDetails'])->name('customer.details');
+Route::get('/Customer', [UserController::class, 'viewAdmin'])->name('customer.admin');
+Route::get('/Auth', [UserController::class, 'adminAuth'])->name('admin.auth');
+Route::get('/customer/detail/{id}', [userController::class, 'getCustomerDetails'])->name('customer.details');
+
 
 // Admin Contact Us CS
 Route::get('/contactUS/CS/Admin', [contactUsController::class, 'CSAdmin']);

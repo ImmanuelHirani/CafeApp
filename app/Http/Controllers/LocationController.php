@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\customer;
 use App\Models\location;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,29 +21,30 @@ class locationController extends Controller
         ]);
 
         // Ambil model customer berdasarkan ID pengguna yang login
-        $customer = customer::find(Auth::id());
+        $customer = User::find(Auth::id());
 
         if (!$customer) {
             return back()->withErrors(['error' => 'customer not found.']);
         }
 
         // Cek apakah user sudah memiliki 2 lokasi
-        if ($customer->locationcustomer()->count() >= 2) {
+        if ($customer->locationuser()->count() >= 2) {
             return back()->withErrors(['error' => 'only 2 locations are allowed.']);
         }
 
         // Buat lokasi baru
-        $location = new location();
-        $location->customer_ID = $customer->customer_ID;
+        $location = new Location();
+        $location->user_id = $customer->user_ID; // Assuming 'user_id' is the correct column name
         $location->location_label = $validatedData['location_label'];
         $location->reciver_address = $validatedData['reciver_address'];
         $location->reciver_name = $validatedData['reciver_name'];
         $location->reciver_number = $validatedData['reciver_number'];
-        $location->is_primary = $customer->locationcustomer()->count() === 0 ? 1 : 0; // Set lokasi pertama sebagai primary
+        $location->is_primary = $customer->locationuser()->count() === 0 ? 1 : 0; // Set lokasi pertama sebagai primary
         $location->save();
 
-        return back()->with('success', 'location added successfully!');
+        return back()->with('success', 'Location added successfully!');
     }
+
 
     public function deletelocation($locationID)
     {
@@ -66,7 +68,7 @@ class locationController extends Controller
         }
 
         // Atur semua lokasi milik pengguna menjadi tidak primary
-        location::where('customer_ID', $location->customer_ID)->update(['is_primary' => 0]);
+        location::where('user_ID', $location->user_ID)->update(['is_primary' => 0]);
 
         // Atur lokasi yang dipilih menjadi primary
         $location->is_primary = 1;
@@ -111,7 +113,7 @@ class locationController extends Controller
         }
 
         // Periksa apakah lokasi ini milik customer yang sedang login
-        if ($location->customer_ID !== Auth::id()) {
+        if ($location->user_ID !== Auth::id()) {
             return back()->withErrors(['error' => 'Unauthorized action.']);
         }
 

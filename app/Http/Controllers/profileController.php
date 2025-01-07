@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
+
 use App\Models\favorite_menu;
-use App\Models\favoriteMenu;
-use App\Models\Menu;
 use App\Models\menus;
-use App\Models\orderTransaction;
 use App\Models\transaction;
-use App\Models\transactionDetails;
-use Illuminate\Http\Request;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class profileController extends Controller
@@ -18,21 +14,21 @@ class profileController extends Controller
     public function profile()
     {
         // Ambil data customer yang sedang login
-        $customer = Auth::user();
+        $user = Auth::user();
 
-
-        if (!$customer) {
+        if (!$user) {
             return redirect()->back()->with('error', 'Login First!');
         }
 
-        $menusFav = $customer->customer->favoriteMenus()->with('properties')->get();
+        // Mengambil menu favorit dari customer dengan memanggil model User secara statis
+        $menusFav = User::find($user->user_ID)->favoriteMenus()->with('properties')->get();
 
         $menus = menus::all();
 
 
-        // Ambil semua transaksi berdasarkan customer_ID dengan status_order tertentu
+        // Ambil semua transaksi berdasarkan user_ID dengan status_order tertentu
         $orders = transaction::with(['details'])
-            ->where('customer_ID', $customer->customer_ID)
+            ->where('user_ID', $user->user_ID)
             ->whereIn('status_order', ['paid', 'serve', 'shipped', 'completed', 'canceled']) // Tambahkan kondisi status_order
             ->get();
 
@@ -44,7 +40,7 @@ class profileController extends Controller
 
         // Kirim data ke view
         return view('Frontend.profile', [
-            'customer' => $customer,
+            'customer' => $user,
             'menus' => $menus,
             'menusFav' => $menusFav,  // Menampilkan hanya menu favorit
             'transactions' => $transactions,
@@ -57,14 +53,14 @@ class profileController extends Controller
         $user = Auth::user();
 
         // Cek apakah user sudah login dan customer terkait ada
-        if (!$user || !$user->customer) {
+        if (!$user) {
             return response()->json([
                 'message' => 'Login First!',
             ], 401);
         }
 
-        // Cari menu favorit berdasarkan customer_ID dan menu_ID
-        $deleted = favorite_menu::where('customer_ID', $user->customer->customer_ID)
+        // Cari menu favorit berdasarkan user_ID dan menu_ID
+        $deleted = favorite_menu::where('user_ID', $user->user_ID)
             ->where('menu_ID', $menuID)
             ->delete();
 
@@ -87,14 +83,14 @@ class profileController extends Controller
         $user = Auth::user();
 
         // Cek apakah user sudah login dan customer terkait ada
-        if (!$user || !$user->customer) {
+        if (!$user) {
             return response()->json([
                 'message' => 'Login First!',
             ], 401);
         }
 
         // Hapus semua data favorit untuk customer yang login
-        $deletedCount = favorite_menu::where('customer_ID', $user->customer->customer_ID)->delete();
+        $deletedCount = favorite_menu::where('user_ID', $user->user_ID)->delete();
 
         // Jika tidak ada data yang dihapus
         if ($deletedCount === 0) {

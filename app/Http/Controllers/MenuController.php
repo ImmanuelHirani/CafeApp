@@ -107,7 +107,7 @@ class MenuController extends Controller
     {
         try {
             // Menemukan menu berdasarkan ID dengan relasi menu_properties dan reviews beserta customer-nya
-            $menuDetails = menus::with(['properties', 'reviews.customer'])->where('menu_ID', $id)->first();
+            $menuDetails = menus::with(['properties', 'reviews.user'])->where('menu_ID', $id)->first();
 
             if (!$menuDetails) {
                 return redirect()->route('menu.index')->withErrors(['error' => 'Menu not found']);
@@ -220,8 +220,18 @@ class MenuController extends Controller
             })
             ->filter();
 
+
         // Menentukan tampilan berdasarkan kondisi (misalnya, rute atau role)
         if (request()->is('admin/*')) {
+
+            // Ambil data user dari database menggunakan guard 'admin'
+            $user = Auth::guard('admin')->user();
+
+            // Validasi apakah user valid dan memiliki user_type admin atau owner
+            if (!$user || !in_array($user->user_type, ['admin', 'owner'])) {
+                return redirect()->route('admin.auth')->with('error', 'Access Unauthorized');
+            }
+
             // Jika rute dimulai dengan 'admin/', tampilkan tampilan admin
             return view('Backend.Admin-Product', [
                 'menus' => $menus,
@@ -239,11 +249,9 @@ class MenuController extends Controller
     public function addToFav(Request $request)
     {
         // Mendapatkan data customer yang sedang login
-        $customer = Auth::user();
+        $user = Auth::user();
 
-        $customer = Auth::user();
-
-        if (!$customer) {
+        if (!$user) {
             return response()->json([
                 'message' => 'Login First!',
             ], 400);
@@ -259,7 +267,7 @@ class MenuController extends Controller
         $menuID = $request->input('menu_ID');
 
         // Memastikan menu belum ada di daftar favorit
-        $existingFavorite = favorite_menu::where('customer_ID', $customer->customer_ID)
+        $existingFavorite = favorite_menu::where('user_ID', $user->user_ID)
             ->where('menu_ID', $menuID)
             ->first();
 
@@ -271,7 +279,7 @@ class MenuController extends Controller
 
         // Menambahkan menu ke daftar favorit
         favorite_menu::create([
-            'customer_ID' => $customer->customer_ID,
+            'user_ID' => $user->user_ID,
             'menu_ID' => $menuID,
         ]);
 
@@ -283,9 +291,9 @@ class MenuController extends Controller
     public function storeReview(Request $request)
     {
         // Mendapatkan user yang login
-        $customer = Auth::user();
+        $user = Auth::user();
 
-        if (!$customer) {
+        if (!$user) {
             return redirect()->back()->with('error', 'Login first!');
         }
 
@@ -296,7 +304,7 @@ class MenuController extends Controller
             'rating.integer' => 'The rating must be a valid number.',
             'review_desc.required' => 'Please provide a description for your review.',
             'menu_ID.exists' => 'The selected menu item is invalid.',
-            'customer_ID.exists' => 'The customer ID is invalid.',
+            'user_ID.exists' => 'The customer ID is invalid.',
         ];
 
         // Validasi data yang diterima dari request
@@ -304,12 +312,21 @@ class MenuController extends Controller
             'rating' => 'required|integer|min:1|max:5',
             'review_desc' => 'required|string|max:500',
             'menu_ID' => 'required|exists:menus,menu_ID',
-            'customer_ID' => 'required|exists:customers,customer_ID',
+            'user_ID' => 'required|exists:users,user_ID',
         ], $customMessages);
+
+        // Memeriksa apakah user sudah memberikan review untuk menu yang sama
+        $existingReview = menu_review::where('user_ID', $request->user_ID)
+            ->where('menu_ID', $request->menu_ID)
+            ->first();
+
+        if ($existingReview) {
+            return redirect()->back()->with('error', 'You have already reviewed this menu!');
+        }
 
         // Menyimpan review baru
         menu_review::create([
-            'customer_ID' => $request->customer_ID,
+            'user_ID' => $request->user_ID,
             'menu_ID' => $request->menu_ID,
             'rating' => $request->rating,
             'review_desc' => $request->review_desc,

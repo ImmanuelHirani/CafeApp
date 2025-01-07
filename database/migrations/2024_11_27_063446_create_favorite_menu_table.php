@@ -10,11 +10,11 @@ return new class extends Migration
     {
         Schema::create('favorite_menu', function (Blueprint $table) {
             $table->id('favorit_ID');
-            $table->unsignedBigInteger('customer_ID');
+            $table->unsignedBigInteger('user_ID');
             $table->unsignedBigInteger('menu_ID');
             $table->timestamps();
             // Foreign keys
-            $table->foreign('customer_ID')->references('customer_ID')->on('customers')->onDelete('cascade');
+            $table->foreign('user_ID')->references('user_ID')->on('users')->onDelete('cascade');
             $table->foreign('menu_ID')->references('menu_ID')->on('menus')->onDelete('cascade');
         });
     }

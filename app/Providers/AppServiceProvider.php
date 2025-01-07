@@ -2,20 +2,17 @@
 
 namespace App\Providers;
 
-use App\Models\orderTransaction;
-use App\Models\tempTransaction;
-use App\Models\tempTransactionDetails;
+
 use App\Models\transaction;
-use App\Models\transactionDetails;
 use Illuminate\Support\ServiceProvider;
-use App\Services\CustomerService;
-use App\Repository\CustomerRepo;
+use App\Services\userService;
+use App\Repository\userRepo;
 use App\Repository\MenuRepo;
 use Illuminate\Support\Facades\DB;
 use App\Repository\orderRepo;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
-use App\Repository\RepositoryImpl\CustomerRepoImpl;
+use App\Repository\RepositoryImpl\userRepoImpl;
 use App\Repository\RepositoryImpl\MenuRepoImpl;
 use App\Repository\RepositoryImpl\OrderRepoImpl;
 use App\Services\MenuService;
@@ -29,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         // Binding repository
-        $this->app->bind(CustomerRepo::class, CustomerRepoImpl::class);
+        $this->app->bind(userRepo::class, userRepoImpl::class);
         $this->app->bind(MenuRepo::class, MenuRepoImpl::class);
         $this->app->bind(orderRepo::class, OrderRepoImpl::class);
 
@@ -37,8 +34,8 @@ class AppServiceProvider extends ServiceProvider
             return new MenuService($app->make(MenuRepo::class));
         });
 
-        $this->app->singleton(CustomerService::class, function ($app) {
-            return new CustomerService($app->make(CustomerRepo::class));
+        $this->app->singleton(userService::class, function ($app) {
+            return new userService($app->make(userRepo::class));
         });
 
         $this->app->singleton(OrderService::class, function ($app) {
@@ -54,11 +51,11 @@ class AppServiceProvider extends ServiceProvider
     {
         View::composer('*', function ($view) {
             // Pastikan user sudah login
-            $customerID = Auth::check() ? Auth::user()->customer_ID : null;
+            $userID = Auth::check() ? Auth::user()->user_ID : null;
 
             // Jika user tidak login, tidak ada data cart
-            $cartItems = $customerID
-                ? transaction::where('customer_ID', $customerID)
+            $cartItems = $userID
+                ? transaction::where('user_ID', $userID)
                 ->where('status_order', 'pending')
                 ->with(['details.menu']) // Eager load order_details untuk akses order_type
                 ->get()

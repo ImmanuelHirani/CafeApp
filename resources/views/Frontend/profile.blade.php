@@ -85,7 +85,7 @@
                     </div>
                     <hr>
                     <form enctype="multipart/form-data" method="POST"
-                        action="{{ Route('profile.update', Auth::user()->customer_ID) }}"
+                        action="{{ Route('profile.update', Auth::user()->user_ID) }}"
                         class="flex flex-col-reverse items-center w-full grid-cols-6 gap-8 my-3 md:gap-16 md:grid profile-wrap">
                         @csrf
                         @method('put')
@@ -135,8 +135,8 @@
                             Location</button>
                     </div>
                     <div class="flex flex-col items-center w-full gap-6 my-3 location-wrap">
-                        @if ($customer->locationCustomer->isNotEmpty())
-                            @foreach ($customer->locationCustomer as $location)
+                        @if ($customer->locationUser->isNotEmpty())
+                            @foreach ($customer->locationUser as $location)
                                 <div
                                     class="w-full md:p-6 p-3 border-[2.5px] flex flex-col gap-3 border-red-800 rounded-lg
                                 @if ($location->is_primary == 1) bg-secondary-color bg-opacity-40 @endif

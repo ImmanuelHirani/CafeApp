@@ -10,7 +10,7 @@ class favorite_menu extends Model
     protected $primaryKey = 'favorite_ID';
 
     protected $fillable = [
-        'customer_ID',
+        'user_ID',
         'menu_ID',
     ];
 }

@@ -5,19 +5,29 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\transaction;
 use App\Models\transaction_details;
+use App\Models\User;
 use Illuminate\Support\Facades\DB; // Import DB
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
 
     public function dashboard()
     {
+        // Ambil data user dari database menggunakan guard 'admin'
+        $user = Auth::guard('admin')->user();
+
+        // Validasi apakah user valid dan memiliki user_type admin atau owner
+        if (!$user || !in_array($user->user_type, ['admin', 'owner'])) {
+            return redirect()->route('admin.auth')->with('error', 'Access Unauthorized');
+        }
+
         // Mengambil jumlah keseluruhan customer
-        $totalCustomers = Customer::count();
+        $totalCustomers = User::where('user_type', 'customer')->count();
 
         // Mengambil 10 order terbaru
-        $orderCustomers = transaction::with(['customer', 'details.menu'])
+        $orderCustomers = transaction::with(['user', 'details.menu'])
             ->latest()
             ->take(10)
             ->get();

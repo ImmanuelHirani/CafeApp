@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="right-nav">
-                <div class="flex items-center gap-3 icon-wrap">
+                <div class="flex items-center gap-1.5 icon-wrap">
                     @if (request()->is('cart', 'payment'))
                         <a href="/cart">
                             <img src="{{ asset('/asset/SVG/Cart_add-navbar.svg') }}" class="w-11 md:w-14"

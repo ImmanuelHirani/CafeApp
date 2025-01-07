@@ -21,7 +21,6 @@ export default {
             fontFamily: {
                 magilo: ["Magilo"],
                 aesthetnova: ["AesthetNova"],
-                inter: ["inter"],
             },
 
             colors: {

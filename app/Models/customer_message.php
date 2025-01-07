@@ -11,5 +11,5 @@ class customer_message extends Model
     protected $primaryKey = 'message_ID';
 
     // Kolom yang dapat diisi
-    protected $fillable = ['customer_ID', 'name', 'email', 'messages'];
+    protected $fillable = ['user_ID', 'name', 'email', 'messages'];
 }

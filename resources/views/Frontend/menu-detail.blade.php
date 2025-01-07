@@ -111,7 +111,7 @@
                         @foreach ($menuReviews as $index => $menuReview)
                             <div class="flex flex-col gap-6 h-fit review-item page-{{ ceil(($index + 1) / 5) }}">
                                 <div id="customersReview" class="flex flex-col grid-cols-12 gap-4 md:grid">
-                                    <p class="col-span-2 text-base">{{ $menuReview->customer->username }}</p>
+                                    <p class="col-span-2 text-base">{{ $menuReview->user->username }}</p>
                                     <!-- Nama Customer -->
                                     <div class="flex flex-col col-span-9 gap-3 review-comment">
                                         <div class="flex items-center gap-1.5 star">

@@ -7,7 +7,7 @@
         <p class="text-lg font-semibold text-center uppercase md:text-start md:text-xl">
             Add New Location
         </p>
-        <form action="{{ route('profile.location.add', Auth::user()->customer_ID) }}" method="POST">
+        <form action="{{ route('profile.location.add', Auth::user()->user_ID) }}" method="POST">
             @csrf
             <div class="flex flex-col w-full gap-4 max-h-[25rem] md:p-4 px-1 py-3 overflow-y-auto">
                 <!-- Location Label -->

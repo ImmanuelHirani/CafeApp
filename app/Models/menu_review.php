@@ -10,7 +10,7 @@ class menu_review extends Model
     protected $primaryKey = 'review_ID'; // Sesuaikan dengan primary key di tabel
 
     protected $fillable = [
-        'customer_ID',
+        'user_ID',
         'menu_ID',
         'rating',
         'review_desc',
@@ -21,8 +21,8 @@ class menu_review extends Model
         return $this->belongsTo(menus::class, 'menu_ID', 'menu_ID');
     }
 
-    public function customer()
+    public function user()
     {
-        return $this->belongsTo(customer::class, 'customer_ID', 'customer_ID');
+        return $this->belongsTo(User::class, 'user_ID', 'user_ID');
     }
 }

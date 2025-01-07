@@ -17,11 +17,20 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+    protected $table = 'users';
+    protected $primaryKey = 'user_ID';
+
     protected $fillable = [
-        'name',
+        'username',
+        'phone',
         'email',
         'password',
+        'image',
+        'user_type',
+        'is_active'
     ];
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -38,11 +47,26 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
-    protected function casts(): array
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        // Hapus ini untuk password
+        // 'password' => 'hashed',
+    ];
+
+
+
+    public function favoriteMenus()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->belongsToMany(menus::class, 'favorite_menu', 'user_ID', 'menu_ID');
+    }
+
+    public function orderuser()
+    {
+        return $this->hasMany(transaction::class, 'user_ID', 'user_ID');
+    }
+
+    public function locationuser()
+    {
+        return $this->hasMany(location::class, 'user_ID', 'user_ID');
     }
 }

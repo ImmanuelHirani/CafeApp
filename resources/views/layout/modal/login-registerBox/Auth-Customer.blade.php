@@ -122,3 +122,4 @@
                 </svg>
             </div>
         </div>
+        <script src="{{ asset('/js/boxLogin.js') }}"></script>

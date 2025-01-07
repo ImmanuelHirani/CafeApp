@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\location;
 use App\Models\Menu;
 use App\Models\menu_size;
 use App\Models\MenuProperties;
@@ -11,6 +12,7 @@ use App\Models\orderTranscationDetails;
 use App\Models\transaction;
 use App\Models\transaction_details;
 use App\Models\transactionDetails;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -42,7 +44,7 @@ class CartController extends Controller
 
         // Validasi Input
         $request->validate([
-            'customer_ID' => 'required|exists:customers,customer_ID',
+            'user_ID' => 'required|exists:users,user_ID',
             'size' => 'required|string',
             'quantity' => 'required|integer|min:1|max:2',
         ]);
@@ -63,13 +65,13 @@ class CartController extends Controller
 
         try {
             // Cek atau Buat Transaksi Baru
-            $Transaction = transaction::where('customer_ID', $customer->customer_ID)
+            $Transaction = transaction::where('user_ID', $customer->user_ID)
                 ->where('status_order', 'pending') // Pastikan status "pending"
                 ->first();
 
             if (!$Transaction) {
                 $Transaction = transaction::create([
-                    'customer_ID' => $customer->customer_ID,
+                    'user_ID' => $customer->user_ID,
                     'total_amounts' => $total_amount,
                     'status_order' => 'pending', // Set status "pending"
                 ]);
@@ -128,14 +130,14 @@ class CartController extends Controller
 
         try {
             // Cek apakah ada transaksi pending sebelumnya
-            $order = transaction::where('customer_ID', $customer->customer_ID)
+            $order = transaction::where('user_ID', $customer->user_ID)
                 ->where('status_order', 'pending') // Pastikan status "pending"
                 ->first();
 
             if (!$order) {
                 // Jika tidak ada transaksi pending, buat transaksi baru
                 $order = transaction::create([
-                    'customer_ID' => $customer->customer_ID,
+                    'user_ID' => $customer->user_ID,
                     'status_order' => 'pending',
                     'total_amounts' => $totalPrice,
                     'created_at' => now(),
@@ -313,23 +315,24 @@ class CartController extends Controller
             return redirect()->back()->with('error', 'log in first!');
         }
 
-        $customerID = $customer->customer_ID;
+        $customerID = $customer->user_ID;
 
         // Ambil item dalam cart hanya dari pesanan dengan status 'pending'
         $cart_items = transaction_details::whereHas('order', function ($query) use ($customerID) {
-            $query->where('customer_ID', $customerID)->where('status_order', 'pending');
+            $query->where('user_ID', $customerID)->where('status_order', 'pending');
         })->with('menu')->get();
 
         // Periksa jika cart kosong
         if ($cart_items->isEmpty()) {
-            return redirect('/menu')->with('error', 'cart is empty , add some menu');
+            return redirect('/menu#pizza')->with('error', 'cart is empty , add some menu');
         }
 
         // Hitung total subtotal dari semua item dalam cart
         $totalSubtotal = $cart_items->sum('subtotal');
 
-        // Ambil lokasi utama pelanggan
-        $primaryLocation = $customer->locationCustomer->firstWhere('is_primary', 1);
+
+        // Ambil lokasi utama pelanggan (akses langsung melalui $customer)
+        $primaryLocation = User::find($customer->user_ID)->locationuser()->firstWhere('is_primary', 1);
 
         // Periksa apakah pelanggan belum mengatur lokasi utama
         if (!$primaryLocation) {
@@ -345,6 +348,8 @@ class CartController extends Controller
         ]);
     }
 
+
+
     // Cart Make order:
     public function makeOrder()
     {
@@ -357,16 +362,16 @@ class CartController extends Controller
         }
 
         // Cek apakah ada order yang statusnya 'in-progress'
-        $existingInProgressOrder = transaction::where('customer_ID', $customer->customer_ID)
+        $existingInProgressOrder = transaction::where('user_ID', $customer->user_ID)
             ->where('status_order', 'in-progress')
             ->exists();
 
         if ($existingInProgressOrder) {
-            return redirect()->route('payment.view')->with('error', 'Finish your previous order before making a new one.');
+            return redirect()->route('payment.view')->with('error', 'Finish your previous order!.');
         }
 
         // Cari transaksi dengan status 'pending' milik user yang login
-        $order = transaction::where('customer_ID', $customer->customer_ID)
+        $order = transaction::where('user_ID', $customer->user_ID)
             ->where('status_order', 'pending')
             ->first();
 

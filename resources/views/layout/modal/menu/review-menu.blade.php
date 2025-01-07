@@ -23,7 +23,7 @@
             <input type="hidden" name="rating" id="rating" value="0">
             <input type="hidden" name="menu_ID" value="{{ $menuDetails->menu_ID }}">
             @auth
-                <input type="hidden" name="customer_ID" value="{{ Auth::user()->customer_ID }}">
+                <input type="hidden" name="user_ID" value="{{ Auth::user()->user_ID }}">
             @endauth
             <!-- Feedback Form -->
             <div class="flex flex-col w-full gap-3">

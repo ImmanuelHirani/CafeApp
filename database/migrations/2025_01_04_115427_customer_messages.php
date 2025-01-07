@@ -14,13 +14,13 @@ return new class extends Migration
 
         Schema::create('customer_messages', function (Blueprint $table) {
             $table->id('message_ID');
-            $table->unsignedBigInteger('customer_ID');
+            $table->unsignedBigInteger('user_ID');
             $table->string('name');
             $table->string('email');
             $table->string('messages');
             $table->timestamps();
 
-            $table->foreign('customer_ID')->references('customer_ID')->on('customers')->onDelete('cascade');
+            $table->foreign('user_ID')->references('user_ID')->on('users')->onDelete('cascade');
         });
     }
 

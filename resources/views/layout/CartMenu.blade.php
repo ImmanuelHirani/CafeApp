@@ -23,7 +23,7 @@
             <input type="hidden" name="menu_ID" value="{{ $menuDetails->menu_ID ?? '' }}">
             <!-- Input Hidden Customer ID -->
             @auth
-                <input type="hidden" name="customer_ID" value="{{ Auth::user()->customer_ID }}">
+                <input type="hidden" name="user_ID" value="{{ Auth::user()->user_ID }}">
             @endauth
             <!-- Input Hidden Quantity -->
             <input type="hidden" name="quantity" id="hidden-quantity" value="1">

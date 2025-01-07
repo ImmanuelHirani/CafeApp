@@ -7,7 +7,6 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
@@ -178,7 +177,9 @@
                         })
                         .then(response => {
                             if (!response.ok) {
-                                throw new Error(`Network error: ${response.statusText}`);
+                                throw new Error(Network error: $ {
+                                    response.statusText
+                                });
                             }
                             return response.json();
                         })
@@ -229,7 +230,9 @@
                         })
                         .catch(error => {
                             console.error('Error:', error.message);
-                            alert(`Error: ${error.message}`);
+                            alert(Error: $ {
+                                error.message
+                            });
                             initiatePaymentBtn.disabled = false;
                             initiatePaymentBtn.textContent = 'Pay Now';
                         });
