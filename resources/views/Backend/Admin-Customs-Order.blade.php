@@ -228,7 +228,6 @@
                 </div>
             </form>
         </aside>
-
         @include('layout.modal.custom-menu.categories')
         @include('layout.modal.custom-menu.properties')
         @include('layout.modal.custom-menu.size')

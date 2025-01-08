@@ -153,6 +153,9 @@
                                         <div class="flex md:w-[30%] w-[70%]  flex-col gap-3 wrap">
                                             <p>Custom Pizza</p>
                                             <p class="uppercase text-highlight-content">Size : {{ $cart->size }}</p>
+                                            <button id="btn-see-detail-custom"
+                                                class="px-2 py-1 rounded-lg w-fit bg-primary-color text-highlight-content"><i
+                                                    class="ti ti-clipboard-text"></i></button>
                                             <div class="flex items-center w-full gap-3 md:hidden wrap">
                                                 <div class="wrap">
                                                     <p>Max Qty :1</p>
@@ -255,7 +258,7 @@
                 </div>
             </div>
         </section>
-
+        @include('layout.modal.custom-menu.custom-details')
     </main>
     @include('layout.Footer')
 </body>
