@@ -26,37 +26,43 @@
         </div>
         <!-- middle Content -->
         <div class="middle-quick-link">
-            <ul class="flex items-center gap-2">
+            <ul class="flex items-center gap-10">
                 <li class="relative group">
                     <a href="/dashboard"
-                        class="!text-accent-color-admin px-6 flex items-center gap-3 nav-toggle py-2 rounded-full outline-1 outline-gray-300">
+                        class="!text-accent-color-admin  flex items-center gap-3 nav-toggle py-2 rounded-full outline-1 outline-gray-300">
                         <i class="text-2xl ti ti-layout-dashboard"></i>Dashboard</a>
                 </li>
                 <li class="relative group">
                     <a href="/admin/product"
-                        class="px-6 py-2 rounded-full flex items-center gap-3 !text-accent-color-admin nav-toggle outline-1 outline-gray-300">
+                        class=" py-2 rounded-full flex items-center gap-3 !text-accent-color-admin nav-toggle outline-1 outline-gray-300">
                         <i class="text-2xl ti ti-tools-kitchen-2"></i>
                         Menu</a>
                 </li>
                 <li class="relative group">
                     <a href="/admin/menu/custom/order"
-                        class="px-6 py-2 rounded-full flex items-center gap-3 !text-accent-color-admin nav-toggle outline-1 outline-gray-300">
+                        class=" py-2 rounded-full flex items-center gap-3 !text-accent-color-admin nav-toggle outline-1 outline-gray-300">
                         <i class="text-2xl rotate-180 ti ti-pizza"></i>
                         Custom Pizza</a>
                 </li>
                 <li class="relative group">
                     <a href="/Customer"
-                        class="!text-accent-color-admin flex items-center gap-3 nav-toggle px-6 py-2 rounded-full outline-1 outline-gray-300"><i
+                        class="!text-accent-color-admin flex items-center gap-3 nav-toggle py-2 rounded-full outline-1 outline-gray-300"><i
                             class="text-2xl ti ti-users"></i>Customers</a>
                 </li>
                 <li class="relative group">
+                    <a href="/Admin/User"
+                        class="!text-accent-color-admin flex items-center gap-3 nav-toggle py-2 rounded-full outline-1 outline-gray-300">
+                        <i class="text-2xl ti ti-user-shield"></i>
+                        Admin</a>
+                </li>
+                <li class="relative group">
                     <a href="/contactUS/CS/Admin"
-                        class="!text-accent-color-admin flex items-center gap-3 nav-toggle px-6 py-2 rounded-full outline-1 outline-gray-300">
+                        class="!text-accent-color-admin flex items-center gap-3 nav-toggle py-2 rounded-full outline-1 outline-gray-300">
                         <i class="text-2xl ti ti-headset"></i>Customer Service</a>
                 </li>
                 <li class="relative group">
                     <a href="/admin/menu/order"
-                        class="!text-accent-color-admin flex items-center gap-3 nav-toggle px-6 py-2 rounded-full outline-1 outline-gray-300"><i
+                        class="!text-accent-color-admin flex items-center gap-3 nav-toggle  py-2 rounded-full outline-1 outline-gray-300"><i
                             class="text-2xl ti ti-checkup-list"></i>Transaction</a>
                 </li>
             </ul>
@@ -70,7 +76,7 @@
 <script>
     // Create an instance of Notyf
     const notyf = new Notyf({
-        duration: 1000,
+        duration: 3000,
         position: {
             x: 'right',
             y: 'top',

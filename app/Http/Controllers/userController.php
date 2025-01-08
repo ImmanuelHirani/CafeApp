@@ -213,6 +213,17 @@ class userController extends Controller
         ]);
     }
 
+    public function viewUser()
+    {
+        // Menampilkan hanya user dengan type 'admin' dan 'owner'
+        $admins = User::whereIn('user_type', ['admin', 'owner'])->get();
+
+        return view('Backend.Admin-User', [
+            'admins' =>  $admins,
+        ]);
+    }
+
+
 
     public function index()
     {

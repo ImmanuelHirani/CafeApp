@@ -82,7 +82,7 @@
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 <script>
     const notyf = new Notyf({
-        duration: 1000,
+        duration: 3000,
         position: {
             x: 'right',
             y: 'top',

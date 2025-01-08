@@ -17,8 +17,8 @@
 
 <body id="Admin">
     @include('layout.header')
-    <main class="grid grid-cols-10 gap-3 py-4">
-        <section class="flex flex-col h-full col-span-7 p-6 rounded-lg gap-9 bg-primary-color-admin">
+    <main class="grid grid-cols-7 gap-3 py-4">
+        <section class="flex flex-col h-full col-span-5 p-6 rounded-lg gap-9 bg-primary-color-admin">
             <div class="flex items-center justify-between wrap">
                 <p class="text-2xl font-semibold">Custom Pizza</p>
                 <button id="btn-add-product"
@@ -115,7 +115,7 @@
                 </table>
             </div>
         </section>
-        <aside class="flex flex-col h-full col-span-3 gap-8 pt-6 overflow-hidden rounded-lg bg-primary-color-admin">
+        <aside class="flex flex-col h-full col-span-2 gap-8 pt-6 overflow-hidden rounded-lg bg-primary-color-admin">
             <div class="px-6 head-aside">
                 <p class="text-xl font-semibold">Edit Custom Menu</p>
             </div>

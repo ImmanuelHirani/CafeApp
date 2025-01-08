@@ -157,7 +157,7 @@ class CartController extends Controller
             if ($existingCustomMenu) {
                 // Jika sudah ada, tidak bisa menambahkan lagi
                 DB::rollBack();  // Rollback transaksi jika custom menu sudah ada
-                return redirect()->back()->with('error', 'Custom menu can only be added once per transaction');
+                return redirect()->back()->with('error', 'Only One Custom Pizza Per Transaction.');
             }
 
             // Simpan detail transaksi tanpa loop topping
@@ -347,8 +347,6 @@ class CartController extends Controller
             'primaryLocation' => $primaryLocation, // Kirim lokasi utama ke Blade
         ]);
     }
-
-
 
     // Cart Make order:
     public function makeOrder()

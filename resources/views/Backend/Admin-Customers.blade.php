@@ -26,7 +26,7 @@
                                 ID
                             </th>
                             <th class="text-sm font-medium text-left text-gray-500 uppercase">
-                                Customers Name
+                                Customers Username
                             </th>
                             <th class="text-sm font-medium text-left text-gray-500 uppercase">
                                 Email

@@ -99,6 +99,7 @@ Route::post('/customer-message', [customer_message::class, 'insertCS'])->name('i
 
 // Admin Customer
 Route::get('/Customer', [UserController::class, 'viewAdmin'])->name('customer.admin');
+Route::get('/Admin/User', [UserController::class, 'viewUser'])->name('admin.user');
 Route::get('/Auth', [UserController::class, 'adminAuth'])->name('admin.auth');
 Route::get('/customer/detail/{id}', [userController::class, 'getCustomerDetails'])->name('customer.details');
 

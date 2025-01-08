@@ -67,7 +67,7 @@ $(document).ready(function () {
         info: true,
         language: {
             // Konfigurasi bahasa lainnya
-            lengthMenu: "Customers : _MENU_  per halaman",
+            lengthMenu: "User : _MENU_  per halaman",
             zeroRecords: "Tidak ditemukan data yang sesuai",
             info: "Menampilkan _PAGE_ dari _PAGES_ halaman",
             infoEmpty: "Tidak ditemukan data yang sesuai",

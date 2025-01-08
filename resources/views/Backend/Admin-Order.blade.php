@@ -124,7 +124,7 @@
                     </li>
                 </ul>
             </div>
-            <form action="" class="my-auto sideMenu-tabs-content">
+            <form action="" class="h-full my-auto sideMenu-tabs-content">
                 <div class="h-full px-6 pb-6 overflow-y-auto card-content">
                     <div class="flex flex-col gap-3 text-lg">
                         @isset($orderDetails)
@@ -167,7 +167,7 @@
                     </div>
                 </div>
             </form>
-            <form action="" class="my-auto sideMenu-tabs-content">
+            <form action="" class="h-full my-auto sideMenu-tabs-content">
                 <div class="flex flex-col gap-3 px-6 pt-0.5 pb-6 h-[36.5rem] overflow-y-auto card-wrapper">
                     @isset($orderDetails)
                         <div class="flex flex-col gap-3 text-lg order-card">
