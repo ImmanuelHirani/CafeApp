@@ -84,7 +84,7 @@
     }
 
     #Admin {
-        @apply flex flex-col h-full p-4 overflow-x-hidden bg-secondary-color-admin;
+        @apply flex flex-col h-screen p-4 overflow-x-hidden bg-secondary-color-admin;
     }
     #Admin {
         @apply font-aesthetnova;
@@ -443,6 +443,11 @@ section {
     transition: all 0.3s ease-in-out allow-discrete;
 }
 
+#modal-custom-detail::backdrop {
+    @apply bg-transparent;
+    transition: all 0.3s ease-in-out allow-discrete;
+}
+
 #modal-add-properties::backdrop {
     @apply bg-transparent;
     transition: all 0.3s ease-in-out allow-discrete;
@@ -458,6 +463,10 @@ section {
     @apply bg-black bg-opacity-50;
 }
 
+#modal-custom-detail[open]::backdrop {
+    @apply bg-black bg-opacity-80;
+}
+
 @starting-style {
     #modal-add-product[open]::backdrop {
         @apply bg-transparent;
@@ -468,6 +477,10 @@ section {
     }
 
     #modal-add-size[open]::backdrop {
+        @apply bg-transparent;
+    }
+
+    #modal-custom-detail[open]::backdrop {
         @apply bg-transparent;
     }
 }

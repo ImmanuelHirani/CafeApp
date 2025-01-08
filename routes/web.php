@@ -70,6 +70,9 @@ Route::put('/cart/update/{transactionID}', [CartController::class, 'updateCartQu
 Route::delete('/cart/delete/{transactionID}', [CartController::class, 'deleteCart'])->name('delete.cart');
 Route::post('/cart/add/', [CartController::class, 'AddToCart'])->name('cart.add');
 Route::post('/store-custom-order', [CartController::class, 'AddToCartCustom'])->name('store.custom.order');
+Route::get('/transaction_details/custom-details/{transactionID}', [CartController::class, 'getCustomDetails']);
+
+
 
 
 

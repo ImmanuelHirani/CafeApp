@@ -55,10 +55,20 @@
                                                     Custom Pizza
                                                 </p>
                                             @endif
-                                            <p
-                                                class="text-xl font-medium uppercase md:text-lg line-clamp-1 text-highlight-content">
-                                                ({{ $orderDetail->size }})
-                                            </p>
+                                            <div class="flex items-center gap-3 wrap">
+                                                <p
+                                                    class="text-xl font-medium uppercase md:text-lg line-clamp-1 text-highlight-content">
+                                                    ({{ $orderDetail->size }})
+                                                </p>
+                                                @if ($orderDetail->order_type === 'custom_menu')
+                                                    <button
+                                                        data-custom-pizza="{{ $orderDetail->transaction_detail_ID }}"
+                                                        id="btn-see-detail-custom"
+                                                        class="px-2 py-1 rounded-lg w-fit bg-primary-color text-highlight-content"><i
+                                                            class="ti ti-clipboard-text"></i></button>
+                                                @endif
+                                            </div>
+
                                             <div class="flex wrap">
                                                 <p class="text-xl font-medium md:text-lg">Rp
                                                     {{ number_format($orderDetail->subtotal, 0, ',', '.') }}
@@ -93,7 +103,7 @@
                     </div>
                     <div class="col-span-6 row-auto gap-4 text-base md:text-lg">
                         <div
-                            class="sticky flex flex-col w-full gap-4 rounded-lg h-fit top-36 box-Location font-aesthetnova bg-secondary-accent-color">
+                            class="sticky flex flex-col w-full gap-2 rounded-lg h-fit top-36 box-Location font-aesthetnova bg-secondary-accent-color">
                             <div class="px-4 py-4 rounded-t-lg bg-secondary-color header body md:px-8">
                                 <p class="font-semibold uppercase">Payment Method</p>
                             </div>
@@ -106,17 +116,17 @@
                                 </div>
                             </div>
                             <div
-                                class="flex flex-col items-center justify-between w-full gap-4 px-4 py-4 md:gap-0 md:px-8 footer">
-                                <div class="flex items-center justify-between w-full wrap">
+                                class="flex flex-col items-center justify-between w-full px-4 py-4 md:gap-0 md:px-8 footer">
+                                <div class="flex flex-col items-center justify-between w-full gap-2 md:flex-row wrap">
                                     <p class="text-sm text-highlight-content">
                                         Order That Been Pay Cannot Be Cancle *
                                     </p>
                                     <button id="initiate-payment" type="button"
-                                        class="self-end gap-3 px-2 py-2 text-base text-center transition-all duration-300 ease-in-out rounded-lg w-fit 2xl:px-12 bg-secondary-color">
+                                        class="self-end w-full gap-3 px-2 py-2 text-base text-center transition-all duration-300 ease-in-out rounded-lg md:w-fit 2xl:px-12 bg-secondary-color">
                                         Pay Now
                                     </button>
                                 </div>
-                                <form id="payment-form" class="w-full space-y-4"
+                                <form id="payment-form" class="w-full space-y-2 md:space-y-4"
                                     action="{{ route('order.pay', $orderTransaction->transaction_ID) }}"
                                     method="POST">
                                     @csrf
@@ -245,6 +255,7 @@
             });
         </script>
     </main>
+    @include('layout.modal.custom-menu.custom-details')
     @include('layout.Footer')
 </body>
 <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"

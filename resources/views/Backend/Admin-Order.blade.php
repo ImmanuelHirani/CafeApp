@@ -47,7 +47,7 @@
                             <tr class="hover:bg-gray-50">
                                 <td class="text-base text-gray-900">{{ $orderCustomer->transaction_ID }}</td>
                                 <td class="text-base text-gray-500">
-                                    {{ $orderCustomer->customer->username ?? 'Not Set The Username Yet' }}
+                                    {{ $orderCustomer->user->username ?? 'Not Set The Username Yet' }}
                                 </td>
                                 <td class="text-base text-center text-secondary-accent-color">
                                     Rp {{ number_format($orderCustomer->total_amounts, 0, ',', '.') }}
@@ -92,7 +92,7 @@
                                         </div>
                                     </form>
                                 </td>
-                                <td class="text-base text-gray-500"> {{ $orderCustomer->customer->created_at }}</td>
+                                <td class="text-base text-gray-500"> {{ $orderCustomer->created_at }}</td>
                                 <td class="flex justify-center text-base text-gray-500">
                                     <div
                                         class="flex items-center cursor-pointer justify-center !text-white bg-blue-300 rounded-full w-9 h-9 btn">
@@ -108,7 +108,7 @@
                 </table>
             </div>
         </section>
-        <aside class="flex flex-col h-full col-span-2 gap-8 pt-6 overflow-hidden rounded-lg bg-primary-color-admin">
+        <aside class="flex flex-col col-span-2 gap-8 pt-6 overflow-hidden rounded-lg h-fit bg-primary-color-admin">
             <div class="px-6 head-aside">
                 <p class="text-xl font-semibold">Transaction Details</p>
             </div>
@@ -168,7 +168,7 @@
                 </div>
             </form>
             <form action="" class="my-auto sideMenu-tabs-content">
-                <div class="flex flex-col gap-3 px-6 pt-0.5 pb-6 h-[28.5rem] overflow-y-auto card-wrapper">
+                <div class="flex flex-col gap-3 px-6 pt-0.5 pb-6 h-[36.5rem] overflow-y-auto card-wrapper">
                     @isset($orderDetails)
                         <div class="flex flex-col gap-3 text-lg order-card">
                             @forelse ($orderDetails->details as $detail)

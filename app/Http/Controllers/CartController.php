@@ -407,4 +407,24 @@ class CartController extends Controller
         // Redirect back with a success message
         return redirect()->Route('frontend.menu')->with('error', 'Order Canceled');
     }
+
+    public function getCustomDetails($transactionID)
+    {
+        $details = transaction_details::where('transaction_detail_ID', $transactionID)->first();
+
+        if ($details) {
+            // Split the menu_name string into an array of toppings
+            $toppings = explode(',', $details->menu_name);
+
+            return response()->json([
+                'status' => 'success',
+                'toppings' => $toppings
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'No details found'
+        ]);
+    }
 }

@@ -130,9 +130,17 @@
                                         <p class="text-2xl font-medium line-clamp-1">
                                             {{ $transaction->order_type === 'normal_menu' ? $transaction->menu_name : 'Custom menu' }}
                                         </p>
-                                        <p class="text-xl uppercase text-highlight-content">Size
-                                            ({{ $transaction->size }})
-                                        </p>
+                                        <div class="flex items-center gap-3 wrap">
+                                            <p class="text-lg uppercase text-highlight-content">Size
+                                                ({{ $transaction->size }})
+                                            </p>
+                                            @if ($transaction->order_type === 'custom_menu')
+                                                <button data-custom-pizza="{{ $transaction->transaction_detail_ID }}"
+                                                    id="btn-see-detail-custom"
+                                                    class="px-2 py-1 rounded-lg w-fit bg-primary-color text-highlight-content"><i
+                                                        class="ti ti-clipboard-text"></i></button>
+                                            @endif
+                                        </div>
                                         <div class="flex">
                                             <p class="text-xl">Rp
                                                 {{ number_format($transaction->subtotal, 0, ',', '.') }}</p>
@@ -285,6 +293,7 @@
         </section>
         <!-- SideBar  -->
         @include('layout.popovers.aside.sidebar-frontend')
+        @include('layout.modal.custom-menu.custom-details')
     </main>
     @include('layout.Footer')
 </body>

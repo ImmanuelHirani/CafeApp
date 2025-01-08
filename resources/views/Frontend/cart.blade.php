@@ -63,7 +63,7 @@
                                                     @csrf
                                                     @method('PUT')
                                                     <div
-                                                        class="flex items-center justify-center gap-8 px-4 py-1.5 rounded-full w-fit outline outline-1 outline-white">
+                                                        class="flex items-center justify-center gap-6 px-2 py-1.5 rounded-full w-fit outline outline-1 outline-white">
                                                         <button type="button" class="decrease-btn"
                                                             data-id="{{ $cart->transaction_detail_ID }}">
                                                             <i class="ti ti-minus"></i>
@@ -85,7 +85,7 @@
                                                     <button type="button"
                                                         class="flex items-center justify-center p-1.5 rounded-full bg-secondary-color delete-cart-item"
                                                         data-id="{{ $cart->transaction_detail_ID }}">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4"
                                                             fill="none" viewBox="0 0 26 24" stroke="currentColor">
                                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                                 stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -126,7 +126,7 @@
                                                 <button type="button"
                                                     class="flex items-center justify-center p-1.5 rounded-full bg-secondary-color delete-cart-item"
                                                     data-id="{{ $cart->transaction_detail_ID }}">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4"
                                                         fill="none" viewBox="0 0 26 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
                                                             stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -152,10 +152,14 @@
                                         </div>
                                         <div class="flex md:w-[30%] w-[70%]  flex-col gap-3 wrap">
                                             <p>Custom Pizza</p>
-                                            <p class="uppercase text-highlight-content">Size : {{ $cart->size }}</p>
-                                            <button id="btn-see-detail-custom"
-                                                class="px-2 py-1 rounded-lg w-fit bg-primary-color text-highlight-content"><i
-                                                    class="ti ti-clipboard-text"></i></button>
+                                            <div class="flex items-center gap-3 wrap">
+                                                <p class="uppercase text-highlight-content">Size : {{ $cart->size }}
+                                                </p>
+                                                <button data-custom-pizza="{{ $cart->transaction_detail_ID }}"
+                                                    id="btn-see-detail-custom"
+                                                    class="px-2 py-1 rounded-lg w-fit bg-primary-color text-highlight-content"><i
+                                                        class="ti ti-clipboard-text"></i></button>
+                                            </div>
                                             <div class="flex items-center w-full gap-3 md:hidden wrap">
                                                 <div class="wrap">
                                                     <p>Max Qty :1</p>
@@ -167,7 +171,7 @@
                                                     <button type="button"
                                                         class="flex items-center justify-center p-1.5 rounded-full bg-secondary-color delete-cart-item"
                                                         data-id="{{ $cart->transaction_detail_ID }}">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4"
                                                             fill="none" viewBox="0 0 26 24" stroke="currentColor">
                                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                                 stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -258,8 +262,8 @@
                 </div>
             </div>
         </section>
-        @include('layout.modal.custom-menu.custom-details')
     </main>
+    @include('layout.modal.custom-menu.custom-details')
     @include('layout.Footer')
 </body>
 <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
@@ -398,6 +402,5 @@
         }
     });
 </script>
-
 
 </html>
