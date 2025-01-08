@@ -95,12 +95,12 @@ class CustomCategoriesController extends Controller
             // Commit transaction
             DB::commit();
 
-            return redirect()->back()->with('success', 'Data berhasil disimpan.');
+            return redirect()->back()->with('success', 'Data Store.');
         } catch (\Exception $e) {
             // Rollback transaction jika terjadi kesalahan
             DB::rollBack();
 
-            return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+            return redirect()->back()->withErrors(['error' => 'Had been a problem: ' . $e->getMessage()]);
         }
     }
 
@@ -118,7 +118,7 @@ class CustomCategoriesController extends Controller
         $menuCustom->delete();
 
         // Jika berhasil menghapus menu
-        return redirect()->back()->with('success', 'Menu deleted successfully.');
+        return redirect()->back()->with('success', 'Menu deleted .');
     }
 
     // Method untuk menyimpan data berdasarkan categories_ID
@@ -140,7 +140,7 @@ class CustomCategoriesController extends Controller
             ]);
 
             // Redirect dengan pesan sukses
-            return redirect()->back()->with('success', 'New Topping successfully added.');
+            return redirect()->back()->with('success', 'New Topping added.');
         } catch (\Exception $e) {
             // Tangani error jika ada
             return redirect()->back()->with('error', 'Failed to add Topping. Please try again.');
@@ -216,7 +216,7 @@ class CustomCategoriesController extends Controller
         }
 
         // Redirect back with success message
-        return redirect()->back()->with('success', 'Data updated successfully!');
+        return redirect()->back()->with('success', 'Data updated ');
     }
 
 
@@ -269,6 +269,6 @@ class CustomCategoriesController extends Controller
             );
         }
 
-        return redirect()->back()->with('success', 'Size properties berhasil ditambahkan atau diperbarui.');
+        return redirect()->back()->with('success', 'Size Added');
     }
 }

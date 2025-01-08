@@ -3,7 +3,7 @@
         <div class="relative flex items-center gap-4 user">
             <img src="https://png.pngtree.com/background/20230426/original/pngtree-happy-old-man-wearing-glasses-is-smiling-picture-image_2485948.jpg"
                 alt="" class="object-cover w-10 h-10 rounded-full" />
-            <button id="toggle-profile-box" class="flex items-center gap-3 text-gray-500">Super Admin <i
+            <button id="toggle-profile-box" class="flex items-center gap-3 text-gray-500">Admin<i
                     class="text-lg font-semibold ti ti-chevron-down"></i></button>
             <div id="box-admin-profile"
                 class="w-[13rem] bg-secondary-accent-color-admin  z-50 hidden absolute left-0 top-14 rounded-lg p-2 bg-wh backdrop-blur-2xl h-fit outline outline-1 outline-black">

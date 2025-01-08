@@ -104,7 +104,7 @@ class CartController extends Controller
             return redirect()->back()->with('success', 'Menu added to cart.');
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', 'Failed to add menu to cart. Please try again.');
+            return redirect()->back()->with('error', 'Failed to add menu to cart.');
         }
     }
 
@@ -157,7 +157,7 @@ class CartController extends Controller
             if ($existingCustomMenu) {
                 // Jika sudah ada, tidak bisa menambahkan lagi
                 DB::rollBack();  // Rollback transaksi jika custom menu sudah ada
-                return redirect()->back()->with('error', 'Only One Custom Pizza Per Transaction.');
+                return redirect()->back()->with('error', 'Only One Each Transaction.');
             }
 
             // Simpan detail transaksi tanpa loop topping
@@ -175,7 +175,7 @@ class CartController extends Controller
             DB::commit();
 
             // Menyusun respons jika berhasil
-            return redirect()->back()->with('success', 'Custom Menu added to cart.');
+            return redirect()->back()->with('success', 'Custom Menu added');
         } catch (\Exception $e) {
             // Rollback transaksi jika terjadi error
             DB::rollBack();

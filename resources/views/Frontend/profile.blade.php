@@ -119,8 +119,8 @@
                                     alt="Image Preview">
                                 <input name="image" id="file" type="file" class="hidden file-img-product">
                                 <label for="file"
-                                    class="px-8 py-2 text-white rounded-lg cursor-pointer h-fit w-fit outline-1 outline outline-white">Pilih
-                                    Gambar</label>
+                                    class="px-8 py-2 text-white rounded-lg cursor-pointer h-fit w-fit outline-1 outline outline-white">Choose
+                                    Image</label>
                                 <p class="hidden text-red-500 error-message">File harus berupa gambar dengan format
                                     .JPEG, .PNG, atau .JPG</p>
                             </div>

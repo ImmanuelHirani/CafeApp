@@ -67,13 +67,13 @@ class profileController extends Controller
         // Cek apakah penghapusan berhasil
         if ($deleted) {
             return response()->json([
-                'message' => 'Menu Removed From Favorite',
+                'message' => 'Menu Removed ',
             ], 200);
         }
 
         // Jika menu tidak ditemukan di daftar favorit
         return response()->json([
-            'message' => 'Menu Not Found In Favorites',
+            'message' => 'Menu Not Found',
         ], 404);
     }
 

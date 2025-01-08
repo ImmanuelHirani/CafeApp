@@ -1,7 +1,7 @@
 <div class="hidden col-span-3 row-span-2 transition-all duration-300 ease-in-out md:block">
     <div class="sticky transition-all duration-300 ease-in-out top-36 box-cart font-aesthetnova">
         <div class="flex items-center justify-between px-3 py-3 rounded-t-lg header bg-secondary-color">
-            <p class="text-lg 3xl:text-xl">Atur Jumlah & Detail Pesanan</p>
+            <p class="text-base 3xl:text-lg">Set Quantity & Order Details</p>
         </div>
         <!-- Form Add to Cart -->
         <form method="POST" action="{{ route('cart.add') }}"
@@ -28,7 +28,7 @@
             <!-- Input Hidden Quantity -->
             <input type="hidden" name="quantity" id="hidden-quantity" value="1">
             <!-- Informasi Harga -->
-            <p class="text-highlight-content">Max. Pembelian 2 pcs!</p>
+            <p class="text-highlight-content">Max. Purchase 2 pcs!</p>
             @if ($selectedProperty)
                 <div class="flex items-center justify-between gap-2 wrap">
                     <p>SUBTOTAL</p>

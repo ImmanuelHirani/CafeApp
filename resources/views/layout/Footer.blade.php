@@ -67,52 +67,52 @@
         <div class="img-showcase-food">
             <div class=" swiper-wrapper">
                 <div class="img-wrap swiper-slide">
-                    <img src="{{ asset('/asset/Logo/Pizza Menu/Meat Lovers.jpg') }}"
-                        class="w-full h-[243px] object-cover" alt="" />
-                </div>
-                <div class="img-wrap swiper-slide">
-                    <img src="{{ asset('/asset/Logo/Pizza Menu/Blackpaper.jpg') }}"
-                        class="w-full h-[243px] object-cover" alt="" />
-                </div>
-                <div class="img-wrap swiper-slide">
-                    <img src="{{ asset('/asset/Coffe menu/Caramel Hazelnut Iced Coffee.jpg') }}"
-                        class="w-full h-[243px] object-cover" alt="" />
-                </div>
-                <div class="img-wrap swiper-slide">
-                    <img src="{{ asset('/asset/Coffe menu/capuccino Coffe.jpg') }}"
-                        class="w-full h-[243px] object-cover" alt="" />
-                </div>
-                <div class="img-wrap swiper-slide">
-                    <img src="{{ asset('/asset/Coffe menu/Dalgona Coffee.jpg') }}" class="w-full h-[243px] object-cover"
+                    <img src="{{ asset('asset/Pizza/image 24.png') }}" class="w-full h-[243px] object-cover"
                         alt="" />
                 </div>
                 <div class="img-wrap swiper-slide">
-                    <img src="{{ asset('/asset/Booba Menu/Milk bobba.jpg') }}" class="w-full h-[243px] object-cover"
+                    <img src="{{ asset('asset/Booba Menu/image 29.png') }}" class="w-full h-[243px] object-cover"
+                        alt="" />
+                </div>
+                <div class="img-wrap swiper-slide">
+                    <img src="{{ asset('asset/Coffe menu/image 22.png') }}" class="w-full h-[243px] object-cover"
+                        alt="" />
+                </div>
+                <div class="img-wrap swiper-slide">
+                    <img src="{{ asset('asset/Pizza/image 25.png') }}" class="w-full h-[243px] object-cover"
+                        alt="" />
+                </div>
+                <div class="img-wrap swiper-slide">
+                    <img src="{{ asset('asset/Booba Menu/image 30.png') }}" class="w-full h-[243px] object-cover"
+                        alt="" />
+                </div>
+                <div class="img-wrap swiper-slide">
+                    <img src="{{ asset('asset/Coffe menu/image 23.png') }}" class="w-full h-[243px] object-cover"
                         alt="" />
                 </div>
                 <!-- Left -->
                 <div class="img-wrap swiper-slide">
-                    <img src="{{ asset('/asset/Logo/Pizza Menu/Chicken.jpg') }}" class="w-full h-[243px] object-cover"
+                    <img src="{{ asset('asset/Pizza/image 26.png') }}" class="w-full h-[243px] object-cover"
                         alt="" />
                 </div>
                 <div class="img-wrap swiper-slide">
-                    <img src="{{ asset('/asset/Coffe menu/Dalgona Coffee.jpg') }}" class="w-full h-[243px] object-cover"
+                    <img src="{{ asset('asset/Booba Menu/image 32.png') }}" class="w-full h-[243px] object-cover"
                         alt="" />
                 </div>
                 <div class="img-wrap swiper-slide">
-                    <img src="{{ asset('/asset/Logo/Pizza Menu/Peperoni.jpg') }}" class="w-full h-[243px] object-cover"
+                    <img src="{{ asset('asset/Coffe menu/image 36.png') }}" class="w-full h-[243px] object-cover"
                         alt="" />
                 </div>
                 <div class="img-wrap swiper-slide">
-                    <img src="{{ asset('/asset/Coffe menu/Caramel Machiato.jpg') }}"
-                        class="w-full h-[243px] object-cover" alt="" />
-                </div>
-                <div class="img-wrap swiper-slide">
-                    <img src="{{ asset('/asset/Booba Menu/Matcha.jpg') }}" class="w-full h-[243px] object-cover"
+                    <img src="{{ asset('asset/Pizza/image 27.png') }}" class="w-full h-[243px] object-cover"
                         alt="" />
                 </div>
                 <div class="img-wrap swiper-slide">
-                    <img src="{{ asset('/asset/Booba Menu/Oreo Bobba.jpg') }}" class="w-full h-[243px] object-cover"
+                    <img src="{{ asset('asset/Booba Menu/image 33.png') }}" class="w-full h-[243px] object-cover"
+                        alt="" />
+                </div>
+                <div class="img-wrap swiper-slide">
+                    <img src="{{ asset('asset/Pizza/image 35.png') }}" class="w-full h-[243px] object-cover"
                         alt="" />
                 </div>
             </div>

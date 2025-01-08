@@ -34,14 +34,12 @@
                     <p>SIZE: Not selected</p>
                 @endif
                 <p class="text-lg">{{ $menuDetails->name ?? '' }}</p>
-                <p class="text-base text-highlight-content">
-                    Max. Pembelian 2 pcs
-                </p>
+                <p class="text-base text-highlight-content">Max. Purchase 2 pcs!</p>
             </div>
         </div>
         <!-- Size Selection -->
         <div class="flex flex-col gap-3">
-            <p class="text-lg md:text-2xl">Size :</p>
+            <p class="text-lg md:text-2xl">Choose Size :</p>
             <div class="flex flex-wrap items-center gap-3 menu-selection-wrapper">
                 @isset($menuDetails)
                     @foreach ($menuDetails->properties as $property)

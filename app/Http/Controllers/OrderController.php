@@ -154,7 +154,7 @@ class OrderController extends Controller
             $orderTransaction->save(); // simpan perubahan
 
             // Kembalikan response sukses
-            return back()->with('success', 'Order status updated.');
+            return back()->with('success', 'updated.');
         } else {
             // Jika order tidak ditemukan
             return back()->with('error', 'Order not found.');
@@ -176,7 +176,7 @@ class OrderController extends Controller
         $orderTransaction->save();
 
         // Redirect back with a success message
-        return redirect()->Route('frontend.menu')->with('error', 'Order has been canceled');
+        return redirect()->Route('frontend.menu')->with('error', 'Order canceled');
     }
 
     public function payOrder($transactionID)

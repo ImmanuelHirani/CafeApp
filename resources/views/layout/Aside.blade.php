@@ -104,9 +104,17 @@
                                         value="{{ $property->menu_size_ID }}">
                                     <input type="hidden" name="properties[{{ $property->menu_size_ID }}][size]"
                                         value="{{ $property->size }}">
-                                    <input type="hidden"
-                                        name="properties[{{ $property->menu_size_ID }}][is_active_properties]" value="1">
-                                    <input type="hidden" name="is_active_properties" value="1">
+                                    <select name="properties[{{ $property->menu_size_ID }}][is_active_properties]"
+                                        class="relative w-full p-3 rounded-lg outline-none {{ $property->is_active_properties == 1 ? 'bg-green-500 text-white' : 'bg-secondary-color text-white' }}">
+                                        <option value="1" class="font-medium"
+                                            {{ ($property->is_active_properties ?? '') == 1 ? 'selected' : '' }}>
+                                            Active
+                                        </option>
+                                        <option value="0" class="font-medium"
+                                            {{ ($property->is_active_properties ?? '') == 0 ? 'selected' : '' }}>
+                                            Non-Active
+                                        </option>
+                                    </select>
                                 @endforeach
                             @else
                                 <p>No sizes available for this menu.</p>

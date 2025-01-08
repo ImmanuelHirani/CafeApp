@@ -104,7 +104,7 @@ class userController extends Controller
         // Panggil service untuk update
         $updateduser = $this->userService->updateuser($user, $validatedData);
 
-        return redirect()->back()->with('success', 'Profile updated successfully');
+        return redirect()->back()->with('success', 'updated successfully');
     }
 
     // Login untuk user (customer)
@@ -127,10 +127,10 @@ class userController extends Controller
 
             // Jika bukan customer, logout
             Auth::guard('web')->logout();
-            return back()->withErrors(['email' => 'Anda tidak memiliki akses sebagai customer.']);
+            return back()->withErrors(['email' => 'Access Unauthorized']);
         }
 
-        return back()->withErrors(['email' => 'Login gagal! Email atau password salah.']);
+        return back()->withErrors(['email' => 'Email or password Wrong!.']);
     }
 
     // Login untuk admin
@@ -153,10 +153,10 @@ class userController extends Controller
 
             // Jika bukan admin atau owner, logout
             Auth::guard('admin')->logout();
-            return back()->withErrors(['email' => 'Anda tidak memiliki akses sebagai admin.']);
+            return back()->withErrors(['email' => 'Access Unauthorized']);
         }
 
-        return back()->withErrors(['email' => 'Login gagal! Email atau password salah.']);
+        return back()->withErrors(['email' => 'Email or password Wrong!.']);
     }
 
 
@@ -167,7 +167,7 @@ class userController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('template')->with('success', 'Logout berhasil.');
+        return redirect()->route('template')->with('success', 'Logout Success');
     }
 
 
@@ -178,7 +178,7 @@ class userController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('admin.auth')->with('success', 'Logout berhasil.');
+        return redirect()->route('admin.auth')->with('success', 'Logout Success.');
     }
 
 
@@ -223,8 +223,6 @@ class userController extends Controller
         ]);
     }
 
-
-
     public function index()
     {
         $menus = menus::all();
@@ -249,7 +247,7 @@ class userController extends Controller
             $users->save(); // simpan perubahan
 
             // Kembalikan response sukses
-            return back()->with('success', 'status updated.');
+            return back()->with('success', 'Updated.');
         } else {
             // Jika order tidak ditemukan
             return back()->with('error', 'not found.');

@@ -16,19 +16,19 @@
 </head>
 
 <body id="Admin">
-    <main class="grid w-full grid-cols-12 overflow-hidden bg-white rounded-lg">
-        <div class="w-full h-[43.5rem] relative col-span-7  ">
-            <img class="object-cover w-full h-full " src="{{ asset('asset/backgorund-AdminAuth.png') }}" alt="">
+    <main class="grid w-full grid-cols-12 overflow-hidden bg-white rounded-lg h-fit">
+        <div class="relative w-full h-full col-span-7 ">
+            <img class="object-cover w-full h-full" src="{{ asset('asset/backgorund-AdminAuth.png') }}" alt="">
             <img class="absolute top-4 left-4" src="{{ asset('asset/Logo/Logo.png') }}" alt="">
             <div
-                class="absolute flex flex-col items-center justify-center gap-1 translate-x-1/2 translate-y-1/2 wrap right-1/2 bottom-1/2">
+                class="absolute flex flex-col items-center justify-center gap-1 translate-x-1/2 right-1/2 bottom-[55%]">
                 <label class="!text-white text-5xl font-semibold">Welcome</label>
                 <label class="!text-white text-lg">Login / Register See Dashboard</label>
             </div>
         </div>
-        <div class="flex items-center justify-center w-full h-full col-span-5 ">
+        <div class="relative flex justify-center w-full h-full col-span-5">
             <form id="LoginBox" action="{{ route('login.admin') }}" method="POST"
-                class="flex flex-col justify-center  lg:w-[90%] w-full col-span-3 gap-4">
+                class="flex flex-col justify-center absolute 3xl:bottom-[40%] md:bottom-[35%]  lg:w-[90%] w-full col-span-3 gap-4">
                 @csrf
                 <h5 class="mb-4 font-semibold text-center font-aesthetnova">Login</h5>
                 <div class="relative">
@@ -53,7 +53,7 @@
                 </p>
             </form>
             <form id="RegisterBox" action="{{ route('register.admin') }}" method="POST"
-                class="flex flex-col justify-center lg:w-[90%] w-full col-span-3 gap-4">
+                class="flex flex-col justify-center absolute 3xl:bottom-[40%] md:bottom-[35%] lg:w-[90%] w-full col-span-3 gap-4">
                 @csrf
                 <h5 class="mb-4 font-semibold text-center font-aesthetnova">Register</h5>
                 <div class="relative">

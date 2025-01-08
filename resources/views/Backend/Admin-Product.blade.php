@@ -28,32 +28,32 @@
             <!-- quick link tab -->
             <div class="flex items-center justify-between w-full text-lg !text-secondary-accent-color wrap-quickTab">
                 <button
-                    class="relative z-10 flex  items-center gap-2 3xl:px-5 px-3.5 py-2 font-semibold transition-all duration-300 ease-in-out tabs-toggle-product wrap group">
+                    class="relative z-10 flex  items-center gap-2 3xl:px-5 px-3.5 py-2 font-medium transition-all duration-300 ease-in-out tabs-toggle-product wrap group">
                     <i class="text-2xl ti ti-box"></i>
                     All Products
                 </button>
                 <button
-                    class="relative z-10 flex items-center gap-2 3xl:px-5 px-3.5 py-2 font-semibold transition-all duration-300 ease-in-out tabs-toggle-product wrap group">
+                    class="relative z-10 flex items-center gap-2 3xl:px-5 px-3.5 py-2 font-medium transition-all duration-300 ease-in-out tabs-toggle-product wrap group">
                     <i class="text-2xl ti ti-ad-2"></i>
                     Most Purchase
                 </button>
                 <button
-                    class="relative z-10 flex items-center gap-2 3xl:px-5 px-3.5 py-2 font-semibold transition-all duration-300 ease-in-out tabs-toggle-product wrap group">
+                    class="relative z-10 flex items-center gap-2 3xl:px-5 px-3.5 py-2 font-medium transition-all duration-300 ease-in-out tabs-toggle-product wrap group">
                     <i class="text-2xl ti ti-writing"></i>
                     Best Rating
                 </button>
                 <button
-                    class="relative z-10 flex items-center gap-2 3xl:px-5 px-3.5 py-2 font-semibold transition-all duration-300 ease-in-out tabs-toggle-product wrap group">
+                    class="relative z-10 flex items-center gap-2 3xl:px-5 px-3.5 py-2 font-medium transition-all duration-300 ease-in-out tabs-toggle-product wrap group">
                     <i class="text-2xl ti ti-pizza"></i>
                     Pizza
                 </button>
                 <button
-                    class="relative z-10 flex items-center gap-2 3xl:px-5 px-3.5 py-2 font-semibold transition-all duration-300 ease-in-out tabs-toggle-product wrap group">
+                    class="relative z-10 flex items-center gap-2 3xl:px-5 px-3.5 py-2 font-medium transition-all duration-300 ease-in-out tabs-toggle-product wrap group">
                     <i class="text-2xl ti ti-coffee"></i>
                     Coffee
                 </button>
                 <button
-                    class="relative z-10 flex items-center gap-2 3xl:px-5 px-3.5 py-2 font-semibold transition-all duration-300 ease-in-out tabs-toggle-product wrap group">
+                    class="relative z-10 flex items-center gap-2 3xl:px-5 px-3.5 py-2 font-medium transition-all duration-300 ease-in-out tabs-toggle-product wrap group">
                     <i class="text-2xl ti ti-bubble-tea"></i>
                     Bubble ice
                 </button>
@@ -108,11 +108,11 @@
                                         </div>
                                         <div class="flex justify-between mt-auto footer-card">
                                             <div class="inline-flex gap-3 stock">
-                                                <p class="!text-accent-color-admin">Stock</p>
+                                                <p class="!text-accent-color-admin">Stock :</p>
                                                 <p class="font-semibold">{{ $menu->stock }}</p>
                                             </div>
                                             <div class="inline-flex gap-3 categories">
-                                                <p class="!text-accent-color-admin">Categories</p>
+                                                <p class="!text-accent-color-admin">Categories :</p>
                                                 <p class="font-semibold">{{ ucfirst($menu->menu_type) }}</p>
                                             </div>
                                         </div>
@@ -174,11 +174,11 @@
                                         </div>
                                         <div class="flex justify-between mt-auto footer-card">
                                             <div class="inline-flex gap-3 stock">
-                                                <p class="!text-accent-color-admin">Stock</p>
+                                                <p class="!text-accent-color-admin">Stock :</p>
                                                 <p class="font-semibold">{{ $topProduct->stock }}</p>
                                             </div>
                                             <div class="inline-flex gap-3 categories">
-                                                <p class="!text-accent-color-admin">Categories</p>
+                                                <p class="!text-accent-color-admin">Categories :</p>
                                                 <p class="font-semibold">{{ ucfirst($topProduct->menu_type) }}</p>
                                             </div>
                                         </div>
@@ -239,11 +239,11 @@
                                         </div>
                                         <div class="flex justify-between mt-auto footer-card">
                                             <div class="inline-flex gap-3 stock">
-                                                <p class="!text-accent-color-admin">Stock</p>
+                                                <p class="!text-accent-color-admin">Stock :</p>
                                                 <p class="font-semibold">{{ $topRating->stock }}</p>
                                             </div>
                                             <div class="inline-flex gap-3 categories">
-                                                <p class="!text-accent-color-admin">Categories</p>
+                                                <p class="!text-accent-color-admin">Categories :</p>
                                                 <p class="font-semibold">{{ ucfirst($topRating->menu_type) }}</p>
                                             </div>
                                         </div>
@@ -307,11 +307,11 @@
                                             </div>
                                             <div class="flex justify-between mt-auto footer-card">
                                                 <div class="inline-flex gap-3 stock">
-                                                    <p class="!text-accent-color-admin">Stock</p>
+                                                    <p class="!text-accent-color-admin">Stock :</p>
                                                     <p class="font-semibold">{{ $menu->stock }}</p>
                                                 </div>
                                                 <div class="inline-flex gap-3 categories">
-                                                    <p class="!text-accent-color-admin">Categories</p>
+                                                    <p class="!text-accent-color-admin">Categories :</p>
                                                     <p class="font-semibold">{{ ucfirst($menu->menu_type) }}</p>
                                                 </div>
                                             </div>
@@ -376,11 +376,11 @@
                                             </div>
                                             <div class="flex justify-between mt-auto footer-card">
                                                 <div class="inline-flex gap-3 stock">
-                                                    <p class="!text-accent-color-admin">Stock</p>
+                                                    <p class="!text-accent-color-admin">Stock :</p>
                                                     <p class="font-semibold">{{ $menu->stock }}</p>
                                                 </div>
                                                 <div class="inline-flex gap-3 categories">
-                                                    <p class="!text-accent-color-admin">Categories</p>
+                                                    <p class="!text-accent-color-admin">Categories :</p>
                                                     <p class="font-semibold">{{ ucfirst($menu->menu_type) }}</p>
                                                 </div>
                                             </div>
@@ -445,11 +445,11 @@
                                             </div>
                                             <div class="flex justify-between mt-auto footer-card">
                                                 <div class="inline-flex gap-3 stock">
-                                                    <p class="!text-accent-color-admin">Stock</p>
+                                                    <p class="!text-accent-color-admin">Stock :</p>
                                                     <p class="font-semibold">{{ $menu->stock }}</p>
                                                 </div>
                                                 <div class="inline-flex gap-3 categories">
-                                                    <p class="!text-accent-color-admin">Categories</p>
+                                                    <p class="!text-accent-color-admin">Categories :</p>
                                                     <p class="font-semibold">{{ ucfirst($menu->menu_type) }}</p>
                                                 </div>
                                             </div>

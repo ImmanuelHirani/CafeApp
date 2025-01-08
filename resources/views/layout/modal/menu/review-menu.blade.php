@@ -27,7 +27,7 @@
             @endauth
             <!-- Feedback Form -->
             <div class="flex flex-col w-full gap-3">
-                <p class="text-lg text-center md:text-start md:text-xl">
+                <p class="text-base text-center md:text-start md:text-xl">
                     Tell us your feedback about this product
                 </p>
                 <div class="grid grid-cols-4 gap-3.5 items-end">

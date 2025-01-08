@@ -27,28 +27,26 @@
                 </div>
             </div>
             <div class="right-nav">
-                <div class="flex items-center gap-1.5 icon-wrap">
-                    @if (request()->is('cart', 'payment'))
-                        <a href="/cart">
-                            <img src="{{ asset('/asset/SVG/Cart_add-navbar.svg') }}" class="w-11 md:w-14"
-                                alt="Cart" />
-                        </a>
-                    @else
+                <div class="flex items-center gap-4 icon-wrap">
+                    <div class="flex items-center gap-2 wrap">
                         <button id="cartTrigger">
                             <img src="{{ asset('/asset/SVG/Cart_add-navbar.svg') }}" class="w-11 md:w-14"
                                 alt="Cart" />
                         </button>
-                    @endif
-                    @auth
-                        <a href="/profile">
-                            <img src="{{ asset('/asset/SVG/User_login_navbar.svg') }}" class="w-8 md:w-10" alt="Logout" />
-                        </a>
-                    @endauth
-                    @guest
-                        <button id="loginRegisterTrigger">
-                            <img src="{{ asset('/asset/SVG/User_login_navbar.svg') }}" class="w-8 md:w-10" alt="" />
-                        </button>
-                    @endguest
+                        @auth
+                            <a href="/profile">
+                                <img src="{{ asset('/asset/SVG/User_login_navbar.svg') }}" class="w-8 md:w-10"
+                                    alt="Logout" />
+                            </a>
+                        @endauth
+                        @guest
+                            <button id="loginRegisterTrigger">
+                                <img src="{{ asset('/asset/SVG/User_login_navbar.svg') }}" class="w-8 md:w-10"
+                                    alt="" />
+                            </button>
+                        @endguest
+                    </div>
+
                     <button id="navTrigger" class="flex items-center p-2 rounded-full xl:hidden bg-secondary-color">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

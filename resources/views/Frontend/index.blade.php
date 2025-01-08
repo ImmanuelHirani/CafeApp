@@ -390,7 +390,7 @@
                 </div>
                 <div class="flex flex-col gap-10 mt-6 lg:gap-20 lg:mt-20 main-content">
                     <div class="flex flex-col items-center grid-cols-2 gap-6 lg:grid md:gap-12 coffee">
-                        <img src="{{ asset('/asset/Coffe menu/capuccino Coffe.jpg') }}"
+                        <img src="{{ asset('asset/Coffe menu/Immanuel_Christian_Cappuccino_Coffee_f618a4a1-c4eb-4938-86d8-dde4681e8a1d.png') }}"
                             class="rounded-[20px] 3xl:w-[750px] xl:w-[536px] w-full 3xl:h-[450px] h-[347px] object-cover"
                             alt="" />
                         <div class="flex flex-col gap-6 md:gap-8 desc-content">
@@ -445,7 +445,7 @@
                             </div>
                         </div>
                         <div class="flex w-full place-content-end wrap">
-                            <img src="{{ asset('/asset/Booba Menu/Choco bobba.jpg') }}"
+                            <img src="{{ asset('asset/Booba Menu/image 30.png') }}"
                                 class="rounded-[20px] 3xl:w-[750px] xl:w-[536px] w-full 3xl:h-[450px] h-[347px] object-cover"
                                 alt="" />
                         </div>

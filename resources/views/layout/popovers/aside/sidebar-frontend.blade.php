@@ -235,7 +235,7 @@
                             <div class="flex flex-col gap-3 mt-auto wrap">
                                 <i
                                     class="p-6 mx-auto text-center text-white rounded-full text-7xl w-fit ti ti-shopping-cart-question bg-highlight-content"></i>
-                                <p class="text-xl text-center">It seems you haven't made your choice yet!
+                                <p class="text-base text-center md:text-xl">It seems you haven't made your choice yet!
                                 </p>
                             </div>
                         @endforelse
@@ -246,16 +246,18 @@
             <hr class="" />
             <div class="mt-auto">
                 <p class="text-base text-center">
-                    Shipping and taxes calculated at checkout.
+                    Total was calculated at cart.
                 </p>
                 <div class="flex items-center w-full gap-3 wrap">
                     <a class="w-full" href="{{ route('cart.view') }}">
-                        <button class="w-full py-3 mt-4 font-semibold rounded-lg bg-secondary-color hover:bg-red-600">
+                        <button
+                            class="w-full py-3 mt-4 !text-sm font-semibold rounded-lg bg-secondary-color hover:bg-red-600">
                             VIEW CART
                         </button>
                     </a>
                     <a class="w-full" href="/payment">
-                        <button class="w-full py-3 mt-4 font-semibold rounded-lg bg-secondary-color hover:bg-red-600">
+                        <button
+                            class="w-full py-3 mt-4 !text-sm font-semibold rounded-lg bg-secondary-color hover:bg-red-600">
                             PAYMENT
                         </button>
                     </a>

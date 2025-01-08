@@ -43,7 +43,7 @@ class MenuController extends Controller
             // Panggil service untuk menangani logika pembuatan menu
             $newMenu = $this->menuService->createNewMenu($validated);
 
-            return redirect()->back()->with('success', 'Menu Added');
+            return redirect()->back()->with('success', 'Added');
         } catch (\Exception $e) {
             Log::error('Menu creation error: ' . $e->getMessage());
             return redirect()->back()->withErrors(['error' => 'Failed to add menu: ' . $e->getMessage()]);
@@ -343,17 +343,19 @@ class MenuController extends Controller
         // Temukan review atau gagal dengan 404
         $review = menu_review::findOrFail($reviewID);
 
-        // Cek apakah review milik pengguna yang sedang login
+        // Ambil user ID dari user yang sedang login
+        $loggedInUserId = Auth::id(); // Gunakan Auth::id() untuk mendapatkan ID user saat ini
 
-        if ($review->user_ID !== user::find(Auth::id())) {
+        // Cek apakah review milik pengguna yang sedang login
+        if ($review->user_ID !== $loggedInUserId) {
             // Jika tidak, tampilkan pesan error atau redirect
-            return redirect()->back()->with('error', '!Unauthorized not Yours');
+            return redirect()->back()->with('error', 'Unauthorized: Not yours');
         }
 
         // Hapus review
         $review->delete();
 
         // Redirect kembali dengan pesan sukses
-        return redirect()->back()->with('success', 'Review berhasil dihapus.');
+        return redirect()->back()->with('success', 'Review Deleted.');
     }
 }

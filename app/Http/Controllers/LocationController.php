@@ -29,7 +29,7 @@ class locationController extends Controller
 
         // Cek apakah user sudah memiliki 2 lokasi
         if ($customer->locationuser()->count() >= 2) {
-            return back()->withErrors(['error' => 'only 2 locations are allowed.']);
+            return back()->withErrors(['error' => 'only 2 locations allowed.']);
         }
 
         // Buat lokasi baru
@@ -42,7 +42,7 @@ class locationController extends Controller
         $location->is_primary = $customer->locationuser()->count() === 0 ? 1 : 0; // Set lokasi pertama sebagai primary
         $location->save();
 
-        return back()->with('success', 'Location added successfully!');
+        return back()->with('success', 'Location added ');
     }
 
 
@@ -124,6 +124,6 @@ class locationController extends Controller
         $location->reciver_number = $validatedData['reciver_number'];
         $location->save();
 
-        return back()->with('success', 'location updated successfully!');
+        return back()->with('success', 'location updated');
     }
 }

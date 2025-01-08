@@ -106,7 +106,7 @@
                         </div>
                     </div>
                     <div
-                        class="flex flex-col w-full col-span-6 row-auto gap-4 p-4 rounded-lg h-fit md:p-8 lg:gap-y-6 gap-y-5 content-body bg-secondary-accent-color outline outline-1 outline-highlight-content">
+                        class="flex flex-col sticky top-[20px] w-full col-span-6 row-auto gap-4 p-4 rounded-lg h-fit md:p-8 lg:gap-y-6 gap-y-5 content-body bg-secondary-accent-color outline outline-1 outline-highlight-content">
                         <p class="text-2xl text-highlight-content lg:text-3xl">
                             Order Summary
                         </p>

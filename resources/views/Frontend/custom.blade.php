@@ -56,7 +56,8 @@
                                 <p class="text-highlight-content">Note :</p>
                                 <ul class="pb-6 space-y-1 list-disc list-inside text-accent-color">
                                     @foreach ($sizes as $index => $size)
-                                        <li>{{ $size->size }} ({{ $size->allowed_flavor }} Flavor)</li>
+                                        <li><span class="uppercase">{{ $size->size }}</span> ({{ $size->allowed_flavor }}
+                                            Flavor)</li>
                                     @endforeach
                                 </ul>
                             </div>
@@ -123,10 +124,9 @@
                     <!-- Kontrol Jumlah dan Tombol Add to Cart -->
                     <div
                         class="flex flex-col items-center justify-between lg:w-[20%] w-full gap-3 rounded-lg add-to-cart">
-                        <div class="flex items-center justify-between w-full gap-3 wrap">
-                            <p class="text-sm font-medium md:text-base text-highlight-content">! Max buy For Custom
-                                Order only 1
-                                each transaction</p>
+                        <div class="flex items-center justify-center w-full gap-3 wrap">
+                            <p class="text-sm font-medium md:text-base text-highlight-content">!Only One Each
+                                Transaction.</p>
                         </div>
                         <!-- Tombol Add to Cart -->
                         <button type="submit"
@@ -331,7 +331,7 @@
         });
 
         // Set default value kosong saat halaman dimuat
-        sizeOutput.innerHTML = 'Custom Pizza - (No Size)';
+        sizeOutput.innerHTML = 'Custom Pizza - (No Size Selected)';
         toppingsOutput.innerHTML = 'No Toppings Selected';
         totalPriceOutput.innerHTML = 'Rp.0';
         updateHiddenInputs();

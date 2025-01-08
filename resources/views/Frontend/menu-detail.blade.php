@@ -41,26 +41,35 @@
                         <p class="text-2xl md:text-4xl 3xl:text-5xl" class="py-1 line-clamp-1">
                             {{ $menuDetails->name ?? '' }}</p>
                     </span>
-                    <span class="flex flex-row justify-between md:gap-4 md:flex-col">
-                        <p class="w-full text-xl md:text-2xl">
+                    <span class="flex flex-row-reverse justify-between w-full md:gap-4 md:flex-col">
+                        <p class="text-xl w-fit md:text-3xl">
                             Rp {{ number_format($selectedPrice, 0, ',', '.') }}
                         </p>
-                        <div class="flex items-center justify-between w-full gap-3 md:justify-normal">
-                            <i class="text-2xl ti ti-package text-highlight-content"></i>
-                            <p class="w-full text-sm md:text-lg md:text-start text-end text-highlight-content">
-                                Stock : ({{ $menuDetails->stock }})
-                            </p>
+                        <div class="flex items-center gap-3 w-fit md:justify-normal">
+                            @if ($menuDetails->stock == 0)
+                                <p class="text-base text-white w-fit md:text-start text-end">
+                                    <span class="text-highlight-content">This variant is out of stock</span>. Save it to
+                                    your Wishlist to remember the menu you want to order.
+                                </p>
+                            @else
+                                <i class="text-2xl w-fit ti ti-package text-highlight-content"></i>
+                                <p class="text-lg w-fit md:text-start text-end text-highlight-content">
+                                    Stock : ({{ $menuDetails->stock }})
+                                </p>
+                            @endif
                         </div>
                     </span>
                     <span class="flex-col hidden gap-3 md:flex">
-                        <h6>Size :</h6>
+                        <p class="text-xl md:text-2xl">Choose Size :</p>
                         <div class="flex items-center gap-3 flex-nowrap menu-selection-wrapper">
                             @isset($menuDetails)
                                 @foreach ($menuDetails->properties as $property)
-                                    <a href="{{ route('frontend.menu.details', ['id' => $menuDetails->menu_ID, 'size' => $property->size]) }}"
-                                        class="w-full px-3 py-3 uppercase rounded-full outline text-center outline-2 {{ $selectedProperty && $selectedProperty->size == $property->size ? 'bg-secondary-color outline-secondary-color' : 'outline-white hover:bg-secondary-color transition-all ease-in-out duration-300 hover:outline-none' }}">
-                                        {{ $property->size }}
-                                    </a>
+                                    @if ($property->is_active_properties != 0)
+                                        <a href="{{ route('frontend.menu.details', ['id' => $menuDetails->menu_ID, 'size' => $property->size]) }}"
+                                            class="w-full  py-3 uppercase rounded-full outline text-center outline-2 {{ $selectedProperty && $selectedProperty->size == $property->size ? 'bg-secondary-color outline-secondary-color' : 'outline-white hover:bg-secondary-color transition-all ease-in-out duration-300 hover:outline-none' }}">
+                                            {{ $property->size }}
+                                        </a>
+                                    @endif
                                 @endforeach
                             @else
                                 <p>No sizes available for this menu.</p>
@@ -105,7 +114,8 @@
                     </div>
                     <hr />
                     @if ($menuReviews->isEmpty())
-                        <p class="text-lg text-center text-gray-500">No reviews available for this menu at the moment.
+                        <p class="text-base text-center text-gray-500 md:text-lg">No reviews available for this menu at
+                            the moment.
                         </p>
                     @else
                         @foreach ($menuReviews as $index => $menuReview)
@@ -138,26 +148,21 @@
                                         </p>
                                     </div>
                                     @auth
-                                        <div class="flex flex-col items-center justify-center col-span-2 gap-2 wrap">
-
-                                            <div class="flex items-center justify-end w-full gap-4 wrap">
-                                                <p
-                                                    class="self-start text-sm md:self-center text-end text-highlight-content">
-                                                    {{ $menuReview->created_at->diffForHumans() }}
-                                                </p>
-                                                @if ($menuReview->user_ID === Auth::id())
-                                                    <form
-                                                        action="{{ route('menu.reviews.delete', $menuReview->review_ID) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit"
-                                                            class="px-2 py-1 rounded-full bg-secondary-color">
-                                                            <i class="text-2xl text-white ti ti-trash"></i>
-                                                        </button>
-                                                    </form>
-                                                @endif
-                                            </div>
+                                        <div class="flex items-center justify-end w-full col-span-2 gap-4 wrap">
+                                            <p class="text-sm text-end text-highlight-content">
+                                                {{ $menuReview->created_at->diffForHumans() }}
+                                            </p>
+                                            @if ($menuReview->user_ID === Auth::id())
+                                                <form action="{{ route('menu.reviews.delete', $menuReview->review_ID) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                        class="px-2 py-1 rounded-full bg-secondary-color">
+                                                        <i class="text-2xl text-white ti ti-trash"></i>
+                                                    </button>
+                                                </form>
+                                            @endif
                                         </div>
                                     @endauth
                                     @guest
@@ -179,7 +184,6 @@
         @include('layout.popovers.menu-details.cart-menu-mobile-insert')
         <!-- Review Box Wrapper -->
         @include('layout.modal.menu.review-menu')
-
         <!-- SideBar  -->
         @include('layout.popovers.aside.sidebar-frontend')
         <!-- Login & register Box -->

@@ -19,7 +19,7 @@
         <section class="mt-16 md:mt-20 contact-us">
             <div class="container flex flex-col items-center justify-center gap-8 md:gap-24">
                 <div class="flex flex-col items-center justify-center md:w-[40%] w-[80%] gap-3 text-center title-wrap">
-                    <h2>Contact Us</h2>
+                    <h3>Contact Us</h3>
                     <h6>
                         Welcome! We appreciate your interest. For questions, feedback, or
                         assistance, please contact us.
@@ -27,7 +27,8 @@
                 </div>
                 <div class="flex flex-col items-center grid-cols-7 gap-8 md:gap-24 md:grid content-wrapper">
                     <img src="../asset/Contact-us.png" class="w-full col-span-4" alt="" />
-                    <form action="{{ route('insertCS') }}" method="POST" class="flex flex-col w-full col-span-3 gap-4">
+                    <form action="{{ route('insertCS') }}" method="POST"
+                        class="flex flex-col w-full col-span-3 gap-4 font-aesthetnova">
                         @csrf
                         <label for="name">
                             <h6>Name</h6>
@@ -49,7 +50,6 @@
                             Submit
                         </button>
                     </form>
-
                 </div>
             </div>
         </section>
