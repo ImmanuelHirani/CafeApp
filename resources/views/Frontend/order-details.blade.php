@@ -21,7 +21,7 @@
             <div class="container">
                 <div class="flex flex-col grid-cols-12 gap-4 md:grid">
                     <div
-                        class="sticky top-[20px] flex flex-col col-span-6 row-auto gap-4 text-base transition-all duration-300 ease-in-out h-fit box-cart lg:text-xl">
+                        class="md:sticky top-[20px] flex flex-col col-span-6 row-auto gap-4 text-base transition-all duration-300 ease-in-out h-fit box-cart lg:text-xl">
                         <div
                             class="flex flex-col p-4 rounded-lg md:p-8 gap-y-6 content-body bg-secondary-accent-color outline outline-1 outline-highlight-content">
                             <div id="order_notice" class="flex flex-col gap-3">
@@ -70,14 +70,14 @@
                             <div id="location" class="flex flex-col">
                                 <p class="text-highlight-content">Delivery Information</p>
                                 <p>
-                                    {{ $orderTransactions->first()->order->location->first()->reciver_name ?? 'None' }}
+                                    {{ $orderTransactions->first()->order->location->first()->reciver_name ?? 'No Delivery Information Order Was Canceled' }}
                                     | (
-                                    {{ $orderTransactions->first()->order->location->first()->reciver_number ?? 'None' }})
+                                    {{ $orderTransactions->first()->order->location->first()->reciver_number ?? '-' }})
                                 </p>
                                 <p class="text-highlight-content">
-                                    ({{ $orderTransactions->first()->order->location->first()->location_label ?? 'None' }})
+                                    ({{ $orderTransactions->first()->order->location->first()->location_label ?? '-' }})
                                 </p>
-                                <p> {{ $orderTransactions->first()->order->location->first()->reciver_address ?? 'None' }}
+                                <p> {{ $orderTransactions->first()->order->location->first()->reciver_address ?? '-' }}
                                 </p>
                             </div>
                             <hr />
@@ -106,7 +106,7 @@
                         </div>
                     </div>
                     <div
-                        class="flex flex-col sticky top-[20px] w-full col-span-6 row-auto gap-4 p-4 rounded-lg h-fit md:p-8 lg:gap-y-6 gap-y-5 content-body bg-secondary-accent-color outline outline-1 outline-highlight-content">
+                        class="flex flex-col md:sticky top-[20px] w-full col-span-6 row-auto gap-4 p-4 rounded-lg h-fit md:p-8 lg:gap-y-6 gap-y-5 content-body bg-secondary-accent-color outline outline-1 outline-highlight-content">
                         <p class="text-2xl text-highlight-content lg:text-3xl">
                             Order Summary
                         </p>

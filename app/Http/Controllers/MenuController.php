@@ -4,19 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\favorite_menu;
 use Illuminate\Http\Request;
-use App\Repository\MenuRepo;
-use App\Models\Menu;
 use App\Models\menu_size;
 use App\Models\menu_review;
 use App\Models\menus;
 use App\Models\transaction_details;
-use App\Models\user;
 use App\Services\MenuService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
-use Symfony\Contracts\Service\Attribute\Required;
 
 
 class MenuController extends Controller
@@ -179,6 +174,33 @@ class MenuController extends Controller
             }
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => 'Failed to get details: ' . $e->getMessage()]);
+        }
+    }
+
+    public function getMenuDetailsAjax(Request $request)
+    {
+        try {
+            $menuId = $request->input('menuId');
+            $size = $request->input('size');
+
+            $menuDetails = menus::with('properties')->where('menu_ID', $menuId)->first();
+
+            if (!$menuDetails) {
+                return response()->json(['message' => 'Menu not found'], 404);
+            }
+
+            $selectedProperty = $menuDetails->properties->firstWhere('size', $size);
+
+            if (!$selectedProperty || $selectedProperty->is_active_properties == 0) {
+                return response()->json(['message' => 'Size not available'], 400);
+            }
+
+            return response()->json([
+                'price' => number_format($selectedProperty->price, 0, ',', '.'),
+                'size' => $selectedProperty->size,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to fetch details: ' . $e->getMessage()], 500);
         }
     }
 

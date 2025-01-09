@@ -24,18 +24,16 @@
             <img src="{{ asset('storage/' . $menuDetails->image ?? '') }}"
                 class="w-[150px] h-[150px] object-cover rounded-lg" alt="{{ $menuDetails->name ?? 'Image' }}" />
             <div class="flex flex-col gap-2 text-wrap">
-                @if ($selectedProperty)
-                    <div class="flex items-center gap-2 wrap">
-                        <p class="text-lg">SIZE: </p>
-                        <input name="size" class="text-lg text-white uppercase bg-transparent outline-none w-[4rem]"
-                            readonly value="{{ $selectedProperty->size ?? '' }}">
-                    </div>
-                @else
-                    <p>SIZE: Not selected</p>
-                @endif
+                <div class="flex items-center gap-2 wrap">
+                    <p class="text-lg">SIZE: </p>
+                    <input id="sizeInput" name="size"
+                        class="text-lg text-white uppercase bg-transparent outline-none w-[4rem]" readonly
+                        value="{{ $selectedProperty && $selectedProperty->size ? $selectedProperty->size : 'sm' }}">
+                </div>
                 <p class="text-lg">{{ $menuDetails->name ?? '' }}</p>
                 <p class="text-base text-highlight-content">Max. Purchase 2 pcs!</p>
             </div>
+
         </div>
         <!-- Size Selection -->
         <div class="flex flex-col gap-3">
@@ -43,15 +41,19 @@
             <div class="flex flex-wrap items-center gap-3 menu-selection-wrapper">
                 @isset($menuDetails)
                     @foreach ($menuDetails->properties as $property)
-                        <a href="{{ route('frontend.menu.details', ['id' => $menuDetails->menu_ID, 'size' => $property->size]) }}"
-                            class="w-[22%] px-3 py-3 uppercase rounded-full outline text-center outline-2 {{ $selectedProperty && $selectedProperty->size == $property->size ? 'bg-secondary-color outline-secondary-color' : 'outline-white hover:bg-secondary-color transition-all ease-in-out duration-300 hover:outline-none' }}">
-                            {{ $property->size }}
-                        </a>
+                        @if ($property->is_active_properties != 0)
+                            <a href="javascript:void(0);" data-menu-id="{{ $menuDetails->menu_ID }}"
+                                data-size="{{ $property->size }}"
+                                class="size-selection-link w-[22%] px-3 py-3 uppercase rounded-full outline text-center outline-2 {{ ($selectedProperty && $selectedProperty->size == $property->size) || $property->size == 'sm' ? 'bg-secondary-color outline-secondary-color' : 'outline-white hover:bg-secondary-color transition-all ease-in-out duration-300 hover:outline-none' }}">
+                                {{ $property->size }}
+                            </a>
+                        @endif
                     @endforeach
                 @else
                     <p>No sizes available for this menu.</p>
                 @endisset
             </div>
+
         </div>
         <!-- Quantity Selection -->
         <div class="flex flex-col gap-3">
@@ -82,7 +84,7 @@
         @if ($selectedProperty)
             <div class="flex items-center justify-between gap-2 wrap">
                 <p>Subtotal</p>
-                <p id="subtotal-mobile">Rp {{ number_format($selectedProperty->price, 0, ',', '.') }}</p>
+                <p id="subtotal-mobile">Rp 0</p>
             </div>
         @else
             <p>SIZE: Not selected</p>
@@ -96,41 +98,7 @@
         </svg>
     </form>
 </div>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const decreaseMobileButton = document.getElementById('decrease-mobile');
-        const increaseMobileButton = document.getElementById('increase-mobile');
-        const quantityDisplay = document.getElementById('quantity-display-mobile');
-        const hiddenQuantityInput = document.getElementById('hidden-quantity-mobile');
-        const subtotalMobileElement = document.getElementById('subtotal-mobile');
-        const pricePerItem = {{ $selectedProperty->price ?? 0 }}; // Harga per item dari server-side
 
-        let quantity = 1; // Inisialisasi jumlah awal
-
-        function updateValues() {
-            quantityDisplay.textContent = quantity;
-            hiddenQuantityInput.value = quantity;
-            const subtotalMobile = pricePerItem * quantity;
-            subtotalMobileElement.textContent = 'Rp ' + subtotalMobile.toLocaleString('id-ID');
-        }
-
-        decreaseMobileButton.addEventListener('click', function() {
-            if (quantity > 1) {
-                quantity--;
-                updateValues();
-            }
-        });
-
-        increaseMobileButton.addEventListener('click', function() {
-            if (quantity < 2) { // Sesuai batasan pembelian
-                quantity++;
-                updateValues();
-            }
-        });
-
-        updateValues();
-    });
-</script>
 <script>
     const triggermenuMobile = document.getElementById("triggermenuMobile"),
         closecartMobile = document.getElementById("closecartMobile"),
@@ -142,5 +110,86 @@
 
     closecartMobile.addEventListener("click", () => {
         addtoCartMobile.classList.remove("cart-mobile-menu-active");
+    });
+</script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const decreaseMobileButton = document.getElementById('decrease-mobile');
+        const increaseMobileButton = document.getElementById('increase-mobile');
+        const quantityDisplay = document.getElementById('quantity-display-mobile');
+        const hiddenQuantityInput = document.getElementById('hidden-quantity-mobile');
+        const subtotalMobileElement = document.getElementById('subtotal-mobile');
+        const sizeInput = document.getElementById('sizeInput');
+
+        let quantity = 1; // Inisialisasi jumlah awal
+        let pricePerItem = {{ $selectedProperty->price ?? 0 }}; // Harga per item
+
+        // Fungsi untuk update subtotal dan quantity
+        function updateValues() {
+            quantityDisplay.textContent = quantity;
+            hiddenQuantityInput.value = quantity;
+            const subtotalMobile = pricePerItem * quantity;
+            subtotalMobileElement.textContent = 'Rp ' + subtotalMobile.toLocaleString(
+                'id-ID'); // Memformat dengan tanda ribuan
+        }
+
+        // Mengambil harga dan mengupdate harga per item berdasarkan ukuran
+        function fetchSizeDetails(menuId, size) {
+            $.ajax({
+                url: '/menu/details',
+                method: 'GET',
+                data: {
+                    menuId,
+                    size
+                },
+                success: function(response) {
+                    if (response.price) {
+                        // Pastikan harga dalam bentuk angka, lalu format dengan 'toLocaleString'
+                        pricePerItem = parseInt(response.price.replace(/[^0-9,-]+/g, ""));
+                        updateValues(); // Perbarui nilai subtotal berdasarkan harga baru
+                    } else {
+                        alert('Failed to fetch details: ' + response.message);
+                    }
+
+                    // Update UI untuk ukuran yang aktif
+                    $('.size-selection-link').removeClass(
+                        'bg-secondary-color outline-secondary-color');
+                    $(`a[data-size="${size}"]`).addClass(
+                        'bg-secondary-color outline-secondary-color');
+                },
+                error: function(xhr) {
+                    alert('Failed to fetch details: ' + xhr.responseJSON.message);
+                }
+            });
+        }
+
+        // Event handler untuk mengurangi jumlah
+        decreaseMobileButton.addEventListener('click', function() {
+            if (quantity > 1) {
+                quantity--;
+                updateValues();
+            }
+        });
+
+        // Event handler untuk menambah jumlah
+        increaseMobileButton.addEventListener('click', function() {
+            if (quantity < 2) { // Sesuai batasan pembelian
+                quantity++;
+                updateValues();
+            }
+        });
+
+        // Menetapkan ukuran default saat halaman dimuat
+        let initialSize = sizeInput.value || 'sm'; // Defaultkan ke 'sm' jika tidak ada yang dipilih
+        fetchSizeDetails({{ $menuDetails->menu_ID }}, initialSize); // Ambil harga berdasarkan ukuran awal
+
+        // Event handler untuk memilih ukuran
+        $(document).on('click', '.size-selection-link', function() {
+            const menuId = $(this).data('menu-id');
+            const size = $(this).data('size');
+            sizeInput.value = size; // Update input ukuran dengan yang dipilih
+            fetchSizeDetails(menuId, size); // Ambil detail harga berdasarkan ukuran yang dipilih
+        });
     });
 </script>

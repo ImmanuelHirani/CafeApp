@@ -98,7 +98,7 @@ class userController extends Controller
                 'regex:/^[0-9]{10,15}$/',
                 Rule::unique('users', 'phone')->ignore($user->user_ID, 'user_ID'),
             ],
-            'image' => 'nullable|image|mimes:jpeg,png|max:1024', // Maks. 1 MB
+            'image' => 'nullable|image|mimes:jpeg,png', // Maks. 1 MB
         ]);
 
         // Panggil service untuk update
@@ -124,7 +124,7 @@ class userController extends Controller
             'username' => 'required|max:20',
             'email' => 'required|email|unique:users,email,' . $userID . ',user_ID',
             'phone' => 'nullable|numeric',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg',
         ]);
 
         // Update data user

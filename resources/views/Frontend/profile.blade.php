@@ -430,31 +430,30 @@
             </div>
             {{-- Wishlist --}}
             <div
-                class="gap-6 overflow-hidden md:col-span-8 sideMenu-tabs-content rounded-2xl bg-secondary-accent-color">
+                class="gap-6 overflow-hidden md:col-span-8 auto-rows-auto sideMenu-tabs-content rounded-2xl bg-secondary-accent-color">
                 <div class="banner">
                     <img src="{{ asset('asset/Banner-profile.png') }}" alt="">
                 </div>
                 <div class="w-full gap-6 p-3 space-y-4 md:p-8 body">
-                    <div class="flex items-center justify-between location">
-                        <p class="text-xl uppercase md:text-2xl">my wishlist </p>
+                    <div class="flex items-center justify-between h-full">
+                        <p class="text-xl uppercase md:text-2xl">My Wishlist</p>
                         <button id="clearAll"
-                            class="self-end px-4 py-2 text-base transition-all duration-300 ease-in-out rounded-lg md:px-8 md:text-lg hover:outline-none outline-1 outline hover:bg-secondary-color w-fit">CLEAR
-                            ALL</button>
+                            class="self-end px-4 py-2 text-base transition-all duration-300 ease-in-out rounded-lg md:px-8 md:text-lg hover:outline-none outline-1 outline hover:bg-secondary-color w-fit">
+                            CLEAR ALL
+                        </button>
                     </div>
-                    <div class="swiper">
-                        <div class="p-1 whislist-swiper">
+                    <div class="h-full swiper">
+                        <div class="h-full p-1 whislist-swiper">
                             <div class="w-full swiper-wrapper">
                                 <!-- Card Menu -->
-                                @foreach ($menusFav as $menu)
+                                @forelse ($menusFav as $menu)
                                     <div
                                         class="swiper-slide outline outline-2 outline-highlight-content relative transition-all duration-300 ease-in-out card-wrapper rounded-2xl w-[23rem] h-fit bg-primary-color">
                                         <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}"
                                             class="md:h-[200px] h-[140px] w-full text-white rounded-t-2xl object-cover object-center" />
                                         <div class="flex flex-col md:h-[11rem] h-[9rem] gap-4 p-5 content">
                                             <div class="flex flex-col gap-2 wrap-desc">
-                                                <p class="text-xl line-clamp-1">
-                                                    {{ $menu->name }}
-                                                </p>
+                                                <p class="text-xl line-clamp-1">{{ $menu->name }}</p>
                                                 <p
                                                     class="text-base text-justify font-aesthetnova md:line-clamp-2 line-clamp-1">
                                                     {{ $menu->menu_description }}
@@ -475,7 +474,9 @@
                                                 @endif
                                                 <div class="flex items-center md:gap-2 gap-1.5 wrap">
                                                     <a href="{{ Route('frontend.menu.details', $menu->menu_ID ?? '') }}"
-                                                        class="px-6 py-1 text-base rounded-lg md:px-8 md:py-1.5 bg-secondary-color">Details</a>
+                                                        class="px-6 py-1 text-base rounded-lg md:px-8 md:py-1.5 bg-secondary-color">
+                                                        Details
+                                                    </a>
                                                     <button data-menu-id="{{ $menu->menu_ID }}"
                                                         class="px-2 md:h-[2.2rem] h-[2rem] flex items-center text-base rounded-lg cursor-pointer md:px-3 outline outline-2 outline-secondary-color transition-all ease-in-out duration-500 hover:bg-secondary-color">
                                                         <i class="text-xl ti ti-trash"></i>
@@ -484,7 +485,15 @@
                                             </div>
                                         </div>
                                     </div>
-                                @endforeach
+                                @empty
+                                    <div
+                                        class="flex flex-col items-center justify-center w-full h-full gap-3 mt-4 wrap">
+                                        <i class="text-5xl text-white ti ti-shopping-bag-heart"></i>
+                                        <p class="mx-auto my-auto text-xl text-center text-white">
+                                            No Favorite Menu added
+                                        </p>
+                                    </div>
+                                @endforelse
                                 <!-- Card Menu End -->
                             </div>
                         </div>

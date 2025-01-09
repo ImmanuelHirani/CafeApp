@@ -1,9 +1,12 @@
 <header class="px-6 py-6 rounded-xl bg-primary-color-admin">
     <nav class="flex items-center justify-between text-lg font-medium">
         <div class="relative flex items-center gap-4 user">
-            <img src="https://png.pngtree.com/background/20230426/original/pngtree-happy-old-man-wearing-glasses-is-smiling-picture-image_2485948.jpg"
+
+            <img src="{{ Auth::guard('admin')->user()->image ? asset('storage/' . Auth::guard('admin')->user()->image) : 'https://salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled.png' }}"
                 alt="" class="object-cover w-10 h-10 rounded-full" />
-            <button id="toggle-profile-box" class="flex items-center gap-3 text-gray-500">Admin<i
+
+            <button id="toggle-profile-box"
+                class="flex items-center gap-3 text-gray-500">{{ Auth::guard('admin')->user()->user_type }}<i
                     class="text-lg font-medium ti ti-chevron-down"></i></button>
             <div id="box-admin-profile"
                 class="w-[13rem] bg-secondary-accent-color-admin  z-50 hidden absolute left-0 top-14 rounded-lg p-2 bg-wh backdrop-blur-2xl h-fit outline outline-1 outline-black">

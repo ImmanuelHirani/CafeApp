@@ -11,19 +11,13 @@
             <div class="relative">
                 <input required type="text" name="email" value="{{ old('email') }}"
                     class="w-full h-12 border-b-[1px] border-white bg-transparent outline-none" placeholder="Email" />
-                <svg class="absolute right-0 w-6 h-6 bottom-2" fill="white" viewBox="0 0 48 48"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <g data-name="8-Email" id="_8-Email">
-                        <path
-                            d="M45,7H3a3,3,0,0,0-3,3V38a3,3,0,0,0,3,3H45a3,3,0,0,0,3-3V10A3,3,0,0,0,45,7Zm-.64,2L24,24.74,3.64,9ZM2,37.59V10.26L17.41,22.17ZM3.41,39,19,23.41l4.38,3.39a1,1,0,0,0,1.22,0L29,23.41,44.59,39ZM46,37.59,30.59,22.17,46,10.26Z" />
-                    </g>
-                </svg>
+                <i class="absolute right-0 text-3xl text-white ti ti-mail bottom-2"></i>
             </div>
             <div class="relative">
                 <input required type="password" name="password"
                     class="w-full h-12 border-b-[1px] border-white bg-transparent outline-none"
                     placeholder="Password" />
-                <i class="absolute right-0 w-6 h-6 text-3xl cursor-pointer ti ti-eye bottom-3 trigger-reveal-pass"></i>
+                <i class="absolute right-0 text-3xl cursor-pointer ti ti-eye bottom-3 trigger-reveal-pass"></i>
             </div>
             <button type="submit" class="w-full py-3 mt-3 text-center rounded-lg bg-secondary-color">Login</button>
             <p class="text-center">
@@ -55,31 +49,22 @@
             <div class="relative">
                 <input required type="text" name="email" value="{{ old('email') }}"
                     class="w-full h-12 border-b-[1px] border-white bg-transparent outline-none" placeholder="Email" />
-                <svg class="absolute right-0 w-6 h-6 bottom-2" fill="white" viewBox="0 0 48 48"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <g data-name="8-Email" id="_8-Email">
-                        <path
-                            d="M45,7H3a3,3,0,0,0-3,3V38a3,3,0,0,0,3,3H45a3,3,0,0,0,3-3V10A3,3,0,0,0,45,7Zm-.64,2L24,24.74,3.64,9ZM2,37.59V10.26L17.41,22.17ZM3.41,39,19,23.41l4.38,3.39a1,1,0,0,0,1.22,0L29,23.41,44.59,39ZM46,37.59,30.59,22.17,46,10.26Z" />
-                    </g>
-                </svg>
+                <i class="absolute right-0 text-3xl text-white ti ti-mail bottom-2"></i>
+
             </div>
             <div class="relative">
                 <input required type="text" name="phone" value="{{ old('phone') }}"
                     class="w-full h-12 border-b-[1px]
                             border-white bg-transparent outline-none"
                     placeholder="Phone Number" />
-                <svg class="absolute right-0 w-6 h-6 bottom-2" fill="white" stroke-width="1.5" viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M18.1182 14.702L14 15.5C11.2183 14.1038 9.5 12.5 8.5 10L9.26995 5.8699L7.81452 2L4.0636 2C2.93605 2 2.04814 2.93178 2.21654 4.04668C2.63695 6.83 3.87653 11.8765 7.5 15.5C11.3052 19.3052 16.7857 20.9564 19.802 21.6127C20.9668 21.8662 22 20.9575 22 19.7655L22 16.1812L18.1182 14.702Z"
-                        stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
+                <i class="absolute right-0 text-3xl text-white ti ti-phone bottom-4 "></i>
+
             </div>
             <div class="relative">
                 <input required type="password" name="password"
                     class="w-full h-12 border-b-[1px] border-white bg-transparent outline-none"
                     placeholder="Password" />
-                <i class="absolute right-0 w-6 h-6 text-3xl cursor-pointer ti ti-eye bottom-3 trigger-reveal-pass"></i>
+                <i class="absolute right-0 text-3xl cursor-pointer ti ti-eye bottom-3 trigger-reveal-pass"></i>
             </div>
             <button type="submit" class="w-full py-3 mt-3 rounded-lg bg-secondary-color">
                 Register
@@ -92,8 +77,7 @@
         <img src="{{ asset('asset/Bobba-login.png') }}" class="absolute w-[10%] bottom-0 right-0" alt="" />
         <img src="{{ asset('asset/Coffe-Login.png') }}" class="absolute w-[8%] top-0 left-0" alt="" />
         <img src="{{ asset('asset/Pizza-Hero.png') }}"
-            class="absolute translate-x-1/2 right-1/2 xl:w-fit w-[70%] lg:-bottom-[53%] -bottom-[60%]"
-            alt="" />
+            class="absolute translate-x-1/2 right-1/2 xl:w-fit w-[70%] lg:-bottom-[53%] -bottom-[60%]" alt="" />
         <!-- Close Button -->
         <svg xmlns="http://www.w3.org/2000/svg"
             class="absolute cursor-pointer closeloginBox lg:top-6 top-3 lg:right-6 right-3" width="20"

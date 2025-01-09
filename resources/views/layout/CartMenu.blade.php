@@ -97,3 +97,52 @@
         updateValues();
     });
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Ambil semua tombol ukuran
+        const sizeButtons = document.querySelectorAll("button[data-size]");
+        const subtotalElement = document.querySelector("#subtotal");
+        const sizeInput = document.querySelector("input[name='size']");
+
+        sizeButtons.forEach((button) => {
+            button.addEventListener("click", function() {
+                const size = this.getAttribute("data-size");
+                const menuID = this.getAttribute("data-menu-id");
+
+                // Tambahkan efek loading (opsional)
+                button.classList.add("loading");
+
+                // Kirim request ke server
+                fetch(`/menu/details/ajax`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-TOKEN": document.querySelector(
+                                'meta[name="csrf-token"]').getAttribute("content"),
+                        },
+                        body: JSON.stringify({
+                            menu_ID: menuID,
+                            size
+                        }),
+                    })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        // Update harga dan input size
+                        if (data.success) {
+                            subtotalElement.textContent = `Rp ${data.price}`;
+                            sizeInput.value = data.size;
+                        } else {
+                            alert(data.message || "Failed to update size");
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Error:", error);
+                        alert("An error occurred. Please try again.");
+                    })
+                    .finally(() => {
+                        button.classList.remove("loading");
+                    });
+            });
+        });
+    });
+</script>
