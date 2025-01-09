@@ -18,6 +18,15 @@ class CustomCategoriesController extends Controller
 
     public function adminCustomOrder()
     {
+
+        // Ambil data user dari database menggunakan guard 'admin'
+        $user = Auth::guard('admin')->user();
+
+        // Validasi apakah user valid dan memiliki user_type admin atau owner
+        if (!$user || !in_array($user->user_type, ['admin', 'owner'])) {
+            return redirect()->route('admin.auth')->with('error', 'Login First');
+        }
+
         // Mengambil data kategori beserta properties dan sizes
         $categories = custom_categories::with(['properties'])->get();
 

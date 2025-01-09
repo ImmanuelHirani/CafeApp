@@ -15,7 +15,7 @@
         <section class="flex flex-col h-full col-span-5 p-6 rounded-lg gap-9 bg-primary-color-admin">
             <!-- Header Content -->
             <div class="flex items-center justify-between header">
-                <p class="text-2xl font-semibold">Menus</p>
+                <p class="text-2xl font-medium">Menus</p>
                 <div class="flex items-center gap-3 wrap">
                     <button id="btn-add-product"
                         class="flex items-center group transition-all ease-in-out duration-300 hover:bg-secondary-accent-color hover:!text-white gap-3  justify-center py-3 h-10 px-4  w-full outline outline-2 outline-accent-color-admin rounded-full !text-accent-color-admin">
@@ -65,7 +65,7 @@
                 <div class="grid w-full grid-cols-3 gap-4 tabs-content-product 3xl:grid-cols-4 auto-rows-auto">
                     @isset($menus)
                         @if ($menus->isEmpty())
-                            <p class="font-semibold text-center 2xl:col-span-3 3xl:col-span-4 ">
+                            <p class="font-medium text-center 2xl:col-span-3 3xl:col-span-4 ">
                                 No Menu was Found <br>
                                 <span class="text-sm text-gray-400">Add a new menu.</span>
                             </p>
@@ -109,11 +109,11 @@
                                         <div class="flex justify-between mt-auto footer-card">
                                             <div class="inline-flex gap-3 stock">
                                                 <p class="!text-accent-color-admin">Stock :</p>
-                                                <p class="font-semibold">{{ $menu->stock }}</p>
+                                                <p class="font-medium">{{ $menu->stock }}</p>
                                             </div>
                                             <div class="inline-flex gap-3 categories">
                                                 <p class="!text-accent-color-admin">Categories :</p>
-                                                <p class="font-semibold">{{ ucfirst($menu->menu_type) }}</p>
+                                                <p class="font-medium">{{ ucfirst($menu->menu_type) }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -126,7 +126,7 @@
                 <div class="grid grid-cols-3 gap-4 tabs-content-product 3xl:grid-cols-4 auto-rows-auto">
                     @isset($topProducts)
                         @if ($topProducts->isEmpty())
-                            <p class="font-semibold text-center 2xl:col-span-3 3xl:col-span-4 ">
+                            <p class="font-medium text-center 2xl:col-span-3 3xl:col-span-4 ">
                                 No top-selling menu items yet. <br>
                                 <span class="text-sm text-gray-400"> Check back soon!</span>
                             </p>
@@ -175,11 +175,11 @@
                                         <div class="flex justify-between mt-auto footer-card">
                                             <div class="inline-flex gap-3 stock">
                                                 <p class="!text-accent-color-admin">Stock :</p>
-                                                <p class="font-semibold">{{ $topProduct->stock }}</p>
+                                                <p class="font-medium">{{ $topProduct->stock }}</p>
                                             </div>
                                             <div class="inline-flex gap-3 categories">
                                                 <p class="!text-accent-color-admin">Categories :</p>
-                                                <p class="font-semibold">{{ ucfirst($topProduct->menu_type) }}</p>
+                                                <p class="font-medium">{{ ucfirst($topProduct->menu_type) }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -192,7 +192,7 @@
                 <div class="grid grid-cols-3 gap-4 tabs-content-product 3xl:grid-cols-4 auto-rows-auto">
                     @isset($topRatings)
                         @if ($topRatings->isEmpty())
-                            <p class="font-semibold text-center 2xl:col-span-3 3xl:col-span-4 ">
+                            <p class="font-medium text-center 2xl:col-span-3 3xl:col-span-4 ">
                                 No menu has achieved a best-rating status yet. <br>
                                 <span class="text-sm text-gray-400"> Check back soon!</span>
                             </p>
@@ -240,11 +240,11 @@
                                         <div class="flex justify-between mt-auto footer-card">
                                             <div class="inline-flex gap-3 stock">
                                                 <p class="!text-accent-color-admin">Stock :</p>
-                                                <p class="font-semibold">{{ $topRating->stock }}</p>
+                                                <p class="font-medium">{{ $topRating->stock }}</p>
                                             </div>
                                             <div class="inline-flex gap-3 categories">
                                                 <p class="!text-accent-color-admin">Categories :</p>
-                                                <p class="font-semibold">{{ ucfirst($topRating->menu_type) }}</p>
+                                                <p class="font-medium">{{ ucfirst($topRating->menu_type) }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -257,7 +257,7 @@
                 <div class="grid grid-cols-3 gap-4 tabs-content-product 3xl:grid-cols-4 auto-rows-auto">
                     @isset($menus)
                         @if ($menus->isEmpty())
-                            <p class="font-semibold text-center 2xl:col-span-3 3xl:col-span-4 ">
+                            <p class="font-medium text-center 2xl:col-span-3 3xl:col-span-4 ">
                                 No menu was found in this category yet.<br>
                                 <span class="text-sm text-gray-400">Add some menu</span>
                             </p>
@@ -308,11 +308,11 @@
                                             <div class="flex justify-between mt-auto footer-card">
                                                 <div class="inline-flex gap-3 stock">
                                                     <p class="!text-accent-color-admin">Stock :</p>
-                                                    <p class="font-semibold">{{ $menu->stock }}</p>
+                                                    <p class="font-medium">{{ $menu->stock }}</p>
                                                 </div>
                                                 <div class="inline-flex gap-3 categories">
                                                     <p class="!text-accent-color-admin">Categories :</p>
-                                                    <p class="font-semibold">{{ ucfirst($menu->menu_type) }}</p>
+                                                    <p class="font-medium">{{ ucfirst($menu->menu_type) }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -326,7 +326,7 @@
                 <div class="grid grid-cols-3 gap-4 tabs-content-product 3xl:grid-cols-4 auto-rows-auto">
                     @isset($menus)
                         @if ($menus->isEmpty())
-                            <p class="font-semibold text-center 2xl:col-span-3 3xl:col-span-4 ">
+                            <p class="font-medium text-center 2xl:col-span-3 3xl:col-span-4 ">
                                 No menu was found in this category yet.<br>
                                 <span class="text-sm text-gray-400">Add some menu</span>
                             </p>
@@ -377,11 +377,11 @@
                                             <div class="flex justify-between mt-auto footer-card">
                                                 <div class="inline-flex gap-3 stock">
                                                     <p class="!text-accent-color-admin">Stock :</p>
-                                                    <p class="font-semibold">{{ $menu->stock }}</p>
+                                                    <p class="font-medium">{{ $menu->stock }}</p>
                                                 </div>
                                                 <div class="inline-flex gap-3 categories">
                                                     <p class="!text-accent-color-admin">Categories :</p>
-                                                    <p class="font-semibold">{{ ucfirst($menu->menu_type) }}</p>
+                                                    <p class="font-medium">{{ ucfirst($menu->menu_type) }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -395,7 +395,7 @@
                 <div class="grid grid-cols-3 gap-4 tabs-content-product 3xl:grid-cols-4 auto-rows-auto">
                     @isset($menus)
                         @if ($menus->isEmpty())
-                            <p class="font-semibold text-center 2xl:col-span-3 3xl:col-span-4 ">
+                            <p class="font-medium text-center 2xl:col-span-3 3xl:col-span-4 ">
                                 No menu was found in this category yet.<br>
                                 <span class="text-sm text-gray-400">Add some menu</span>
                             </p>
@@ -446,11 +446,11 @@
                                             <div class="flex justify-between mt-auto footer-card">
                                                 <div class="inline-flex gap-3 stock">
                                                     <p class="!text-accent-color-admin">Stock :</p>
-                                                    <p class="font-semibold">{{ $menu->stock }}</p>
+                                                    <p class="font-medium">{{ $menu->stock }}</p>
                                                 </div>
                                                 <div class="inline-flex gap-3 categories">
                                                     <p class="!text-accent-color-admin">Categories :</p>
-                                                    <p class="font-semibold">{{ ucfirst($menu->menu_type) }}</p>
+                                                    <p class="font-medium">{{ ucfirst($menu->menu_type) }}</p>
                                                 </div>
                                             </div>
                                         </div>

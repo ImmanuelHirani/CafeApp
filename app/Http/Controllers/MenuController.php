@@ -114,8 +114,18 @@ class MenuController extends Controller
                 return redirect()->route('menu.index')->withErrors(['error' => 'Menu not found']);
             }
 
-            // Jika size diberikan, cari property berdasarkan size
-            $selectedProperty = $size ? $menuDetails->properties->firstWhere('size', $size) : $menuDetails->properties->first();
+            // Jika parameter size diberikan, validasi size
+            if ($size) {
+                $selectedProperty = $menuDetails->properties->firstWhere('size', $size);
+
+                // Periksa apakah properti ditemukan dan is_active_properties = 1
+                if (!$selectedProperty || $selectedProperty->is_active_properties == 0) {
+                    return redirect()->back()->withErrors(['error' => 'Size not available']);
+                }
+            }
+
+            // Ambil property pertama jika size tidak diberikan
+            $selectedProperty = $selectedProperty ?? $menuDetails->properties->first();
             $selectedPrice = $selectedProperty ? $selectedProperty->price : null;
 
             // Ambil data review terkait menu
@@ -160,7 +170,6 @@ class MenuController extends Controller
                     return $menu;
                 })
                 ->filter();
-
 
             // Tentukan tampilan berdasarkan rute (admin atau frontend)
             if (request()->is('admin/*')) {
@@ -230,7 +239,7 @@ class MenuController extends Controller
 
             // Validasi apakah user valid dan memiliki user_type admin atau owner
             if (!$user || !in_array($user->user_type, ['admin', 'owner'])) {
-                return redirect()->route('admin.auth')->with('error', 'Access Unauthorized');
+                return redirect()->route('admin.auth')->with('error', 'Login First');
             }
 
             // Jika rute dimulai dengan 'admin/', tampilkan tampilan admin

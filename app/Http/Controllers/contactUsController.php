@@ -21,6 +21,16 @@ class contactUsController extends Controller
     }
     public function CSAdmin()
     {
+
+        // Ambil data user dari database menggunakan guard 'admin'
+        $user = Auth::guard('admin')->user();
+
+        // Validasi apakah user valid dan memiliki user_type admin atau owner
+        if (!$user || !in_array($user->user_type, ['admin', 'owner'])) {
+            return redirect()->route('admin.auth')->with('error', 'Login First');
+        }
+
+
         // Use the correct method to fetch all messages from the database
         $CSMessages = customer_message::all();
 

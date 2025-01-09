@@ -1,7 +1,7 @@
 <aside id="showSelectedMenu"
     class="flex flex-col h-full col-span-2 gap-8 pt-6 overflow-hidden rounded-lg bg-primary-color-admin">
     <div class="px-6 head-aside">
-        <p class="text-xl font-semibold">Edit Menu</p>
+        <p class="text-xl font-medium">Edit Menu</p>
     </div>
     <div class="px-6 quick-link">
         <ul class="flex items-center justify-between w-full gap-3 text-base">
@@ -99,22 +99,22 @@
                                             class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin size-price"
                                             min="0" name="properties[{{ $property->menu_size_ID }}][price]"
                                             value="{{ $property->price }}" />
+                                        <select name="properties[{{ $property->menu_size_ID }}][is_active_properties]"
+                                            class="relative w-full p-3 rounded-lg outline-none {{ $property->is_active_properties == 1 ? 'bg-green-500 text-white' : 'bg-secondary-color text-white' }}">
+                                            <option value="1" class="font-medium"
+                                                {{ ($property->is_active_properties ?? '') == 1 ? 'selected' : '' }}>
+                                                Active
+                                            </option>
+                                            <option value="0" class="font-medium"
+                                                {{ ($property->is_active_properties ?? '') == 0 ? 'selected' : '' }}>
+                                                Non-Active
+                                            </option>
+                                        </select>
                                     </div>
                                     <input type="hidden" name="properties[{{ $property->menu_size_ID }}][menu_size_ID]"
                                         value="{{ $property->menu_size_ID }}">
                                     <input type="hidden" name="properties[{{ $property->menu_size_ID }}][size]"
                                         value="{{ $property->size }}">
-                                    <select name="properties[{{ $property->menu_size_ID }}][is_active_properties]"
-                                        class="relative w-full p-3 rounded-lg outline-none {{ $property->is_active_properties == 1 ? 'bg-green-500 text-white' : 'bg-secondary-color text-white' }}">
-                                        <option value="1" class="font-medium"
-                                            {{ ($property->is_active_properties ?? '') == 1 ? 'selected' : '' }}>
-                                            Active
-                                        </option>
-                                        <option value="0" class="font-medium"
-                                            {{ ($property->is_active_properties ?? '') == 0 ? 'selected' : '' }}>
-                                            Non-Active
-                                        </option>
-                                    </select>
                                 @endforeach
                             @else
                                 <p>No sizes available for this menu.</p>
@@ -128,7 +128,7 @@
         @else
             <div class="px-6 pb-6 overflow-y-auto card-content sideMenu-tabs-content">
                 <div class="flex flex-col gap-3 text-lg">
-                    <p class="text-lg font-semibold text-center text-red-500">
+                    <p class="text-lg font-medium text-center text-red-500">
                         No Menu Details was Found <br>
                         <span class="text-sm text-gray-400">Select a menu if available to view details or add a new
                             menu.</span>
@@ -137,7 +137,7 @@
             </div>
             <div class="px-6 pb-6 overflow-y-auto card-content sideMenu-tabs-content">
                 <div class="flex flex-col gap-3 text-lg">
-                    <p class="text-lg font-semibold text-center text-red-500">
+                    <p class="text-lg font-medium text-center text-red-500">
                         No Menu Details was Found <br>
                         <span class="text-sm text-gray-400">Select a menu if available to view details or add a new
                             menu.</span>

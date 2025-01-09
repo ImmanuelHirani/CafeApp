@@ -55,7 +55,7 @@
                                     Rp {{ number_format($orderCustomer->total_amounts, 0, ',', '.') }}
                                 </td>
                                 <td class="px-4 py-2 whitespace-nowrap">
-                                    <div class="w-[7rem] mx-auto text-sm font-semibold py-2 text-center rounded-full status-order"
+                                    <div class="w-[7rem] mx-auto text-sm font-medium py-2 text-center rounded-full status-order"
                                         data-status="{{ strtolower($orderCustomer->status_order) }}">
                                         {{ $orderCustomer->status_order }}
                                     </div>
@@ -71,7 +71,7 @@
         </section>
         <aside class="flex flex-col h-full col-span-3 gap-3 pt-6 overflow-hidden rounded-lg bg-primary-color-admin">
             <div class="px-6 head-aside">
-                <p class="text-2xl font-semibold">Top Product</p>
+                <p class="text-2xl font-medium">Top Product</p>
             </div>
             <div class="p-6 card-content flex flex-col gap-3 h-[36rem] overflow-y-auto">
                 @forelse ($topProducts as $index => $product)
@@ -85,7 +85,7 @@
                         </div>
                     </div>
                 @empty
-                    <p class="my-auto text-lg font-semibold text-center text-red-500">
+                    <p class="my-auto text-lg font-medium text-center text-red-500">
                         No Top Products Available <br>
                         <span class="text-sm text-gray-400">Please check back later for updates.</span>
                     </p>

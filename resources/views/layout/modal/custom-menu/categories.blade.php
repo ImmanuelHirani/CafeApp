@@ -28,7 +28,7 @@
                 @csrf
                 <div id="form1" class="gap-3 bg-white rounded-lg tabs-content">
                     <div class="flex flex-col gap-3 wrap">
-                        <input type="hidden" name="form_target[]" value="controller1">
+                        <input type="hidden" required name="form_target[]" value="controller1">
                         <input type="text" name="from1[categories]"
                             class="w-full p-2 rounded-lg outline outline-2 outline-secondary-accent-color bg-secondary-accent-color-admin"
                             placeholder="Enter New Category" required>

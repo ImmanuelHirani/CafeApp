@@ -19,7 +19,7 @@
     <main class="grid grid-cols-7 gap-4 py-4">
         <section class="flex flex-col h-full col-span-5 p-6 rounded-lg gap-9 bg-primary-color-admin">
             <div class="overflow-x-auto">
-                <table id="table_transaction" class="min-w-full font-semibold border shadow-sm stripe">
+                <table id="table_transaction" class="min-w-full font-medium border shadow-sm stripe">
                     <thead class="">
                         <tr>
                             <th class="text-sm font-medium text-left text-gray-500 uppercase">
@@ -110,7 +110,7 @@
         </section>
         <aside class="flex flex-col col-span-2 gap-8 pt-6 overflow-hidden rounded-lg h-fit bg-primary-color-admin">
             <div class="px-6 head-aside">
-                <p class="text-xl font-semibold">Transaction Details</p>
+                <p class="text-xl font-medium">Transaction Details</p>
             </div>
             <div class="px-6 quick-link">
                 <ul class="flex items-center justify-between w-full gap-3 text-base">
@@ -156,7 +156,7 @@
                             </label>
                         @else
                             <div class="flex flex-col gap-3 my-auto text-lg">
-                                <p class="text-lg font-semibold text-center text-red-500">
+                                <p class="text-lg font-medium text-center text-red-500">
                                     No Transaction Details Available! <br>
                                     <span class="text-sm text-gray-400">Please ensure order details are properly
                                         selected.</span>
@@ -217,7 +217,7 @@
                                         <p class="!text-gray-500">Size: {{ $detail->size ?? 'Unknown' }}</p>
                                     </div>
                                     <!-- Total -->
-                                    <p class="font-semibold">Total: Rp
+                                    <p class="font-medium">Total: Rp
                                         {{ number_format($detail->subtotal ?? 0, 0, ',', '.') }}</p>
                                     <hr />
                                 @endif
@@ -227,7 +227,7 @@
                         </div>
                     @else
                         <div class="flex flex-col gap-3 my-auto text-lg">
-                            <p class="text-lg font-semibold text-center text-red-500">
+                            <p class="text-lg font-medium text-center text-red-500">
                                 No Transaction Details Available! <br>
                                 <span class="text-sm text-gray-400">Please ensure order details are properly
                                     selected.</span>

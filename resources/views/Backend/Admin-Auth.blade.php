@@ -22,15 +22,15 @@
             <img class="absolute top-4 left-4" src="{{ asset('asset/Logo/Logo.png') }}" alt="">
             <div
                 class="absolute flex flex-col items-center justify-center gap-1 translate-x-1/2 right-1/2 bottom-[55%]">
-                <label class="!text-white text-5xl font-semibold">Welcome</label>
+                <label class="!text-white text-5xl font-medium">Welcome</label>
                 <label class="!text-white text-lg">Login / Register See Dashboard</label>
             </div>
         </div>
         <div class="relative flex justify-center w-full h-full col-span-5">
             <form id="LoginBox" action="{{ route('login.admin') }}" method="POST"
-                class="flex flex-col justify-center absolute 3xl:bottom-[40%] md:bottom-[35%]  lg:w-[90%] w-full col-span-3 gap-4">
+                class="flex flex-col justify-center absolute 3xl:bottom-[45%] md:bottom-[40%]  lg:w-[90%] w-full col-span-3 gap-4">
                 @csrf
-                <h5 class="mb-4 font-semibold text-center font-aesthetnova">Login</h5>
+                <h5 class="mb-4 font-medium text-center font-aesthetnova">Login</h5>
                 <div class="relative">
                     <input required type="text" name="email" value="{{ old('email') }}"
                         class="w-full h-12 p-3 bg-transparent border-2 border-gray-300 rounded-lg outline-none "
@@ -46,7 +46,7 @@
                         class="absolute w-6 h-6 text-3xl text-gray-400 cursor-pointer right-3 ti ti-eye bottom-4 trigger-reveal-pass"></i>
                 </div>
                 <button type="submit"
-                    class="w-full py-3 mt-3 font-semibold text-center rounded-lg bg-secondary-accent-color">Login</button>
+                    class="w-full py-3 mt-3 font-medium text-center rounded-lg bg-secondary-accent-color">Login</button>
                 <p class="text-center">
                     Don't Have Account ?
                     <span id="RegisterBoxOpen" class="text-gray-500 underline cursor-pointer">Sign Up</span>
@@ -55,7 +55,7 @@
             <form id="RegisterBox" action="{{ route('register.admin') }}" method="POST"
                 class="flex flex-col justify-center absolute 3xl:bottom-[40%] md:bottom-[35%] lg:w-[90%] w-full col-span-3 gap-4">
                 @csrf
-                <h5 class="mb-4 font-semibold text-center font-aesthetnova">Register</h5>
+                <h5 class="mb-4 font-medium text-center font-aesthetnova">Register</h5>
                 <div class="relative">
                     <input required type="text" name="email" value="{{ old('email') }}"
                         class="w-full h-12 p-3 bg-transparent border-2 border-gray-300 rounded-lg outline-none "
@@ -82,7 +82,7 @@
                     <option value="owner">Owner</option>
                 </select>
                 <button type="submit"
-                    class="w-full py-3 font-semibold text-center rounded-lg bg-secondary-accent-color">Register</button>
+                    class="w-full py-3 font-medium text-center rounded-lg bg-secondary-accent-color">Register</button>
                 <p class="text-center">
                     Already Have Account ?
                     <span id="LoginBoxOpen" class="text-gray-500 underline cursor-pointer">Sign In</span>

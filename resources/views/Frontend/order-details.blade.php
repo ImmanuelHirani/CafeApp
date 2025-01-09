@@ -75,7 +75,7 @@
                                     {{ $orderTransactions->first()->order->location->first()->reciver_number ?? 'None' }})
                                 </p>
                                 <p class="text-highlight-content">
-                                    ({{ $orderTransactions->first()->order->location->first()->location_labe ?? 'None' }})
+                                    ({{ $orderTransactions->first()->order->location->first()->location_label ?? 'None' }})
                                 </p>
                                 <p> {{ $orderTransactions->first()->order->location->first()->reciver_address ?? 'None' }}
                                 </p>

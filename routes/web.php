@@ -42,6 +42,8 @@ Route::delete('/menu-reviews/delete/{reviewID}', [MenuController::class, 'delete
 // Profile
 Route::get('/profile', [profileController::class, 'profile'])->name('frontend.profile');
 Route::put('/profile/update/{user_ID}', [UserController::class, 'updateuser'])->name('profile.update');
+Route::put('/admin/update/{userID}', [UserController::class, 'updateAdmin'])->name('admin.profile.update');
+
 Route::post('/profile/location/add', [LocationController::class, 'addLocation'])->name('profile.location.add');
 Route::delete('/profile/location/delete/{locationID}', [LocationController::class, 'deleteLocation'])->name('profile.location.delete');
 Route::put('/profile/location/update/primary/{locationID}', [LocationController::class, 'updatePrimary'])->name('profile.location.primary');
@@ -99,6 +101,7 @@ Route::post('/customer-message', [customer_message::class, 'insertCS'])->name('i
 
 // Admin Customer
 Route::get('/Customer', [UserController::class, 'viewAdmin'])->name('customer.admin');
+Route::get('/admin/profile', [profileController::class, 'profileAdmin'])->name('customer.profile');
 Route::get('/Admin/User', [UserController::class, 'viewUser'])->name('admin.user');
 Route::get('/Auth', [UserController::class, 'adminAuth'])->name('admin.auth');
 Route::get('/customer/detail/{id}', [userController::class, 'getCustomerDetails'])->name('customer.details');

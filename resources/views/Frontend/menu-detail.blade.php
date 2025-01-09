@@ -79,7 +79,7 @@
                     <p class="text-base text-justify md:text-lg line-clamp-3">
                         {{ $menuDetails->menu_description ?? '' }}
                     </p>
-                    <hr />
+
                 </div>
                 {{-- Sidecart Quick Add --}}
                 @include('layout.CartMenu')

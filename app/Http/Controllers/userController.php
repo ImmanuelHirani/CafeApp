@@ -107,6 +107,48 @@ class userController extends Controller
         return redirect()->back()->with('success', 'updated successfully');
     }
 
+
+
+    public function updateAdmin(Request $request, $userID)
+    {
+        // Cari user berdasarkan userID
+        $user = User::find($userID);
+
+        // Validasi apakah user valid dan memiliki user_type admin atau owner
+        if (!$user || !in_array($user->user_type, ['admin', 'owner'])) {
+            return redirect()->route('admin.auth')->with('error', 'Login First');
+        }
+
+        // Validasi data
+        $request->validate([
+            'username' => 'required|max:20',
+            'email' => 'required|email|unique:users,email,' . $userID . ',user_ID',
+            'phone' => 'nullable|numeric',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        // Update data user
+        $user->update($request->only(['username', 'email', 'phone']));
+
+        // Jika ada file gambar yang diunggah
+        if ($request->hasFile('image')) {
+            // Hapus gambar lama jika ada
+            if ($user->image && file_exists(storage_path('app/public/' . $user->image))) {
+                unlink(storage_path('app/public/' . $user->image));
+            }
+
+            // Simpan gambar baru
+            $path = $request->file('image')->store('profiles', 'public');
+            $user->image = $path;
+            $user->save();
+        }
+
+        return redirect()->back()->with('success', 'Profile updated successfully!');
+    }
+
+
+
+
     // Login untuk user (customer)
     public function loginUser(Request $request)
     {
@@ -205,6 +247,16 @@ class userController extends Controller
     // View
     public function viewAdmin()
     {
+
+        // Ambil data user dari database menggunakan guard 'admin'
+        $user = Auth::guard('admin')->user();
+
+        // Validasi apakah user valid dan memiliki user_type admin atau owner
+        if (!$user || !in_array($user->user_type, ['admin', 'owner'])) {
+            return redirect()->route('admin.auth')->with('error', 'Login First');
+        }
+
+
         // Menampilkan hanya user dengan type 'customer'
         $users = user::where('user_type', 'customer')->get();
 
@@ -215,6 +267,16 @@ class userController extends Controller
 
     public function viewUser()
     {
+
+        // Ambil data user dari database menggunakan guard 'admin'
+        $user = Auth::guard('admin')->user();
+
+        // Validasi apakah user valid dan memiliki user_type admin atau owner
+        if (!$user || !in_array($user->user_type, ['admin', 'owner'])) {
+            return redirect()->route('admin.auth')->with('error', 'Login First');
+        }
+
+
         // Menampilkan hanya user dengan type 'admin' dan 'owner'
         $admins = User::whereIn('user_type', ['admin', 'owner'])->get();
 

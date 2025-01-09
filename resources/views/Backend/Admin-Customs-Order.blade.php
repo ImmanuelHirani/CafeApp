@@ -20,7 +20,7 @@
     <main class="grid grid-cols-7 gap-3 py-4">
         <section class="flex flex-col h-full col-span-5 p-6 rounded-lg gap-9 bg-primary-color-admin">
             <div class="flex items-center justify-between wrap">
-                <p class="text-2xl font-semibold">Custom Pizza</p>
+                <p class="text-2xl font-medium">Custom Pizza</p>
                 <button id="btn-add-product"
                     class="flex items-center group hover:bg-secondary-accent-color transition-all ease-in-out duration-300 hover:!text-white w-fit gap-3 px-4 justify-center py-3 h-10 outline outline-2 outline-accent-color-admin rounded-full !text-accent-color-admin">
                     New Categories
@@ -117,7 +117,7 @@
         </section>
         <aside class="flex flex-col h-full col-span-2 gap-8 pt-6 overflow-hidden rounded-lg bg-primary-color-admin">
             <div class="px-6 head-aside">
-                <p class="text-xl font-semibold">Edit Custom Menu</p>
+                <p class="text-xl font-medium">Edit Custom Menu</p>
             </div>
             <div class="px-6 quick-link">
                 <ul class="flex items-center justify-between w-full gap-3 text-base">
@@ -138,7 +138,7 @@
                     <div class="flex flex-col gap-3 text-lg order-card">
                         <div class="flex flex-col gap-3 topping-list">
                             <div class="flex items-center justify-between gap-3 mb-4 wrap">
-                                <p class="font-semibold">Topping List :</p>
+                                <p class="font-medium">Topping List :</p>
                                 <label id="btn-add-properties"
                                     class="cursor-pointer btn-add-product flex items-center group hover:bg-secondary-accent-color transition-all ease-in-out duration-300 hover:!text-white w-fit gap-3 px-4 justify-center text-base py-2 outline outline-2 outline-accent-color-admin rounded-full !text-accent-color-admin">
                                     New Properties
@@ -168,7 +168,7 @@
                                         </div>
                                     @endforeach
                                 @else
-                                    <p class="text-lg font-semibold text-center text-red-500">
+                                    <p class="text-lg font-medium text-center text-red-500">
                                         No properties Details Available! <br>
                                         <span class="text-sm text-gray-400">Please ensure Categories details are properly
                                             select.</span>
@@ -182,7 +182,7 @@
                 {{-- Size Section --}}
                 <div class="px-6 pb-6 space-y-2 sideMenu-tabs-content h-fit">
                     <div class="flex items-center justify-between gap-3 wrap">
-                        <p class="font-semibold">Size List :</p>
+                        <p class="font-medium">Size List :</p>
                         @isset($sizes)
                             @php
                                 $isSizesAvailable = $sizes->isNotEmpty();
@@ -211,7 +211,7 @@
                             </div>
                         @endforeach
                     @else
-                        <p class="text-lg font-semibold text-center text-red-500">
+                        <p class="text-lg font-medium text-center text-red-500">
                             No sizes Details Available! <br>
                             <span class="text-sm text-gray-400">Please ensure Categories details are properly
                                 select.</span>

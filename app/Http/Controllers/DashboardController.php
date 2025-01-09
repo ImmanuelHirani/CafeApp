@@ -20,7 +20,7 @@ class DashboardController extends Controller
 
         // Validasi apakah user valid dan memiliki user_type admin atau owner
         if (!$user || !in_array($user->user_type, ['admin', 'owner'])) {
-            return redirect()->route('admin.auth')->with('error', 'Access Unauthorized');
+            return redirect()->route('admin.auth')->with('error', 'Login First');
         }
 
         // Mengambil jumlah keseluruhan customer
@@ -38,8 +38,9 @@ class DashboardController extends Controller
         $inProgressOrders = transaction::where('status_order', 'In-Progress')->count();
         $completedOrders = transaction::where('status_order', 'completed')->count();
 
-        // Mengambil total income (jumlah total amount) jika diperlukan
-        $totalIncome = transaction::sum('total_amounts');
+        // Mengambil total income (jumlah total amount) kecuali yang memiliki status_order Canceled, Pending, atau In-Progress
+        $totalIncome = transaction::whereNotIn('status_order', ['Canceled', 'Pending', 'In-Progress'])
+            ->sum('total_amounts');
 
         // Mengambil 10 menu yang paling sering dibeli (bukan custom_menu)
         $topProducts = transaction_details::select('menu_ID', DB::raw('SUM(quantity) as total_quantity'))

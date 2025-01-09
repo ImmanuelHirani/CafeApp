@@ -96,7 +96,7 @@
         </section>
         <aside class="flex flex-col h-full col-span-2 gap-8 pt-6 overflow-hidden rounded-lg bg-primary-color-admin">
             <div class="px-6 head-aside">
-                <p class="text-xl font-semibold">Customers Details</p>
+                <p class="text-xl font-medium">Customers Details</p>
             </div>
             <div class="px-6 quick-link">
                 <ul class="flex items-center justify-between w-full gap-3 text-base">
@@ -133,7 +133,7 @@
                                 Send Request Reset Password
                             </button> --}}
                 @else
-                    <p class="text-lg font-semibold text-center text-red-500">
+                    <p class="text-lg font-medium text-center text-red-500">
                         No Customer Details Available! <br>
                         <span class="text-sm text-gray-400">Please ensure customer details are properly
                             select.</span>
@@ -175,7 +175,7 @@
                         @php $i++; @endphp
                     @endforeach
                 @else
-                    <p class="text-lg font-semibold text-center text-red-500 ">
+                    <p class="text-lg font-medium text-center text-red-500 ">
                         No Location Details Available! <br>
                         <span class="text-sm text-gray-400">Please ensure customer details are properly select.</span>
                     </p>

@@ -4,19 +4,19 @@
             <img src="https://png.pngtree.com/background/20230426/original/pngtree-happy-old-man-wearing-glasses-is-smiling-picture-image_2485948.jpg"
                 alt="" class="object-cover w-10 h-10 rounded-full" />
             <button id="toggle-profile-box" class="flex items-center gap-3 text-gray-500">Admin<i
-                    class="text-lg font-semibold ti ti-chevron-down"></i></button>
+                    class="text-lg font-medium ti ti-chevron-down"></i></button>
             <div id="box-admin-profile"
                 class="w-[13rem] bg-secondary-accent-color-admin  z-50 hidden absolute left-0 top-14 rounded-lg p-2 bg-wh backdrop-blur-2xl h-fit outline outline-1 outline-black">
                 <div class="flex flex-col gap-1 uppercase wrap">
-                    <a href=""
-                        class="flex items-center gap-3 p-2 text-sm font-semibold text-black transition-all duration-300 ease-in-out rounded-lg hover:bg-gray-300 "><i
+                    <a href="/admin/profile"
+                        class="flex items-center gap-3 p-2 text-sm font-medium text-black transition-all duration-300 ease-in-out rounded-lg hover:bg-gray-300 "><i
                             class="text-lg ti ti-edit"></i> Profile</a>
                     <form action="{{ route('logout.admin') }}" method="POST" class=""
-                        class="flex items-center gap-3 p-2 font-semibold text-black transition-all duration-300 ease-in-out rounded-lg hover:bg-gray-300 ">
+                        class="flex items-center gap-3 p-2 font-medium text-black transition-all duration-300 ease-in-out rounded-lg hover:bg-gray-300 ">
                         @csrf
 
                         <button type="submit"
-                            class="flex items-center w-full gap-3 p-2 text-sm font-semibold text-black uppercase transition-all duration-300 ease-in-out rounded-lg cursor-pointer hover:bg-gray-300 ">
+                            class="flex items-center w-full gap-3 p-2 text-sm font-medium text-black uppercase transition-all duration-300 ease-in-out rounded-lg cursor-pointer hover:bg-gray-300 ">
                             <i class="text-lg ti ti-logout-2"></i>
                             Log Out
                         </button>

@@ -19,83 +19,68 @@
 
 <body id="Admin">
     @include('layout.header')
-    @include('layout.Dashboard')
+
     <main class="grid grid-cols-12 gap-4 py-4">
-        <section class="flex flex-col col-span-9 p-6 rounded-lg gap-9 bg-primary-color-admin">
-            <div class="overflow-x-auto">
-                <table id="orderTable" class="w-auto text-center border shadow-sm table-auto stripe">
-                    <thead class="">
-                        <tr>
-                            <th class="px-4 py-2 text-sm font-medium text-gray-500 uppercase w-fit">
-                                Order ID
-                            </th>
-                            <th class="px-4 py-2 text-sm font-medium text-gray-500 uppercase w-fit">
-                                Customers
-                            </th>
-                            <th class="px-4 py-2 text-sm font-medium text-gray-500 uppercase w-fit">
-                                Payment Amount
-                            </th>
-                            <th class="px-4 py-2 text-sm font-medium text-gray-500 uppercase w-fit">
-                                Status
-                            </th>
-                            <th class="px-4 py-2 text-sm font-medium text-gray-500 uppercase w-fit">
-                                Purchase Date
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white">
-                        @foreach ($orderCustomers as $orderCustomer)
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2 text-base text-gray-900 whitespace-nowrap">
-                                    {{ $orderCustomer->transaction_ID }}</td>
-                                <td class="px-4 py-2 text-base text-gray-500 whitespace-nowrap">
-                                    {{ $orderCustomer->user->username ?? 'Not Set The Username Yet' }}
-                                </td>
-                                <td class="px-4 py-2 text-base text-secondary-accent-color whitespace-nowrap">
-                                    Rp {{ number_format($orderCustomer->total_amounts, 0, ',', '.') }}
-                                </td>
-                                <td class="px-4 py-2 whitespace-nowrap">
-                                    <div class="w-[7rem] mx-auto text-sm font-semibold py-2 text-center rounded-full status-order"
-                                        data-status="{{ strtolower($orderCustomer->status_order) }}">
-                                        {{ $orderCustomer->status_order }}
-                                    </div>
-                                </td>
-                                <td class="px-4 py-2 text-base text-gray-500 whitespace-nowrap">
-                                    {{ $orderCustomer->created_at ?? '' }}
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </section>
-        <aside class="flex flex-col h-full col-span-3 gap-3 pt-6 overflow-hidden rounded-lg bg-primary-color-admin">
-            <div class="px-6 head-aside">
-                <p class="text-2xl font-semibold">Top Product</p>
-            </div>
-            <div class="p-6 card-content flex flex-col gap-3 h-[36rem] overflow-y-auto">
-                @forelse ($topProducts as $index => $product)
-                    <div class="flex items-center w-full gap-6 card-topProduct">
-                        <p class="text-lg w-[10%]">#{{ $index + 1 }}</p>
-                        <img src="{{ asset('storage/' . $product->menu->image ?? asset('default-image.jpg')) }}"
-                            class="object-cover w-[40%] h-28 rounded-lg" alt="{{ $product->menu->name }}" />
-                        <div class="wrap w-[50%]">
-                            <p class="text-lg line-clamp-1">{{ $product->menu->name }}</p>
-                            <p class="text-base">{{ $product->menu->menu_type }}</p>
+        <section class="flex flex-col col-span-12 p-6 rounded-lg gap-9 bg-primary-color-admin">
+            <div class="flex flex-col gap-3 overflow-x-auto">
+                <p class="text-2xl">Personal Information</p>
+                <hr>
+                <form enctype="multipart/form-data" method="POST"
+                    action="{{ route('admin.profile.update', $user->user_ID) }}"
+                    class="flex flex-col-reverse items-center w-full grid-cols-12 gap-8 my-3 md:gap-16 md:grid profile-wrap">
+                    @csrf
+                    @method('PUT')
+                    <div class="flex flex-col w-full col-span-8 gap-3 md:gap-6 wrap">
+                        <div class="flex flex-col items-center w-full md:flex-row wrap">
+                            <label for="username" class="text-lg md:w-[30%] w-full">Username</label>
+                            <input name="username" id="username" type="text" placeholder="Max 20 Char"
+                                value="{{ $user->username ?? 'Not Set Username Yet' }}"
+                                class="md:w-[70%] bg-secondary-accent-color-admin w-full px-4 py-2 text-gray-500 rounded-lg">
+                        </div>
+                        <div class="flex flex-col items-center w-full md:flex-row wrap">
+                            <label for="email" class="text-lg md:w-[30%] w-full">Email</label>
+                            <input name="email" id="email" type="text" placeholder="Email"
+                                value="{{ $user->email ?? 'Not Set Email Yet' }}"
+                                class="md:w-[70%] bg-secondary-accent-color-admin w-full px-4 py-2 text-gray-500 rounded-lg">
+                        </div>
+                        <div class="flex flex-col items-center w-full md:flex-row wrap">
+                            <label for="phone" class="text-lg md:w-[30%] w-full">Phone</label>
+                            <input name="phone" id="phone" type="text" placeholder="Phone Number"
+                                value="{{ $user->phone ?? 'Not Set Phone Yet' }}"
+                                class="md:w-[70%] bg-secondary-accent-color-admin w-full px-4 py-2 text-gray-500 rounded-lg">
+                        </div>
+                        <div class="flex flex-col items-center w-full md:flex-row wrap">
+                            <label for="user_role" class="text-lg md:w-[30%] w-full">User Role</label>
+                            <label
+                                class="md:w-[70%] bg-secondary-accent-color-admin w-full px-4 py-2 text-gray-500 rounded-lg">{{ $user->user_type ?? 'Role Not Set Yet' }}</label>
+                        </div>
+                        <button type="submit" class="self-end w-full px-8 py-2 bg-green-600 rounded-lg md:w-fit">Update
+                            Data</button>
+                    </div>
+                    <div class="flex items-center justify-center w-full h-full col-span-4 border-2 rounded-lg">
+                        <div class="flex flex-col items-center gap-6 wrap">
+                            <img class="md:w-[8rem] w-[12rem] h-[12rem] md:h-[8rem] rounded-full object-cover img-preview"
+                                src="{{ $user->image ? asset('storage/' . $user->image) : 'https://salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled.png' }}"
+                                alt="Image Preview">
+                            <input name="image" id="file" type="file" class="hidden file-img-product">
+                            <label for="file"
+                                class="px-8 py-2 rounded-lg cursor-pointer h-fit w-fit outline-1 outline outline-gray-300">Choose
+                                Image</label>
+                            <p class="hidden !text-red-500 error-message">File harus berupa gambar dengan format .JPEG,
+                                .PNG, atau .JPG
+                            </p>
                         </div>
                     </div>
-                @empty
-                    <p class="my-auto text-lg font-semibold text-center text-red-500">
-                        No Top Products Available <br>
-                        <span class="text-sm text-gray-400">Please check back later for updates.</span>
-                    </p>
-                @endforelse
+                </form>
+
+                <hr>
             </div>
-        </aside>
+        </section>
     </main>
 </body>
 <script src="{{ asset('/js/table.js') }}"></script>
 <script src="{{ asset('/js/selectedStatus.js') }}"></script>
+<script src="{{ asset('/js/imgPicker.js') }}"></script>
 {{-- <script src="{{ asset('/js/tabs-sideMenu.js') }}"></script>
 <script src="{{ asset('/js/imgPicker.js') }}"></script>
 <script src="{{ asset('/js/tabs-menu.js') }}"></script>

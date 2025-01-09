@@ -103,4 +103,20 @@ class profileController extends Controller
             'message' => 'All favorite menus cleared ',
         ], 200);
     }
+
+    public function profileAdmin()
+    {
+
+        // Ambil data user dari database menggunakan guard 'admin'
+        $user = Auth::guard('admin')->user();
+
+        // Validasi apakah user valid dan memiliki user_type admin atau owner
+        if (!$user || !in_array($user->user_type, ['admin', 'owner'])) {
+            return redirect()->route('admin.auth')->with('error', 'Login First');
+        }
+
+        return view('Backend.Admin-Profile', [
+            'user' => $user,
+        ]);
+    }
 }
