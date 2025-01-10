@@ -50,7 +50,7 @@
                                     <div
                                         class="relative flex items-center self-start w-full gap-4 px-3 py-3 rounded-lg md:gap-12 outline outline-1 outline-highlight-content md:justify-between h-fit md:px-4 md:py-4 cart-item font-aesthetnova bg-secondary-accent-color">
                                         <div
-                                            class="wrap md:w-[30%] w-[12rem] h-[10rem] md:h-[180px] overflow-hidden rounded-lg ">
+                                            class="wrap md:w-[30%] w-[14rem] h-[10rem] md:h-[180px] overflow-hidden rounded-lg ">
                                             <img src="{{ asset('storage/' . $cart->menu->image) }}"
                                                 class="object-cover w-full h-full " alt="" />
                                         </div>
@@ -146,7 +146,7 @@
                                     <div
                                         class="relative flex items-center self-start w-full gap-4 px-3 py-3 rounded-lg md:gap-12 outline outline-1 outline-highlight-content md:justify-between h-fit md:px-4 md:py-4 cart-item font-aesthetnova bg-secondary-accent-color">
                                         <div
-                                            class="wrap md:w-[30%] w-[12rem] h-[10rem] md:h-[180px] overflow-hidden rounded-lg ">
+                                            class="wrap md:w-[30%] w-[14rem] h-[10rem] md:h-[180px] overflow-hidden rounded-lg ">
                                             <img src="{{ asset('/asset/CustomOrder.png') }}"
                                                 class="object-cover w-full h-full overflow-hidden " alt="" />
                                         </div>
@@ -270,8 +270,6 @@
 <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
 <script src="{{ asset('/js/swiper.js') }}"></script>
 <script src="{{ asset('/js/GSAP.js') }}"></script>
-<script src="{{ asset('/js/sidebar.js') }}"></script>
-<script src="{{ asset('/js/boxLogin.js') }}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {

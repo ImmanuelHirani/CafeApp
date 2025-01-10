@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
@@ -222,175 +222,214 @@
                         </div>
                     </div>
                     <div class="w-full text-white tabs-content-order">
-                        <div class=" swiper">
-                            <div class="w-full p-1 profile-order-wrapper">
-                                <div class="w-full swiper-wrapper">
-                                    @foreach ($transactions as $transaction)
-                                        @if ($transaction->status_order == 'paid')
-                                            <div
-                                                class="h-fit swiper-slide flex bg-primary-color flex-col items-center outline w-full md:w-[30rem] outline-highlight-content outline-1 gap-3 rounded-lg p-3">
-                                                <div class="relative flex items-center w-full gap-8 wrap">
-                                                    <img src="https://cdn-icons-png.flaticon.com/512/4852/4852525.png"
-                                                        class="md:w-[8rem] w-[6rem] h-[8rem] object-cover bg-secondary-accent-color rounded-md"
-                                                        alt="">
-                                                    <div class="flex flex-col w-full gap-1.5 wrap md:flex-row">
-                                                        <div class="flex flex-col w-full gap-1 detail-wrap">
-                                                            <!-- Total Items -->
-                                                            <p>Total ({{ $transaction->total_items }} Items)</p>
-                                                            <!-- Total Amount -->
-                                                            <p>Rp
-                                                                {{ number_format($transaction->total_amounts, 0, ',', '.') }}
-                                                            </p>
-                                                        </div>
-                                                        <div class="flex w-full md:px-3 md:justify-end wrap">
-                                                            <!-- Order Status -->
-                                                            <label
-                                                                class="px-8 py-2 text-sm text-center bg-purple-500 rounded-lg md:rounded-full w-fit h-fit">
-                                                                {{ ucfirst($transaction->status_order) }}
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <a href="{{ Route('order-details.view', $transaction->transaction_ID ?? '') }}"
-                                                    class="w-full px-4 py-2 font-medium text-center rounded-md bg-secondary-accent-color text-highlight-content">
-                                                    See Details
-                                                </a>
-                                            </div>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-full text-white tabs-content-order">
-                        <div class="swiper">
-                            <div class="p-1 profile-order-wrapper">
-                                <div class="w-full swiper-wrapper">
-                                    @foreach ($transactions as $transaction)
-                                        @if ($transaction->status_order == 'completed')
-                                            <div
-                                                class="h-fit swiper-slide flex bg-primary-color flex-col items-center outline w-full md:w-[30rem] outline-highlight-content outline-1 gap-3 rounded-lg p-3">
-                                                <div class="relative flex items-center w-full gap-8 wrap">
-                                                    <img src="https://cdn-icons-png.flaticon.com/512/4852/4852525.png"
-                                                        class="md:w-[8rem] w-[6rem] h-[8rem]  object-cover bg-secondary-accent-color rounded-md"
-                                                        alt="">
-                                                    <div class="flex flex-col w-full gap-1.5 wrap md:flex-row">
-                                                        <div class="flex flex-col w-full gap-1 detail-wrap">
-                                                            <!-- Total Items -->
-                                                            <p>Total ({{ $transaction->total_items }} Items)</p>
-                                                            <!-- Total Amount -->
-                                                            <p>Rp
-                                                                {{ number_format($transaction->total_amounts, 0, ',', '.') }}
-                                                            </p>
-                                                        </div>
-                                                        <div class="flex w-full md:px-3 md:justify-end wrap">
-                                                            <!-- Order Status -->
-                                                            <label for=""
-                                                                class="px-8 py-2 text-sm text-center text-white bg-green-500 rounded-lg md:rounded-full w-fit md:w-fit h-fit">
-                                                                {{ $transaction->status_order }}
-                                                            </label>
+                        @php
+                            $paidOrders = $transactions->where('status_order', 'paid');
+                        @endphp
+                        @if ($paidOrders->count() > 0)
+                            <div class=" swiper">
+                                <div class="w-full p-1 profile-order-wrapper">
+                                    <div class="w-full swiper-wrapper">
+                                        @foreach ($transactions as $transaction)
+                                            @if ($transaction->status_order == 'paid')
+                                                <div
+                                                    class="h-fit swiper-slide flex bg-primary-color flex-col items-center outline w-full md:w-[30rem] outline-highlight-content outline-1 gap-3 rounded-lg p-3">
+                                                    <div class="relative flex items-center w-full gap-8 wrap">
+                                                        <img src="https://cdn-icons-png.flaticon.com/512/4852/4852525.png"
+                                                            class="md:w-[8rem] w-[6rem] h-[8rem] object-cover bg-secondary-accent-color rounded-md"
+                                                            alt="">
+                                                        <div class="flex flex-col w-full gap-1.5 wrap md:flex-row">
+                                                            <div class="flex flex-col w-full gap-1 detail-wrap">
+                                                                <!-- Total Items -->
+                                                                <p>Total ({{ $transaction->total_items }} Items)</p>
+                                                                <!-- Total Amount -->
+                                                                <p>Rp
+                                                                    {{ number_format($transaction->total_amounts, 0, ',', '.') }}
+                                                                </p>
+                                                            </div>
+                                                            <div class="flex w-full md:px-3 md:justify-end wrap">
+                                                                <!-- Order Status -->
+                                                                <label
+                                                                    class="px-8 py-2 text-sm text-center bg-purple-500 rounded-lg md:rounded-full w-fit h-fit">
+                                                                    {{ ucfirst($transaction->status_order) }}
+                                                                </label>
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    <a href="{{ Route('order-details.view', $transaction->transaction_ID ?? '') }}"
+                                                        class="w-full px-4 py-2 font-medium text-center rounded-md bg-secondary-accent-color text-highlight-content">
+                                                        See Details
+                                                    </a>
                                                 </div>
-                                                <a href="{{ Route('order-details.view', $transaction->transaction_ID ?? '') }}"
-                                                    class="w-full px-4 py-2 font-medium text-center rounded-md bg-secondary-accent-color text-highlight-content">
-                                                    See Details
-                                                </a>
-                                            </div>
-                                        @endif
-                                    @endforeach
+                                            @endif
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @else
+                            <div class="flex items-center justify-center w-full p-6 mt-4 md:mt-16 swiper-slide">
+                                <p class="text-lg text-white">No paid Order was found</p>
+                            </div>
+                        @endif
                     </div>
                     <div class="w-full text-white tabs-content-order">
-                        <div class="swiper">
-                            <div class="p-1 profile-order-wrapper">
-                                <div class="w-full swiper-wrapper">
-                                    @foreach ($transactions as $transaction)
-                                        @if ($transaction->status_order == 'canceled')
-                                            <div
-                                                class="h-fit swiper-slide flex bg-primary-color flex-col items-center outline w-full md:w-[30rem] outline-highlight-content outline-1 gap-3 rounded-lg p-3">
-                                                <div class="relative flex items-center w-full gap-8 wrap">
-                                                    <img src="https://cdn-icons-png.flaticon.com/512/4852/4852525.png"
-                                                        class="md:w-[8rem] w-[6rem] h-[8rem]  object-cover bg-secondary-accent-color rounded-md"
-                                                        alt="">
-                                                    <div class="flex flex-col w-full gap-1.5 wrap md:flex-row">
-                                                        <div class="flex flex-col w-full gap-1 detail-wrap">
-                                                            <!-- Total Items -->
-                                                            <p>Total ({{ $transaction->total_items }} Items)</p>
-                                                            <!-- Total Amount -->
-                                                            <p>Rp
-                                                                {{ number_format($transaction->total_amounts, 0, ',', '.') }}
-                                                            </p>
-                                                        </div>
-                                                        <div class="flex w-full md:px-3 md:justify-end wrap">
-                                                            <!-- Order Status -->
-                                                            <label for=""
-                                                                class="px-8 py-2 text-sm text-center text-white rounded-lg bg-secondary-color md:rounded-full w-fit md:w-fit h-fit">
-                                                                {{ $transaction->status_order }}
-                                                            </label>
+                        @php
+                            $completedOrders = $transactions->where('status_order', 'completed');
+                        @endphp
+                        @if ($completedOrders->count() > 0)
+                            <div class="swiper">
+                                <div class="p-1 profile-order-wrapper">
+                                    <div class="w-full swiper-wrapper">
+                                        @foreach ($transactions as $transaction)
+                                            @if ($transaction->status_order == 'completed')
+                                                <div
+                                                    class="h-fit swiper-slide flex bg-primary-color flex-col items-center outline w-full md:w-[30rem] outline-highlight-content outline-1 gap-3 rounded-lg p-3">
+                                                    <div class="relative flex items-center w-full gap-8 wrap">
+                                                        <img src="https://cdn-icons-png.flaticon.com/512/4852/4852525.png"
+                                                            class="md:w-[8rem] w-[6rem] h-[8rem]  object-cover bg-secondary-accent-color rounded-md"
+                                                            alt="">
+                                                        <div class="flex flex-col w-full gap-1.5 wrap md:flex-row">
+                                                            <div class="flex flex-col w-full gap-1 detail-wrap">
+                                                                <!-- Total Items -->
+                                                                <p>Total ({{ $transaction->total_items }} Items)</p>
+                                                                <!-- Total Amount -->
+                                                                <p>Rp
+                                                                    {{ number_format($transaction->total_amounts, 0, ',', '.') }}
+                                                                </p>
+                                                            </div>
+                                                            <div class="flex w-full md:px-3 md:justify-end wrap">
+                                                                <!-- Order Status -->
+                                                                <label for=""
+                                                                    class="px-8 py-2 text-sm text-center text-white bg-green-500 rounded-lg md:rounded-full w-fit md:w-fit h-fit">
+                                                                    {{ $transaction->status_order }}
+                                                                </label>
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    <a href="{{ Route('order-details.view', $transaction->transaction_ID ?? '') }}"
+                                                        class="w-full px-4 py-2 font-medium text-center rounded-md bg-secondary-accent-color text-highlight-content">
+                                                        See Details
+                                                    </a>
                                                 </div>
-                                                <a href="{{ Route('order-details.view', $transaction->transaction_ID ?? '') }}"
-                                                    class="w-full px-4 py-2 font-medium text-center rounded-md bg-secondary-accent-color text-highlight-content">
-                                                    See Details
-                                                </a>
-                                            </div>
-                                        @endif
-                                    @endforeach
+                                            @endif
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @else
+                            <div class="flex items-center justify-center w-full p-6 mt-4 md:mt-16 swiper-slide">
+                                <p class="text-lg text-white">No completed Order was found</p>
+                            </div>
+                        @endif
                     </div>
                     <div class="w-full text-white tabs-content-order">
-                        <div class="swiper">
-                            <div class="p-1 profile-order-wrapper">
-                                <div class="w-full swiper-wrapper">
-                                    @foreach ($transactions as $transaction)
-                                        @if ($transaction->status_order == 'serve')
-                                            <div
-                                                class="h-fit swiper-slide flex bg-primary-color flex-col items-center outline w-full md:w-[30rem] outline-highlight-content outline-1 gap-3 rounded-lg p-3">
-                                                <div class="relative flex items-center w-full gap-8 wrap">
-                                                    <img src="https://cdn-icons-png.flaticon.com/512/4852/4852525.png"
-                                                        class="md:w-[8rem] w-[6rem] h-[8rem]  object-cover bg-secondary-accent-color rounded-md"
-                                                        alt="">
-                                                    <div class="flex flex-col w-full gap-1.5 wrap md:flex-row">
-                                                        <div class="flex flex-col w-full gap-1 detail-wrap">
-                                                            <!-- Total Items -->
-                                                            <p>Total ({{ $transaction->total_items }} Items)</p>
-                                                            <!-- Total Amount -->
-                                                            <p>Rp
-                                                                {{ number_format($transaction->total_amounts, 0, ',', '.') }}
-                                                            </p>
-                                                        </div>
-                                                        <div class="flex w-full md:px-3 md:justify-end wrap">
-                                                            <!-- Order Status -->
-                                                            <label for=""
-                                                                class="px-8 py-2 text-sm text-center text-white bg-teal-500 rounded-lg md:rounded-full w-fit md:w-fit h-fit">
-                                                                {{ $transaction->status_order }}
-                                                            </label>
+                        @php
+                            $canceledOrders = $transactions->where('status_order', 'canceled');
+                        @endphp
+                        @if ($canceledOrders->count() > 0)
+                            <div class="swiper">
+                                <div class="p-1 profile-order-wrapper">
+                                    <div class="w-full swiper-wrapper">
+                                        @foreach ($transactions as $transaction)
+                                            @if ($transaction->status_order == 'canceled')
+                                                <div
+                                                    class="h-fit swiper-slide flex bg-primary-color flex-col items-center outline w-full md:w-[30rem] outline-highlight-content outline-1 gap-3 rounded-lg p-3">
+                                                    <div class="relative flex items-center w-full gap-8 wrap">
+                                                        <img src="https://cdn-icons-png.flaticon.com/512/4852/4852525.png"
+                                                            class="md:w-[8rem] w-[6rem] h-[8rem]  object-cover bg-secondary-accent-color rounded-md"
+                                                            alt="">
+                                                        <div class="flex flex-col w-full gap-1.5 wrap md:flex-row">
+                                                            <div class="flex flex-col w-full gap-1 detail-wrap">
+                                                                <!-- Total Items -->
+                                                                <p>Total ({{ $transaction->total_items }} Items)</p>
+                                                                <!-- Total Amount -->
+                                                                <p>Rp
+                                                                    {{ number_format($transaction->total_amounts, 0, ',', '.') }}
+                                                                </p>
+                                                            </div>
+                                                            <div class="flex w-full md:px-3 md:justify-end wrap">
+                                                                <!-- Order Status -->
+                                                                <label for=""
+                                                                    class="px-8 py-2 text-sm text-center text-white rounded-lg bg-secondary-color md:rounded-full w-fit md:w-fit h-fit">
+                                                                    {{ $transaction->status_order }}
+                                                                </label>
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    <a href="{{ Route('order-details.view', $transaction->transaction_ID ?? '') }}"
+                                                        class="w-full px-4 py-2 font-medium text-center rounded-md bg-secondary-accent-color text-highlight-content">
+                                                        See Details
+                                                    </a>
                                                 </div>
-                                                <a href="{{ Route('order-details.view', $transaction->transaction_ID ?? '') }}"
-                                                    class="w-full px-4 py-2 font-medium text-center rounded-md bg-secondary-accent-color text-highlight-content">
-                                                    See Details
-                                                </a>
-                                            </div>
-                                        @endif
-                                    @endforeach
+                                            @endif
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @else
+                            <div class="flex items-center justify-center w-full p-6 mt-4 md:mt-16 swiper-slide">
+                                <p class="text-lg text-white">No canceled Order was found</p>
+                            </div>
+                        @endif
                     </div>
                     <div class="w-full text-white tabs-content-order">
-                        <div class="swiper">
-                            <div class="p-1 profile-order-wrapper">
-                                <div class="w-full swiper-wrapper">
-                                    @foreach ($transactions as $transaction)
-                                        @if ($transaction->status_order == 'shipped')
+                        @php
+                            $serveOrders = $transactions->where('status_order', 'serve');
+                        @endphp
+                        @if ($serveOrders->count() > 0)
+                            <div class="swiper">
+                                <div class="p-1 profile-order-wrapper">
+                                    <div class="w-full swiper-wrapper">
+                                        @foreach ($transactions as $transaction)
+                                            @if ($transaction->status_order == 'serve')
+                                                <div
+                                                    class="h-fit swiper-slide flex bg-primary-color flex-col items-center outline w-full md:w-[30rem] outline-highlight-content outline-1 gap-3 rounded-lg p-3">
+                                                    <div class="relative flex items-center w-full gap-8 wrap">
+                                                        <img src="https://cdn-icons-png.flaticon.com/512/4852/4852525.png"
+                                                            class="md:w-[8rem] w-[6rem] h-[8rem]  object-cover bg-secondary-accent-color rounded-md"
+                                                            alt="">
+                                                        <div class="flex flex-col w-full gap-1.5 wrap md:flex-row">
+                                                            <div class="flex flex-col w-full gap-1 detail-wrap">
+                                                                <!-- Total Items -->
+                                                                <p>Total ({{ $transaction->total_items }} Items)</p>
+                                                                <!-- Total Amount -->
+                                                                <p>Rp
+                                                                    {{ number_format($transaction->total_amounts, 0, ',', '.') }}
+                                                                </p>
+                                                            </div>
+                                                            <div class="flex w-full md:px-3 md:justify-end wrap">
+                                                                <!-- Order Status -->
+                                                                <label for=""
+                                                                    class="px-8 py-2 text-sm text-center text-white bg-teal-500 rounded-lg md:rounded-full w-fit md:w-fit h-fit">
+                                                                    {{ $transaction->status_order }}
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <a href="{{ Route('order-details.view', $transaction->transaction_ID ?? '') }}"
+                                                        class="w-full px-4 py-2 font-medium text-center rounded-md bg-secondary-accent-color text-highlight-content">
+                                                        See Details
+                                                    </a>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        @else
+                            <div class="flex items-center justify-center w-full p-6 mt-4 md:mt-16 swiper-slide">
+                                <p class="text-lg text-white">No serve Order was found</p>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="w-full text-white tabs-content-order">
+                        @php
+                            $shippedOrders = $transactions->where('status_order', 'shipped');
+                        @endphp
+                        @if ($shippedOrders->count() > 0)
+                            <div class="swiper">
+                                <div class="p-1 profile-order-wrapper">
+                                    <div class="w-full swiper-wrapper">
+                                        @foreach ($shippedOrders as $transaction)
                                             <div
                                                 class="h-fit swiper-slide flex bg-primary-color flex-col items-center outline w-full md:w-[30rem] outline-highlight-content outline-1 gap-3 rounded-lg p-3">
                                                 <div class="relative flex items-center w-full gap-8 wrap">
@@ -420,11 +459,15 @@
                                                     See Details
                                                 </a>
                                             </div>
-                                        @endif
-                                    @endforeach
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @else
+                            <div class="flex items-center justify-center w-full p-6 mt-4 md:mt-16 swiper-slide">
+                                <p class="text-lg text-white">No Shipped Order was found</p>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -488,8 +531,8 @@
                                 @empty
                                     <div
                                         class="flex flex-col items-center justify-center w-full h-full gap-3 mt-4 wrap">
-                                        <i class="text-5xl text-white ti ti-shopping-bag-heart"></i>
-                                        <p class="mx-auto my-auto text-xl text-center text-white">
+                                        <i class="text-white md:text-5xl ti ti-shopping-bag-heart"></i>
+                                        <p class="mx-auto my-auto text-center text-white md:text-xl">
                                             No Favorite Menu added
                                         </p>
                                     </div>
@@ -511,11 +554,8 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 <script src="{{ asset('/js/swiper.js') }}"></script>
 <script src="{{ asset('/js/GSAP.js') }}"></script>
-<script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
-<script src="{{ asset('/js/sidebar.js') }}"></script>
 <script src="{{ asset('/js/tabs-order.js') }}"></script>
 <script src="{{ asset('/js/tabs-profile.js') }}"></script>
-<script src="{{ asset('/js/boxLogin.js') }}"></script>
 <script src="{{ asset('/js/imgPicker.js') }}"></script>
 <script>
     document.addEventListener("DOMContentLoaded", () => {

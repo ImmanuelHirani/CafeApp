@@ -50,7 +50,7 @@ class MenuController extends Controller
         // Validasi data untuk menu utama
         $validated = $request->validate([
             'menu_type' => 'required|string|min:1|max:10',
-            'image' => 'nullable|mimes:jpg,jpeg,bmp,png|max:2048',
+            'image' => 'nullable|mimes:jpg,jpeg,bmp,png',
             'name' => 'required|string|regex:/^[a-zA-Z\s]+$/|min:1|max:40',
             'stock' => 'required|integer|min:0|max:100',
             'menu_description' => 'required|string|min:1|max:255',

@@ -4,13 +4,12 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
-    <!-- <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" /> -->
     @vite('resources/css/app.css')
 </head>
 
@@ -243,58 +242,9 @@
     </main>
     @include('layout.Footer')
 </body>
-<!-- <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>
-      AOS.init();
-  </script> -->
-
-<script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-<script src="{{ asset('/js/swiper.js') }}"></script>
-<script src="{{ asset('/js/GSAP.js') }}"></script>
-<script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
-<script src="{{ asset('/js/sidebar.js') }}"></script>
-<script src="{{ asset('/js/boxLogin.js') }}"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        // Seleksi semua tombol dengan atribut data-menu-id
-        const favoriteButtons = document.querySelectorAll("button[data-menu-id]");
-
-        favoriteButtons.forEach((button) => {
-            button.addEventListener("click", async () => {
-                const menuID = button.getAttribute("data-menu-id");
-                const csrfToken = document.querySelector('meta[name="csrf-token"]')
-                    .getAttribute("content");
-
-                try {
-                    const response = await fetch(`/favorite-menu/add`, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "X-CSRF-TOKEN": csrfToken,
-                        },
-                        body: JSON.stringify({
-                            menu_ID: menuID
-                        }),
-                    });
-                    const data = await response.json();
-                    if (response.ok) {
-                        // Menampilkan pemberitahuan sukses menggunakan Notyf
-                        notyf.success(data.message || "Perubahan favorit berhasil!");
-                    } else {
-                        // Menampilkan pemberitahuan error menggunakan Notyf
-                        notyf.error(data.message ||
-                            "Terjadi kesalahan, silakan coba lagi.");
-                    }
-                } catch (error) {
-                    console.error("Error:", error);
-                    // Menampilkan pemberitahuan error jika terjadi kesalahan jaringan
-                    notyf.error(
-                        "Gagal memproses favorit. Periksa koneksi Anda dan coba lagi.");
-                }
-            });
-        });
-    });
-</script>
+<script src="{{ asset('js/swiper.js') }}"></script>
+<script src="{{ asset('js/GSAP.js') }}"></script>
+<script src="{{ asset('js/FavMenu.js') }}"></script>
 
 </html>

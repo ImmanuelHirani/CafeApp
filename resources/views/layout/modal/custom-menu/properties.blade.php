@@ -17,7 +17,7 @@
                     </button>
                 </form>
             @else
-                <h6>Please Select a Categories First</h6>
+                <p class="text-xl font-semibold text-center">Please Select a Categories First</p>
             @endisset
         </div>
     </div>

@@ -57,15 +57,11 @@
     </main>
     @include('layout.Footer')
 </body>
-<!-- <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>
-      AOS.init();
-  </script> -->
+
 <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 <script src="{{ asset('/js/swiper.js') }}"></script>
 <script src="{{ asset('/js/GSAP.js') }}"></script>
-<script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
-<script src="{{ asset('/js/sidebar.js') }}"></script>
-<script src="{{ asset('/js/boxLogin.js') }}"></script>
+
+
 
 </html>

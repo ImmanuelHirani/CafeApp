@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
@@ -11,7 +12,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     <!-- Add this in your <head> section -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <!-- @TODO: replace SET_YOUR_CLIENT_KEY_HERE with your client key -->
     <!-- Pastikan ini ada di bagian HEAD, sebelum script payment -->
     <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
@@ -469,6 +470,5 @@
 <script src="{{ asset('/js/swiper.js') }}"></script>
 <script src="{{ asset('/js/GSAP.js') }}"></script>
 <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
-
 
 </html>

@@ -34,6 +34,8 @@ class OrderController extends Controller
             return redirect()->back()->with('error', 'Login First!');
         }
 
+        $menus = menus::with('properties')->get();
+
         $customerID = $customer->user_ID;
 
         // Fetch order transactions with their details and menu
@@ -60,6 +62,7 @@ class OrderController extends Controller
 
         return view('Frontend.payment', [
             'orderTransactions' => $orderTransactions,
+            'menus' => $menus,
         ]);
     }
 
