@@ -74,8 +74,10 @@
                                 <div class="relative p-3 overflow-hidden rounded-lg cursor-pointer card h-fit outline outline-2 outline-accent-color-admin"
                                     onclick="window.location.href='/admin/product/detail/{{ $menu->menu_ID }}'">
                                     <div class="relative overflow-hidden rounded-lg head-img">
-                                        <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}"
-                                            class="object-cover w-full h-[13em]" />
+                      <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}"
+     class="object-cover w-full h-[13em]" />
+
+
                                         <form onclick="confirmation(event)"
                                             action="{{ route('delete.menu', $menu->menu_ID ?? '') }}" method="POST">
                                             @csrf

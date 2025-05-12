@@ -15,8 +15,9 @@
 
     <!-- @TODO: replace SET_YOUR_CLIENT_KEY_HERE with your client key -->
     <!-- Pastikan ini ada di bagian HEAD, sebelum script payment -->
+    {{--
     <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
-        data-client-key="{{ config('midtrans.client_key') }}"></script>
+        data-client-key="{{ config('midtrans.client_key') }}"></script> --}}
     <!-- Note: replace with src="https://app.midtrans.com/snap/snap.js" for Production environment -->
     <!-- <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" /> -->
     @vite('resources/css/app.css')
@@ -25,8 +26,8 @@
 <body>
     @include('layout.Navbar')
     <main>
-        <section id="hero" class="relative flex items-center overflow-x-hidden">
-            <div class="container flex flex-col-reverse items-center gap-6 mt-10 hero lg:my-20 lg:gap-0 lg:flex-row">
+        <section id="hero" class="relative flex items-center w-full h-screen overflow-x-hidden">
+            <div class="container flex flex-col-reverse items-center w-full gap-6 mt-10 lg:my-24 lg:gap-0 lg:flex-row">
                 <!-- Left Content -->
                 <div
                     class="flex flex-col items-center w-full text-center gap-6 lg:gap-9 xl:w-[65%] lg:w-[60%] lg:items-start lg:text-start left-content">
@@ -35,7 +36,7 @@
                         Enjoy high-quality, homemade cafe
                     </h5>
                     <div id="ExploreBtn"
-                        class="relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-md shadow-2xl backdrop-blur-2xl outline outline-1 outline-white w-fit">
+                        class="relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-md shadow-2xl backdrop-blur-2xl outline outline-white w-fit">
                         <a href=""
                             class="px-6 py-2 text-lg font-medium rounded-lg 3xl:text-2xl md:px-12 md:py-3 md:text-xl font-aesthetnova">Explore
                             Now</a>
@@ -49,7 +50,7 @@
             </div>
             <video src="{{ asset('/asset/Pizza HD_2.mp4') }}" class="absolute inset-0 object-cover w-full h-full -z-10"
                 loop autoplay muted></video>
-            <div class="absolute w-full h-full bg-opacity-70 bg-primary-color overlay-bg -z-10"></div>
+            <div class="absolute w-full h-full bg-primary-color/70 overlay-bg -z-10"></div>
         </section>
         <section id="toppings" class="flex items-center overflow-x-hidden lg:h-screen">
             <div
@@ -362,7 +363,7 @@
                         </svg>
                     </div>
                     <div id="btn-custom"
-                        class="relative inline-flex items-center justify-center overflow-hidden transition-all duration-500 ease-in-out rounded-full outline outline-1 hover:outline-none hover:bg-secondary-color backdrop-blur-lg md:outline-white md:bg-transparent bg-secondary-color md:w-[4em] h-[2.5em] md:hover:w-[14em] will-change-transform md:h-[4em]">
+                        class="relative inline-flex items-center justify-center overflow-hidden transition-all duration-500 ease-in-out rounded-full outline hover:outline-none hover:bg-secondary-color backdrop-blur-lg md:outline-white md:bg-transparent bg-secondary-color md:w-[4em] h-[2.5em] md:hover:w-[14em] will-change-transform md:h-[4em]">
                         <a href="{{ Route('frontend.menu.custom') }}"
                             class="flex items-center w-full gap-2 px-4 py-2 overflow-hidden text-sm transition-all duration-500 ease-in-out rounded-lg md:hover:px-4 md:gap-4 group 3xl:text-2xl md:px-8 md:py-3 md:text-xl font-aesthetnova">
                             <i
@@ -405,7 +406,7 @@
                                 elegant and satisfying indulgence.
                             </p>
                             <div id="coffe-menu"
-                                class="relative moreMenu inline-flex items-center justify-center ms-auto overflow-hidden transition-all duration-500 ease-in-out rounded-full outline outline-1 hover:outline-none hover:bg-secondary-color backdrop-blur-lg md:outline-white md:bg-transparent bg-secondary-color w-fit md:w-[4em] h-[2.5em] md:hover:w-[21em] will-change-transform md:h-[4em]">
+                                class="relative moreMenu inline-flex items-center justify-center ms-auto overflow-hidden transition-all duration-500 ease-in-out rounded-full outline hover:outline-none hover:bg-secondary-color backdrop-blur-lg md:outline-white md:bg-transparent bg-secondary-color w-fit md:w-[4em] h-[2.5em] md:hover:w-[21em] will-change-transform md:h-[4em]">
                                 <a href="/menu#coffee"
                                     class="flex items-center w-full gap-2 px-6 py-3 overflow-hidden text-sm transition-all duration-500 ease-in-out rounded-lg jus md:gap-4 group 3xl:text-2xl md:px-8 md:py-3 md:text-xl font-aesthetnova">
                                     <i
@@ -432,7 +433,7 @@
                                 our café.
                             </p>
                             <div id="bubble-menu"
-                                class="relative inline-flex moreMenu items-center justify-center overflow-hidden transition-all duration-500 ease-in-out rounded-full outline outline-1 hover:outline-none hover:bg-secondary-color backdrop-blur-lg md:outline-white md:bg-transparent bg-secondary-color md:w-[4em] w-fit h-[2.5em] md:hover:w-[22em] will-change-transform md:h-[4em]">
+                                class="relative inline-flex moreMenu items-center justify-center overflow-hidden transition-all duration-500 ease-in-out rounded-full outline hover:outline-none hover:bg-secondary-color backdrop-blur-lg md:outline-white md:bg-transparent bg-secondary-color md:w-[4em] w-fit h-[2.5em] md:hover:w-[22em] will-change-transform md:h-[4em]">
                                 <a href="/menu#bubble"
                                     class="flex items-center w-full gap-2 px-6 py-2 overflow-hidden text-sm transition-all duration-500 ease-in-out rounded-lg md:gap-4 group 3xl:text-2xl md:px-8 md:py-3 md:text-xl font-aesthetnova">
                                     <i

@@ -1,10 +1,33 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@source "../views";
+
+@theme {
+    --breakpoint-xs: 26.875rem; /* 430px / 16 */
+    --breakpoint-md: 49.875rem; /* 798px / 16 */
+    --breakpoint-lg: 52.125rem; /* 834px / 16 */
+    --breakpoint-xl: 80rem; /* 1280px / 16 */
+    --breakpoint-2xl: 90rem; /* 1440px / 16 */
+    --breakpoint-3xl: 112.5rem; /* 1800px / 16 */
+
+    --color-highlight-content: #f8c055;
+    --color-accent-color: #faf7f5;
+    --color-accent-admin-color: #727272;
+    --color-primary-color: #090e1a;
+    --color-secondary-accent-color: #141925;
+    --color-secondary-color: #f24949;
+    --color-secondary-accent-color-admin: #f5f7fa;
+    --color-secondary-color-admin: #f1f5f9;
+    --color-primary-admin-color: #ffffff;
+
+    --animate-spin-slow: spin 20s linear infinite;
+
+    --font-magilo: "Magilo";
+    --font-aesthetnova: "AesthetNova";
+}
 
 @layer components {
     .btn-primary {
-        @apply px-5 py-2 font-semibold rounded-lg shadow-md bg-violet-500 text-accent-color hover:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-400 focus:ring-opacity-75;
+        @apply px-5 py-2 font-semibold rounded-lg shadow-md bg-violet-500 text-accent-color hover:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-400;
     }
     .middle-nav {
         @apply py-[18px] max-w-fit rounded-full   px-14 text-xl;
@@ -159,7 +182,7 @@
 /* JS Required Css End */
 
 .container {
-    @apply px-4 md:px-12;
+    @apply px-4 md:px-12 mx-auto;
 }
 
 section {
@@ -454,17 +477,17 @@ section {
 }
 
 #modal-add-product[open]::backdrop {
-    @apply bg-black bg-opacity-50;
+    @apply bg-black/50;
 }
 #modal-add-properties[open]::backdrop {
-    @apply bg-black bg-opacity-50;
+    @apply bg-black/50;
 }
 #modal-add-size[open]::backdrop {
-    @apply bg-black bg-opacity-50;
+    @apply bg-black/50;
 }
 
 #modal-custom-detail[open]::backdrop {
-    @apply bg-black bg-opacity-80;
+    @apply bg-black/80;
 }
 
 @starting-style {

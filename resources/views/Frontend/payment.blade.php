@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     @vite('resources/css/app.css')
+    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
+        data-client-key="{{ config('midtrans.client_key') }}"></script>
 </head>
 
 <body>
@@ -60,8 +62,7 @@
                                                     ({{ $orderDetail->size }})
                                                 </p>
                                                 @if ($orderDetail->order_type === 'custom_menu')
-                                                    <button
-                                                        data-custom-pizza="{{ $orderDetail->transaction_detail_ID }}"
+                                                    <button data-custom-pizza="{{ $orderDetail->transaction_detail_ID }}"
                                                         id="btn-see-detail-custom"
                                                         class="px-2 py-1 rounded-lg w-fit bg-primary-color text-highlight-content"><i
                                                             class="ti ti-clipboard-text"></i></button>
@@ -108,8 +109,7 @@
                             </div>
                             <div class="px-4 py-4 body md:px-8">
                                 <div class="user-quick-details flex items-center justify-between gap-0.5">
-                                    <img src="../asset/Payment/Midtrans.png" class="md:w-[25%] w-[40%]"
-                                        alt="" />
+                                    <img src="../asset/Payment/Midtrans.png" class="md:w-[25%] w-[40%]" alt="" />
                                     <input type="checkbox"
                                         class="w-5 h-5 transition-all duration-300 ease-in-out bg-transparent border-2 rounded-full appearance-none cursor-pointer border-highlight-content checked:bg-highlight-content checked:border-highlight-content hover:border-none hover:bg-highlight-content" />
                                 </div>
@@ -126,8 +126,7 @@
                                     </button>
                                 </div>
                                 <form id="payment-form" class="w-full space-y-2 md:space-y-4"
-                                    action="{{ route('order.pay', $orderTransaction->transaction_ID) }}"
-                                    method="POST">
+                                    action="{{ route('order.pay', $orderTransaction->transaction_ID) }}" method="POST">
                                     @csrf
                                     @method('PUT')
                                     <button id="complete-payment" type="submit"
@@ -143,7 +142,7 @@
             </div>
         </section>
         <script type="text/javascript">
-            document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('DOMContentLoaded', function () {
                 const initiatePaymentBtn = document.getElementById('initiate-payment');
                 const completePaymentBtn = document.getElementById('complete-payment');
                 const cancelButton = document.getElementById('cancel-button');
@@ -154,7 +153,7 @@
                 initiatePaymentBtn.classList.add('opacity-50', 'cursor-not-allowed');
 
                 // Add event listener to checkbox
-                paymentCheckbox.addEventListener('change', function() {
+                paymentCheckbox.addEventListener('change', function () {
                     if (paymentCheckbox.checked) {
                         initiatePaymentBtn.disabled = false;
                         initiatePaymentBtn.classList.remove('opacity-50', 'cursor-not-allowed');
@@ -175,14 +174,14 @@
                     initiatePaymentBtn.textContent = 'Processing...';
 
                     fetch('/payment/get-transaction-token', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                                'Accept': 'application/json'
-                            },
-                            credentials: 'same-origin'
-                        })
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'Accept': 'application/json'
+                        },
+                        credentials: 'same-origin'
+                    })
                         .then(response => {
                             if (!response.ok) {
                                 notyf.error(
@@ -194,7 +193,7 @@
                         .then(data => {
                             if (data.status === 'success' && data.token) {
                                 snap.pay(data.token, {
-                                    onSuccess: function(result) {
+                                    onSuccess: function (result) {
                                         console.log('Payment success:', result);
                                         notyf.success('Payment successful');
 
@@ -212,7 +211,7 @@
                                         // Hide Pay Now button
                                         initiatePaymentBtn.style.display = 'none';
                                     },
-                                    onPending: function(result) {
+                                    onPending: function (result) {
                                         console.log('Payment pending:', result);
                                         notyf.error(
                                             'Payment pending. Please complete your payment');
@@ -220,13 +219,13 @@
                                         initiatePaymentBtn.disabled = false;
                                         initiatePaymentBtn.textContent = 'Pay Now';
                                     },
-                                    onError: function(result) {
+                                    onError: function (result) {
                                         console.error('Payment error:', result);
                                         notyf.error('Payment failed!');
                                         initiatePaymentBtn.disabled = false;
                                         initiatePaymentBtn.textContent = 'Pay Now';
                                     },
-                                    onClose: function() {
+                                    onClose: function () {
                                         console.log(
                                             'Customer closed the popup without finishing the payment'
                                         );
@@ -258,8 +257,7 @@
     @include('layout.Footer')
     @include('layout.popovers.aside.sidebar-frontend')
 </body>
-<script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
-    data-client-key="{{ config('midtrans.client_key') }}"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 <script src="{{ asset('/js/swiper.js') }}"></script>
 <script src="{{ asset('/js/GSAP.js') }}"></script>
