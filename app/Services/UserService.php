@@ -7,7 +7,7 @@ use App\Repository\userRepo;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
-class userService
+class UserService
 {
     protected $userRepo;
 

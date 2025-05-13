@@ -1,5 +1,4 @@
-{{-- <script type="text/javascript" src="https://app.stg.midtrans.com/snap/snap.js"
-    data-client-key="SB-Mid-client-dskTet5i7M47dhLP"></script> --}}
+
 
 <header class="fixed inset-x-0 top-0 z-50 md:top-12">
     <nav class="container relative w-full py-5 transition-all duration-300 ease-linear md:bg-transparent md:py-0">
@@ -30,18 +29,18 @@
             <div class="right-nav">
                 <div class="flex items-center gap-4 icon-wrap">
                     <div class="flex items-center gap-2 wrap">
-                        <button id="cartTrigger">
+                        <button id="cartTrigger" class="cursor-pointer"> 
                             <img src="{{ asset('/asset/SVG/Cart_add-navbar.svg') }}" class="w-11 md:w-14"
                                 alt="Cart" />
                         </button>
                         @auth
-                            <a href="/profile">
+                            <a href="/profile" class="cursor-pointer">
                                 <img src="{{ asset('/asset/SVG/User_login_navbar.svg') }}" class="w-8 md:w-10"
                                     alt="Logout" />
                             </a>
                         @endauth
                         @guest
-                            <button id="loginRegisterTrigger">
+                            <button id="loginRegisterTrigger" class="cursor-pointer">
                                 <img src="{{ asset('/asset/SVG/User_login_navbar.svg') }}" class="w-8 md:w-10"
                                     alt="" />
                             </button>

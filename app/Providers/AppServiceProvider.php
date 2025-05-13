@@ -9,14 +9,14 @@ use App\Services\userService;
 use App\Repository\userRepo;
 use App\Repository\MenuRepo;
 use Illuminate\Support\Facades\DB;
-use App\Repository\orderRepo;
+
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
 use App\Repository\RepositoryImpl\userRepoImpl;
 use App\Repository\RepositoryImpl\MenuRepoImpl;
-use App\Repository\RepositoryImpl\OrderRepoImpl;
+
 use App\Services\MenuService;
-use App\Services\OrderService;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
         // Binding repository
         $this->app->bind(userRepo::class, userRepoImpl::class);
         $this->app->bind(MenuRepo::class, MenuRepoImpl::class);
-        $this->app->bind(orderRepo::class, OrderRepoImpl::class);
+
 
         $this->app->bind(MenuService::class, function ($app) {
             return new MenuService($app->make(MenuRepo::class));
@@ -36,10 +36,6 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(userService::class, function ($app) {
             return new userService($app->make(userRepo::class));
-        });
-
-        $this->app->singleton(OrderService::class, function ($app) {
-            return new OrderService($app->make(orderRepo::class));
         });
     }
 

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class menu_review extends Model
+class Menu_Review extends Model
 {
     protected $table = 'menu_review';
     protected $primaryKey = 'review_ID'; // Sesuaikan dengan primary key di tabel

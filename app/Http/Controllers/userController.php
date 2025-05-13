@@ -10,7 +10,7 @@ use App\Models\menus;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 
-class userController extends Controller
+class UserController extends Controller
 {
     private userService $userService;
 

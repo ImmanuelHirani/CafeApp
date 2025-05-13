@@ -66,7 +66,7 @@
                                 @foreach ($menuDetails->properties as $property)
                                     @if ($property->is_active_properties != 0)
                                         <a href="{{ route('frontend.menu.details', ['id' => $menuDetails->menu_ID, 'size' => $property->size]) }}"
-                                            class="w-full  py-3 uppercase rounded-full outline text-center outline-2 {{ $selectedProperty && $selectedProperty->size == $property->size ? 'bg-secondary-color outline-secondary-color' : 'outline-white hover:bg-secondary-color transition-all ease-in-out duration-300 hover:outline-none' }}">
+                                            class="w-full  py-3 uppercase rounded-full outline text-center  {{ $selectedProperty && $selectedProperty->size == $property->size ? 'bg-secondary-color outline-secondary-color' : 'outline-white hover:bg-secondary-color transition-all ease-in-out duration-300 hover:outline-none' }}">
                                             {{ $property->size }}
                                         </a>
                                     @endif

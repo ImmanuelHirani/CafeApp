@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class menu_size extends Model
+class Menu_Size extends Model
 {
     protected $table = 'menus_size';
     protected $primaryKey = 'menu_size_ID'; // Sesuaikan dengan primary key di tabel

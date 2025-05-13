@@ -69,16 +69,14 @@
                                             <div class="swiper-slide">
                                                 <div
                                                     class="relative transition-all duration-300 ease-in-out scale-95 opacity-50 card-wrapper rounded-2xl h-fit bg-secondary-accent-color">
-                                                    <img src="{{ asset('storage/' . $menu->image) }}"
-                                                        alt="{{ $menu->name }}"
+                                                    <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}"
                                                         class="h-[250px] w-full text-white rounded-t-2xl object-cover object-center" />
                                                     <div class="flex flex-col gap-4 p-5 content">
                                                         <div class="flex flex-col gap-2 wrap-desc">
                                                             <h6 class="line-clamp-1">
                                                                 {{ $menu->name }}
                                                             </h6>
-                                                            <p
-                                                                class="text-base text-justify font-aesthetnova line-clamp-3">
+                                                            <p class="text-base text-justify font-aesthetnova line-clamp-3">
                                                                 {{ $menu->menu_description }}
                                                             </p>
                                                         </div>
@@ -100,7 +98,7 @@
                                                                 <a href="{{ Route('frontend.menu.details', $menu->menu_ID ?? '') }}"
                                                                     class="px-6 py-1 text-lg rounded-lg md:px-8 md:py-1.5 bg-secondary-color">Details</a>
                                                                 <button data-menu-id="{{ $menu->menu_ID }}"
-                                                                    class="px-2 md:h-[2.5rem] h-[2.2rem] flex items-center text-base rounded-lg cursor-pointer md:px-3 outline outline-2 outline-secondary-color transition-all ease-in-out duration-500 hover:bg-secondary-color">
+                                                                    class="px-2 md:h-[2.5rem] h-[2.2rem] flex items-center text-base rounded-lg cursor-pointer md:px-3 outline-2 outline-secondary-color transition-all ease-in-out duration-500 hover:bg-secondary-color">
                                                                     <i class="text-2xl ti ti-heart-filled"></i>
                                                                 </button>
                                                             </div>
@@ -127,16 +125,14 @@
                                             <div class="swiper-slide">
                                                 <div
                                                     class="relative transition-all duration-300 ease-in-out scale-95 opacity-50 card-wrapper rounded-2xl h-fit bg-secondary-accent-color">
-                                                    <img src="{{ asset('storage/' . $menu->image) }}"
-                                                        alt="{{ $menu->name }}"
+                                                    <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}"
                                                         class="h-[250px] w-full text-white rounded-t-2xl object-cover object-center" />
                                                     <div class="flex flex-col gap-4 p-5 content">
                                                         <div class="flex flex-col gap-2 wrap-desc">
                                                             <h6 class="line-clamp-1">
                                                                 {{ $menu->name }}
                                                             </h6>
-                                                            <p
-                                                                class="text-base text-justify font-aesthetnova line-clamp-3">
+                                                            <p class="text-base text-justify font-aesthetnova line-clamp-3">
                                                                 {{ $menu->menu_description }}
                                                             </p>
                                                         </div>
@@ -158,7 +154,7 @@
                                                                 <a href="{{ Route('frontend.menu.details', $menu->menu_ID ?? '') }}"
                                                                     class="px-6 py-1 text-lg rounded-lg md:px-8 md:py-1.5 bg-secondary-color">Details</a>
                                                                 <button data-menu-id="{{ $menu->menu_ID }}"
-                                                                    class="px-2 md:h-[2.5rem] h-[2.2rem] flex items-center text-base rounded-lg cursor-pointer md:px-3 outline outline-2 outline-secondary-color transition-all ease-in-out duration-500 hover:bg-secondary-color">
+                                                                    class="px-2 md:h-[2.5rem] h-[2.2rem] flex items-center text-base rounded-lg cursor-pointer md:px-3 outline-2 outline-secondary-color transition-all ease-in-out duration-500 hover:bg-secondary-color">
                                                                     <i class="text-2xl ti ti-heart-filled"></i>
                                                                 </button>
                                                             </div>
@@ -185,16 +181,14 @@
                                             <div class="swiper-slide">
                                                 <div
                                                     class="relative transition-all duration-300 ease-in-out scale-95 opacity-50 card-wrapper rounded-2xl h-fit bg-secondary-accent-color">
-                                                    <img src="{{ asset('storage/' . $menu->image) }}"
-                                                        alt="{{ $menu->name }}"
+                                                    <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}"
                                                         class="h-[250px] w-full text-white rounded-t-2xl object-cover object-center" />
                                                     <div class="flex flex-col gap-4 p-5 content">
                                                         <div class="flex flex-col gap-2 wrap-desc">
                                                             <h6 class="line-clamp-1">
                                                                 {{ $menu->name }}
                                                             </h6>
-                                                            <p
-                                                                class="text-base text-justify font-aesthetnova line-clamp-3">
+                                                            <p class="text-base text-justify font-aesthetnova line-clamp-3">
                                                                 {{ $menu->menu_description }}
                                                             </p>
                                                         </div>
@@ -216,7 +210,7 @@
                                                                 <a href="{{ Route('frontend.menu.details', $menu->menu_ID ?? '') }}"
                                                                     class="px-6 py-1 text-lg rounded-lg md:px-8 md:py-1.5 bg-secondary-color">Details</a>
                                                                 <button data-menu-id="{{ $menu->menu_ID }}"
-                                                                    class="px-2 md:h-[2.5rem] h-[2.2rem] flex items-center text-base rounded-lg cursor-pointer md:px-3 outline outline-2 outline-secondary-color transition-all ease-in-out duration-500 hover:bg-secondary-color">
+                                                                    class="px-2 md:h-[2.5rem] h-[2.2rem] flex items-center text-base rounded-lg cursor-pointer md:px-3 outline-2 outline-secondary-color transition-all ease-in-out duration-500 hover:bg-secondary-color">
                                                                     <i class="text-2xl ti ti-heart-filled"></i>
                                                                 </button>
                                                             </div>

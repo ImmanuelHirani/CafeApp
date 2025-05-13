@@ -9,7 +9,7 @@
                 class="flex items-center gap-3 text-gray-500">{{ Auth::guard('admin')->user()->user_type }}<i
                     class="text-lg font-medium ti ti-chevron-down"></i></button>
             <div id="box-admin-profile"
-                class="w-[13rem] bg-secondary-accent-color-admin  z-50 hidden absolute left-0 top-14 rounded-lg p-2 bg-wh backdrop-blur-2xl h-fit outline outline-1 outline-black">
+                class="w-[13rem] bg-secondary-accent-color-admin  z-50 hidden absolute left-0 top-14 rounded-lg p-2 h-fit outline-1 outline-black">
                 <div class="flex flex-col gap-1 uppercase wrap">
                     <a href="/admin/profile"
                         class="flex items-center gap-3 p-2 text-sm font-medium text-black transition-all duration-300 ease-in-out rounded-lg hover:bg-gray-300 "><i

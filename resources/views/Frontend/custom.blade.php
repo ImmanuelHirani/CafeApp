@@ -48,7 +48,7 @@
                                     @foreach ($sizes as $size)
                                         <button data-id="{{ $size->size_ID }}" data-price="{{ $size->price }}"
                                             data-max-toppings="{{ $size->allowed_flavor }}"
-                                            class="w-[20%] p-3 hover:bg-secondary-color transition-all ease-in-out duration-300 size-button rounded-full outline outline-2 outline-white ">
+                                            class="w-[20%] p-3 hover:bg-secondary-color transition-all ease-in-out duration-300 size-button rounded-full outline  outline-white ">
                                             {{ $size->size }}
                                         </button>
                                     @endforeach
@@ -92,7 +92,7 @@
                                         @if ($property->is_active == 1)
                                             <button data-price="{{ $property->price }}"
                                                 data-name="{{ $property->properties_name }}"
-                                                class="px-8 py-3 text-sm transition-all duration-300 ease-in-out rounded-full hover:bg-secondary-color topping-button w-fit outline outline-2 outline-white 3xl:text-xl lg:text-xl">
+                                                class="px-8 py-3 text-sm transition-all duration-300 ease-in-out rounded-full hover:bg-secondary-color topping-button w-fit outline  outline-white 3xl:text-xl lg:text-xl">
                                                 {{ $property->properties_name }}
                                             </button>
                                         @endif
@@ -110,7 +110,7 @@
             <div
                 class="container fixed z-50 w-full text-white translate-x-1/2 right-1/2 bottom-4 add-to-cart-custom-order">
                 <form action="{{ route('store.custom.order') }}" method="POST"
-                    class="flex flex-col items-center justify-between w-full p-4 rounded-lg md:p-6 lg:gap-y-0 gap-y-4 lg:flex-row wrap outline outline-1 outline-highlight-content bg-secondary-accent-color">
+                    class="flex flex-col items-center justify-between w-full p-4 rounded-lg md:p-6 lg:gap-y-0 gap-y-4 lg:flex-row wrap outline outline-highlight-content bg-secondary-accent-color">
                     @csrf
                     <!-- Informasi Pesanan -->
                     <div class="lg:w-[60%] w-full space-y-1 wrap">

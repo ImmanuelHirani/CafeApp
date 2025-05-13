@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class favorite_menu extends Model
+class Favorite_Menu extends Model
 {
     protected $table = 'favorite_menu';
     protected $primaryKey = 'favorite_ID';

@@ -9,7 +9,7 @@ use App\Models\transaction;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
-class profileController extends Controller
+class ProfileController extends Controller
 {
     public function profile()
     {

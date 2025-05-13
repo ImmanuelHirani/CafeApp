@@ -119,7 +119,7 @@
                                     alt="Image Preview">
                                 <input name="image" id="file" type="file" class="hidden file-img-product">
                                 <label for="file"
-                                    class="px-8 py-2 text-white rounded-lg cursor-pointer h-fit w-fit outline-1 outline outline-white">Choose
+                                    class="px-8 py-2 text-white rounded-lg cursor-pointer h-fit w-fit outline outline-white">Choose
                                     Image</label>
                                 <p class="hidden text-red-500 error-message">File harus berupa gambar dengan format
                                     .JPEG, .PNG, atau .JPG</p>
@@ -143,7 +143,7 @@
                                 location-box">
                                     <div class="w-full space-y-2 header">
                                         <button
-                                            class="w-full px-8 py-2 text-sm rounded-full md:w-fit text-balance bg-primary-color text-highlight-content outline outline-1 outline-highlight-content">
+                                            class="w-full px-8 py-2 text-sm rounded-full md:w-fit text-balance bg-primary-color text-highlight-content outline outline-highlight-content">
                                             {{ $location->location_label }}
                                         </button>
                                         <p>{{ $location->reciver_name }} | ({{ $location->reciver_number }})</p>
@@ -204,19 +204,19 @@
                         <div class="w-full gap-4 p-0.5  button-profile-order">
                             <div class="swiper-wrapper ">
                                 <div
-                                    class="py-2 text-base text-center text-white transition-all duration-300 ease-in-out rounded-lg cursor-pointer swiper-slide outline outline-2 outline-white hover:bg-secondary-color hover:outline-none tabs-toggle-order">
+                                    class="py-2 text-base text-center text-white transition-all duration-300 ease-in-out rounded-lg cursor-pointer swiper-slide outline  outline-white hover:bg-secondary-color hover:outline-none tabs-toggle-order">
                                     Paid</div>
                                 <div
-                                    class="py-2 text-base text-center text-white transition-all duration-300 ease-in-out rounded-lg cursor-pointer swiper-slide outline outline-2 outline-white hover:bg-secondary-color hover:outline-none tabs-toggle-order">
+                                    class="py-2 text-base text-center text-white transition-all duration-300 ease-in-out rounded-lg cursor-pointer swiper-slide outline  outline-white hover:bg-secondary-color hover:outline-none tabs-toggle-order">
                                     Completed</div>
                                 <div
-                                    class="py-2 text-base text-center text-white transition-all duration-300 ease-in-out rounded-lg cursor-pointer swiper-slide outline outline-2 outline-white hover:bg-secondary-color hover:outline-none tabs-toggle-order">
+                                    class="py-2 text-base text-center text-white transition-all duration-300 ease-in-out rounded-lg cursor-pointer swiper-slide outline  outline-white hover:bg-secondary-color hover:outline-none tabs-toggle-order">
                                     Canceled</div>
                                 <div
-                                    class="py-2 text-base text-center text-white transition-all duration-300 ease-in-out rounded-lg cursor-pointer swiper-slide outline outline-2 outline-white hover:bg-secondary-color hover:outline-none tabs-toggle-order">
+                                    class="py-2 text-base text-center text-white transition-all duration-300 ease-in-out rounded-lg cursor-pointer swiper-slide outline  outline-white hover:bg-secondary-color hover:outline-none tabs-toggle-order">
                                     Serve</div>
                                 <div
-                                    class="py-2 text-base text-center text-white transition-all duration-300 ease-in-out rounded-lg cursor-pointer swiper-slide outline outline-2 outline-white hover:bg-secondary-color hover:outline-none tabs-toggle-order">
+                                    class="py-2 text-base text-center text-white transition-all duration-300 ease-in-out rounded-lg cursor-pointer swiper-slide outline  outline-white hover:bg-secondary-color hover:outline-none tabs-toggle-order">
                                     Shipping</div>
                             </div>
                         </div>
@@ -232,7 +232,7 @@
                                         @foreach ($transactions as $transaction)
                                             @if ($transaction->status_order == 'paid')
                                                 <div
-                                                    class="h-fit swiper-slide flex bg-primary-color flex-col items-center outline w-full md:w-[30rem] outline-highlight-content outline-1 gap-3 rounded-lg p-3">
+                                                    class="h-fit swiper-slide flex bg-primary-color flex-col items-center outline w-full md:w-[30rem] outline-highlight-content  gap-3 rounded-lg p-3">
                                                     <div class="relative flex items-center w-full gap-8 wrap">
                                                         <img src="https://cdn-icons-png.flaticon.com/512/4852/4852525.png"
                                                             class="md:w-[8rem] w-[6rem] h-[8rem] object-cover bg-secondary-accent-color rounded-md"
@@ -282,7 +282,7 @@
                                         @foreach ($transactions as $transaction)
                                             @if ($transaction->status_order == 'completed')
                                                 <div
-                                                    class="h-fit swiper-slide flex bg-primary-color flex-col items-center outline w-full md:w-[30rem] outline-highlight-content outline-1 gap-3 rounded-lg p-3">
+                                                    class="h-fit swiper-slide flex bg-primary-color flex-col items-center outline w-full md:w-[30rem] outline-highlight-content  gap-3 rounded-lg p-3">
                                                     <div class="relative flex items-center w-full gap-8 wrap">
                                                         <img src="https://cdn-icons-png.flaticon.com/512/4852/4852525.png"
                                                             class="md:w-[8rem] w-[6rem] h-[8rem]  object-cover bg-secondary-accent-color rounded-md"
@@ -332,7 +332,7 @@
                                         @foreach ($transactions as $transaction)
                                             @if ($transaction->status_order == 'canceled')
                                                 <div
-                                                    class="h-fit swiper-slide flex bg-primary-color flex-col items-center outline w-full md:w-[30rem] outline-highlight-content outline-1 gap-3 rounded-lg p-3">
+                                                    class="h-fit swiper-slide flex bg-primary-color flex-col items-center outline w-full md:w-[30rem] outline-highlight-content  gap-3 rounded-lg p-3">
                                                     <div class="relative flex items-center w-full gap-8 wrap">
                                                         <img src="https://cdn-icons-png.flaticon.com/512/4852/4852525.png"
                                                             class="md:w-[8rem] w-[6rem] h-[8rem]  object-cover bg-secondary-accent-color rounded-md"
@@ -382,7 +382,7 @@
                                         @foreach ($transactions as $transaction)
                                             @if ($transaction->status_order == 'serve')
                                                 <div
-                                                    class="h-fit swiper-slide flex bg-primary-color flex-col items-center outline w-full md:w-[30rem] outline-highlight-content outline-1 gap-3 rounded-lg p-3">
+                                                    class="h-fit swiper-slide flex bg-primary-color flex-col items-center outline w-full md:w-[30rem] outline-highlight-content  gap-3 rounded-lg p-3">
                                                     <div class="relative flex items-center w-full gap-8 wrap">
                                                         <img src="https://cdn-icons-png.flaticon.com/512/4852/4852525.png"
                                                             class="md:w-[8rem] w-[6rem] h-[8rem]  object-cover bg-secondary-accent-color rounded-md"
@@ -431,7 +431,7 @@
                                     <div class="w-full swiper-wrapper">
                                         @foreach ($shippedOrders as $transaction)
                                             <div
-                                                class="h-fit swiper-slide flex bg-primary-color flex-col items-center outline w-full md:w-[30rem] outline-highlight-content outline-1 gap-3 rounded-lg p-3">
+                                                class="h-fit swiper-slide flex bg-primary-color flex-col items-center outline w-full md:w-[30rem] outline-highlight-content  gap-3 rounded-lg p-3">
                                                 <div class="relative flex items-center w-full gap-8 wrap">
                                                     <img src="https://cdn-icons-png.flaticon.com/512/4852/4852525.png"
                                                         class="md:w-[8rem] w-[6rem] h-[8rem]  object-cover bg-secondary-accent-color rounded-md"
@@ -481,7 +481,7 @@
                     <div class="flex items-center justify-between h-full">
                         <p class="text-xl uppercase md:text-2xl">My Wishlist</p>
                         <button id="clearAll"
-                            class="self-end px-4 py-2 text-base transition-all duration-300 ease-in-out rounded-lg md:px-8 md:text-lg hover:outline-none outline-1 outline hover:bg-secondary-color w-fit">
+                            class="self-end px-4 py-2 text-base transition-all duration-300 ease-in-out rounded-lg md:px-8 md:text-lg hover:outline-none outline hover:bg-secondary-color w-fit">
                             CLEAR ALL
                         </button>
                     </div>
@@ -491,7 +491,7 @@
                                 <!-- Card Menu -->
                                 @forelse ($menusFav as $menu)
                                     <div
-                                        class="swiper-slide outline outline-2 outline-highlight-content relative transition-all duration-300 ease-in-out card-wrapper rounded-2xl w-[23rem] h-fit bg-primary-color">
+                                        class="swiper-slide outline  outline-highlight-content relative transition-all duration-300 ease-in-out card-wrapper rounded-2xl w-[23rem] h-fit bg-primary-color">
                                         <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}"
                                             class="md:h-[200px] h-[140px] w-full text-white rounded-t-2xl object-cover object-center" />
                                         <div class="flex flex-col md:h-[11rem] h-[9rem] gap-4 p-5 content">
@@ -521,7 +521,7 @@
                                                         Details
                                                     </a>
                                                     <button data-menu-id="{{ $menu->menu_ID }}"
-                                                        class="px-2 md:h-[2.2rem] h-[2rem] flex items-center text-base rounded-lg cursor-pointer md:px-3 outline outline-2 outline-secondary-color transition-all ease-in-out duration-500 hover:bg-secondary-color">
+                                                        class="px-2 md:h-[2.2rem] h-[2rem] flex items-center text-base rounded-lg cursor-pointer md:px-3 outline  outline-secondary-color transition-all ease-in-out duration-500 hover:bg-secondary-color">
                                                         <i class="text-xl ti ti-trash"></i>
                                                     </button>
                                                 </div>

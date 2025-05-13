@@ -11,11 +11,11 @@
 
                     <input type="file" name="image" id="AddProduct" class="hidden file-img-product" />
                     <label for="AddProduct"
-                        class="absolute px-8 text-base py-1.5 font-medium translate-x-1/2 bg-white rounded-full cursor-pointer outline outline-1 bottom-5 w-fit right-1/2">
+                        class="absolute px-8 text-base py-1.5 font-medium translate-x-1/2 bg-white rounded-full cursor-pointer outline bottom-5 w-fit right-1/2">
                         Choose File
                     </label>
                     <label
-                        class="p-2 hidden rounded-t-lg top-0 backdrop-blur-lg bg-secondary-accent-color-admin error-message absolute font-medium text-center !text-black">
+                        class="p-2 hidden rounded-t-lg top-0 bg-secondary-accent-color-admin error-message absolute font-medium text-center !text-black">
                         File harus berupa gambar (jpg, jpeg, png) dan ukuran maksimal 2MB.
                     </label>
                 </div>
@@ -63,7 +63,7 @@
                     <!-- Buttons -->
                     <div class="flex items-center justify-between w-full gap-3 wrap">
                         <button type="reset"
-                            class="w-full py-2.5 text-center rounded-lg outline outline-1 outline-gray-300 text-secondary-accent-color bg-secondary-accent-color-admin btn">
+                            class="w-full py-2.5 text-center rounded-lg outline outline-gray-300 text-secondary-accent-color bg-secondary-accent-color-admin btn">
                             Cancle
                         </button>
                         <button type="submit" class="w-full py-2.5 bg-black  !text-white btn text-center rounded-lg">

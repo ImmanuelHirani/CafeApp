@@ -2,7 +2,7 @@
     class="fixed inset-0 z-50 flex items-center  justify-end transition-all duration-[400ms] ease-linear translate-x-full font-aesthetnova">
     <div class="flex w-full h-full max-w-3xl">
         <!-- Others Also Bought Section -->
-        <div class="md:w-[38%] md:block hidden bg-secondary-accent-color bg-opacity-85">
+        <div class="md:w-[38%] md:block hidden bg-secondary-accent-color/70">
             <h6 class="mt-8 mb-4 font-semibold text-center">
                 OTHERS ALSO BOUGHT
             </h6>
@@ -13,7 +13,7 @@
                         @foreach ($menus as $menu)
                             <div class="swiper-slide">
                                 <div
-                                    class="flex flex-col items-center w-full rounded-lg shadow-xl bg-secondary-accent-color max-h-fit outline outline-1 outline-highlight-content">
+                                    class="flex flex-col items-center w-full rounded-lg shadow-xl bg-secondary-accent-color max-h-fit outline outline-highlight-content">
                                     <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}"
                                         class="rounded-t-lg h-[180px] w-full object-cover" />
                                     <div class="flex items-center justify-between w-full gap-6 p-4 wrap">
@@ -54,7 +54,7 @@
             </div>
         </div>
         <!-- My Cart Section -->
-        <div class="relative md:w-[62%] w-full flex flex-col gap-3 p-6 bg-secondary-accent-color shadow-lg">
+        <div class="relative md:w-[62%] w-full flex flex-col gap-3 p-6 bg-secondary-accent-color/90 shadow-lg">
             <div class="flex items-center justify-between wrap">
                 <p class="text-2xl md:my-3">MY CART</p>
                 <button id="closeCart" class="">
@@ -65,7 +65,7 @@
                     </svg>
                 </button>
             </div>
-            <hr />
+            <hr class="border-white/40" />
             <div class="w-full swiper">
                 <div
                     class="my-2 3xl:max-h-[670px] 2xl:max-h-[470px] xl:max-h-[31em] max-h-[27em] sm:max-h-[38em] w-full cart-added-content overflow-hidden">
@@ -95,7 +95,7 @@
                                                     @csrf
                                                     @method('PUT')
                                                     <div
-                                                        class="flex items-center justify-center gap-8 px-4 py-1.5 rounded-full w-fit outline outline-1 outline-white">
+                                                        class="flex items-center justify-center gap-8 px-4 py-1.5 rounded-full w-fit outline outline-white">
                                                         <button type="button" class="decrease-btn"
                                                             data-id="{{ $item->transaction_detail_ID }}">
                                                             <i class="ti ti-minus"></i>
@@ -154,7 +154,7 @@
                                                         @csrf
                                                         @method('PUT')
                                                         <div
-                                                            class="flex items-center justify-center gap-8 px-3 py-1.5 rounded-full w-fit outline outline-1 outline-white">
+                                                            class="flex items-center justify-center gap-8 px-3 py-1.5 rounded-full w-fit outline outline-white">
                                                             <button type="button" class="decrease-btn"
                                                                 data-id="{{ $item->transaction_detail_ID }}">
                                                                 <i class="ti ti-minus"></i>
@@ -243,7 +243,7 @@
                     <!-- End of cart item block -->
                 </div>
             </div>
-            <hr class="" />
+            <hr class="border-white/40" />
             <div class="mt-auto">
                 <p class="text-base text-center">
                     Total was calculated at cart.

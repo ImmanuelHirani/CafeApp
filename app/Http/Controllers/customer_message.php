@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\customer_message as ModelMessage;
 
-class customer_message extends Controller
+class Customer_Message extends Controller
 {
     public function insertCS(Request $request)
     {

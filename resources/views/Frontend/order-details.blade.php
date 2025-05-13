@@ -19,7 +19,7 @@
                     <div
                         class="md:sticky top-[20px] flex flex-col col-span-6 row-auto gap-4 text-base transition-all duration-300 ease-in-out h-fit box-cart lg:text-xl">
                         <div
-                            class="flex flex-col p-4 rounded-lg md:p-8 gap-y-6 content-body bg-secondary-accent-color outline outline-1 outline-highlight-content">
+                            class="flex flex-col p-4 rounded-lg md:p-8 gap-y-6 content-body bg-secondary-accent-color outline outline-highlight-content">
                             <div id="order_notice" class="flex flex-col gap-3">
                                 <span class="flex items-center justify-between">
                                     <p>Order Detail</p>
@@ -102,7 +102,7 @@
                         </div>
                     </div>
                     <div
-                        class="flex flex-col md:sticky top-[20px] w-full col-span-6 row-auto gap-4 p-4 rounded-lg h-fit md:p-8 lg:gap-y-6 gap-y-5 content-body bg-secondary-accent-color outline outline-1 outline-highlight-content">
+                        class="flex flex-col md:sticky top-[20px] w-full col-span-6 row-auto gap-4 p-4 rounded-lg h-fit md:p-8 lg:gap-y-6 gap-y-5 content-body bg-secondary-accent-color outline outline-highlight-content">
                         <p class="text-2xl text-highlight-content lg:text-3xl">
                             Order Summary
                         </p>
@@ -155,7 +155,7 @@
                     </div>
                     {{-- <div class="col-span-6 row-auto gap-4 text-base md:text-lg">
                         <div
-                            class="sticky flex flex-col w-full gap-4 rounded-lg h-fit top-36 box-Location font-aesthetnova bg-secondary-accent-color outline outline-1 outline-highlight-content">
+                            class="sticky flex flex-col w-full gap-4 rounded-lg h-fit top-36 box-Location font-aesthetnova bg-secondary-accent-color outline outline-highlight-content">
                             <div class="px-4 py-4 md:py-8 body md:px-8">
                                 <div class="space-y-2 wrap">
                                     <p class="text-2xl text-highlight-content">

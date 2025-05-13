@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class customer_message extends Model
+class Customer_Message extends Model
 {
     // Pastikan nama tabel sesuai dengan database Anda
     protected $table = 'customer_messages';

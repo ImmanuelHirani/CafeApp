@@ -9,7 +9,7 @@
                     <input name="size[]" value="sm" placeholder="Size"
                         class="p-2 uppercase border-2 rounded-lg text-center text-secondary-accent-color border-secondary-accent-color w-[3.5rem] flex items-center justify-center h-[3rem]" />
                     <input type="text" name="price[]" placeholder="Price"
-                        class="w-full p-3 text-center rounded-lg outline outline-2 outline-secondary-accent-color bg-secondary-accent-color-admin" />
+                        class="w-full p-3 text-center rounded-lg outline  outline-secondary-accent-color bg-secondary-accent-color-admin" />
                     <p>Allowed Flavor :</p>
                     <input name="allowed_flavor[]" value="3"
                         class="p-2 uppercase border-2 rounded-lg text-center text-secondary-accent-color border-secondary-accent-color w-[3.5rem] flex items-center justify-center h-[3rem]" />
@@ -19,7 +19,7 @@
                     <input name="size[]" value="md" placeholder="Size"
                         class="p-2 uppercase border-2 rounded-lg text-center text-secondary-accent-color border-secondary-accent-color w-[3.5rem] flex items-center justify-center h-[3rem]" />
                     <input type="text" name="price[]" placeholder="Price"
-                        class="w-full p-3 text-center rounded-lg outline outline-2 outline-secondary-accent-color bg-secondary-accent-color-admin" />
+                        class="w-full p-3 text-center rounded-lg outline  outline-secondary-accent-color bg-secondary-accent-color-admin" />
                     <p>Allowed Flavor :</p>
                     <input name="allowed_flavor[]" value="5"
                         class="p-2 uppercase border-2 rounded-lg text-center text-secondary-accent-color border-secondary-accent-color w-[3.5rem] flex items-center justify-center h-[3rem]" />
@@ -28,7 +28,7 @@
                     <input name="size[]" value="lg" placeholder="Size"
                         class="p-2 uppercase border-2 rounded-lg text-center text-secondary-accent-color border-secondary-accent-color w-[3.5rem] flex items-center justify-center h-[3rem]" />
                     <input type="text" name="price[]" placeholder="Price"
-                        class="w-full p-3 text-center rounded-lg outline outline-2 outline-secondary-accent-color bg-secondary-accent-color-admin" />
+                        class="w-full p-3 text-center rounded-lg outline  outline-secondary-accent-color bg-secondary-accent-color-admin" />
                     <p>Allowed Flavor :</p>
                     <input name="allowed_flavor[]" value="7"
                         class="p-2 uppercase border-2 rounded-lg text-center text-secondary-accent-color border-secondary-accent-color w-[3.5rem] flex items-center justify-center h-[3rem]" />
@@ -37,7 +37,7 @@
                     <input name="size[]" value="xl" placeholder="Size"
                         class="p-2 uppercase border-2 rounded-lg text-center text-secondary-accent-color border-secondary-accent-color w-[3.5rem] flex items-center justify-center h-[3rem]" />
                     <input type="text" name="price[]" placeholder="Price"
-                        class="w-full p-3 text-center rounded-lg outline outline-2 outline-secondary-accent-color bg-secondary-accent-color-admin" />
+                        class="w-full p-3 text-center rounded-lg outline  outline-secondary-accent-color bg-secondary-accent-color-admin" />
                     <p>Allowed Flavor :</p>
                     <input name="allowed_flavor[]" value="9"
                         class="p-2 uppercase border-2 rounded-lg text-center text-secondary-accent-color border-secondary-accent-color w-[3.5rem] flex items-center justify-center h-[3rem]" />

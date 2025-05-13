@@ -35,7 +35,7 @@
                                 onerror="this.onerror=null; this.src='{{ asset('asset/Error-Image.png') }}';" />
                             <input type="file" id="imgUpload" name="image" class="hidden file-img-product" />
                             <label for="imgUpload"
-                                class="absolute px-8 text-base py-1.5 font-medium translate-x-1/2 bg-white rounded-full cursor-pointer outline outline-1 bottom-5 w-fit right-1/2">
+                                class="absolute px-8 text-base py-1.5 font-medium translate-x-1/2 bg-white rounded-full cursor-pointer outline-1 bottom-5 w-fit right-1/2">
                                 Choose File
                             </label>
                         </div>

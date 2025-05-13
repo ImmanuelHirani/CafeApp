@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class transaction_location extends Model
+class Transaction_Location extends Model
 {
     protected $table = 'transaction_location';
     protected $primaryKey = 'transaction_location_ID';

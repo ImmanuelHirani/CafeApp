@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class custom_properties extends Model
+class Custom_Properties extends Model
 {
 
     use Notifiable;

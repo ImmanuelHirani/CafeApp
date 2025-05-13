@@ -30,7 +30,7 @@
                     <div class="flex flex-col gap-3 wrap">
                         <input type="hidden" required name="form_target[]" value="controller1">
                         <input type="text" name="from1[categories]"
-                            class="w-full p-2 rounded-lg outline outline-2 outline-secondary-accent-color bg-secondary-accent-color-admin"
+                            class="w-full p-2 rounded-lg outline  outline-secondary-accent-color bg-secondary-accent-color-admin"
                             placeholder="Enter New Category" required>
                         <label
                             class="w-full p-3 text-center text-white rounded-lg cursor-pointer bg-secondary-accent-color next-tabs">Next</label>
@@ -40,10 +40,10 @@
                     <!-- Input grup properti -->
                     <div class="flex flex-col gap-3">
                         <input type="text" name="properties_name[]"
-                            class="w-full p-2 text-base rounded-lg outline outline-1 outline-secondary-accent-color"
+                            class="w-full p-2 text-base rounded-lg outline outline-secondary-accent-color"
                             placeholder="Add new Toppings" required>
                         <input type="number" name="price[]"
-                            class="w-full p-2 text-base rounded-lg outline outline-1 outline-secondary-accent-color"
+                            class="w-full p-2 text-base rounded-lg outline outline-secondary-accent-color"
                             placeholder="Price" required>
                     </div>
                     <!-- Submit -->

@@ -7,10 +7,10 @@
                     method="POST">
                     @csrf
                     <input type="text" name="properties_name"
-                        class="w-full p-2 text-base rounded-lg outline outline-1 outline-secondary-accent-color"
+                        class="w-full p-2 text-base rounded-lg outline outline-secondary-accent-color"
                         placeholder="Add new Toppings" required />
                     <input type="number" name="price"
-                        class="w-full p-2 text-base rounded-lg outline outline-1 outline-secondary-accent-color"
+                        class="w-full p-2 text-base rounded-lg outline outline-secondary-accent-color"
                         placeholder="Price" required />
                     <button type="submit" class="w-full p-2 text-white rounded-lg bg-secondary-accent-color">
                         Insert

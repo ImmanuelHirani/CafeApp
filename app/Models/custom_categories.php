@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class custom_categories extends Model
+class Custom_Categories extends Model
 {
     use HasFactory;
     use Notifiable;

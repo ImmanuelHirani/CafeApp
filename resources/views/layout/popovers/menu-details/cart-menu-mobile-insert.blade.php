@@ -44,7 +44,7 @@
                         @if ($property->is_active_properties != 0)
                             <a href="javascript:void(0);" data-menu-id="{{ $menuDetails->menu_ID }}"
                                 data-size="{{ $property->size }}"
-                                class="size-selection-link w-[22%] px-3 py-3 uppercase rounded-full outline text-center outline-2 {{ ($selectedProperty && $selectedProperty->size == $property->size) || $property->size == 'sm' ? 'bg-secondary-color outline-secondary-color' : 'outline-white hover:bg-secondary-color transition-all ease-in-out duration-300 hover:outline-none' }}">
+                                class="size-selection-link w-[22%] px-3 py-3 uppercase rounded-full outline text-center  {{ ($selectedProperty && $selectedProperty->size == $property->size) || $property->size == 'sm' ? 'bg-secondary-color outline-secondary-color' : 'outline-white hover:bg-secondary-color transition-all ease-in-out duration-300 hover:outline-none' }}">
                                 {{ $property->size }}
                             </a>
                         @endif

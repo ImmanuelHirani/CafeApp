@@ -6,7 +6,7 @@ use App\Models\customer_message;
 use App\Models\menus;
 use Illuminate\Support\Facades\Auth;
 
-class contactUsController extends Controller
+class ContactUsController extends Controller
 {
     public function contactUS()
     {

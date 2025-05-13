@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 use Carbon\Carbon;
 
 
-class userRepoImpl implements userRepo
+class UserRepoImpl implements userRepo
 {
 
     private Connection $conn;

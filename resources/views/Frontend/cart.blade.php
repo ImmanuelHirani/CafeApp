@@ -40,7 +40,7 @@
                             </div>
                             <hr />
                             <a href="/profile#locations"
-                                class="self-end w-full gap-3 px-2 py-2 text-base text-center transition-all duration-300 ease-in-out rounded-lg md:w-fit 2xl:px-5 outline outline-1 outline-secondary-color hover:bg-secondary-color">
+                                class="self-end w-full gap-3 px-2 py-2 text-base text-center transition-all duration-300 ease-in-out rounded-lg md:w-fit 2xl:px-5 outline outline-secondary-color hover:bg-secondary-color">
                                 Change Primary Location ?
                             </a>
                         </div>
@@ -48,7 +48,7 @@
                             @if ($cart->order->status_order == 'pending')
                                 @if ($cart->order_type == 'normal_menu')
                                     <div
-                                        class="relative flex items-center self-start w-full gap-4 px-3 py-3 rounded-lg md:gap-12 outline outline-1 outline-highlight-content md:justify-between h-fit md:px-4 md:py-4 cart-item font-aesthetnova bg-secondary-accent-color">
+                                        class="relative flex items-center self-start w-full gap-4 px-3 py-3 rounded-lg md:gap-12 outline outline-highlight-content md:justify-between h-fit md:px-4 md:py-4 cart-item font-aesthetnova bg-secondary-accent-color">
                                         <div
                                             class="wrap md:w-[30%] w-[14rem] h-[10rem] md:h-[180px] overflow-hidden rounded-lg ">
                                             <img src="{{ asset('storage/' . $cart->menu->image) }}"
@@ -63,7 +63,7 @@
                                                     @csrf
                                                     @method('PUT')
                                                     <div
-                                                        class="flex items-center justify-center gap-6 px-2 py-1.5 rounded-full w-fit outline outline-1 outline-white">
+                                                        class="flex items-center justify-center gap-6 px-2 py-1.5 rounded-full w-fit outline outline-white">
                                                         <button type="button" class="decrease-btn"
                                                             data-id="{{ $cart->transaction_detail_ID }}">
                                                             <i class="ti ti-minus"></i>
@@ -104,7 +104,7 @@
                                                 @csrf
                                                 @method('PUT')
                                                 <div
-                                                    class="flex items-center justify-center gap-8 px-4 py-1.5 rounded-full w-fit outline outline-1 outline-white">
+                                                    class="flex items-center justify-center gap-8 px-4 py-1.5 rounded-full w-fit outline outline-white">
                                                     <button type="button" class="decrease-btn"
                                                         data-id="{{ $cart->transaction_detail_ID }}">
                                                         <i class="ti ti-minus"></i>
@@ -144,7 +144,7 @@
                                 @endif
                                 @if ($cart->order_type == 'custom_menu')
                                     <div
-                                        class="relative flex items-center self-start w-full gap-4 px-3 py-3 rounded-lg md:gap-12 outline outline-1 outline-highlight-content md:justify-between h-fit md:px-4 md:py-4 cart-item font-aesthetnova bg-secondary-accent-color">
+                                        class="relative flex items-center self-start w-full gap-4 px-3 py-3 rounded-lg md:gap-12 outline outline-highlight-content md:justify-between h-fit md:px-4 md:py-4 cart-item font-aesthetnova bg-secondary-accent-color">
                                         <div
                                             class="wrap md:w-[30%] w-[14rem] h-[10rem] md:h-[180px] overflow-hidden rounded-lg ">
                                             <img src="{{ asset('/asset/CustomOrder.png') }}"
@@ -214,7 +214,7 @@
                             @endif
                         @empty
                             <div
-                                class="relative flex items-center self-start w-full gap-5 px-3 py-3 rounded-lg outline outline-1 outline-highlight-content md:justify-between h-fit md:px-4 md:py-4 box-Location font-aesthetnova bg-secondary-accent-color">
+                                class="relative flex items-center self-start w-full gap-5 px-3 py-3 rounded-lg outline outline-highlight-content md:justify-between h-fit md:px-4 md:py-4 box-Location font-aesthetnova bg-secondary-accent-color">
                             </div>
                         @endforelse
                     </div>

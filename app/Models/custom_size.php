@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class custom_size extends Model
+class Custom_Size extends Model
 {
     use Notifiable;
 
