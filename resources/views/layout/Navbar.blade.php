@@ -1,5 +1,3 @@
-
-
 <header class="fixed inset-x-0 top-0 z-50 md:top-12">
     <nav class="container relative w-full py-5 transition-all duration-300 ease-linear md:bg-transparent md:py-0">
         <div id="main-nav" class="relative flex items-center justify-between w-full md:pl-4 md:pr-5 group">
@@ -29,7 +27,7 @@
             <div class="right-nav">
                 <div class="flex items-center gap-4 icon-wrap">
                     <div class="flex items-center gap-2 wrap">
-                        <button id="cartTrigger" class="cursor-pointer"> 
+                        <button id="cartTrigger" class="cursor-pointer">
                             <img src="{{ asset('/asset/SVG/Cart_add-navbar.svg') }}" class="w-11 md:w-14"
                                 alt="Cart" />
                         </button>

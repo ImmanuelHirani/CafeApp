@@ -55,7 +55,7 @@
                     <img src="{{ asset('/asset/Topping/Topping1.jpg') }}"
                         class="object-cover w-full h-full rounded-t-lg lg:rounded-none" alt="" />
                     <div
-                        class="absolute flex items-center justify-center w-16 h-16 overflow-hidden transition-all duration-300 ease-in-out rounded-full bg-secondary-accent-color md:w-24 md:h-24 top-3 left-3 bg-opacity-70 box-number">
+                        class="absolute flex items-center justify-center w-16 h-16 overflow-hidden transition-all duration-300 ease-in-out rounded-full bg-secondary-accent-color/70 md:w-24 md:h-24 top-3 left-3 box-number">
                         <h3 class="items-start mt-1.5 md:mt-3">01</h3>
                     </div>
                     <div
@@ -417,10 +417,11 @@
             </div>
         </div>
     </section>
+    @include('layout.popovers.aside.sidebar-frontend')
 @endsection
 @section('script')
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="{{ asset('/js/swiper.js') }}"></script>
-    <script src="{{ asset('/js/GSAP/NavbarGsap.js') }}"></script>
-    <script src="{{ asset('/js/GSAP/HomepageGsap.js') }}"></script>
+    <script src="{{ asset('js/swiper.js') }}"></script>
+    <script src="{{ asset('js/GSAP/NavbarGsap.js') }}"></script>
+    <script src="{{ asset('js/GSAP/HomepageGsap.js') }}"></script>
 @endsection

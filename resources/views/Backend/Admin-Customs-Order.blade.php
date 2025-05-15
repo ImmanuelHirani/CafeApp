@@ -16,13 +16,13 @@
 </head>
 
 <body id="Admin">
-    @include('layout.header')
+    @include('layout.Header')
     <main class="grid grid-cols-7 gap-3 py-4">
-        <section class="flex flex-col h-full col-span-5 p-6 rounded-lg gap-9 bg-primary-color-admin">
+        <div class="flex flex-col h-full col-span-5 p-6 rounded-lg gap-9 bg-primary-color-admin">
             <div class="flex items-center justify-between wrap">
                 <p class="text-2xl font-medium">Custom Pizza</p>
                 <button id="btn-add-product"
-                    class="flex items-center group hover:bg-secondary-accent-color transition-all ease-in-out duration-300 hover:!text-white w-fit gap-3 px-4 justify-center py-3 h-10 outline outline-2 outline-accent-color-admin rounded-full !text-accent-color-admin">
+                    class="flex items-center group hover:bg-secondary-accent-color transition-all ease-in-out duration-300 hover:!text-white w-fit gap-3 px-4 justify-center py-3 h-10 outline outline-accent-color-admin rounded-full !text-accent-color-admin">
                     New Categories
                     <i class="ti ti-plus group-hover:!text-white !text-accent-color-admin text-xl"></i>
                 </button>
@@ -114,7 +114,7 @@
                     </tbody>
                 </table>
             </div>
-        </section>
+        </div>
         <aside class="flex flex-col h-full col-span-2 gap-8 pt-6 overflow-hidden rounded-lg bg-primary-color-admin">
             <div class="px-6 head-aside">
                 <p class="text-xl font-medium">Edit Custom Menu</p>
@@ -134,13 +134,13 @@
             <form action="{{ route('update.properties') }}" class="flex flex-col h-full" method="POST">
                 @csrf
                 <div class="flex flex-col gap-3 px-6 py-1 pb-6 overflow-y-auto card-wrapper sideMenu-tabs-content">
-                    {{-- Topping List Section --}}
+                    {{-- Topping List div --}}
                     <div class="flex flex-col gap-3 text-lg order-card">
                         <div class="flex flex-col gap-3 topping-list">
                             <div class="flex items-center justify-between gap-3 mb-4 wrap">
                                 <p class="font-medium">Topping List :</p>
                                 <label id="btn-add-properties"
-                                    class="cursor-pointer btn-add-product flex items-center group hover:bg-secondary-accent-color transition-all ease-in-out duration-300 hover:!text-white w-fit gap-3 px-4 justify-center text-base py-2 outline outline-2 outline-accent-color-admin rounded-full !text-accent-color-admin">
+                                    class="cursor-pointer btn-add-product flex items-center group hover:bg-secondary-accent-color transition-all ease-in-out duration-300 hover:!text-white w-fit gap-3 px-4 justify-center text-base py-2 outline outline-accent-color-admin rounded-full !text-accent-color-admin">
                                     New Properties
                                 </label>
                             </div>
@@ -149,7 +149,7 @@
                                     @foreach ($detailCategories->properties as $detail)
                                         <input type="text" name="properties[{{ $detail->properties_ID }}][name]"
                                             value="{{ $detail->properties_name }}"
-                                            class="w-full px-4 py-2 text-base rounded-lg bg-secondary-accent-color-admin outline outline-1 outline-gray-300">
+                                            class="w-full px-4 py-2 text-base rounded-lg bg-secondary-accent-color-admin outline outline-gray-300">
                                         <div class="flex items-center w-full gap-3 wrap">
                                             <input type="number" name="properties[{{ $detail->properties_ID }}][price]"
                                                 class="w-full p-2 rounded-lg outline-none bg-secondary-color-admin size-price"
@@ -179,7 +179,7 @@
                     </div>
                 </div>
 
-                {{-- Size Section --}}
+                {{-- Size div --}}
                 <div class="px-6 pb-6 space-y-2 sideMenu-tabs-content h-fit">
                     <div class="flex items-center justify-between gap-3 wrap">
                         <p class="font-medium">Size List :</p>
@@ -189,7 +189,7 @@
                             @endphp
                             @if (!$isSizesAvailable)
                                 <label id="btn-add-size"
-                                    class="cursor-pointer btn-add-product flex items-center group hover:bg-secondary-accent-color transition-all ease-in-out duration-300 hover:!text-white w-fit gap-3 px-4 justify-center text-base py-2 outline outline-2 outline-accent-color-admin rounded-full !text-accent-color-admin">
+                                    class="cursor-pointer btn-add-product flex items-center group hover:bg-secondary-accent-color transition-all ease-in-out duration-300 hover:!text-white w-fit gap-3 px-4 justify-center text-base py-2 outline outline-accent-color-admin rounded-full !text-accent-color-admin">
                                     Create Size Rules
                                 </label>
                             @endif
@@ -233,10 +233,10 @@
         @include('layout.modal.custom-menu.size')
     </main>
 </body>
-<script src="{{ asset('/js/table.js') }}"></script>
-<script src="{{ asset('/js/modal.js') }}"></script>
-<script src="{{ asset('/js/selectedStatus.js') }}"></script>
-<script src="{{ asset('/js/tabs-sideMenu.js') }}"></script>
+<script src="{{ asset('js/table.js') }}"></script>
+<script src="{{ asset('js/modal.js') }}"></script>
+<script src="{{ asset('js/selectedStatus.js') }}"></script>
+<script src="{{ asset('js/tabs-sideMenu.js') }}"></script>
 <script>
     function confirmation(ev) {
         ev.preventDefault(); // Mencegah pengiriman form default

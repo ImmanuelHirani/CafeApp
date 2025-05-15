@@ -1,435 +1,279 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+@extends('layout.main')
+@section('meta')
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
-    <!-- <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" /> -->
-    @vite('resources/css/app.css')
-</head>
-
-<body>
-    @include('layout.Navbar')
-    <main>
-        <section
-            class="container md:grid flex flex-col grid-cols-12 gap-6 md:mt-20 mt-10 auto-rows-[100%] profile font-aesthetnova">
-            <div class="col-span-4 overflow-hidden md:sticky top-36 h-fit rounded-2xl bg-secondary-accent-color">
-                <div class="flex flex-col profile">
-                    <div class="flex items-center pt-4 header">
-                        <div class="flex items-center gap-12 px-8 rounded-lg wrap">
-                            <img src="{{ Auth::user()->image ? asset('storage/' . Auth::user()->image) : 'https://salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled.png' }}"
-                                class="object-cover rounded-full w-[3.5rem] h-[3.5rem]" alt="">
-                            <p class="text-xl 3xl:text-2xl line-clamp-1">
-                                {{ Auth::user()->username ?? 'Not Set Username Yet' }}</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-col gap-4 py-6 body">
-                        <hr class="border-4 border-primary-color">
-                        <div
-                            class="relative flex items-center gap-12 px-12 cursor-pointer sideMenu-tabs-toggle wrap group ">
-                            <div
-                                class="absolute left-0 h-[4.4rem] w-[0.8rem] line transition-all ease-in-out duration-300 group-hover:bg-secondary-color">
-                            </div>
-                            <i class="text-4xl w-[13%] text-white ti ti-user-circle"></i>
-                            <p class="text-xl 3xl:text-2xl w-[77%]">Account Overview</p>
-                        </div>
-                        <hr class="border-4 border-primary-color">
-                        <div
-                            class="relative flex items-center gap-12 px-12 cursor-pointer sideMenu-tabs-toggle wrap group ">
-                            <div
-                                class="absolute left-0 h-[4.4rem] w-[0.8rem] line transition-all ease-in-out duration-300 group-hover:bg-secondary-color">
-                            </div>
-                            <i class="text-4xl w-[13%] text-white ti ti-clipboard-list"></i>
-                            <p class="text-xl 3xl:text-2xl w-[77%]">My Order</p>
-                        </div>
-                        <hr class="border-4 border-primary-color">
-                        <div
-                            class="relative flex items-center gap-12 px-12 cursor-pointer sideMenu-tabs-toggle wrap group ">
-                            <div
-                                class="absolute left-0 h-[4.4rem] w-[0.8rem] line transition-all ease-in-out duration-300 group-hover:bg-secondary-color">
-                            </div>
-                            <i class="text-4xl w-[13%] text-white ti ti-shopping-bag-heart"></i>
-                            <p class="text-xl 3xl:text-2xl w-[77%]">Wishlist</p>
-                        </div>
-                        <hr class="border-4 border-primary-color">
-                        <label for="logout" type="submit"
-                            class="relative flex items-center gap-12 px-12 cursor-pointer wrap group ">
-                            <div
-                                class="absolute left-0 h-[4.4rem] w-[0.8rem] line transition-all ease-in-out duration-300 group-hover:bg-secondary-color">
-                            </div>
-                            <i class="text-4xl w-[13%] text-white ti ti-logout-2"></i>
-                            <p class="text-xl 3xl:text-2xl w-[77%]">Log Out</p>
-                        </label>
-                        <form action="{{ route('logout') }}" method="POST" class="hidden">
-                            @csrf
-                            <input type="submit" class="hidden" id="logout">
-                        </form>
+@endsection
+@section('content')
+    <section
+        class="container md:grid flex flex-col grid-cols-12 gap-6 md:mt-20 mt-10 auto-rows-[100%] profile font-aesthetnova">
+        <div class="col-span-4 overflow-hidden md:sticky top-36 h-fit rounded-2xl bg-secondary-accent-color">
+            <div class="flex flex-col profile">
+                <div class="flex items-center pt-4 header">
+                    <div class="flex items-center gap-12 px-8 rounded-lg wrap">
+                        <img src="{{ Auth::user()->image ? asset('storage/' . Auth::user()->image) : 'https://salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled.png' }}"
+                            class="object-cover rounded-full w-[3.5rem] h-[3.5rem]" alt="">
+                        <p class="text-xl 3xl:text-2xl line-clamp-1">
+                            {{ Auth::user()->username ?? 'Not Set Username Yet' }}</p>
                     </div>
                 </div>
-            </div>
-            {{-- Profile --}}
-            <div class="overflow-hidden md:col-span-8 sideMenu-tabs-content rounded-2xl bg-secondary-accent-color">
-                <div class="banner">
-                    <img src="{{ asset('asset/Banner-profile.png') }}" alt="">
-                </div>
-                <div class="flex flex-col gap-4 p-4 md:p-6 3xl:p-8 body">
-                    <div class="profile">
-                        <p class="text-2xl">Profile</p>
+                <div class="flex flex-col gap-4 py-6 body">
+                    <hr class="border-4 border-primary-color">
+                    <div class="relative flex items-center gap-12 px-12 cursor-pointer sideMenu-tabs-toggle wrap group ">
+                        <div
+                            class="absolute left-0 h-[4.4rem] w-[0.8rem] line transition-all ease-in-out duration-300 group-hover:bg-secondary-color">
+                        </div>
+                        <i class="text-4xl w-[13%] text-white ti ti-user-circle"></i>
+                        <p class="text-xl 3xl:text-2xl w-[77%]">Account Overview</p>
                     </div>
-                    <hr>
-                    <form enctype="multipart/form-data" method="POST"
-                        action="{{ Route('profile.update', Auth::user()->user_ID) }}"
-                        class="flex flex-col-reverse items-center w-full grid-cols-6 gap-8 my-3 md:gap-16 md:grid profile-wrap">
+                    <hr class="border-4 border-primary-color">
+                    <div class="relative flex items-center gap-12 px-12 cursor-pointer sideMenu-tabs-toggle wrap group ">
+                        <div
+                            class="absolute left-0 h-[4.4rem] w-[0.8rem] line transition-all ease-in-out duration-300 group-hover:bg-secondary-color">
+                        </div>
+                        <i class="text-4xl w-[13%] text-white ti ti-clipboard-list"></i>
+                        <p class="text-xl 3xl:text-2xl w-[77%]">My Order</p>
+                    </div>
+                    <hr class="border-4 border-primary-color">
+                    <div class="relative flex items-center gap-12 px-12 cursor-pointer sideMenu-tabs-toggle wrap group ">
+                        <div
+                            class="absolute left-0 h-[4.4rem] w-[0.8rem] line transition-all ease-in-out duration-300 group-hover:bg-secondary-color">
+                        </div>
+                        <i class="text-4xl w-[13%] text-white ti ti-shopping-bag-heart"></i>
+                        <p class="text-xl 3xl:text-2xl w-[77%]">Wishlist</p>
+                    </div>
+                    <hr class="border-4 border-primary-color">
+                    <label for="logout" type="submit"
+                        class="relative flex items-center gap-12 px-12 cursor-pointer wrap group ">
+                        <div
+                            class="absolute left-0 h-[4.4rem] w-[0.8rem] line transition-all ease-in-out duration-300 group-hover:bg-secondary-color">
+                        </div>
+                        <i class="text-4xl w-[13%] text-white ti ti-logout-2"></i>
+                        <p class="text-xl 3xl:text-2xl w-[77%]">Log Out</p>
+                    </label>
+                    <form action="{{ route('logout') }}" method="POST" class="hidden">
                         @csrf
-                        @method('put')
-                        <div class="flex flex-col w-full col-span-4 gap-3 md:gap-6 wrap">
-                            <div class="flex flex-col items-center w-full text-white md:flex-row wrap">
-                                <label for="username" class="text-lg md:w-[30%] w-full">Username</label>
-                                <input name="username" id="username" type="text" placeholder="Max 20 Char"
-                                    value="{{ Auth::user()->username ?? 'Not Set Username Yet' }}"
-                                    class="md:w-[70%] w-full px-4 py-2 text-gray-500 rounded-lg">
-                            </div>
-                            <div class="flex flex-col items-center w-full text-white md:flex-row wrap">
-                                <label for="email" class="text-lg md:w-[30%] w-full">Email</label>
-                                <input name="email" id="email" type="text" placeholder="Email"
-                                    value="{{ Auth::user()->email ?? 'Not Set Email Yet' }}"
-                                    class="md:w-[70%] w-full px-4 py-2 text-gray-500 rounded-lg">
-                            </div>
-                            <div class="flex flex-col items-center w-full text-white md:flex-row wrap">
-                                <label for="phone" class="text-lg md:w-[30%] w-full">Phone</label>
-                                <input name="phone" id="phone" type="text" placeholder="Phone Number"
-                                    value="{{ Auth::user()->phone ?? 'Not Set Phone Yet' }}"
-                                    class="md:w-[70%] w-full px-4 py-2 text-gray-500 rounded-lg">
-                            </div>
-                            <button type="submit"
-                                class="self-end w-full px-8 py-2 bg-green-600 rounded-lg md:w-fit">Update
-                                Data</button>
-                        </div>
-                        <div class="flex justify-center w-full col-span-2">
-                            <div class="flex flex-col items-center gap-6 wrap">
-                                <img class="md:w-[8rem] w-[12rem] h-[12rem] md:h-[8rem] rounded-full object-cover img-preview"
-                                    src="{{ Auth::user()->image ? asset('storage/' . Auth::user()->image) : 'https://salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled.png' }}"
-                                    alt="Image Preview">
-                                <input name="image" id="file" type="file" class="hidden file-img-product">
-                                <label for="file"
-                                    class="px-8 py-2 text-white rounded-lg cursor-pointer h-fit w-fit outline outline-white">Choose
-                                    Image</label>
-                                <p class="hidden text-red-500 error-message">File harus berupa gambar dengan format
-                                    .JPEG, .PNG, atau .JPG</p>
-                            </div>
-                        </div>
+                        <input type="submit" class="hidden" id="logout">
                     </form>
-                    <hr>
-                    <div id="locations" class="flex items-center justify-between ">
-                        <p class="text-base md:text-2xl">My Location <span class="text-highlight-content">(Max
-                                2)</span> </p>
-                        <button id="locationTrigger"
-                            class="self-end px-4 py-2 text-sm bg-green-600 rounded-lg md:px-8 w-fit">Add
-                            Location</button>
-                    </div>
-                    <div class="flex flex-col items-center w-full gap-6 my-3 location-wrap">
-                        @if ($customer->locationUser->isNotEmpty())
-                            @foreach ($customer->locationUser as $location)
-                                <div
-                                    class="w-full md:p-6 p-3 border-[2.5px] flex flex-col gap-3 border-red-800 rounded-lg
-                                @if ($location->is_primary == 1) bg-secondary-color bg-opacity-40 @endif
-                                location-box">
-                                    <div class="w-full space-y-2 header">
-                                        <button
-                                            class="w-full px-8 py-2 text-sm rounded-full md:w-fit text-balance bg-primary-color text-highlight-content outline outline-highlight-content">
-                                            {{ $location->location_label }}
-                                        </button>
-                                        <p>{{ $location->reciver_name }} | ({{ $location->reciver_number }})</p>
-                                    </div>
-                                    <div class="flex flex-col justify-between gap-3 md:flex-row body">
-                                        <div class="wrap md:w-[60%] w-full flex flex-col gap-3">
-                                            <p>{{ $location->reciver_address }}</p>
-                                            <div class="flex items-center w-full gap-3 wrap">
-                                                <a href="{{ route('profile.location.detail', $location->location_ID) }}"
-                                                    class="locationTriggerUpdate text-center md:w-[6rem] w-full py-1.5 bg-green-600 rounded-lg">Edit</a>
-                                                <form
-                                                    action="{{ Route('profile.location.delete', $location->location_ID) }}"
-                                                    method="POST" class="w-full">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button
-                                                        class="text-center md:w-[6rem] w-full py-1.5 bg-red-500 rounded-lg">Delete</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                        <div class="check-status flex  h-fit justify-end md:w-[40%] w-full text-end">
-                                            @if ($location->is_primary == 1)
-                                                <i
-                                                    class="hidden text-2xl md:block text-secondary-color ti ti-check text-end"></i>
-                                                <button
-                                                    class="w-full px-8 py-2 text-center text-white rounded-lg md:w-fit md:hidden bg-secondary-accent-color">Location
-                                                    Choose</button>
-                                            @else
-                                                <form
-                                                    action="{{ Route('profile.location.primary', $location->location_ID) }}"
-                                                    method="POST" class="flex justify-end w-full ">
-                                                    @csrf
-                                                    @method('put')
-                                                    <button
-                                                        class="hidden w-full px-8 py-2 text-white bg-green-600 rounded-lg text-end md:w-fit md:block">Choose</button>
-                                                    <button
-                                                        class="w-full px-8 py-2 text-white rounded-lg bg-primary-color md:hidden">Choose
-                                                        Location</button>
-                                                </form>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-                        @else
-                            <p class="text-base md:text-xl">No location available</p>
-                        @endif
-                    </div>
                 </div>
             </div>
-            {{-- Order --}}
-            <div class="overflow-hidden md:col-span-8 sideMenu-tabs-content rounded-2xl bg-secondary-accent-color">
-                <div class="banner">
-                    <img src="{{ asset('asset/Banner-profile.png') }}" alt="">
+        </div>
+        {{-- Profile --}}
+        <div class="overflow-hidden md:col-span-8 sideMenu-tabs-content rounded-2xl bg-secondary-accent-color">
+            <div class="banner">
+                <img src="{{ asset('asset/Banner-profile.png') }}" alt="">
+            </div>
+            <div class="flex flex-col gap-4 p-4 md:p-6 3xl:p-8 body">
+                <div class="profile">
+                    <p class="text-2xl">Profile</p>
                 </div>
-                <div class="w-full p-4 space-y-3 md:p-6 3xl:p-8 body">
-                    <div class="swiper">
-                        <div class="w-full gap-4 p-0.5  button-profile-order">
-                            <div class="swiper-wrapper ">
-                                <div
-                                    class="py-2 text-base text-center text-white transition-all duration-300 ease-in-out rounded-lg cursor-pointer swiper-slide outline  outline-white hover:bg-secondary-color hover:outline-none tabs-toggle-order">
-                                    Paid</div>
-                                <div
-                                    class="py-2 text-base text-center text-white transition-all duration-300 ease-in-out rounded-lg cursor-pointer swiper-slide outline  outline-white hover:bg-secondary-color hover:outline-none tabs-toggle-order">
-                                    Completed</div>
-                                <div
-                                    class="py-2 text-base text-center text-white transition-all duration-300 ease-in-out rounded-lg cursor-pointer swiper-slide outline  outline-white hover:bg-secondary-color hover:outline-none tabs-toggle-order">
-                                    Canceled</div>
-                                <div
-                                    class="py-2 text-base text-center text-white transition-all duration-300 ease-in-out rounded-lg cursor-pointer swiper-slide outline  outline-white hover:bg-secondary-color hover:outline-none tabs-toggle-order">
-                                    Serve</div>
-                                <div
-                                    class="py-2 text-base text-center text-white transition-all duration-300 ease-in-out rounded-lg cursor-pointer swiper-slide outline  outline-white hover:bg-secondary-color hover:outline-none tabs-toggle-order">
-                                    Shipping</div>
-                            </div>
+                <hr>
+                <form enctype="multipart/form-data" method="POST"
+                    action="{{ Route('profile.update', Auth::user()->user_ID) }}"
+                    class="flex flex-col-reverse items-center w-full grid-cols-6 gap-8 my-3 md:gap-16 md:grid profile-wrap">
+                    @csrf
+                    @method('put')
+                    <div class="flex flex-col w-full col-span-4 gap-3 md:gap-6 wrap">
+                        <div class="flex flex-col items-center w-full text-white md:flex-row wrap">
+                            <label for="username" class="text-lg md:w-[30%] w-full">Username</label>
+                            <input name="username" id="username" type="text" placeholder="Max 20 Char"
+                                value="{{ Auth::user()->username ?? '' }}"
+                                class="md:w-[70%] w-full py-3 text-gray-500 border-b-[1px] border-white/30 outline-none">
+                        </div>
+                        <div class="flex flex-col items-center w-full text-white md:flex-row wrap">
+                            <label for="email" class="text-lg md:w-[30%] w-full">Email</label>
+                            <input name="email" id="email" type="text" placeholder="Email"
+                                value="{{ Auth::user()->email ?? '' }}"
+                                class="md:w-[70%] w-full py-3 text-gray-500 border-b-[1px] border-white/30 outline-none">
+                        </div>
+                        <div class="flex flex-col items-center w-full text-white md:flex-row wrap">
+                            <label for="phone" class="text-lg md:w-[30%] w-full">Phone</label>
+                            <input name="phone" id="phone" type="text" placeholder="Phone Number"
+                                value="{{ Auth::user()->phone ?? '' }}"
+                                class="md:w-[70%] w-full py-3 text-gray-500 border-b-[1px] border-white/30 outline-none">
+                        </div>
+                        <button type="submit" class="self-end w-full px-8 py-2 bg-green-600 rounded-lg md:w-fit">Update
+                            Data</button>
+                    </div>
+                    <div class="flex justify-center w-full col-span-2">
+                        <div class="flex flex-col items-center gap-6 wrap">
+                            <img class="md:w-[8rem] w-[12rem] h-[12rem] md:h-[8rem] rounded-full object-cover img-preview"
+                                src="{{ Auth::user()->image ? asset('storage/' . Auth::user()->image) : 'https://salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled.png' }}"
+                                alt="Image Preview">
+                            <input name="image" id="file" type="file" class="hidden file-img-product">
+                            <label for="file"
+                                class="px-8 py-2 text-white rounded-lg cursor-pointer h-fit w-fit outline outline-white">Choose
+                                Image</label>
+                            <p class="hidden text-red-500 error-message">File harus berupa gambar dengan format
+                                .JPEG, .PNG, atau .JPG</p>
                         </div>
                     </div>
-                    <div class="w-full text-white tabs-content-order">
-                        @php
-                            $paidOrders = $transactions->where('status_order', 'paid');
-                        @endphp
-                        @if ($paidOrders->count() > 0)
-                            <div class=" swiper">
-                                <div class="w-full p-1 profile-order-wrapper">
-                                    <div class="w-full swiper-wrapper">
-                                        @foreach ($transactions as $transaction)
-                                            @if ($transaction->status_order == 'paid')
-                                                <div
-                                                    class="h-fit swiper-slide flex bg-primary-color flex-col items-center outline w-full md:w-[30rem] outline-highlight-content  gap-3 rounded-lg p-3">
-                                                    <div class="relative flex items-center w-full gap-8 wrap">
-                                                        <img src="https://cdn-icons-png.flaticon.com/512/4852/4852525.png"
-                                                            class="md:w-[8rem] w-[6rem] h-[8rem] object-cover bg-secondary-accent-color rounded-md"
-                                                            alt="">
-                                                        <div class="flex flex-col w-full gap-1.5 wrap md:flex-row">
-                                                            <div class="flex flex-col w-full gap-1 detail-wrap">
-                                                                <!-- Total Items -->
-                                                                <p>Total ({{ $transaction->total_items }} Items)</p>
-                                                                <!-- Total Amount -->
-                                                                <p>Rp
-                                                                    {{ number_format($transaction->total_amounts, 0, ',', '.') }}
-                                                                </p>
-                                                            </div>
-                                                            <div class="flex w-full md:px-3 md:justify-end wrap">
-                                                                <!-- Order Status -->
-                                                                <label
-                                                                    class="px-8 py-2 text-sm text-center bg-purple-500 rounded-lg md:rounded-full w-fit h-fit">
-                                                                    {{ ucfirst($transaction->status_order) }}
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <a href="{{ Route('order-details.view', $transaction->transaction_ID ?? '') }}"
-                                                        class="w-full px-4 py-2 font-medium text-center rounded-md bg-secondary-accent-color text-highlight-content">
-                                                        See Details
-                                                    </a>
-                                                </div>
-                                            @endif
-                                        @endforeach
+                </form>
+                <hr>
+                <div id="locations" class="flex items-center justify-between ">
+                    <p class="text-base md:text-2xl">My Location <span class="text-highlight-content">(Max
+                            2)</span> </p>
+                    <button id="locationTrigger"
+                        class="self-end px-4 py-2 text-sm bg-green-600 rounded-lg md:px-8 w-fit">Add
+                        Location</button>
+                </div>
+                <div class="flex flex-col items-center w-full gap-6 my-3 location-wrap">
+                    @if ($customer->locationUser->isNotEmpty())
+                        @foreach ($customer->locationUser as $location)
+                            <div
+                                class="w-full md:p-6 p-3 border-[2.5px] flex flex-col gap-3 border-red-800 rounded-lg
+                                @if ($location->is_primary == 1) bg-secondary-color/40 @endif
+                                location-box">
+                                <div class="w-full space-y-2 header">
+                                    <button
+                                        class="w-full px-8 py-2 text-sm rounded-full md:w-fit text-balance bg-primary-color text-highlight-content outline outline-highlight-content">
+                                        {{ $location->location_label }}
+                                    </button>
+                                    <p>{{ $location->reciver_name }} | ({{ $location->reciver_number }})</p>
+                                </div>
+                                <div class="flex flex-col justify-between gap-3 md:flex-row body">
+                                    <div class="wrap md:w-[60%] w-full flex flex-col gap-3">
+                                        <p>{{ $location->reciver_address }}</p>
+                                        <div class="flex items-center w-full gap-3 wrap">
+                                            <a href="{{ route('profile.location.detail', $location->location_ID) }}"
+                                                class="locationTriggerUpdate text-center md:w-[6rem] w-full py-1.5 bg-green-600 rounded-lg">Edit</a>
+                                            <form action="{{ Route('profile.location.delete', $location->location_ID) }}"
+                                                method="POST" class="w-full">
+                                                @csrf
+                                                @method('delete')
+                                                <button
+                                                    class="text-center md:w-[6rem] w-full py-1.5 bg-red-500 rounded-lg">Delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="check-status flex  h-fit justify-end md:w-[40%] w-full text-end">
+                                        @if ($location->is_primary == 1)
+                                            <i
+                                                class="hidden text-2xl md:block text-secondary-color ti ti-check text-end"></i>
+                                            <button
+                                                class="w-full px-8 py-2 text-center text-white rounded-lg md:w-fit md:hidden bg-secondary-accent-color">Location
+                                                Choose</button>
+                                        @else
+                                            <form action="{{ Route('profile.location.primary', $location->location_ID) }}"
+                                                method="POST" class="flex justify-end w-full ">
+                                                @csrf
+                                                @method('put')
+                                                <button
+                                                    class="hidden w-full px-8 py-2 text-white bg-green-600 rounded-lg text-end md:w-fit md:block">Choose</button>
+                                                <button
+                                                    class="w-full px-8 py-2 text-white rounded-lg bg-primary-color md:hidden">Choose
+                                                    Location</button>
+                                            </form>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
-                        @else
-                            <div class="flex items-center justify-center w-full p-6 mt-4 md:mt-16 swiper-slide">
-                                <p class="text-lg text-white">No paid Order was found</p>
-                            </div>
-                        @endif
+                        @endforeach
+                    @else
+                        <p class="text-base md:text-xl">No location available</p>
+                    @endif
+                </div>
+            </div>
+        </div>
+        {{-- Order --}}
+        <div class="overflow-hidden md:col-span-8 sideMenu-tabs-content rounded-2xl bg-secondary-accent-color">
+            <div class="banner">
+                <img src="{{ asset('asset/Banner-profile.png') }}" alt="">
+            </div>
+            <div class="w-full p-4 space-y-3 md:p-6 3xl:p-8 body">
+                <div class="swiper">
+                    <div class="w-full gap-4 p-0.5  button-profile-order">
+                        <div class="swiper-wrapper ">
+                            <div
+                                class="py-2 text-base text-center text-white transition-all duration-300 ease-in-out rounded-lg cursor-pointer swiper-slide outline  outline-white hover:bg-secondary-color hover:outline-none tabs-toggle-order">
+                                Paid</div>
+                            <div
+                                class="py-2 text-base text-center text-white transition-all duration-300 ease-in-out rounded-lg cursor-pointer swiper-slide outline  outline-white hover:bg-secondary-color hover:outline-none tabs-toggle-order">
+                                Completed</div>
+                            <div
+                                class="py-2 text-base text-center text-white transition-all duration-300 ease-in-out rounded-lg cursor-pointer swiper-slide outline  outline-white hover:bg-secondary-color hover:outline-none tabs-toggle-order">
+                                Canceled</div>
+                            <div
+                                class="py-2 text-base text-center text-white transition-all duration-300 ease-in-out rounded-lg cursor-pointer swiper-slide outline  outline-white hover:bg-secondary-color hover:outline-none tabs-toggle-order">
+                                Serve</div>
+                            <div
+                                class="py-2 text-base text-center text-white transition-all duration-300 ease-in-out rounded-lg cursor-pointer swiper-slide outline  outline-white hover:bg-secondary-color hover:outline-none tabs-toggle-order">
+                                Shipping</div>
+                        </div>
                     </div>
-                    <div class="w-full text-white tabs-content-order">
-                        @php
-                            $completedOrders = $transactions->where('status_order', 'completed');
-                        @endphp
-                        @if ($completedOrders->count() > 0)
-                            <div class="swiper">
-                                <div class="p-1 profile-order-wrapper">
-                                    <div class="w-full swiper-wrapper">
-                                        @foreach ($transactions as $transaction)
-                                            @if ($transaction->status_order == 'completed')
+                </div>
+                <div class="w-full text-white tabs-content-order">
+                    @php
+                        $paidOrders = $transactions->where('status_order', 'paid');
+                    @endphp
+                    @if ($paidOrders->count() > 0)
+                        <div class=" swiper">
+                            <div class="w-full p-1 profile-order-wrapper">
+                                <div class="w-full swiper-wrapper">
+                                    @foreach ($transactions as $transaction)
+                                        @if ($transaction->status_order == 'paid')
+                                            <div
+                                                class="swiper-slide h-fit w-full bg-primary-color p-3 rounded-lg outline outline-highlight-content flex flex-col space-y-3">
+                                                <!-- Top Section: Image & Transaction Info -->
                                                 <div
-                                                    class="h-fit swiper-slide flex bg-primary-color flex-col items-center outline w-full md:w-[30rem] outline-highlight-content  gap-3 rounded-lg p-3">
-                                                    <div class="relative flex items-center w-full gap-8 wrap">
-                                                        <img src="https://cdn-icons-png.flaticon.com/512/4852/4852525.png"
-                                                            class="md:w-[8rem] w-[6rem] h-[8rem]  object-cover bg-secondary-accent-color rounded-md"
-                                                            alt="">
-                                                        <div class="flex flex-col w-full gap-1.5 wrap md:flex-row">
-                                                            <div class="flex flex-col w-full gap-1 detail-wrap">
-                                                                <!-- Total Items -->
-                                                                <p>Total ({{ $transaction->total_items }} Items)</p>
-                                                                <!-- Total Amount -->
-                                                                <p>Rp
-                                                                    {{ number_format($transaction->total_amounts, 0, ',', '.') }}
-                                                                </p>
-                                                            </div>
-                                                            <div class="flex w-full md:px-3 md:justify-end wrap">
-                                                                <!-- Order Status -->
-                                                                <label for=""
-                                                                    class="px-8 py-2 text-sm text-center text-white bg-green-500 rounded-lg md:rounded-full w-fit md:w-fit h-fit">
-                                                                    {{ $transaction->status_order }}
-                                                                </label>
-                                                            </div>
+                                                    class="relative flex flex-col md:flex-row items-center gap-4 md:gap-8 w-full">
+                                                    <img src="https://cdn-icons-png.flaticon.com/512/4852/4852525.png"
+                                                        alt="Transaction"
+                                                        class="w-[6rem] md:w-[8rem] h-[8rem] object-cover bg-secondary-accent-color rounded-md" />
+
+                                                    <!-- Transaction Info -->
+                                                    <div class="flex flex-col md:flex-row w-full gap-2 md:gap-4">
+                                                        <!-- Detail Info -->
+                                                        <div class="flex flex-col w-full gap-1">
+                                                            <p>Total ({{ $transaction->total_items }} Items)</p>
+                                                            <p>Rp
+                                                                {{ number_format($transaction->total_amounts, 0, ',', '.') }}
+                                                            </p>
+                                                        </div>
+
+                                                        <!-- Order Status -->
+                                                        <div class="flex w-full md:w-auto md:px-3 md:justify-end">
+                                                            <span
+                                                                class="px-6 py-2 text-sm text-center bg-purple-500 text-white rounded-lg md:rounded-full w-fit h-fit">
+                                                                {{ ucfirst($transaction->status_order) }}
+                                                            </span>
                                                         </div>
                                                     </div>
-                                                    <a href="{{ Route('order-details.view', $transaction->transaction_ID ?? '') }}"
-                                                        class="w-full px-4 py-2 font-medium text-center rounded-md bg-secondary-accent-color text-highlight-content">
+                                                </div>
+
+                                                <!-- Detail Button -->
+                                                <div
+                                                    class="w-full px-4 py-2 text-center font-medium rounded-md bg-secondary-accent-color">
+                                                    <a href="{{ route('order-details.view', $transaction->transaction_ID ?? '') }}"
+                                                        class="text-highlight-content">
                                                         See Details
                                                     </a>
                                                 </div>
-                                            @endif
-                                        @endforeach
-                                    </div>
+                                            </div>
+                                        @endif
+                                    @endforeach
                                 </div>
                             </div>
-                        @else
-                            <div class="flex items-center justify-center w-full p-6 mt-4 md:mt-16 swiper-slide">
-                                <p class="text-lg text-white">No completed Order was found</p>
-                            </div>
-                        @endif
-                    </div>
-                    <div class="w-full text-white tabs-content-order">
-                        @php
-                            $canceledOrders = $transactions->where('status_order', 'canceled');
-                        @endphp
-                        @if ($canceledOrders->count() > 0)
-                            <div class="swiper">
-                                <div class="p-1 profile-order-wrapper">
-                                    <div class="w-full swiper-wrapper">
-                                        @foreach ($transactions as $transaction)
-                                            @if ($transaction->status_order == 'canceled')
-                                                <div
-                                                    class="h-fit swiper-slide flex bg-primary-color flex-col items-center outline w-full md:w-[30rem] outline-highlight-content  gap-3 rounded-lg p-3">
-                                                    <div class="relative flex items-center w-full gap-8 wrap">
-                                                        <img src="https://cdn-icons-png.flaticon.com/512/4852/4852525.png"
-                                                            class="md:w-[8rem] w-[6rem] h-[8rem]  object-cover bg-secondary-accent-color rounded-md"
-                                                            alt="">
-                                                        <div class="flex flex-col w-full gap-1.5 wrap md:flex-row">
-                                                            <div class="flex flex-col w-full gap-1 detail-wrap">
-                                                                <!-- Total Items -->
-                                                                <p>Total ({{ $transaction->total_items }} Items)</p>
-                                                                <!-- Total Amount -->
-                                                                <p>Rp
-                                                                    {{ number_format($transaction->total_amounts, 0, ',', '.') }}
-                                                                </p>
-                                                            </div>
-                                                            <div class="flex w-full md:px-3 md:justify-end wrap">
-                                                                <!-- Order Status -->
-                                                                <label for=""
-                                                                    class="px-8 py-2 text-sm text-center text-white rounded-lg bg-secondary-color md:rounded-full w-fit md:w-fit h-fit">
-                                                                    {{ $transaction->status_order }}
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <a href="{{ Route('order-details.view', $transaction->transaction_ID ?? '') }}"
-                                                        class="w-full px-4 py-2 font-medium text-center rounded-md bg-secondary-accent-color text-highlight-content">
-                                                        See Details
-                                                    </a>
-                                                </div>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                        @else
-                            <div class="flex items-center justify-center w-full p-6 mt-4 md:mt-16 swiper-slide">
-                                <p class="text-lg text-white">No canceled Order was found</p>
-                            </div>
-                        @endif
-                    </div>
-                    <div class="w-full text-white tabs-content-order">
-                        @php
-                            $serveOrders = $transactions->where('status_order', 'serve');
-                        @endphp
-                        @if ($serveOrders->count() > 0)
-                            <div class="swiper">
-                                <div class="p-1 profile-order-wrapper">
-                                    <div class="w-full swiper-wrapper">
-                                        @foreach ($transactions as $transaction)
-                                            @if ($transaction->status_order == 'serve')
-                                                <div
-                                                    class="h-fit swiper-slide flex bg-primary-color flex-col items-center outline w-full md:w-[30rem] outline-highlight-content  gap-3 rounded-lg p-3">
-                                                    <div class="relative flex items-center w-full gap-8 wrap">
-                                                        <img src="https://cdn-icons-png.flaticon.com/512/4852/4852525.png"
-                                                            class="md:w-[8rem] w-[6rem] h-[8rem]  object-cover bg-secondary-accent-color rounded-md"
-                                                            alt="">
-                                                        <div class="flex flex-col w-full gap-1.5 wrap md:flex-row">
-                                                            <div class="flex flex-col w-full gap-1 detail-wrap">
-                                                                <!-- Total Items -->
-                                                                <p>Total ({{ $transaction->total_items }} Items)</p>
-                                                                <!-- Total Amount -->
-                                                                <p>Rp
-                                                                    {{ number_format($transaction->total_amounts, 0, ',', '.') }}
-                                                                </p>
-                                                            </div>
-                                                            <div class="flex w-full md:px-3 md:justify-end wrap">
-                                                                <!-- Order Status -->
-                                                                <label for=""
-                                                                    class="px-8 py-2 text-sm text-center text-white bg-teal-500 rounded-lg md:rounded-full w-fit md:w-fit h-fit">
-                                                                    {{ $transaction->status_order }}
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <a href="{{ Route('order-details.view', $transaction->transaction_ID ?? '') }}"
-                                                        class="w-full px-4 py-2 font-medium text-center rounded-md bg-secondary-accent-color text-highlight-content">
-                                                        See Details
-                                                    </a>
-                                                </div>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                        @else
-                            <div class="flex items-center justify-center w-full p-6 mt-4 md:mt-16 swiper-slide">
-                                <p class="text-lg text-white">No serve Order was found</p>
-                            </div>
-                        @endif
-                    </div>
-                    <div class="w-full text-white tabs-content-order">
-                        @php
-                            $shippedOrders = $transactions->where('status_order', 'shipped');
-                        @endphp
-                        @if ($shippedOrders->count() > 0)
-                            <div class="swiper">
-                                <div class="p-1 profile-order-wrapper">
-                                    <div class="w-full swiper-wrapper">
-                                        @foreach ($shippedOrders as $transaction)
+                        </div>
+                    @else
+                        <div class="flex items-center justify-center w-full p-6 mt-4 md:mt-16 swiper-slide">
+                            <p class="text-lg text-white">No paid Order was found</p>
+                        </div>
+                    @endif
+                </div>
+                <div class="w-full text-white tabs-content-order">
+                    @php
+                        $completedOrders = $transactions->where('status_order', 'completed');
+                    @endphp
+                    @if ($completedOrders->count() > 0)
+                        <div class="swiper">
+                            <div class="p-1 profile-order-wrapper">
+                                <div class="w-full swiper-wrapper">
+                                    @foreach ($transactions as $transaction)
+                                        @if ($transaction->status_order == 'completed')
                                             <div
                                                 class="h-fit swiper-slide flex bg-primary-color flex-col items-center outline w-full md:w-[30rem] outline-highlight-content  gap-3 rounded-lg p-3">
                                                 <div class="relative flex items-center w-full gap-8 wrap">
@@ -448,7 +292,7 @@
                                                         <div class="flex w-full md:px-3 md:justify-end wrap">
                                                             <!-- Order Status -->
                                                             <label for=""
-                                                                class="px-8 py-2 text-sm text-center text-white bg-indigo-500 rounded-lg md:rounded-full w-fit md:w-fit h-fit">
+                                                                class="px-8 py-2 text-sm text-center text-white bg-green-500 rounded-lg md:rounded-full w-fit md:w-fit h-fit">
                                                                 {{ $transaction->status_order }}
                                                             </label>
                                                         </div>
@@ -459,175 +303,264 @@
                                                     See Details
                                                 </a>
                                             </div>
-                                        @endforeach
-                                    </div>
+                                        @endif
+                                    @endforeach
                                 </div>
                             </div>
-                        @else
-                            <div class="flex items-center justify-center w-full p-6 mt-4 md:mt-16 swiper-slide">
-                                <p class="text-lg text-white">No Shipped Order was found</p>
+                        </div>
+                    @else
+                        <div class="flex items-center justify-center w-full p-6 mt-4 md:mt-16 swiper-slide">
+                            <p class="text-lg text-white">No completed Order was found</p>
+                        </div>
+                    @endif
+                </div>
+                <div class="w-full text-white tabs-content-order">
+                    @php
+                        $canceledOrders = $transactions->where('status_order', 'canceled');
+                    @endphp
+                    @if ($canceledOrders->count() > 0)
+                        <div class="swiper">
+                            <div class="p-1 profile-order-wrapper">
+                                <div class="w-full swiper-wrapper">
+                                    @foreach ($transactions as $transaction)
+                                        @if ($transaction->status_order == 'canceled')
+                                            <div
+                                                class="h-fit swiper-slide flex bg-primary-color flex-col items-center outline w-full md:w-[30rem] outline-highlight-content  gap-3 rounded-lg p-3">
+                                                <div class="relative flex items-center w-full gap-8 wrap">
+                                                    <img src="https://cdn-icons-png.flaticon.com/512/4852/4852525.png"
+                                                        class="md:w-[8rem] w-[6rem] h-[8rem]  object-cover bg-secondary-accent-color rounded-md"
+                                                        alt="">
+                                                    <div class="flex flex-col w-full gap-1.5 wrap md:flex-row">
+                                                        <div class="flex flex-col w-full gap-1 detail-wrap">
+                                                            <!-- Total Items -->
+                                                            <p>Total ({{ $transaction->total_items }} Items)</p>
+                                                            <!-- Total Amount -->
+                                                            <p>Rp
+                                                                {{ number_format($transaction->total_amounts, 0, ',', '.') }}
+                                                            </p>
+                                                        </div>
+                                                        <div class="flex w-full md:px-3 md:justify-end wrap">
+                                                            <!-- Order Status -->
+                                                            <label for=""
+                                                                class="px-8 py-2 text-sm text-center text-white rounded-lg bg-secondary-color md:rounded-full w-fit md:w-fit h-fit">
+                                                                {{ $transaction->status_order }}
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <a href="{{ Route('order-details.view', $transaction->transaction_ID ?? '') }}"
+                                                    class="w-full px-4 py-2 font-medium text-center rounded-md bg-secondary-accent-color text-highlight-content">
+                                                    See Details
+                                                </a>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                </div>
                             </div>
-                        @endif
-                    </div>
+                        </div>
+                    @else
+                        <div class="flex items-center justify-center w-full p-6 mt-4 md:mt-16 swiper-slide">
+                            <p class="text-lg text-white">No canceled Order was found</p>
+                        </div>
+                    @endif
+                </div>
+                <div class="w-full text-white tabs-content-order">
+                    @php
+                        $serveOrders = $transactions->where('status_order', 'serve');
+                    @endphp
+                    @if ($serveOrders->count() > 0)
+                        <div class="swiper">
+                            <div class="p-1 profile-order-wrapper">
+                                <div class="w-full swiper-wrapper">
+                                    @foreach ($transactions as $transaction)
+                                        @if ($transaction->status_order == 'serve')
+                                            <div
+                                                class="h-fit swiper-slide flex bg-primary-color flex-col items-center outline w-full md:w-[30rem] outline-highlight-content  gap-3 rounded-lg p-3">
+                                                <div class="relative flex items-center w-full gap-8 wrap">
+                                                    <img src="https://cdn-icons-png.flaticon.com/512/4852/4852525.png"
+                                                        class="md:w-[8rem] w-[6rem] h-[8rem]  object-cover bg-secondary-accent-color rounded-md"
+                                                        alt="">
+                                                    <div class="flex flex-col w-full gap-1.5 wrap md:flex-row">
+                                                        <div class="flex flex-col w-full gap-1 detail-wrap">
+                                                            <!-- Total Items -->
+                                                            <p>Total ({{ $transaction->total_items }} Items)</p>
+                                                            <!-- Total Amount -->
+                                                            <p>Rp
+                                                                {{ number_format($transaction->total_amounts, 0, ',', '.') }}
+                                                            </p>
+                                                        </div>
+                                                        <div class="flex w-full md:px-3 md:justify-end wrap">
+                                                            <!-- Order Status -->
+                                                            <label for=""
+                                                                class="px-8 py-2 text-sm text-center text-white bg-teal-500 rounded-lg md:rounded-full w-fit md:w-fit h-fit">
+                                                                {{ $transaction->status_order }}
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <a href="{{ Route('order-details.view', $transaction->transaction_ID ?? '') }}"
+                                                    class="w-full px-4 py-2 font-medium text-center rounded-md bg-secondary-accent-color text-highlight-content">
+                                                    See Details
+                                                </a>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    @else
+                        <div class="flex items-center justify-center w-full p-6 mt-4 md:mt-16 swiper-slide">
+                            <p class="text-lg text-white">No serve Order was found</p>
+                        </div>
+                    @endif
+                </div>
+                <div class="w-full text-white tabs-content-order">
+                    @php
+                        $shippedOrders = $transactions->where('status_order', 'shipped');
+                    @endphp
+                    @if ($shippedOrders->count() > 0)
+                        <div class="swiper">
+                            <div class="p-1 profile-order-wrapper">
+                                <div class="w-full swiper-wrapper">
+                                    @foreach ($shippedOrders as $transaction)
+                                        <div
+                                            class="h-fit swiper-slide flex bg-primary-color flex-col items-center outline w-full md:w-[30rem] outline-highlight-content  gap-3 rounded-lg p-3">
+                                            <div class="relative flex items-center w-full gap-8 wrap">
+                                                <img src="https://cdn-icons-png.flaticon.com/512/4852/4852525.png"
+                                                    class="md:w-[8rem] w-[6rem] h-[8rem]  object-cover bg-secondary-accent-color rounded-md"
+                                                    alt="">
+                                                <div class="flex flex-col w-full gap-1.5 wrap md:flex-row">
+                                                    <div class="flex flex-col w-full gap-1 detail-wrap">
+                                                        <!-- Total Items -->
+                                                        <p>Total ({{ $transaction->total_items }} Items)</p>
+                                                        <!-- Total Amount -->
+                                                        <p>Rp
+                                                            {{ number_format($transaction->total_amounts, 0, ',', '.') }}
+                                                        </p>
+                                                    </div>
+                                                    <div class="flex w-full md:px-3 md:justify-end wrap">
+                                                        <!-- Order Status -->
+                                                        <label for=""
+                                                            class="px-8 py-2 text-sm text-center text-white bg-indigo-500 rounded-lg md:rounded-full w-fit md:w-fit h-fit">
+                                                            {{ $transaction->status_order }}
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <a href="{{ Route('order-details.view', $transaction->transaction_ID ?? '') }}"
+                                                class="w-full px-4 py-2 font-medium text-center rounded-md bg-secondary-accent-color text-highlight-content">
+                                                See Details
+                                            </a>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    @else
+                        <div class="flex items-center justify-center w-full p-6 mt-4 md:mt-16 swiper-slide">
+                            <p class="text-lg text-white">No Shipped Order was found</p>
+                        </div>
+                    @endif
                 </div>
             </div>
-            {{-- Wishlist --}}
-            <div
-                class="gap-6 overflow-hidden md:col-span-8 auto-rows-auto sideMenu-tabs-content rounded-2xl bg-secondary-accent-color">
-                <div class="banner">
-                    <img src="{{ asset('asset/Banner-profile.png') }}" alt="">
+        </div>
+        {{-- Wishlist --}}
+        <div
+            class="gap-6 overflow-hidden md:col-span-8 auto-rows-auto sideMenu-tabs-content rounded-2xl bg-secondary-accent-color">
+            <div class="banner">
+                <img src="{{ asset('asset/Banner-profile.png') }}" alt="">
+            </div>
+            <div class="w-full gap-6 p-3 space-y-4 md:p-8 body">
+                <div class="flex items-center justify-between h-full">
+                    <p class="text-xl uppercase md:text-2xl">My Wishlist</p>
+                    <button id="clearAll"
+                        class="self-end px-4 py-2 text-base transition-all duration-300 ease-in-out rounded-lg md:px-8 md:text-lg hover:outline-none outline hover:bg-secondary-color w-fit">
+                        CLEAR ALL
+                    </button>
                 </div>
-                <div class="w-full gap-6 p-3 space-y-4 md:p-8 body">
-                    <div class="flex items-center justify-between h-full">
-                        <p class="text-xl uppercase md:text-2xl">My Wishlist</p>
-                        <button id="clearAll"
-                            class="self-end px-4 py-2 text-base transition-all duration-300 ease-in-out rounded-lg md:px-8 md:text-lg hover:outline-none outline hover:bg-secondary-color w-fit">
-                            CLEAR ALL
-                        </button>
-                    </div>
-                    <div class="h-full swiper">
-                        <div class="h-full p-1 whislist-swiper">
-                            <div class="w-full swiper-wrapper">
-                                <!-- Card Menu -->
-                                @forelse ($menusFav as $menu)
-                                    <div
-                                        class="swiper-slide outline  outline-highlight-content relative transition-all duration-300 ease-in-out card-wrapper rounded-2xl w-[23rem] h-fit bg-primary-color">
-                                        <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}"
-                                            class="md:h-[200px] h-[140px] w-full text-white rounded-t-2xl object-cover object-center" />
-                                        <div class="flex flex-col md:h-[11rem] h-[9rem] gap-4 p-5 content">
-                                            <div class="flex flex-col gap-2 wrap-desc">
-                                                <p class="text-xl line-clamp-1">{{ $menu->name }}</p>
-                                                <p
-                                                    class="text-base text-justify font-aesthetnova md:line-clamp-2 line-clamp-1">
-                                                    {{ $menu->menu_description }}
+                <div class="h-full swiper">
+                    <div class="h-full p-1 whislist-swiper">
+                        <div class="w-full swiper-wrapper">
+                            <!-- Card Menu -->
+                            @forelse ($menusFav as $menu)
+                                <div
+                                    class="swiper-slide outline  outline-highlight-content relative transition-all duration-300 ease-in-out card-wrapper rounded-2xl w-[23rem] h-fit bg-primary-color">
+                                    <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}"
+                                        class="md:h-[200px] h-[140px] w-full text-white rounded-t-2xl object-cover object-center" />
+                                    <div class="flex flex-col md:h-[11rem] h-[9rem] gap-4 p-5 content">
+                                        <div class="flex flex-col gap-2 wrap-desc">
+                                            <p class="text-xl line-clamp-1">{{ $menu->name }}</p>
+                                            <p
+                                                class="text-base text-justify font-aesthetnova md:line-clamp-2 line-clamp-1">
+                                                {{ $menu->menu_description }}
+                                            </p>
+                                        </div>
+                                        <div class="flex items-center justify-between mt-auto wrap-price">
+                                            {{-- Menampilkan harga berdasarkan ukuran 'sm' --}}
+                                            @php
+                                                // Mencari property dengan size 'sm'
+                                                $property = $menu->properties->firstWhere('size', 'sm');
+                                            @endphp
+                                            @if ($property)
+                                                <p class="text-xl md:text-xl">
+                                                    Rp {{ number_format($property->price, 0, ',', '.') }}
                                                 </p>
-                                            </div>
-                                            <div class="flex items-center justify-between mt-auto wrap-price">
-                                                {{-- Menampilkan harga berdasarkan ukuran 'sm' --}}
-                                                @php
-                                                    // Mencari property dengan size 'sm'
-                                                    $property = $menu->properties->firstWhere('size', 'sm');
-                                                @endphp
-                                                @if ($property)
-                                                    <p class="text-xl md:text-xl">
-                                                        Rp {{ number_format($property->price, 0, ',', '.') }}
-                                                    </p>
-                                                @else
-                                                    <p class="text-xl md:text-2xl">Price Not Available</p>
-                                                @endif
-                                                <div class="flex items-center md:gap-2 gap-1.5 wrap">
-                                                    <a href="{{ Route('frontend.menu.details', $menu->menu_ID ?? '') }}"
-                                                        class="px-6 py-1 text-base rounded-lg md:px-8 md:py-1.5 bg-secondary-color">
-                                                        Details
-                                                    </a>
-                                                    <button data-menu-id="{{ $menu->menu_ID }}"
-                                                        class="px-2 md:h-[2.2rem] h-[2rem] flex items-center text-base rounded-lg cursor-pointer md:px-3 outline  outline-secondary-color transition-all ease-in-out duration-500 hover:bg-secondary-color">
-                                                        <i class="text-xl ti ti-trash"></i>
-                                                    </button>
-                                                </div>
+                                            @else
+                                                <p class="text-xl md:text-2xl">Price Not Available</p>
+                                            @endif
+                                            <div class="flex items-center md:gap-2 gap-1.5 wrap">
+                                                <a href="{{ Route('frontend.menu.details', $menu->menu_ID ?? '') }}"
+                                                    class="px-6 py-1 text-base rounded-lg md:px-8 md:py-1.5 bg-secondary-color">
+                                                    Details
+                                                </a>
+                                                <button data-menu-id="{{ $menu->menu_ID }}"
+                                                    class="px-2 md:h-[2.2rem] h-[2rem] flex items-center text-base rounded-lg cursor-pointer md:px-3 outline  outline-secondary-color transition-all ease-in-out duration-500 hover:bg-secondary-color">
+                                                    <i class="text-xl ti ti-trash"></i>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
-                                @empty
-                                    <div
-                                        class="flex flex-col items-center justify-center w-full h-full gap-3 mt-4 wrap">
-                                        <i class="text-white md:text-5xl ti ti-shopping-bag-heart"></i>
-                                        <p class="mx-auto my-auto text-center text-white md:text-xl">
-                                            No Favorite Menu added
-                                        </p>
-                                    </div>
-                                @endforelse
-                                <!-- Card Menu End -->
-                            </div>
+                                </div>
+                            @empty
+                                <div class="flex flex-col items-center justify-center w-full h-full gap-3 mt-4 wrap">
+                                    <i class="text-white md:text-5xl ti ti-shopping-bag-heart"></i>
+                                    <p class="mx-auto my-auto text-center text-white md:text-xl">
+                                        No Favorite Menu added
+                                    </p>
+                                </div>
+                            @endforelse
+                            <!-- Card Menu End -->
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
-    <!-- Review Box Wrapper -->
+        </div>
+    </section>
     @include('layout.modal.location.insert')
     @include('layout.modal.location.update')
     @include('layout.popovers.aside.sidebar-frontend')
-    @include('layout.Footer')
-</body>
-<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-<script src="{{ asset('/js/swiper.js') }}"></script>
-<script src="{{ asset('/js/GSAP.js') }}"></script>
-<script src="{{ asset('/js/tabs-order.js') }}"></script>
-<script src="{{ asset('/js/tabs-profile.js') }}"></script>
-<script src="{{ asset('/js/imgPicker.js') }}"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        // Seleksi semua tombol dengan atribut data-menu-id
-        const favoriteButtons = document.querySelectorAll("button[data-menu-id]");
+@endsection
+@section('script')
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script src="{{ asset('js/swiper.js') }}"></script>
+      <script src="{{ asset('js/GSAP/NavbarGsap.js') }}"></script>
+    <script src="{{ asset('js/tabs-order.js') }}"></script>
+    <script src="{{ asset('js/tabs-profile.js') }}"></script>
+    <script src="{{ asset('js/imgPicker.js') }}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Seleksi semua tombol dengan atribut data-menu-id
+            const favoriteButtons = document.querySelectorAll("button[data-menu-id]");
 
-        favoriteButtons.forEach((button) => {
-            button.addEventListener("click", async () => {
-                const menuID = button.getAttribute("data-menu-id");
-                const csrfToken = document.querySelector('meta[name="csrf-token"]')
-                    .getAttribute("content");
-
-                try {
-                    // Kirim permintaan ke endpoint dengan metode DELETE
-                    const response = await fetch(`/favorite-menu/remove/${menuID}`, {
-                        method: "DELETE",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "X-CSRF-TOKEN": csrfToken,
-                        },
-                    });
-
-                    const data = await response.json();
-                    if (response.ok) {
-                        // Menampilkan pemberitahuan sukses menggunakan Notyf
-                        notyf.success(data.message || "Perubahan favorit berhasil!");
-
-                        // Hapus elemen card-wrapper terkait
-                        const cardWrapper = button.closest(".card-wrapper");
-                        if (cardWrapper) {
-                            cardWrapper.remove();
-                        }
-                    } else {
-                        // Menampilkan pemberitahuan error menggunakan Notyf
-                        notyf.error(data.message ||
-                            "Terjadi kesalahan, silakan coba lagi.");
-                    }
-                } catch (error) {
-                    console.error("Error:", error);
-                    // Menampilkan pemberitahuan error jika terjadi kesalahan jaringan
-                    notyf.error(
-                        "Gagal memproses favorit. Periksa koneksi Anda dan coba lagi.");
-                }
-            });
-        });
-    });
-</script>
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const clearAllButton = document.getElementById("clearAll");
-
-        clearAllButton.addEventListener("click", async (ev) => {
-            ev.preventDefault(); // Mencegah aksi default tombol
-            ev.stopPropagation(); // Mencegah bubbling
-
-            Swal.fire({
-                title: "Are you sure?",
-                text: "This action will clear all favorite menus and cannot be undone!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, clear all!",
-                cancelButtonText: "No, cancel!",
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                    const csrfToken = document
-                        .querySelector('meta[name="csrf-token"]')
+            favoriteButtons.forEach((button) => {
+                button.addEventListener("click", async () => {
+                    const menuID = button.getAttribute("data-menu-id");
+                    const csrfToken = document.querySelector('meta[name="csrf-token"]')
                         .getAttribute("content");
 
                     try {
-                        const response = await fetch(`/favorite-menu/clear-all`, {
+                        // Kirim permintaan ke endpoint dengan metode DELETE
+                        const response = await fetch(`/favorite-menu/remove/${menuID}`, {
                             method: "DELETE",
                             headers: {
                                 "Content-Type": "application/json",
@@ -636,27 +569,83 @@
                         });
 
                         const data = await response.json();
-
                         if (response.ok) {
                             // Menampilkan pemberitahuan sukses menggunakan Notyf
-                            notyf.success(data.message || "All favorites cleared");
+                            notyf.success(data.message || "Perubahan favorit berhasil!");
 
-                            // Menghapus semua elemen card-wrapper dari DOM
-                            const cardWrappers = document.querySelectorAll(
-                                ".card-wrapper");
-                            cardWrappers.forEach((card) => card.remove());
+                            // Hapus elemen card-wrapper terkait
+                            const cardWrapper = button.closest(".card-wrapper");
+                            if (cardWrapper) {
+                                cardWrapper.remove();
+                            }
                         } else {
                             // Menampilkan pemberitahuan error menggunakan Notyf
-                            notyf.error(data.message || "Failed to clear favorites!");
+                            notyf.error(data.message ||
+                                "Terjadi kesalahan, silakan coba lagi.");
                         }
                     } catch (error) {
                         console.error("Error:", error);
-                        notyf.error("Failed to clear favorites. Please try again.");
+                        // Menampilkan pemberitahuan error jika terjadi kesalahan jaringan
+                        notyf.error(
+                            "Gagal memproses favorit. Periksa koneksi Anda dan coba lagi.");
                     }
-                }
+                });
             });
         });
-    });
-</script>
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const clearAllButton = document.getElementById("clearAll");
 
-</html>
+            clearAllButton.addEventListener("click", async (ev) => {
+                ev.preventDefault(); // Mencegah aksi default tombol
+                ev.stopPropagation(); // Mencegah bubbling
+
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "This action will clear all favorite menus and cannot be undone!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, clear all!",
+                    cancelButtonText: "No, cancel!",
+                }).then(async (result) => {
+                    if (result.isConfirmed) {
+                        const csrfToken = document
+                            .querySelector('meta[name="csrf-token"]')
+                            .getAttribute("content");
+
+                        try {
+                            const response = await fetch(`/favorite-menu/clear-all`, {
+                                method: "DELETE",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    "X-CSRF-TOKEN": csrfToken,
+                                },
+                            });
+
+                            const data = await response.json();
+
+                            if (response.ok) {
+                                // Menampilkan pemberitahuan sukses menggunakan Notyf
+                                notyf.success(data.message || "All favorites cleared");
+
+                                // Menghapus semua elemen card-wrapper dari DOM
+                                const cardWrappers = document.querySelectorAll(
+                                    ".card-wrapper");
+                                cardWrappers.forEach((card) => card.remove());
+                            } else {
+                                // Menampilkan pemberitahuan error menggunakan Notyf
+                                notyf.error(data.message || "Failed to clear favorites!");
+                            }
+                        } catch (error) {
+                            console.error("Error:", error);
+                            notyf.error("Failed to clear favorites. Please try again.");
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+@endsection

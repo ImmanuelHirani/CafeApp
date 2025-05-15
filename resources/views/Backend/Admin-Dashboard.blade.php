@@ -18,10 +18,10 @@
 </head>
 
 <body id="Admin">
-    @include('layout.header')
+    @include('layout.Header')
     @include('layout.Dashboard')
     <main class="grid grid-cols-12 gap-4 py-4">
-        <section class="flex flex-col col-span-9 p-6 rounded-lg gap-9 bg-primary-color-admin">
+        <div class="flex flex-col col-span-9 p-6 rounded-lg gap-9 bg-primary-color-admin">
             <div class="overflow-x-auto">
                 <table id="orderTable" class="w-auto text-center border shadow-sm table-auto stripe">
                     <thead class="">
@@ -68,7 +68,7 @@
                     </tbody>
                 </table>
             </div>
-        </section>
+        </div>
         <aside class="flex flex-col h-full col-span-3 gap-3 pt-6 overflow-hidden rounded-lg bg-primary-color-admin">
             <div class="px-6 head-aside">
                 <p class="text-2xl font-medium">Top Product</p>
@@ -94,12 +94,7 @@
         </aside>
     </main>
 </body>
-<script src="{{ asset('/js/table.js') }}"></script>
-<script src="{{ asset('/js/selectedStatus.js') }}"></script>
-{{-- <script src="{{ asset('/js/tabs-sideMenu.js') }}"></script>
-<script src="{{ asset('/js/imgPicker.js') }}"></script>
-<script src="{{ asset('/js/tabs-menu.js') }}"></script>
-<script src="{{ asset('/js/modal.js') }}"></script>
-<script src="{{ asset('/js/pagginationPage.js') }}"></script> --}}
+<script src="{{ asset('js/table.js') }}"></script>
+<script src="{{ asset('js/selectedStatus.js') }}"></script>
 
 </html>

@@ -3,7 +3,7 @@
     <div
         class="flex flex-col items-center justify-center w-full h-full gap-3 p-4 border-2 rounded-lg md:p-2 md:gap-6 md:flex-row border-highlight-content bg-secondary-accent-color card-content">
         <div class="w-full h-full wrap">
-            <img src="{{ asset('/asset/CustomOrder.png') }}" class="object-cover w-full md:h-full h-[10rem] rounded-lg "
+            <img src="{{ asset('asset/CustomOrder.png') }}" class="object-cover w-full md:h-full h-[10rem] rounded-lg "
                 alt="" />
         </div>
         <div class="flex flex-col w-full gap-3 wrap">

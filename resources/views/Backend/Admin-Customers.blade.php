@@ -15,9 +15,9 @@
 </head>
 
 <body id="Admin">
-    @include('layout.header')
+    @include('layout.Header')
     <main class="grid grid-cols-7 gap-4 py-4">
-        <section class="flex flex-col h-full col-span-5 p-6 rounded-lg gap-9 bg-primary-color-admin">
+        <div class="flex flex-col h-full col-span-5 p-6 rounded-lg gap-9 bg-primary-color-admin">
             <div class="overflow-x-auto">
                 <table id="tableCustomers" class="border shadow-sm min-w-fullborder stripe">
                     <thead class="">
@@ -93,7 +93,7 @@
                     </tbody>
                 </table>
             </div>
-        </section>
+        </div>
         <aside class="flex flex-col h-full col-span-2 gap-8 pt-6 overflow-hidden rounded-lg bg-primary-color-admin">
             <div class="px-6 head-aside">
                 <p class="text-xl font-medium">Customers Details</p>
@@ -129,7 +129,7 @@
                             class="w-full p-3 rounded-lg outline-none bg-secondary-color-admin" placeholder="Max 20 Char" />
                     </label>
                     {{-- <button type="submit" id="SendRequestEmail"
-                                class="p-2 !text-gray-500 rounded-full outline outline-1 outline-gray-300 bg-secondary-color-admin">
+                                class="p-2 !text-gray-500 rounded-full outline outline-gray-300 bg-secondary-color-admin">
                                 Send Request Reset Password
                             </button> --}}
                 @else
@@ -184,10 +184,10 @@
         </aside>
     </main>
 </body>
-<script src="{{ asset('/js/table.js') }}"></script>
-<script src="{{ asset('/js/selectedStatus.js') }}"></script>
-<script src="{{ asset('/js/tabs-menu.js') }}"></script>
-<script src="{{ asset('/js/pagginationPage.js') }}"></script>
-<script src="{{ asset('/js/tabs-sideMenu.js') }}"></script>
+<script src="{{ asset('js/table.js') }}"></script>
+<script src="{{ asset('js/selectedStatus.js') }}"></script>
+<script src="{{ asset('js/tabs-menu.js') }}"></script>
+<script src="{{ asset('js/pagginationPage.js') }}"></script>
+<script src="{{ asset('js/tabs-sideMenu.js') }}"></script>
 
 </html>

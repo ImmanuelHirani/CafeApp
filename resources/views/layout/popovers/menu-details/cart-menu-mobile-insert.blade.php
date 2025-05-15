@@ -10,7 +10,7 @@
     </svg>
 </button>
 <div id="addtoCartMobile"
-    class="fixed inset-0 z-50 invisible flex flex-col justify-end w-full transition-all duration-[400ms] bg-opacity-60 ease-in-out translate-y-full shadow-inner opacity-0 md:hidden h-full shadow-secondary-accent-color bg-secondary-accent-color">
+    class="fixed inset-0 z-50 invisible flex flex-col justify-end w-full transition-all duration-[400ms] ease-in-out translate-y-full shadow-inner opacity-0 md:hidden h-full shadow-secondary-accent-color bg-secondary-accent-color/60">
     <form method="POST" action="{{ route('cart.add') }}"
         class="relative flex flex-col w-full gap-3 p-4 rounded-lg h-fit font-aesthetnova bg-secondary-accent-color">
         @csrf

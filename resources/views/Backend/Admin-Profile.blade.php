@@ -18,10 +18,10 @@
 </head>
 
 <body id="Admin">
-    @include('layout.header')
+    @include('layout.Header')
 
     <main class="grid grid-cols-12 gap-4 py-4">
-        <section class="flex flex-col col-span-12 p-6 rounded-lg gap-9 bg-primary-color-admin">
+        <div class="flex flex-col col-span-12 p-6 rounded-lg gap-9 bg-primary-color-admin">
             <div class="flex flex-col gap-3 overflow-x-auto">
                 <p class="text-2xl">Personal Information</p>
                 <hr>
@@ -64,7 +64,7 @@
                                 alt="Image Preview">
                             <input name="image" id="file" type="file" class="hidden file-img-product">
                             <label for="file"
-                                class="px-8 py-2 rounded-lg cursor-pointer h-fit w-fit outline-1 outline outline-gray-300">Choose
+                                class="px-8 py-2 rounded-lg cursor-pointer h-fit w-fit outline outline-gray-300">Choose
                                 Image</label>
                             <p class="hidden !text-red-500 error-message">File harus berupa gambar dengan format .JPEG,
                                 .PNG, atau .JPG
@@ -75,12 +75,12 @@
 
                 <hr>
             </div>
-        </section>
+        </div>
     </main>
 </body>
-<script src="{{ asset('/js/table.js') }}"></script>
-<script src="{{ asset('/js/selectedStatus.js') }}"></script>
-<script src="{{ asset('/js/imgPicker.js') }}"></script>
+<script src="{{ asset('js/table.js') }}"></script>
+<script src="{{ asset('js/selectedStatus.js') }}"></script>
+<script src="{{ asset('js/imgPicker.js') }}"></script>
 {{-- <script src="{{ asset('/js/tabs-sideMenu.js') }}"></script>
 <script src="{{ asset('/js/imgPicker.js') }}"></script>
 <script src="{{ asset('/js/tabs-menu.js') }}"></script>

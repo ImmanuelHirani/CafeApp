@@ -2,7 +2,7 @@
     class="fixed inset-0 z-50 flex items-center  justify-end transition-all duration-[400ms] ease-linear translate-x-full font-aesthetnova">
     <div class="flex w-full h-full max-w-3xl">
         <!-- Others Also Bought Section -->
-        <div class="md:w-[38%] md:block hidden bg-secondary-accent-color/70">
+        <div class="md:w-[38%] md:block hidden bg-secondary-accent-color/80">
             <h6 class="mt-8 mb-4 font-semibold text-center">
                 OTHERS ALSO BOUGHT
             </h6>
@@ -54,7 +54,7 @@
             </div>
         </div>
         <!-- My Cart Section -->
-        <div class="relative md:w-[62%] w-full flex flex-col gap-3 p-6 bg-secondary-accent-color/90 shadow-lg">
+        <div class="relative md:w-[62%] w-full flex flex-col gap-3 p-6 bg-secondary-accent-color shadow-lg">
             <div class="flex items-center justify-between wrap">
                 <p class="text-2xl md:my-3">MY CART</p>
                 <button id="closeCart" class="">

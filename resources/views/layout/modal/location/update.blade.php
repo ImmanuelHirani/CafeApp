@@ -17,30 +17,30 @@
                     <p class="w-full text-lg text-start md:text-xl">Locations Place</p>
                     <div class="flex flex-wrap gap-3 wrap">
                         <input required type="text" id="locationInputUpdate" name="location_label"
-                            class="w-full h-10 col-span-4 px-4 rounded-lg outline-none md:col-span-2 md:h-14"
+                            class="w-full h-10 col-span-4 px-4 rounded-lg outline-none border-[1px] border-white/30 text-white md:col-span-2 md:h-14"
                             placeholder="Required" value="{{ $location->location_label ?? '' }}" />
                         <button type="button" onclick="setLocationUpdate('House')"
-                            class="px-6 py-1.5 border border-white rounded-lg md:py-3 w-fit md:px-16">
+                            class="px-6 py-1.5 border-[1px] border-white/30 text-white rounded-lg md:py-3 w-fit md:px-16">
                             House
                         </button>
                         <button type="button" onclick="setLocationUpdate('Apartment')"
-                            class="px-6 py-1.5 border border-white rounded-lg md:py-3 w-fit md:px-16">
+                            class="px-6 py-1.5 border-[1px] border-white/30 text-white rounded-lg md:py-3 w-fit md:px-16">
                             Apartment
                         </button>
                         <button type="button" onclick="setLocationUpdate('Campus')"
-                            class="px-6 py-1.5 border border-white rounded-lg md:py-3 w-fit md:px-16">
+                            class="px-6 py-1.5 border-[1px] border-white/30 text-white rounded-lg md:py-3 w-fit md:px-16">
                             Campus
                         </button>
                         <button type="button" onclick="setLocationUpdate('Hotel')"
-                            class="px-6 py-1.5 border border-white rounded-lg md:py-3 w-fit md:px-16">
+                            class="px-6 py-1.5 border-[1px] border-white/30 text-white rounded-lg md:py-3 w-fit md:px-16">
                             Hotel
                         </button>
                         <button type="button" onclick="setLocationUpdate('Office')"
-                            class="px-6 py-1.5 border border-white rounded-lg md:py-3 w-fit md:px-16">
+                            class="px-6 py-1.5 border-[1px] border-white/30 text-white rounded-lg md:py-3 w-fit md:px-16">
                             Office
                         </button>
                         <button type="button" onclick="setLocationUpdate('Other')"
-                            class="px-6 py-1.5 border border-white rounded-lg md:py-3 w-fit md:px-16">
+                            class="px-6 py-1.5 border-[1px] border-white/30 text-white rounded-lg md:py-3 w-fit md:px-16">
                             Other
                         </button>
                     </div>
@@ -49,20 +49,21 @@
                 <div class="flex flex-col w-full gap-3 contet-wrap">
                     <p class="w-full text-lg text-start md:text-xl">Location Details</p>
                     <textarea required name="reciver_address" id="reciver_address"
-                        class="w-full col-span-4 px-4 py-2 rounded-lg outline-none" rows="3" placeholder="Required">{{ $location->reciver_address ?? '' }}</textarea>
+                        class="w-full col-span-4 px-4 py-2 rounded-lg outline-none border-[1px] border-white/30 text-white" rows="3"
+                        placeholder="Required">{{ $location->reciver_address ?? '' }}</textarea>
                 </div>
                 <!-- Receiver Name -->
                 <div class="flex flex-col w-full gap-3 contet-wrap">
                     <p class="w-full text-lg text-start md:text-xl">Receiver Name</p>
                     <input required type="text" name="reciver_name" id="reciver_name"
-                        class="w-full h-10 col-span-4 px-4 rounded-lg outline-none md:col-span-2 md:h-14"
+                        class="w-full h-10 col-span-4 px-4 rounded-lg outline-none border-[1px] border-white/30 text-white md:col-span-2 md:h-14"
                         placeholder="Required" value="{{ $location->reciver_name ?? '' }}" />
                 </div>
                 <!-- Phone Number -->
                 <div class="flex flex-col w-full gap-3 contet-wrap">
                     <p class="w-full text-lg text-start md:text-xl">Phone Number</p>
                     <input required type="text" name="reciver_number" id="reciver_number"
-                        class="w-full h-10 col-span-4 px-4 rounded-lg outline-none md:col-span-2 md:h-14"
+                        class="w-full h-10 col-span-4 px-4 rounded-lg outline-none border-[1px] border-white/30 text-white md:col-span-2 md:h-14"
                         placeholder="Required" value="{{ $location->reciver_number ?? '' }}" />
                 </div>
             </div>

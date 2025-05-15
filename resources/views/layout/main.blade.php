@@ -13,12 +13,10 @@
     @include('layout.Navbar')
     <main>
         @yield('content')
-        @include('layout.popovers.aside.sidebar-frontend')
         @include('layout.modal.login-registerBox.Auth-Customer')
     </main>
     @include('layout.Footer')
 </body>
 @yield('script')
-
 
 </html>

@@ -12,14 +12,14 @@
                 class="w-[13rem] bg-secondary-accent-color-admin  z-50 hidden absolute left-0 top-14 rounded-lg p-2 h-fit outline-1 outline-black">
                 <div class="flex flex-col gap-1 uppercase wrap">
                     <a href="/admin/profile"
-                        class="flex items-center gap-3 p-2 text-sm font-medium text-black transition-all duration-300 ease-in-out rounded-lg hover:bg-gray-300 "><i
+                        class="flex items-center gap-3 p-2 text-sm font-medium !text-black transition-all duration-300 ease-in-out rounded-lg hover:bg-gray-300 "><i
                             class="text-lg ti ti-edit"></i> Profile</a>
                     <form action="{{ route('logout.admin') }}" method="POST" class=""
-                        class="flex items-center gap-3 p-2 font-medium text-black transition-all duration-300 ease-in-out rounded-lg hover:bg-gray-300 ">
+                        class="flex items-center gap-3 p-2 font-medium !text-black transition-all duration-300 ease-in-out rounded-lg hover:bg-gray-300 ">
                         @csrf
 
                         <button type="submit"
-                            class="flex items-center w-full gap-3 p-2 text-sm font-medium text-black uppercase transition-all duration-300 ease-in-out rounded-lg cursor-pointer hover:bg-gray-300 ">
+                            class="flex items-center w-full gap-3 p-2 text-sm font-medium !text-black uppercase transition-all duration-300 ease-in-out rounded-lg cursor-pointer hover:bg-gray-300 ">
                             <i class="text-lg ti ti-logout-2"></i>
                             Log Out
                         </button>
@@ -29,43 +29,43 @@
         </div>
         <!-- middle Content -->
         <div class="middle-quick-link">
-            <ul class="flex items-center gap-10">
+            <ul class="flex items-center gap-3">
                 <li class="relative group">
                     <a href="/dashboard"
-                        class="!text-accent-color-admin  flex items-center gap-3 nav-toggle py-2 rounded-full outline-1 outline-gray-300">
+                        class="!text-accent-color-admin  flex items-center gap-3 nav-toggle py-2 px-5 rounded-full outline-1 outline-gray-300">
                         <i class="text-2xl ti ti-layout-dashboard"></i>Dashboard</a>
                 </li>
                 <li class="relative group">
                     <a href="/admin/product"
-                        class=" py-2 rounded-full flex items-center gap-3 !text-accent-color-admin nav-toggle outline-1 outline-gray-300">
+                        class=" py-2 rounded-full flex items-center gap-3 px-5 !text-accent-color-admin nav-toggle outline-1 outline-gray-300">
                         <i class="text-2xl ti ti-tools-kitchen-2"></i>
                         Menu</a>
                 </li>
                 <li class="relative group">
                     <a href="/admin/menu/custom/order"
-                        class=" py-2 rounded-full flex items-center gap-3 !text-accent-color-admin nav-toggle outline-1 outline-gray-300">
+                        class=" py-2 rounded-full flex items-center gap-3 px-5 !text-accent-color-admin nav-toggle outline-1 outline-gray-300">
                         <i class="text-2xl rotate-180 ti ti-pizza"></i>
                         Custom Pizza</a>
                 </li>
                 <li class="relative group">
                     <a href="/Customer"
-                        class="!text-accent-color-admin flex items-center gap-3 nav-toggle py-2 rounded-full outline-1 outline-gray-300"><i
+                        class="!text-accent-color-admin flex items-center gap-3 nav-toggle py-2 px-5 rounded-full outline-1 outline-gray-300"><i
                             class="text-2xl ti ti-users"></i>Customers</a>
                 </li>
                 <li class="relative group">
                     <a href="/Admin/User"
-                        class="!text-accent-color-admin flex items-center gap-3 nav-toggle py-2 rounded-full outline-1 outline-gray-300">
+                        class="!text-accent-color-admin flex items-center gap-3 nav-toggle py-2 px-5 rounded-full outline-1 outline-gray-300">
                         <i class="text-2xl ti ti-user-shield"></i>
                         Admin</a>
                 </li>
                 <li class="relative group">
                     <a href="/contactUS/CS/Admin"
-                        class="!text-accent-color-admin flex items-center gap-3 nav-toggle py-2 rounded-full outline-1 outline-gray-300">
+                        class="!text-accent-color-admin flex items-center gap-3 nav-toggle py-2 px-5 rounded-full outline-1 outline-gray-300">
                         <i class="text-2xl ti ti-headset"></i>Customer Service</a>
                 </li>
                 <li class="relative group">
                     <a href="/admin/menu/order"
-                        class="!text-accent-color-admin flex items-center gap-3 nav-toggle  py-2 rounded-full outline-1 outline-gray-300"><i
+                        class="!text-accent-color-admin flex items-center gap-3 nav-toggle py-2 px-5 rounded-full outline-1 outline-gray-300"><i
                             class="text-2xl ti ti-checkup-list"></i>Transaction</a>
                 </li>
             </ul>

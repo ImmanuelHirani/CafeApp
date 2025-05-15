@@ -15,9 +15,9 @@
 </head>
 
 <body id="Admin">
-    @include('layout.header')
+    @include('layout.Header')
     <main class="grid grid-cols-7 gap-4 py-4">
-        <section class="flex flex-col h-full col-span-5 p-6 rounded-lg gap-9 bg-primary-color-admin">
+        <div class="flex flex-col h-full col-span-5 p-6 rounded-lg gap-9 bg-primary-color-admin">
             <div class="overflow-x-auto">
                 <table id="table_transaction" class="min-w-full font-medium border shadow-sm stripe">
                     <thead class="">
@@ -107,7 +107,7 @@
                     </tbody>
                 </table>
             </div>
-        </section>
+        </div>
         <aside class="flex flex-col col-span-2 gap-8 pt-6 overflow-hidden rounded-lg h-fit bg-primary-color-admin">
             <div class="px-6 head-aside">
                 <p class="text-xl font-medium">Transaction Details</p>
@@ -176,12 +176,12 @@
                                     <!-- Check if order_type is custom_menu -->
                                     @if ($detail->order_type == 'custom_menu')
                                         <!-- Custom Order -->
-                                        <img src="{{ asset('/asset/CustomOrder.png') }}"
-                                            class="object-cover w-full outline outline-1 outline-secondary-accent-color rounded-3xl img-preview h-72"
+                                        <img src="{{ asset('asset/CustomOrder.png') }}"
+                                            class="object-cover w-full outline outline-secondary-accent-color rounded-3xl img-preview h-72"
                                             alt="Custom Order" />
                                         <div class="flex flex-wrap items-center gap-2 list-wrap">
                                             <label
-                                                class="w-full px-4 py-2 text-base text-center rounded-full bg-secondary-accent-color-admin outline outline-1 outline-gray-300">
+                                                class="w-full px-4 py-2 text-base text-center rounded-full bg-secondary-accent-color-admin outline outline-gray-300">
                                                 Custom Order
                                             </label>
                                         </div>
@@ -193,7 +193,7 @@
                                         <div class="flex flex-wrap items-center w-full gap-2 wrap">
                                             @foreach ($toppings as $topping)
                                                 <label
-                                                    class="px-4 py-2 text-base text-center rounded-full w-fit bg-secondary-accent-color-admin outline outline-1 outline-gray-300">
+                                                    class="px-4 py-2 text-base text-center rounded-full w-fit bg-secondary-accent-color-admin outline outline-gray-300">
                                                     {{ $topping }}
                                                 </label>
                                             @endforeach
@@ -201,12 +201,12 @@
                                     @else
                                         <!-- Regular Menu Order -->
                                         <img src="{{ isset($detail->menu) && $detail->menu->image ? asset('storage/' . $detail->menu->image) : 'https://salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled.png' }}"
-                                            class="object-cover w-full outline outline-1 outline-secondary-accent-color rounded-3xl img-preview h-72"
+                                            class="object-cover w-full outline outline-secondary-accent-color rounded-3xl img-preview h-72"
                                             alt="{{ $detail->menu->name ?? 'Unknown Menu' }}" />
 
                                         <div class="flex flex-wrap items-center gap-2 list-wrap">
                                             <label
-                                                class="w-full px-4 py-2 text-base text-center rounded-full bg-secondary-accent-color-admin outline outline-1 outline-gray-300">
+                                                class="w-full px-4 py-2 text-base text-center rounded-full bg-secondary-accent-color-admin outline outline-gray-300">
                                                 {{ $detail->menu_name ?? 'Unknown Menu' }}
                                             </label>
                                         </div>
@@ -240,8 +240,8 @@
         </aside>
     </main>
 </body>
-<script src="{{ asset('/js/table.js') }}"></script>
-<script src="{{ asset('/js/selectedStatus.js') }}"></script>
-<script src="{{ asset('/js/tabs-sideMenu.js') }}"></script>
+<script src="{{ asset('js/table.js') }}"></script>
+<script src="{{ asset('js/selectedStatus.js') }}"></script>
+<script src="{{ asset('js/tabs-sideMenu.js') }}"></script>
 
 </html>

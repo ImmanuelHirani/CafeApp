@@ -1,5 +1,5 @@
 <div id="locationBox"
-    class="fixed inset-0 z-50 flex items-center justify-center invisible bg-black opacity-30 bg-opacity-70 box-review-wrapper font-aesthetnova">
+    class="fixed inset-0 z-50 flex items-center justify-center invisible bg-black/80 opacity-30 box-review-wrapper font-aesthetnova">
     <!-- Review Box Container -->
     <div
         class="review-box relative w-[90%] 3xl:w-[45%] md:w-[55%] h-fit md:h-fit bg-secondary-accent-color p-3 md:p-8 rounded-lg flex flex-col gap-3 items-center">
@@ -15,30 +15,30 @@
                     <p class="w-full text-lg text-start md:text-xl">Locations Place</p>
                     <div class="flex flex-wrap gap-3 wrap">
                         <input required type="text" id="locationInput" name="location_label"
-                            class="w-full h-10 col-span-4 px-4 rounded-lg outline-none md:col-span-2 md:h-14"
+                            class="w-full h-10 col-span-4 py-2 text-white outline-none border-[1px] px-3 rounded-lg border-white/30 md:col-span-2 md:h-14"
                             placeholder="Required" />
                         <button type="button" onclick="setLocation('House')"
-                            class="px-6 py-1.5 border border-white rounded-lg md:py-3 w-fit md:px-16">
+                            class="px-6 py-1.5 border-[1px] border-white/30 text-white rounded-lg md:py-3 w-fit md:px-16">
                             House
                         </button>
                         <button type="button" onclick="setLocation('Apartment')"
-                            class="px-6 py-1.5 border border-white rounded-lg md:py-3 w-fit md:px-16">
+                            class="px-6 py-1.5 border-[1px] border-white/30 text-white rounded-lg md:py-3 w-fit md:px-16">
                             Apartment
                         </button>
                         <button type="button" onclick="setLocation('Campus')"
-                            class="px-6 py-1.5 border border-white rounded-lg md:py-3 w-fit md:px-16">
+                            class="px-6 py-1.5 border-[1px] border-white/30 text-white rounded-lg md:py-3 w-fit md:px-16">
                             Campus
                         </button>
                         <button type="button" onclick="setLocation('Hotel')"
-                            class="px-6 py-1.5 border border-white rounded-lg md:py-3 w-fit md:px-16">
+                            class="px-6 py-1.5 border-[1px] border-white/30 text-white rounded-lg md:py-3 w-fit md:px-16">
                             Hotel
                         </button>
                         <button type="button" onclick="setLocation('Office')"
-                            class="px-6 py-1.5 border border-white rounded-lg md:py-3 w-fit md:px-16">
+                            class="px-6 py-1.5 border-[1px] border-white/30 text-white rounded-lg md:py-3 w-fit md:px-16">
                             Office
                         </button>
                         <button type="button" onclick="setLocation('Other')"
-                            class="px-6 py-1.5 border border-white rounded-lg md:py-3 w-fit md:px-16">
+                            class="px-6 py-1.5 border-[1px] border-white/30 text-white rounded-lg md:py-3 w-fit md:px-16">
                             Other
                         </button>
                     </div>
@@ -46,21 +46,22 @@
                 <!-- Receiver Address -->
                 <div class="flex flex-col w-full gap-3 contet-wrap">
                     <p class="w-full text-lg text-start md:text-xl">Locations Details</p>
-                    <textarea required name="reciver_address" class="w-full col-span-4 px-4 py-2 rounded-lg outline-none" rows="3"
-                        placeholder="Required"></textarea>
+                    <textarea required name="reciver_address"
+                        class="w-full col-span-4 py-2 text-white outline-none border-[1px] px-3 rounded-lg border-white/30 md:col-span-2"
+                        rows="4" placeholder="Required"></textarea>
                 </div>
                 <!-- Receiver Name -->
                 <div class="flex flex-col w-full gap-3 contet-wrap">
                     <p class="w-full text-lg text-start md:text-xl">Reciver Name</p>
                     <input required type="text" name="reciver_name"
-                        class="w-full h-10 col-span-4 px-4 rounded-lg outline-none md:col-span-2 md:h-14"
+                        class="w-full h-10 col-span-4 py-2 text-white outline-none border-[1px] px-3 rounded-lg border-white/30 md:col-span-2 md:h-14"
                         placeholder="Required" />
                 </div>
                 <!-- Phone Number -->
                 <div class="flex flex-col w-full gap-3 contet-wrap">
                     <p class="w-full text-lg text-start md:text-xl">Phone Number</p>
                     <input required type="text" name="reciver_number"
-                        class="w-full h-10 col-span-4 px-4 rounded-lg outline-none md:col-span-2 md:h-14"
+                        class="w-full h-10 col-span-4 py-2 text-white outline-none border-[1px] px-3 rounded-lg border-white/30 md:col-span-2 md:h-14"
                         placeholder="Required" />
                 </div>
             </div>

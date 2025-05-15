@@ -10,15 +10,15 @@
 </head>
 
 <body id="Admin">
-    @include('layout.header')
+    @include('layout.Header')
     <main class="grid grid-cols-7 gap-4 py-4">
-        <section class="flex flex-col h-full col-span-5 p-6 rounded-lg gap-9 bg-primary-color-admin">
+        <div class="flex flex-col h-full col-span-5 p-6 rounded-lg gap-9 bg-primary-color-admin">
             <!-- Header Content -->
             <div class="flex items-center justify-between header">
                 <p class="text-2xl font-medium">Menus</p>
                 <div class="flex items-center gap-3 wrap">
                     <button id="btn-add-product"
-                        class="flex items-center group transition-all ease-in-out duration-300 hover:bg-secondary-accent-color hover:!text-white gap-3  justify-center py-3 h-10 px-4  w-full outline outline-2 outline-accent-color-admin rounded-full !text-accent-color-admin">
+                        class="flex items-center group transition-all ease-in-out duration-300 hover:bg-secondary-accent-color hover:!text-white gap-3  justify-center py-3 h-10 px-4  w-full outline outline-accent-color-admin rounded-full !text-accent-color-admin">
                         Add New Menu
                         <i class="ti ti-plus group-hover:!text-white !text-accent-color-admin text-xl"></i>
                     </button>
@@ -71,7 +71,7 @@
                             </p>
                         @else
                             @foreach ($menus as $menu)
-                                <div class="relative p-3 overflow-hidden rounded-lg cursor-pointer card h-fit outline outline-2 outline-accent-color-admin"
+                                <div class="relative p-3 overflow-hidden rounded-lg cursor-pointer card h-fit outline outline-accent-color-admin"
                                     onclick="window.location.href='/admin/product/detail/{{ $menu->menu_ID }}'">
                                     <div class="relative overflow-hidden rounded-lg head-img">
                       <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}"
@@ -134,7 +134,7 @@
                             </p>
                         @else
                             @foreach ($topProducts as $topProduct)
-                                <div class="relative p-3 overflow-hidden rounded-lg cursor-pointer card h-fit outline outline-2 outline-accent-color-admin"
+                                <div class="relative p-3 overflow-hidden rounded-lg cursor-pointer card h-fit outline outline-accent-color-admin"
                                     onclick="window.location.href='/admin/product/detail/{{ $topProduct->menu_ID }}'">
                                     <div class="relative overflow-hidden rounded-lg head-img">
                                         <img src="{{ asset('storage/' . $topProduct->image) }}"
@@ -200,7 +200,7 @@
                             </p>
                         @else
                             @foreach ($topRatings as $topRating)
-                                <div class="relative p-3 overflow-hidden rounded-lg cursor-pointer card h-fit outline outline-2 outline-accent-color-admin"
+                                <div class="relative p-3 overflow-hidden rounded-lg cursor-pointer card h-fit outline outline-accent-color-admin"
                                     onclick="window.location.href='/admin/product/detail/{{ $topRating->menu_ID }}'">
                                     <div class="relative overflow-hidden rounded-lg head-img">
                                         <img src="{{ asset('storage/' . $topRating->image) }}"
@@ -266,7 +266,7 @@
                         @else
                             @foreach ($menus as $menu)
                                 @if ($menu->menu_type == 'pizza')
-                                    <div class="relative p-3 overflow-hidden rounded-lg cursor-pointer card h-fit outline outline-2 outline-accent-color-admin"
+                                    <div class="relative p-3 overflow-hidden rounded-lg cursor-pointer card h-fit outline outline-accent-color-admin"
                                         onclick="window.location.href='/admin/product/detail/{{ $menu->menu_ID }}'">
                                         <div class="relative overflow-hidden rounded-lg head-img">
                                             <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}"
@@ -335,7 +335,7 @@
                         @else
                             @foreach ($menus as $menu)
                                 @if ($menu->menu_type == 'coffee')
-                                    <div class="relative p-3 overflow-hidden rounded-lg cursor-pointer card h-fit outline outline-2 outline-accent-color-admin"
+                                    <div class="relative p-3 overflow-hidden rounded-lg cursor-pointer card h-fit outline outline-accent-color-admin"
                                         onclick="window.location.href='/admin/product/detail/{{ $menu->menu_ID }}'">
                                         <div class="relative overflow-hidden rounded-lg head-img">
                                             <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}"
@@ -404,7 +404,7 @@
                         @else
                             @foreach ($menus as $menu)
                                 @if ($menu->menu_type == 'bobba')
-                                    <div class="relative p-3 overflow-hidden rounded-lg cursor-pointer card h-fit outline outline-2 outline-accent-color-admin"
+                                    <div class="relative p-3 overflow-hidden rounded-lg cursor-pointer card h-fit outline outline-accent-color-admin"
                                         onclick="window.location.href='/admin/product/detail/{{ $menu->menu_ID }}'">
                                         <div class="relative overflow-hidden rounded-lg head-img">
                                             <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}"
@@ -474,18 +474,18 @@
                 <!-- Pagination end -->
             </div>
             <!-- Main Content Card end -->
-        </section>
+        </div>
         @include('layout.Aside')
         @include('layout.modal.menu.insert-menu')
     </main>
 </body>
-<script src="{{ asset('/js/table.js') }}"></script>
-<script src="{{ asset('/js/selectedStatus.js') }}"></script>
-<script src="{{ asset('/js/imgPicker.js') }}"></script>
-<script src="{{ asset('/js/tabs-menu.js') }}"></script>
-<script src="{{ asset('/js/modal.js') }}"></script>
-<script src="{{ asset('/js/pagginationPage.js') }}"></script>
-<script src="{{ asset('/js/tabs-sideMenu.js') }}"></script>
+<script src="{{ asset('js/table.js') }}"></script>
+<script src="{{ asset('js/selectedStatus.js') }}"></script>
+<script src="{{ asset('js/imgPicker.js') }}"></script>
+<script src="{{ asset('js/tabs-menu.js') }}"></script>
+<script src="{{ asset('js/modal.js') }}"></script>
+<script src="{{ asset('js/pagginationPage.js') }}"></script>
+<script src="{{ asset('js/tabs-sideMenu.js') }}"></script>
 <script>
     function confirmation(ev) {
         ev.preventDefault(); // Mencegah pengiriman form default

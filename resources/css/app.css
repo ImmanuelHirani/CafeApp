@@ -11,13 +11,13 @@
 
     --color-highlight-content: #f8c055;
     --color-accent-color: #faf7f5;
-    --color-accent-admin-color: #727272;
+    --color-accent-color-admin: #727272;
     --color-primary-color: #090e1a;
     --color-secondary-accent-color: #141925;
     --color-secondary-color: #f24949;
     --color-secondary-accent-color-admin: #f5f7fa;
     --color-secondary-color-admin: #f1f5f9;
-    --color-primary-admin-color: #ffffff;
+    --color-primary-color-admin: #ffffff;
 
     --animate-spin-slow: spin 20s linear infinite;
 
@@ -130,6 +130,10 @@
 
     footer {
         @apply mt-auto;
+    }
+
+    hr {
+        @apply border-[1px] border-white/30;
     }
 }
 
@@ -374,7 +378,7 @@ section {
 }
 
 .sideMenu-tabs-content {
-    @apply transition-all duration-500 ease-in-out opacity-0;
+    @apply transition-all duration-500 ease-in-out;
 }
 .sideMenu-tabs-content:not(:has(.hidden)) {
     @apply opacity-100;
@@ -517,7 +521,7 @@ section {
 /* Navlink tabs  */
 
 .tab-active-product {
-    @apply rounded-full bg-secondary-accent-color-admin outline outline-1 outline-gray-300;
+    @apply rounded-full bg-secondary-accent-color-admin outline outline-gray-300;
 }
 
 /* Navlink tabs end */

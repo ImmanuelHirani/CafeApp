@@ -1,159 +1,149 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+@extends('layout.main')
+@section('meta')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
-    @vite('resources/css/app.css')
-</head>
-
-<body>
-    @include('layout.Navbar')
-    <main>
-        <section class="mt-10 md:mt-20 cart font-aesthetnova">
-            <div class="container">
-                <div class="flex flex-col grid-cols-12 gap-4 md:grid">
+@endsection
+@section('content')
+    <section class="mt-10 md:mt-20 cart font-aesthetnova">
+        <div class="container">
+            <div class="flex flex-col grid-cols-12 gap-4 md:grid">
+                <div
+                    class="md:sticky top-[20px] flex flex-col col-span-6 row-auto gap-4 text-base transition-all duration-300 ease-in-out h-fit box-cart lg:text-xl">
                     <div
-                        class="md:sticky top-[20px] flex flex-col col-span-6 row-auto gap-4 text-base transition-all duration-300 ease-in-out h-fit box-cart lg:text-xl">
-                        <div
-                            class="flex flex-col p-4 rounded-lg md:p-8 gap-y-6 content-body bg-secondary-accent-color outline outline-highlight-content">
-                            <div id="order_notice" class="flex flex-col gap-3">
-                                <span class="flex items-center justify-between">
-                                    <p>Order Detail</p>
-                                    @php
-                                        // Menentukan kelas warna berdasarkan status_order
-                                        $statusClass = '';
-                                        switch ($orderTransactions->first()->order->status_order) {
-                                            case 'paid':
-                                                $statusClass = 'bg-purple-500 text-white'; // Warna hijau untuk 'paid'
-                                                break;
-                                            case 'serve':
-                                                $statusClass = 'bg-teal-500 text-white'; // Warna biru untuk 'serve'
-                                                break;
-                                            case 'shipped':
-                                                $statusClass = 'bg-indigo-500 text-white'; // Warna kuning untuk 'shipped'
-                                                break;
-                                            case 'completed':
-                                                $statusClass = 'bg-green-500 text-white'; // Warna ungu untuk 'completed'
-                                                break;
-                                            case 'canceled':
-                                                $statusClass = 'bg-secondary-color text-white'; // Warna ungu untuk 'completed'
-                                                break;
-                                            default:
-                                                $statusClass = 'bg-gray-500 text-white'; // Warna abu-abu untuk status lainnya
-                                                break;
-                                        }
-                                    @endphp
-                                    <p
-                                        class="py-1.5 w-[8rem] text-center font-medium rounded-full lg:text-lg text-sm {{ $statusClass }}">
-                                        {{ $orderTransactions->first()->order->status_order }}
-                                    </p>
-                                </span>
-                                <span class="flex items-center justify-between">
-                                    <p>Invoice No.</p>
-                                    <p>INVCT/{{ $orderTransactions->first()->order->created_at->format('Y/m/d') }}/{{ $orderTransactions->first()->order->transaction_ID }}
-                                    </p>
-                                </span>
-                                <span class="flex items-center justify-between">
-                                    <p>Order Date</p>
-                                    <p>{{ $orderTransactions->first()->order->created_at->format('d M Y, H:i') }}</p>
-                                </span>
-                            </div>
-                            <hr />
-                            <div id="location" class="flex flex-col">
-                                <p class="text-highlight-content">Delivery Information</p>
-                                <p>
-                                    {{ $orderTransactions->first()->order->location->first()->reciver_name ?? 'No Delivery Information Order Was Canceled' }}
-                                    | (
-                                    {{ $orderTransactions->first()->order->location->first()->reciver_number ?? '-' }})
+                        class="flex flex-col p-4 rounded-lg md:p-8 gap-y-6 content-body bg-secondary-accent-color outline outline-highlight-content">
+                        <div id="order_notice" class="flex flex-col gap-3">
+                            <span class="flex items-center justify-between">
+                                <p>Order Detail</p>
+                                @php
+                                    // Menentukan kelas warna berdasarkan status_order
+                                    $statusClass = '';
+                                    switch ($orderTransactions->first()->order->status_order) {
+                                        case 'paid':
+                                            $statusClass = 'bg-purple-500 text-white'; // Warna hijau untuk 'paid'
+                                            break;
+                                        case 'serve':
+                                            $statusClass = 'bg-teal-500 text-white'; // Warna biru untuk 'serve'
+                                            break;
+                                        case 'shipped':
+                                            $statusClass = 'bg-indigo-500 text-white'; // Warna kuning untuk 'shipped'
+                                            break;
+                                        case 'completed':
+                                            $statusClass = 'bg-green-500 text-white'; // Warna ungu untuk 'completed'
+                                            break;
+                                        case 'canceled':
+                                            $statusClass = 'bg-secondary-color text-white'; // Warna ungu untuk 'completed'
+                                            break;
+                                        default:
+                                            $statusClass = 'bg-gray-500 text-white'; // Warna abu-abu untuk status lainnya
+                                            break;
+                                    }
+                                @endphp
+                                <p
+                                    class="py-1.5 w-[8rem] text-center font-medium rounded-full lg:text-lg text-sm {{ $statusClass }}">
+                                    {{ $orderTransactions->first()->order->status_order }}
                                 </p>
-                                <p class="text-highlight-content">
-                                    ({{ $orderTransactions->first()->order->location->first()->location_label ?? '-' }})
+                            </span>
+                            <span class="flex items-center justify-between">
+                                <p>Invoice No.</p>
+                                <p>INVCT/{{ $orderTransactions->first()->order->created_at->format('Y/m/d') }}/{{ $orderTransactions->first()->order->transaction_ID }}
                                 </p>
-                                <p> {{ $orderTransactions->first()->order->location->first()->reciver_address ?? '-' }}
+                            </span>
+                            <span class="flex items-center justify-between">
+                                <p>Order Date</p>
+                                <p>{{ $orderTransactions->first()->order->created_at->format('d M Y, H:i') }}</p>
+                            </span>
+                        </div>
+                        <hr />
+                        <div id="location" class="flex flex-col">
+                            <p class="text-highlight-content">Delivery Information</p>
+                            <p>
+                                {{ $orderTransactions->first()->order->location->first()->reciver_name ?? 'No Delivery Information Order Was Canceled' }}
+                                | (
+                                {{ $orderTransactions->first()->order->location->first()->reciver_number ?? '-' }})
+                            </p>
+                            <p class="text-highlight-content">
+                                ({{ $orderTransactions->first()->order->location->first()->location_label ?? '-' }})
+                            </p>
+                            <p> {{ $orderTransactions->first()->order->location->first()->reciver_address ?? '-' }}
+                            </p>
+                        </div>
+                        <hr />
+                        <div class="space-y-4 Payment_informations">
+                            <p class="text-highlight-content">Payment Information</p>
+                            <span class="flex items-center justify-between">
+                                <p>Payment Method</p>
+                                <p>Mid Trans</p>
+                            </span>
+                            <span class="flex items-center justify-between">
+                                <p>Total ({{ $orderTransactions->count() }} Items)</p>
+                                <p>Rp{{ number_format($orderTransactions->first()->order->total_amounts, 0, ',', '.') }}
                                 </p>
-                            </div>
-                            <hr />
-                            <div class="space-y-4 Payment_informations">
-                                <p class="text-highlight-content">Payment Information</p>
-                                <span class="flex items-center justify-between">
-                                    <p>Payment Method</p>
-                                    <p>Mid Trans</p>
-                                </span>
-                                <span class="flex items-center justify-between">
-                                    <p>Total ({{ $orderTransactions->count() }} Items)</p>
-                                    <p>Rp{{ number_format($orderTransactions->first()->order->total_amounts, 0, ',', '.') }}
-                                    </p>
-                                </span>
-                                {{-- <span class="flex items-center justify-between">
+                            </span>
+                            {{-- <span class="flex items-center justify-between">
                                     <p>Delivery Fee</p>
                                     <p>Rp20.000</p>
                                 </span> --}}
-                            </div>
-                            <hr class="border-[1px] border-gray-500" />
-                            <div class="flex justify-between gap-3 wrap">
-                                <p class="text-highlight-content">Total</p>
-                                <p>Rp{{ number_format($orderTransactions->first()->order->total_amounts, 0, ',', '.') }}
-                                </p>
-                            </div>
+                        </div>
+                        <hr class="border-[1px] border-gray-500" />
+                        <div class="flex justify-between gap-3 wrap">
+                            <p class="text-highlight-content">Total</p>
+                            <p>Rp{{ number_format($orderTransactions->first()->order->total_amounts, 0, ',', '.') }}
+                            </p>
                         </div>
                     </div>
-                    <div
-                        class="flex flex-col md:sticky top-[20px] w-full col-span-6 row-auto gap-4 p-4 rounded-lg h-fit md:p-8 lg:gap-y-6 gap-y-5 content-body bg-secondary-accent-color outline outline-highlight-content">
-                        <p class="text-2xl text-highlight-content lg:text-3xl">
-                            Order Summary
-                        </p>
-                        <div class="flex flex-col gap-6 wrap">
-                            <!-- Repeated Content -->
-                            @foreach ($orderTransactions as $transaction)
-                                <div
-                                    class="flex flex-col items-center w-full p-0 gap-x-8 gap-y-3 md:flex-row md:gap-y-0">
-                                    <!-- Normal Menu Image -->
-                                    <div class="img-wrap h-52 3xl:w-80 3xl:h-60 w-full md:w-[45%] md:h-44">
-                                        @if ($transaction->order_type === 'normal_menu')
-                                            <img src="{{ isset($transaction->menu) && $transaction->menu->image ? asset('storage/' . $transaction->menu->image) : 'https://salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled.png' }}"
-                                                alt="{{ $transaction->menu_name ?? 'Unknown Menu' }}"
-                                                class="object-cover w-full h-full rounded-lg" />
-                                        @else
-                                            <img src="{{ asset('/asset/CustomOrder.png') }}"
-                                                class="object-cover w-full h-full rounded-lg" alt="Custom Order" />
+                </div>
+                <div
+                    class="flex flex-col md:sticky top-[20px] w-full col-span-6 row-auto gap-4 p-4 rounded-lg h-fit md:p-8 lg:gap-y-6 gap-y-5 content-body bg-secondary-accent-color outline outline-highlight-content">
+                    <p class="text-2xl text-highlight-content lg:text-3xl">
+                        Order Summary
+                    </p>
+                    <div class="flex flex-col gap-6 wrap">
+                        <!-- Repeated Content -->
+                        @foreach ($orderTransactions as $transaction)
+                            <div class="flex flex-col items-center w-full p-0 gap-x-8 gap-y-3 md:flex-row md:gap-y-0">
+                                <!-- Normal Menu Image -->
+                                <div class="img-wrap h-52 3xl:w-80 3xl:h-60 w-full md:w-[45%] md:h-44">
+                                    @if ($transaction->order_type === 'normal_menu')
+                                        <img src="{{ isset($transaction->menu) && $transaction->menu->image ? asset('storage/' . $transaction->menu->image) : 'https://salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled.png' }}"
+                                            alt="{{ $transaction->menu_name ?? 'Unknown Menu' }}"
+                                            class="object-cover w-full h-full rounded-lg" />
+                                    @else
+                                        <img src="{{ asset('/asset/CustomOrder.png') }}"
+                                            class="object-cover w-full h-full rounded-lg" alt="Custom Order" />
+                                    @endif
+                                </div>
+                                <div class="flex flex-col w-full gap-1.5 text-wrap md:w-[35%]">
+                                    <p class="text-2xl font-medium line-clamp-1">
+                                        {{ $transaction->order_type === 'normal_menu' ? $transaction->menu_name : 'Custom menu' }}
+                                    </p>
+                                    <div class="flex items-center gap-3 wrap">
+                                        <p class="text-lg uppercase text-highlight-content">Size
+                                            ({{ $transaction->size }})
+                                        </p>
+                                        @if ($transaction->order_type === 'custom_menu')
+                                            <button data-custom-pizza="{{ $transaction->transaction_detail_ID }}"
+                                                id="btn-see-detail-custom"
+                                                class="px-2 py-1 rounded-lg w-fit bg-primary-color text-highlight-content"><i
+                                                    class="ti ti-clipboard-text"></i></button>
                                         @endif
                                     </div>
-                                    <div class="flex flex-col w-full gap-1.5 text-wrap md:w-[35%]">
-                                        <p class="text-2xl font-medium line-clamp-1">
-                                            {{ $transaction->order_type === 'normal_menu' ? $transaction->menu_name : 'Custom menu' }}
-                                        </p>
-                                        <div class="flex items-center gap-3 wrap">
-                                            <p class="text-lg uppercase text-highlight-content">Size
-                                                ({{ $transaction->size }})
-                                            </p>
-                                            @if ($transaction->order_type === 'custom_menu')
-                                                <button data-custom-pizza="{{ $transaction->transaction_detail_ID }}"
-                                                    id="btn-see-detail-custom"
-                                                    class="px-2 py-1 rounded-lg w-fit bg-primary-color text-highlight-content"><i
-                                                        class="ti ti-clipboard-text"></i></button>
-                                            @endif
-                                        </div>
-                                        <div class="flex">
-                                            <p class="text-xl">Rp
-                                                {{ number_format($transaction->subtotal, 0, ',', '.') }}</p>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="w-full px-4 py-2 rounded-full md:w-[15%] quantity-area bg-secondary-color">
-                                        <p class="text-center md:text-base ms-auto">
-                                            Qty : {{ $transaction->quantity }}
-                                        </p>
+                                    <div class="flex">
+                                        <p class="text-xl">Rp
+                                            {{ number_format($transaction->subtotal, 0, ',', '.') }}</p>
                                     </div>
                                 </div>
-                            @endforeach
-                            <!-- Repeated Content End -->
-                        </div>
+                                <div class="w-full px-4 py-2 rounded-full md:w-[15%] quantity-area bg-secondary-color">
+                                    <p class="text-center md:text-base ms-auto">
+                                        Qty : {{ $transaction->quantity }}
+                                    </p>
+                                </div>
+                            </div>
+                        @endforeach
+                        <!-- Repeated Content End -->
                     </div>
-                    {{-- <div class="col-span-6 row-auto gap-4 text-base md:text-lg">
+                </div>
+                {{-- <div class="col-span-6 row-auto gap-4 text-base md:text-lg">
                         <div
                             class="sticky flex flex-col w-full gap-4 rounded-lg h-fit top-36 box-Location font-aesthetnova bg-secondary-accent-color outline outline-highlight-content">
                             <div class="px-4 py-4 md:py-8 body md:px-8">
@@ -284,16 +274,202 @@
                             </div>
                         </div>
                     </div> --}}
-                </div>
             </div>
-        </section>
-        <!-- SideBar  -->
-        @include('layout.popovers.aside.sidebar-frontend')
-        @include('layout.modal.custom-menu.custom-details')
-    </main>
-    @include('layout.Footer')
-</body>
-<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-<script src="{{ asset('/js/swiper.js') }}"></script>
+        </div>
+    </section>
+    @include('layout.popovers.aside.sidebar-frontend')
+    @include('layout.modal.custom-menu.custom-details')
+@endsection
+@section('script')
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script src="{{ asset('js/swiper.js') }}"></script>
+    <script>
+        const accordionHeads = document.querySelectorAll(".accordion-head");
 
-</html>
+        accordionHeads.forEach((accordionHead) => {
+            const accordionBody = accordionHead.nextElementSibling;
+
+            // Set semua item terbuka pada awalnya
+            accordionHead.classList.add("accordion-active");
+            accordionBody.style.maxHeight = accordionBody.scrollHeight + "px";
+
+            accordionHead.addEventListener("click", () => {
+                const isActive = accordionHead.classList.contains("accordion-active");
+
+                // Jika item yang diklik sudah aktif, tutup item tersebut
+                if (isActive) {
+                    accordionHead.classList.remove("accordion-active");
+                    accordionBody.style.maxHeight = 0;
+                } else {
+                    // Buka item yang diklik
+                    accordionHead.classList.add("accordion-active");
+                    accordionBody.style.maxHeight = accordionBody.scrollHeight + "px";
+                }
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let selectedSize = null; // Ukuran yang dipilih
+            let selectedToppings = []; // Daftar topping yang dipilih
+            let totalPrice = 0; // Total harga
+
+            const sizeOutput = document.querySelector('.add-to-cart-custom-order #selected-size');
+            const toppingsOutput = document.querySelector('.add-to-cart-custom-order #selected-toppings');
+            const totalPriceOutput = document.querySelector('#total-price');
+            const hiddenToppingsInput = document.getElementById('toppings-input');
+            const hiddenTotalPriceInput = document.getElementById('total-price-input');
+            const hiddenSizeInput = document.getElementById('size-input');
+
+            const sizeButtons = document.querySelectorAll('.size-button');
+            const toppingButtons = document.querySelectorAll('.topping-button');
+
+            // Fungsi untuk menghitung total harga
+            function calculateTotal() {
+                if (!selectedSize) {
+                    notyf.error("Please select a size first.");
+                    return;
+                }
+
+                let toppingPrice = 0;
+                selectedToppings.forEach(toppingName => {
+                    const topping = document.querySelector(`.topping-button[data-name="${toppingName}"]`);
+                    if (topping) {
+                        toppingPrice += parseFloat(topping.getAttribute('data-price'));
+                    }
+                });
+
+                totalPrice = selectedSize.price + toppingPrice;
+
+                // Jika selectedToppings kosong, kirimkan array kosong
+                const toppingsData = selectedToppings.length > 0 ? selectedToppings : [];
+
+                fetch('/calculate-total', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
+                                'content'),
+                        },
+                        body: JSON.stringify({
+                            size_id: selectedSize.id,
+                            size_name: selectedSize.name,
+                            toppings: toppingsData,
+                            total_price: totalPrice,
+                        }),
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            notyf.error(data.error);
+                            return;
+                        }
+
+                        // Update total harga
+                        totalPriceOutput.innerHTML = `Rp.${totalPrice.toLocaleString('id-ID')}`;
+                        updateHiddenInputs(); // Panggil untuk memperbarui input tersembunyi
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        notyf.error("Login First! To Make an order");
+                    });
+            }
+
+            // Fungsi untuk memperbarui input tersembunyi
+            function updateHiddenInputs() {
+                hiddenToppingsInput.value = selectedToppings.join(', ');
+                hiddenTotalPriceInput.value = totalPrice;
+                hiddenSizeInput.value = selectedSize.name;
+            }
+
+            // Event Listener untuk tombol Size
+            sizeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    sizeButtons.forEach(btn => btn.classList.remove('bg-red-500', 'text-white',
+                        '!outline-none'));
+                    this.classList.add('bg-red-500', 'text-white', '!outline-none');
+
+                    const sizePrice = parseFloat(this.getAttribute('data-price'));
+                    const maxToppings = parseInt(this.getAttribute('data-max-toppings'));
+                    const sizeId = this.getAttribute('data-id');
+
+                    selectedSize = {
+                        id: sizeId,
+                        name: this.innerText.trim(),
+                        price: sizePrice,
+                        maxToppings: maxToppings,
+                    };
+
+                    sizeOutput.innerHTML = `Custom Pizza - (${selectedSize.name})`;
+
+                    selectedToppings = [];
+                    toppingButtons.forEach(btn => btn.classList.remove('bg-red-500', 'text-white',
+                        '!outline-none'));
+
+                    toppingsOutput.innerHTML = 'No Toppings Selected';
+                    totalPrice = selectedSize.price;
+                    totalPriceOutput.innerHTML = `Rp.${totalPrice.toLocaleString('id-ID')}`;
+                    updateHiddenInputs();
+                });
+            });
+
+            // Event Listener untuk tombol Topping
+            toppingButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    if (!selectedSize) {
+                        notyf.error("Please select a size first.");
+                        return;
+                    }
+
+                    const toppingPrice = parseFloat(this.getAttribute('data-price'));
+                    const toppingName = this.getAttribute('data-name');
+
+                    if (selectedToppings.includes(toppingName)) {
+                        selectedToppings = selectedToppings.filter(item => item !== toppingName);
+                        this.classList.remove('bg-red-500', 'text-white', '!outline-none');
+                    } else {
+                        if (selectedToppings.length >= selectedSize.maxToppings) {
+                            notyf.open({
+                                type: 'warning',
+                                message: `Max only ${selectedSize.maxToppings} toppings for this size.`,
+                            });
+                            return;
+                        }
+                        selectedToppings.push(toppingName);
+                        this.classList.add('bg-red-500', 'text-white', '!outline-none');
+                    }
+
+                    toppingsOutput.innerHTML = selectedToppings.length > 0 ? selectedToppings.join(
+                        ', ') : 'No Toppings Selected';
+                    calculateTotal();
+                });
+            });
+
+            // Event Listener untuk form submit
+            const form = document.querySelector('.add-to-cart-custom-order form');
+            form.addEventListener('submit', function(e) {
+                // Validasi sebelum submit
+                if (!selectedSize) {
+                    e.preventDefault();
+                    notyf.error("Please select a size first.");
+                    return;
+                }
+
+                if (selectedToppings.length === 0) {
+                    notyf.error("Please select at least one topping.");
+                    e.preventDefault();
+                    return;
+                }
+
+                // Lanjutkan submit jika semua valid
+                updateHiddenInputs(); // Pastikan data sudah ada di input tersembunyi
+            });
+
+            // Set default value kosong saat halaman dimuat
+            sizeOutput.innerHTML = 'Custom Pizza - (No Size Selected)';
+            toppingsOutput.innerHTML = 'No Toppings Selected';
+            totalPriceOutput.innerHTML = 'Rp.0';
+            updateHiddenInputs();
+        });
+    </script>
+@endsection

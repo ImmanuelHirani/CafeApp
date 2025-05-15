@@ -15,9 +15,9 @@
 </head>
 
 <body id="Admin">
-    @include('layout.header')
+    @include('layout.Header')
     <main class="grid grid-cols-7 gap-4 py-4">
-        <section class="flex flex-col col-span-7 p-6 rounded-lg h-fit gap-9 bg-primary-color-admin">
+        <div class="flex flex-col col-span-7 p-6 rounded-lg h-fit gap-9 bg-primary-color-admin">
             <div class="overflow-x-auto">
                 <table id="tableCS" class="min-w-full border shadow-sm stripe">
                     <thead class="">
@@ -56,13 +56,13 @@
                     </tbody>
                 </table>
             </div>
-        </section>
+        </div>
     </main>
 </body>
-<script src="{{ asset('/js/table.js') }}"></script>
-<script src="{{ asset('/js/selectedStatus.js') }}"></script>
-<script src="{{ asset('/js/tabs-menu.js') }}"></script>
-<script src="{{ asset('/js/pagginationPage.js') }}"></script>
-<script src="{{ asset('/js/tabs-sideMenu.js') }}"></script>
+<script src="{{ asset('js/table.js') }}"></script>
+<script src="{{ asset('js/selectedStatus.js') }}"></script>
+<script src="{{ asset('js/tabs-menu.js') }}"></script>
+<script src="{{ asset('js/pagginationPage.js') }}"></script>
+<script src="{{ asset('js/tabs-sideMenu.js') }}"></script>
 
 </html>

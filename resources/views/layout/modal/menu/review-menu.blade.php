@@ -1,8 +1,8 @@
 <div id="reviewBox"
-    class="fixed inset-0 z-50 items-center justify-center hidden bg-black opacity-30 bg-opacity-70 box-review-wrapper font-aesthetnova">
+    class="fixed inset-0 z-50 items-center justify-center hidden bg-primary-color/90 opacity-30 box-review-wrapper font-aesthetnova">
     <!-- Review Box Container -->
     <div
-        class="review-box relative w-[90%] md:w-[50%] h-fit md:h-fit bg-secondary-accent-color p-4 md:p-8 rounded-lg flex flex-col gap-3 items-center">
+        class="review-box relative w-[90%] md:w-[50%] h-fit md:h-fit bg-secondary-accent-color p-4 md:p-8 rounded-lg flex flex-col gap-6 items-center">
         <!-- Review Box Title -->
         <p class="text-lg text-center md:text-start md:text-xl">
             <span class="hidden md:inline-block">WHAT WOULD YOU</span>RATE THIS
@@ -10,8 +10,8 @@
         </p>
         <!-- Product Image -->
         <img src="{{ asset('storage/' . $menuDetails->image) }}" alt="{{ $menuDetails->name }}"
-            class="md:w-[50%] w-full md:h-[18rem] h-[10rem]  object-cover rounded-lg" />
-        <form action="{{ route('menu.reviews.store') }}" method="POST" class="flex flex-col items-center w-full gap-3">
+            class="w-full md:h-[18rem] h-[10rem]  object-cover rounded-lg" />
+        <form action="{{ route('menu.reviews.store') }}" method="POST" class="flex flex-col items-center w-full gap-8">
             @csrf
             <!-- Star Rating SVG Icons -->
             <div class="flex items-center gap-1.5 star">
@@ -26,13 +26,14 @@
                 <input type="hidden" name="user_ID" value="{{ Auth::user()->user_ID }}">
             @endauth
             <!-- Feedback Form -->
-            <div class="flex flex-col w-full gap-3">
+            <div class="flex flex-col w-full gap-4">
                 <p class="text-base text-center md:text-start md:text-xl">
                     Tell us your feedback about this product
                 </p>
                 <div class="grid grid-cols-4 gap-3.5 items-end">
                     <!-- Feedback Textarea -->
-                    <textarea required name="review_desc" class="w-full col-span-4 px-4 py-2 rounded-lg outline-none" rows="4"
+                    <textarea required name="review_desc"
+                        class="w-full col-span-4 px-4 py-2 text-white border-[1px] border-white/30 rounded-lg outline-none" rows="4"
                         placeholder="Max Character Limit - (100 Words)"></textarea>
                     <!-- Submit and Cancel Buttons -->
                     <div class="flex justify-end col-span-4 gap-3.5">
